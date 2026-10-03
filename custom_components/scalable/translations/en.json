@@ -108,7 +108,8 @@
       "initiate_flow": {
         "user": "Add group"
       },
-      "entry_type": "Group"
+      "entry_type": "Group",
+      "step": {}
     }
   },
   "entity": {
