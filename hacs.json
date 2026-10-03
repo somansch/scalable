@@ -1,0 +1,7 @@
+{
+  "name": "Scalable Capital",
+  "render_readme": true,
+  "zip_release": true,
+  "filename": "scalable.zip",
+  "homeassistant": "2026.9.0"
+}

@@ -1,0 +1,211 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Scalable Capital",
+        "description": "Die Integration liest dein Scalable-Depot über **Scalable MCP**, den Zugang, den Scalable für KI-Assistenten anbietet. Schalte ihn vorher in der Web-Version von Scalable ein, unter **Profil → Sicherheit → Agentic Investing**, und stelle die Zugriffsstufe auf **Leserechte**, wenn du nicht auch über einen Assistenten handelst: Diese Integration liest nur, aber durchsetzen tut das die Zugriffsstufe bei Scalable selbst.\n\nMit „Absenden“ wird dieses Home Assistant bei Scalable registriert - übermittelt werden nur ein Name und die Rücksprungadresse. Auf der nächsten Seite steht der Link zur Anmeldung.{detail}",
+        "data": {
+          "name": "Name"
+        },
+        "data_description": {
+          "name": "So heißt dieser Eintrag. Mit dem Namen beginnt auch jede Entity-ID, ein zweites Scalable-Konto braucht deshalb einen eigenen."
+        }
+      },
+      "sign_in": {
+        "title": "Bei Scalable anmelden",
+        "description": "1. [Die Scalable-Anmeldeseite]({auth_url}) öffnen, anmelden, den zweiten Faktor bestätigen und **Home Assistant** freigeben.\n2. Danach landet der Browser auf einer Seite, die nicht lädt - ihre Adresse beginnt mit `http://127.0.0.1:47861`. Das ist so gewollt.\n3. Diese Adresse komplett aus der Adressleiste kopieren und unten einfügen. Sie gilt nur einmal und nur wenige Minuten.{detail}",
+        "data": {
+          "redirect_url": "Adresse aus der Adressleiste"
+        }
+      },
+      "portfolio": {
+        "title": "Welches Depot?",
+        "description": "Dein Konto hat mehr als ein Depot. Scalable nennt sie nur mit ihrer ID. Jedes Depot ist ein eigener Eintrag - für ein weiteres die Integration noch einmal hinzufügen.",
+        "data": {
+          "portfolio_id": "Depot"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Erneut bei Scalable anmelden",
+        "description": "Scalable akzeptiert diese Anmeldung nicht mehr. Mit „Absenden“ gibt es einen neuen Anmeldelink.{detail}",
+        "data": {
+          "register_again": "Home Assistant bei Scalable neu registrieren"
+        },
+        "data_description": {
+          "register_again": "Nur wenn die Scalable-Anmeldeseite meldet, dass sie diese Anwendung nicht kennt."
+        }
+      }
+    },
+    "error": {
+      "register_failed": "Scalable hat die Registrierung abgelehnt.",
+      "authorize_denied": "Die Freigabe wurde bei Scalable abgelehnt.",
+      "state_mismatch": "Diese Adresse gehört zu einem anderen Anmeldeversuch. Bitte den Link oben noch einmal verwenden.",
+      "no_code": "Diese Adresse enthält keinen Anmeldecode. Bitte die ganze Adresse kopieren, auch alles nach dem Fragezeichen.",
+      "code_rejected": "Scalable hat den Code nicht angenommen - er gilt nur einmal und nur wenige Minuten. Bitte den Link oben noch einmal verwenden.",
+      "cannot_connect": "Scalable ist gerade nicht erreichbar. Bitte gleich noch einmal versuchen.",
+      "name_used": "Diesen Namen verwendet bereits ein anderer Eintrag.",
+      "name_invalid": "Der Name braucht mindestens einen Buchstaben oder eine Ziffer."
+    },
+    "abort": {
+      "already_configured": "Dieses Depot ist bereits eingerichtet.",
+      "no_portfolio": "Das Konto hat kein Broker-Depot.",
+      "wrong_account": "Das war ein anderes Scalable-Konto als das, zu dem dieser Eintrag gehört.",
+      "reauth_successful": "Erneut angemeldet."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Scalable Capital",
+        "description": "Was möchtest du ändern?",
+        "menu_options": {
+          "settings": "Einstellungen",
+          "reauth": "Erneut bei Scalable anmelden"
+        }
+      },
+      "settings": {
+        "title": "Einstellungen",
+        "data": {
+          "scan_interval": "Abfrageintervall"
+        },
+        "data_description": {
+          "scan_interval": "Wie oft Scalable abgefragt wird, in Minuten. Jede Abfrage kostet eine Handvoll Aufrufe, dazu einen je Position und Watchlist-Eintrag."
+        }
+      },
+      "reauth": {
+        "title": "Erneut bei Scalable anmelden",
+        "description": "Sinnvoll nach einer Änderung der Zugriffsstufe bei Scalable oder wenn sich Werte nicht mehr aktualisieren. Mit „Absenden“ gibt es einen neuen Anmeldelink.{detail}",
+        "data": {
+          "register_again": "Home Assistant bei Scalable neu registrieren"
+        },
+        "data_description": {
+          "register_again": "Nur wenn die Scalable-Anmeldeseite meldet, dass sie diese Anwendung nicht kennt."
+        }
+      },
+      "sign_in": {
+        "title": "Bei Scalable anmelden",
+        "description": "1. [Die Scalable-Anmeldeseite]({auth_url}) öffnen, anmelden, den zweiten Faktor bestätigen und **Home Assistant** freigeben.\n2. Danach landet der Browser auf einer Seite, die nicht lädt - ihre Adresse beginnt mit `http://127.0.0.1:47861`. Das ist so gewollt.\n3. Diese Adresse komplett aus der Adressleiste kopieren und unten einfügen. Sie gilt nur einmal und nur wenige Minuten.{detail}",
+        "data": {
+          "redirect_url": "Adresse aus der Adressleiste"
+        }
+      }
+    },
+    "error": {
+      "register_failed": "Scalable hat die Registrierung abgelehnt.",
+      "authorize_denied": "Die Freigabe wurde bei Scalable abgelehnt.",
+      "state_mismatch": "Diese Adresse gehört zu einem anderen Anmeldeversuch. Bitte den Link oben noch einmal verwenden.",
+      "no_code": "Diese Adresse enthält keinen Anmeldecode. Bitte die ganze Adresse kopieren, auch alles nach dem Fragezeichen.",
+      "code_rejected": "Scalable hat den Code nicht angenommen - er gilt nur einmal und nur wenige Minuten. Bitte den Link oben noch einmal verwenden.",
+      "cannot_connect": "Scalable ist gerade nicht erreichbar. Bitte gleich noch einmal versuchen."
+    },
+    "abort": {
+      "wrong_account": "Das war ein anderes Scalable-Konto als das, zu dem dieser Eintrag gehört.",
+      "reauth_successful": "Erneut angemeldet."
+    }
+  },
+  "config_subentries": {
+    "group": {
+      "initiate_flow": {
+        "user": "Gruppe hinzufügen"
+      },
+      "entry_type": "Gruppe"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "total": {
+        "name": "Gesamtwert"
+      },
+      "cash": {
+        "name": "Guthaben"
+      },
+      "securities": {
+        "name": "Wertpapiere"
+      },
+      "crypto": {
+        "name": "Krypto"
+      },
+      "change_day": {
+        "name": "Veränderung heute"
+      },
+      "change_week": {
+        "name": "Veränderung 1 Woche"
+      },
+      "change_month": {
+        "name": "Veränderung 1 Monat"
+      },
+      "change_ytd": {
+        "name": "Veränderung seit Jahresbeginn"
+      },
+      "change_year": {
+        "name": "Veränderung 1 Jahr"
+      },
+      "change_since_buy": {
+        "name": "Veränderung seit Kauf"
+      },
+      "invested": {
+        "name": "Kaufwert"
+      },
+      "return": {
+        "name": "Unrealisierte Rendite"
+      },
+      "return_pct": {
+        "name": "Unrealisierte Rendite %"
+      },
+      "type_stock": {
+        "name": "Aktien"
+      },
+      "type_etf": {
+        "name": "ETFs"
+      },
+      "type_etc": {
+        "name": "Rohstoffe (ETCs)"
+      },
+      "type_etn": {
+        "name": "ETNs"
+      },
+      "type_etp": {
+        "name": "ETPs"
+      },
+      "type_fund": {
+        "name": "Fonds"
+      },
+      "type_bond": {
+        "name": "Anleihen"
+      },
+      "type_derivative": {
+        "name": "Derivate"
+      },
+      "type_crypto": {
+        "name": "Krypto"
+      },
+      "type_other": {
+        "name": "Sonstige Wertpapiere"
+      },
+      "value": {
+        "name": "Wert"
+      },
+      "price": {
+        "name": "Kurs"
+      },
+      "quantity": {
+        "name": "Stück"
+      },
+      "open_orders": {
+        "name": "Offene Orders"
+      },
+      "watch_price": {
+        "name": "{name} Kurs"
+      },
+      "watch_change_day": {
+        "name": "{name} Veränderung heute"
+      },
+      "alert": {
+        "name": "{name} Alarm {price}"
+      },
+      "alerts_active": {
+        "name": "Aktive Alarme"
+      }
+    }
+  }
+}

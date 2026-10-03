@@ -1,0 +1,211 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Scalable Capital",
+        "description": "This reads your Scalable portfolio through **Scalable MCP**, the connection Scalable offers to AI assistants. Switch it on first in Scalable's web version, under **Profile → Security → Agentic Investing**, and set its **access level** to the read-only one unless you also trade through an assistant: this integration only ever reads, but the access level is what Scalable itself enforces.\n\nSubmitting registers this Home Assistant with Scalable - only a name and the address to return to are sent. The next screen has the link to sign in.{detail}",
+        "data": {
+          "name": "Name"
+        },
+        "data_description": {
+          "name": "What this entry is called. It also starts every entity id, so a second Scalable account needs a name of its own."
+        }
+      },
+      "sign_in": {
+        "title": "Sign in to Scalable",
+        "description": "1. Open [the Scalable sign-in page]({auth_url}), sign in, confirm the second factor and authorise **Home Assistant**.\n2. Your browser then lands on a page that does not load - its address starts with `http://127.0.0.1:47861`. That is expected.\n3. Copy that whole address from the address bar and paste it below. It works once and only for a few minutes.{detail}",
+        "data": {
+          "redirect_url": "Address from the address bar"
+        }
+      },
+      "portfolio": {
+        "title": "Which portfolio?",
+        "description": "Your account has more than one portfolio. Scalable lists them by id only. Each portfolio is an entry of its own - add the integration again for another one.",
+        "data": {
+          "portfolio_id": "Portfolio"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Sign in to Scalable again",
+        "description": "Scalable no longer accepts this sign-in. Submit to get a new sign-in link.{detail}",
+        "data": {
+          "register_again": "Register Home Assistant with Scalable again"
+        },
+        "data_description": {
+          "register_again": "Only if Scalable's sign-in page says it does not know this application."
+        }
+      }
+    },
+    "error": {
+      "register_failed": "Scalable refused the registration.",
+      "authorize_denied": "The authorisation was declined on Scalable's side.",
+      "state_mismatch": "That address belongs to a different sign-in attempt. Use the link above again.",
+      "no_code": "That address carries no sign-in code. Copy the whole address, including everything after the question mark.",
+      "code_rejected": "Scalable did not accept the code - it works once and only for a few minutes. Use the link above again.",
+      "cannot_connect": "Scalable could not be reached. Try again in a moment.",
+      "name_used": "Another entry already uses this name.",
+      "name_invalid": "The name needs at least one letter or digit."
+    },
+    "abort": {
+      "already_configured": "This portfolio is already set up.",
+      "no_portfolio": "The account has no broker portfolio.",
+      "wrong_account": "That was a different Scalable account than the one this entry belongs to.",
+      "reauth_successful": "Signed in again."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Scalable Capital",
+        "description": "What would you like to change?",
+        "menu_options": {
+          "settings": "Settings",
+          "reauth": "Sign in to Scalable again"
+        }
+      },
+      "settings": {
+        "title": "Settings",
+        "data": {
+          "scan_interval": "Update interval"
+        },
+        "data_description": {
+          "scan_interval": "How often Scalable is asked, in minutes. Every update costs a handful of requests, plus one per position and watchlist entry."
+        }
+      },
+      "reauth": {
+        "title": "Sign in to Scalable again",
+        "description": "Useful after changing the access level in Scalable, or when values stop updating. Submit to get a new sign-in link.{detail}",
+        "data": {
+          "register_again": "Register Home Assistant with Scalable again"
+        },
+        "data_description": {
+          "register_again": "Only if Scalable's sign-in page says it does not know this application."
+        }
+      },
+      "sign_in": {
+        "title": "Sign in to Scalable",
+        "description": "1. Open [the Scalable sign-in page]({auth_url}), sign in, confirm the second factor and authorise **Home Assistant**.\n2. Your browser then lands on a page that does not load - its address starts with `http://127.0.0.1:47861`. That is expected.\n3. Copy that whole address from the address bar and paste it below. It works once and only for a few minutes.{detail}",
+        "data": {
+          "redirect_url": "Address from the address bar"
+        }
+      }
+    },
+    "error": {
+      "register_failed": "Scalable refused the registration.",
+      "authorize_denied": "The authorisation was declined on Scalable's side.",
+      "state_mismatch": "That address belongs to a different sign-in attempt. Use the link above again.",
+      "no_code": "That address carries no sign-in code. Copy the whole address, including everything after the question mark.",
+      "code_rejected": "Scalable did not accept the code - it works once and only for a few minutes. Use the link above again.",
+      "cannot_connect": "Scalable could not be reached. Try again in a moment."
+    },
+    "abort": {
+      "wrong_account": "That was a different Scalable account than the one this entry belongs to.",
+      "reauth_successful": "Signed in again."
+    }
+  },
+  "config_subentries": {
+    "group": {
+      "initiate_flow": {
+        "user": "Add group"
+      },
+      "entry_type": "Group"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "total": {
+        "name": "Total value"
+      },
+      "cash": {
+        "name": "Cash balance"
+      },
+      "securities": {
+        "name": "Securities"
+      },
+      "crypto": {
+        "name": "Crypto"
+      },
+      "change_day": {
+        "name": "Change today"
+      },
+      "change_week": {
+        "name": "Change 1 week"
+      },
+      "change_month": {
+        "name": "Change 1 month"
+      },
+      "change_ytd": {
+        "name": "Change year to date"
+      },
+      "change_year": {
+        "name": "Change 1 year"
+      },
+      "change_since_buy": {
+        "name": "Change since purchase"
+      },
+      "invested": {
+        "name": "Purchase value"
+      },
+      "return": {
+        "name": "Unrealised return"
+      },
+      "return_pct": {
+        "name": "Unrealised return %"
+      },
+      "type_stock": {
+        "name": "Stocks"
+      },
+      "type_etf": {
+        "name": "ETFs"
+      },
+      "type_etc": {
+        "name": "Commodities (ETCs)"
+      },
+      "type_etn": {
+        "name": "ETNs"
+      },
+      "type_etp": {
+        "name": "ETPs"
+      },
+      "type_fund": {
+        "name": "Funds"
+      },
+      "type_bond": {
+        "name": "Bonds"
+      },
+      "type_derivative": {
+        "name": "Derivatives"
+      },
+      "type_crypto": {
+        "name": "Crypto"
+      },
+      "type_other": {
+        "name": "Other securities"
+      },
+      "value": {
+        "name": "Value"
+      },
+      "price": {
+        "name": "Price"
+      },
+      "quantity": {
+        "name": "Quantity"
+      },
+      "open_orders": {
+        "name": "Open orders"
+      },
+      "watch_price": {
+        "name": "{name} price"
+      },
+      "watch_change_day": {
+        "name": "{name} change today"
+      },
+      "alert": {
+        "name": "{name} alert {price}"
+      },
+      "alerts_active": {
+        "name": "Active alerts"
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "domain": "scalable",
+  "name": "Scalable Capital",
+  "codeowners": ["@somansch"],
+  "config_flow": true,
+  "documentation": "https://github.com/somansch/scalable",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/somansch/scalable/issues",
+  "requirements": ["mcp>=1.26.0"],
+  "version": "0.1.0"
+}
