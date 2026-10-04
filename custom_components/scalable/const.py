@@ -40,7 +40,17 @@ DEFAULT_SCAN_INTERVAL = 15
 MIN_SCAN_INTERVAL = 5
 MAX_SCAN_INTERVAL = 1440
 
-# The only tools this integration ever calls - eight, all of them reading.
+# Whether what Scalable no longer lists - a sold position, an entry taken off
+# the watchlist, a deleted price alert - is taken out of Home Assistant too.
+# Off unless asked for: removing a device takes its history with it.
+CONF_REMOVE_STALE = "remove_stale"
+
+# Sent when an entry has finished setting up, with its id and its coordinator.
+# A card's subscription hangs on a coordinator, and a reload - saving the
+# options is one - replaces that coordinator with a new one.
+SIGNAL_ENTRY_LOADED = "scalable_entry_loaded"
+
+# The only tools this integration ever calls - eleven, all of them reading.
 # Scalable's grant covers every tool its server has, trading included - the
 # account's access level in Scalable is what narrows it - so on this side what
 # keeps the integration to reading is this list, checked against the server's
@@ -53,6 +63,11 @@ TOOL_CASH = "get_portfolio_cash_breakdown"
 TOOL_WATCHLIST = "list_watchlist_items"
 TOOL_TRANSACTIONS = "list_portfolio_transactions"
 TOOL_ALERTS = "list_price_alerts"
+# The three the dashboard card adds: a security's price over a period, what
+# an order's detail page says, and the savings plans.
+TOOL_CHART = "get_security_chart"
+TOOL_TRANSACTION = "get_transaction_details"
+TOOL_SAVINGS_PLANS = "list_savings_plans"
 READ_TOOLS = frozenset(
     {
         TOOL_PORTFOLIOS,
@@ -63,6 +78,9 @@ READ_TOOLS = frozenset(
         TOOL_WATCHLIST,
         TOOL_TRANSACTIONS,
         TOOL_ALERTS,
+        TOOL_CHART,
+        TOOL_TRANSACTION,
+        TOOL_SAVINGS_PLANS,
     }
 )
 
@@ -88,3 +106,17 @@ TX_DONE = frozenset({"FILLED", "SETTLED"})
 # CREATED is a status too, but Scalable's server answers "upstream_unavailable"
 # as soon as the filter names it - measured, with every other combination fine.
 TX_OPEN = ("REQUESTED", "PENDING", "PARTIAL_FILLED", "CANCEL_REQUESTED")
+
+# The periods a price chart can be asked for, as Scalable's chart tool names
+# them, and how many seconds an answer is kept: the card asks again on every
+# look, and a year's curve does not change within the hour.
+CHART_TIMEFRAMES = {
+    "one_day": 300,
+    "seven_days": 1800,
+    "one_month": 3600,
+    "three_months": 3 * 3600,
+    "six_months": 6 * 3600,
+    "year_to_date": 6 * 3600,
+    "one_year": 6 * 3600,
+    "max": 12 * 3600,
+}

@@ -31,6 +31,7 @@ from homeassistant.config_entries import (
 from homeassistant.const import CONF_NAME, CONF_TOKEN
 from homeassistant.core import callback
 from homeassistant.helpers.selector import (
+    BooleanSelector,
     NumberSelector,
     NumberSelectorConfig,
     NumberSelectorMode,
@@ -47,6 +48,7 @@ from .const import (
     CONF_PORTFOLIO_ID,
     CONF_REDIRECT_URL,
     CONF_REGISTER_AGAIN,
+    CONF_REMOVE_STALE,
     CONF_SCAN_INTERVAL,
     DEFAULT_NAME,
     DEFAULT_SCAN_INTERVAL,
@@ -304,6 +306,7 @@ class ScalableOptionsFlow(_SignIn, OptionsFlowWithReload):
                 data={
                     **self.config_entry.options,
                     CONF_SCAN_INTERVAL: int(user_input[CONF_SCAN_INTERVAL]),
+                    CONF_REMOVE_STALE: bool(user_input.get(CONF_REMOVE_STALE, False)),
                 }
             )
         return self.async_show_form(
@@ -323,7 +326,11 @@ class ScalableOptionsFlow(_SignIn, OptionsFlowWithReload):
                             unit_of_measurement="min",
                             mode=NumberSelectorMode.BOX,
                         )
-                    )
+                    ),
+                    vol.Required(
+                        CONF_REMOVE_STALE,
+                        default=self.config_entry.options.get(CONF_REMOVE_STALE, False),
+                    ): BooleanSelector(),
                 }
             ),
         )

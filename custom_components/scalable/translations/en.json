@@ -66,10 +66,12 @@
       "settings": {
         "title": "Settings",
         "data": {
-          "scan_interval": "Update interval"
+          "scan_interval": "Update interval",
+          "remove_stale": "Remove what Scalable no longer lists"
         },
         "data_description": {
-          "scan_interval": "How often Scalable is asked, in minutes. Every update costs a handful of requests, plus one per position and watchlist entry."
+          "scan_interval": "How often Scalable is asked, in minutes. Every update costs a handful of requests, plus one per position and watchlist entry.",
+          "remove_stale": "Sold positions, entries taken off the watchlist and deleted price alerts are removed from Home Assistant with the next update - their devices, their entities and the history recorded for them. Off, they stay and read unavailable."
         }
       },
       "reauth": {

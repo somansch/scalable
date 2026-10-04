@@ -7,9 +7,11 @@ beside them, and the watchlist.
 
 from __future__ import annotations
 
+import asyncio
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 import logging
+from time import monotonic
 from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
@@ -22,15 +24,19 @@ from homeassistant.util import dt as dt_util, slugify
 from .api import ScalableMcp, ScalableSession
 from .const import (
     CONF_PORTFOLIO_ID,
+    CHART_TIMEFRAMES,
     CONF_SCAN_INTERVAL,
     DEFAULT_NAME,
     DEFAULT_SCAN_INTERVAL,
     DOMAIN,
     TOOL_ALERTS,
     TOOL_CASH,
+    TOOL_CHART,
     TOOL_HOLDINGS,
     TOOL_OVERVIEW,
     TOOL_QUOTE,
+    TOOL_SAVINGS_PLANS,
+    TOOL_TRANSACTION,
     TOOL_TRANSACTIONS,
     TOOL_WATCHLIST,
     TX_DONE,
@@ -181,6 +187,9 @@ class Portfolio:
     positions: dict[str, Position]
     watchlist: dict[str, WatchItem]
     alerts: dict[str, Alert]
+    transactions: tuple[dict[str, Any], ...] = ()
+    """The whole history as Scalable lists it, newest first - for the card."""
+    savings_plans: tuple[dict[str, Any], ...] = ()
 
 
 def _quote(answer: dict[str, Any] | None, fallback: dict[str, Any] | None) -> Quote:
@@ -328,10 +337,14 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
         # returns, so an entry set up again under another name would otherwise
         # keep the ids of the one before it.
         self.unique_prefix: str = entry.entry_id
-        # The full history is only read again when a position's quantity has
-        # changed: nothing else can move what the units held have cost.
-        self._history_for: dict[str, float] | None = None
-        self._invested: dict[str, float | None] = {}
+        # One session at a time: the HTTP client carries the token in a header
+        # of its own, and the card asks for charts between two polls.
+        self._session_lock = asyncio.Lock()
+        self._charts: dict[tuple[str, str], tuple[float, dict[str, Any]]] = {}
+        self._details: dict[str, tuple[float, dict[str, Any]]] = {}
+        # When Scalable was last read successfully - not when it last valued
+        # the portfolio, which on a Sunday is two days ago.
+        self.last_read: datetime | None = None
 
     async def _async_transactions(
         self, session: ScalableSession, selected: dict[str, Any], **filters: Any
@@ -359,9 +372,19 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
         cash = (await session.async_call(TOOL_CASH, selected)).get("cash") or {}
         watched = (await session.async_call(TOOL_WATCHLIST, selected)).get("items") or []
         alerts = (await session.async_call(TOOL_ALERTS, selected)).get("items") or []
-        waiting = open_orders(
-            await self._async_transactions(session, selected, statuses=list(TX_OPEN))
-        )
+        # The whole history on every update: the card lists it, the open orders
+        # are the ones in it that have not run, and what the units held have
+        # cost follows from the ones that have.
+        history = await self._async_transactions(session, selected)
+        history.sort(key=lambda tx: tx.get("lastEventAt") or "", reverse=True)
+        waiting = open_orders(history)
+        try:
+            plans = (await session.async_call(TOOL_SAVINGS_PLANS, selected)).get("items") or []
+        except ScalableAuthError:
+            raise
+        except ScalableError as err:
+            _LOGGER.debug("No savings plans: %s", err)
+            plans = []
 
         # Crypto is left out of the positions on purpose: Scalable lists its whole
         # coin range there, every coin at quantity zero, and coins carry no quote
@@ -370,11 +393,7 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
             item for item in holdings.get("holdings") or [] if _held_quantity(item) > 0
         ]
         held = {item["isin"]: _held_quantity(item) for item in held_items}
-        if held != self._history_for:
-            self._invested = cost_basis(
-                await self._async_transactions(session, selected), held
-            )
-            self._history_for = held
+        invested = cost_basis(history, held)
 
         quotes: dict[str, dict[str, Any]] = {}
         wanted = [*held, *(item["isin"] for item in watched if item.get("isin"))]
@@ -410,7 +429,7 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
                     security_type=_security_type(quotes.get(item["isin"])),
                     quantity=held[item["isin"]],
                     quote=_quote(quotes.get(item["isin"]), item.get("currentQuote")),
-                    invested=self._invested.get(item["isin"]),
+                    invested=invested.get(item["isin"]),
                     orders=waiting.get(item["isin"], ()),
                 )
                 for item in held_items
@@ -431,16 +450,101 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
                 for item in alerts
                 if isinstance(item, dict) and item.get("alertId")
             },
+            transactions=tuple(history),
+            savings_plans=tuple(item for item in plans if isinstance(item, dict)),
         )
 
     async def _async_update_data(self) -> Portfolio:
         try:
-            token = await async_valid_access_token(self.hass, self.config_entry)
-            async with self.api.async_session(token) as session:
-                return await self._async_fetch(
-                    session, self.config_entry.data[CONF_PORTFOLIO_ID]
-                )
+            async with self._session_lock:
+                token = await async_valid_access_token(self.hass, self.config_entry)
+                async with self.api.async_session(token) as session:
+                    data = await self._async_fetch(
+                        session, self.config_entry.data[CONF_PORTFOLIO_ID]
+                    )
+            self.last_read = dt_util.utcnow()
+            return data
         except ScalableAuthError as err:
             raise ConfigEntryAuthFailed(str(err)) from err
         except ScalableError as err:
             raise UpdateFailed(str(err)) from err
+
+    # --- What the dashboard card asks for between two updates ------------------
+
+    async def async_charts(
+        self, isins: list[str], timeframe: str
+    ) -> dict[str, dict[str, Any] | None]:
+        """The price curve of each security over one period.
+
+        Answers are kept for as long as CHART_TIMEFRAMES says, so a dashboard
+        that is opened ten times costs Scalable one request per security. A
+        security Scalable has no curve for answers None rather than failing
+        the others.
+        """
+        keep = CHART_TIMEFRAMES[timeframe]
+        now = monotonic()
+        found: dict[str, dict[str, Any] | None] = {}
+        missing: list[str] = []
+        for isin in dict.fromkeys(isins):
+            kept = self._charts.get((isin, timeframe))
+            if kept and now - kept[0] < keep:
+                found[isin] = kept[1]
+            else:
+                missing.append(isin)
+        if not missing:
+            return found
+        async with self._session_lock:
+            token = await async_valid_access_token(self.hass, self.config_entry)
+            async with self.api.async_session(token) as session:
+                for isin in missing:
+                    try:
+                        answer = await session.async_call(
+                            TOOL_CHART, {"isin": isin, "timeframe": timeframe}
+                        )
+                    except ScalableAuthError:
+                        raise
+                    except ScalableError as err:
+                        _LOGGER.debug("No chart for %s (%s): %s", isin, timeframe, err)
+                        found[isin] = None
+                        continue
+                    reference = answer.get("closingReferencePoint") or {}
+                    chart = {
+                        "reference": _number(reference.get("midPrice")),
+                        "reference_time": reference.get("timestampUtc"),
+                        "points": [
+                            [point["timestampUtc"], point["midPrice"]]
+                            for point in answer.get("dataPoints") or []
+                            if isinstance(point, dict)
+                            and point.get("timestampUtc")
+                            and isinstance(point.get("midPrice"), (int, float))
+                        ],
+                    }
+                    self._charts[(isin, timeframe)] = (monotonic(), chart)
+                    found[isin] = chart
+        return found
+
+    async def async_transaction(self, transaction_id: str) -> dict[str, Any]:
+        """What Scalable's detail page says about one transaction."""
+        kept = self._details.get(transaction_id)
+        if kept and monotonic() - kept[0] < 300:
+            return kept[1]
+        async with self._session_lock:
+            token = await async_valid_access_token(self.hass, self.config_entry)
+            async with self.api.async_session(token) as session:
+                answer = await session.async_call(
+                    TOOL_TRANSACTION,
+                    {
+                        "portfolioId": self.config_entry.data[CONF_PORTFOLIO_ID],
+                        "transactionId": transaction_id,
+                    },
+                )
+        detail = dict(answer.get("transaction") or {})
+        # The documents are links into Scalable's own app, which only work for
+        # a browser signed in there - their names are kept, the links are not.
+        detail["documents"] = [
+            doc.get("label")
+            for doc in detail.get("documents") or []
+            if isinstance(doc, dict) and doc.get("label")
+        ]
+        self._details[transaction_id] = (monotonic(), detail)
+        return detail

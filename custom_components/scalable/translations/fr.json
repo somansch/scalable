@@ -1,0 +1,214 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Scalable Capital",
+        "description": "Cette intégration lit votre portefeuille Scalable via **Scalable MCP**, la connexion que Scalable propose aux assistants IA. Activez-la d'abord dans la version web de Scalable, sous **Profil → Sécurité → Agentic Investing**, et réglez son **niveau d'accès** sur la lecture seule, sauf si vous négociez aussi via un assistant : cette intégration ne fait que lire, mais c'est le niveau d'accès que Scalable applique de son côté.\n\nEn validant, ce Home Assistant est enregistré auprès de Scalable - seuls un nom et l'adresse de retour sont transmis. L'écran suivant contient le lien de connexion.{detail}",
+        "data": {
+          "name": "Nom"
+        },
+        "data_description": {
+          "name": "Le nom de cette entrée. Il commence aussi chaque identifiant d'entité ; un second compte Scalable a donc besoin de son propre nom."
+        }
+      },
+      "sign_in": {
+        "title": "Se connecter à Scalable",
+        "description": "1. Ouvrez [la page de connexion de Scalable]({auth_url}), connectez-vous, confirmez le second facteur et autorisez **Home Assistant**.\n2. Votre navigateur arrive ensuite sur une page qui ne se charge pas - son adresse commence par `http://127.0.0.1:47861`. C'est normal.\n3. Copiez toute cette adresse depuis la barre d'adresse et collez-la ci-dessous. Elle ne fonctionne qu'une fois et seulement quelques minutes.{detail}",
+        "data": {
+          "redirect_url": "Adresse de la barre d'adresse"
+        }
+      },
+      "portfolio": {
+        "title": "Quel portefeuille ?",
+        "description": "Votre compte comporte plusieurs portefeuilles. Scalable ne les désigne que par leur identifiant. Chaque portefeuille est une entrée distincte - ajoutez de nouveau l'intégration pour un autre.",
+        "data": {
+          "portfolio_id": "Portefeuille"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Se reconnecter à Scalable",
+        "description": "Scalable n'accepte plus cette connexion. Validez pour obtenir un nouveau lien de connexion.{detail}",
+        "data": {
+          "register_again": "Enregistrer de nouveau Home Assistant auprès de Scalable"
+        },
+        "data_description": {
+          "register_again": "Seulement si la page de connexion de Scalable indique qu'elle ne connaît pas cette application."
+        }
+      }
+    },
+    "error": {
+      "register_failed": "Scalable a refusé l'enregistrement.",
+      "authorize_denied": "L'autorisation a été refusée du côté de Scalable.",
+      "state_mismatch": "Cette adresse appartient à une autre tentative de connexion. Utilisez de nouveau le lien ci-dessus.",
+      "no_code": "Cette adresse ne contient pas de code de connexion. Copiez toute l'adresse, y compris ce qui suit le point d'interrogation.",
+      "code_rejected": "Scalable n'a pas accepté le code - il ne fonctionne qu'une fois et seulement quelques minutes. Utilisez de nouveau le lien ci-dessus.",
+      "cannot_connect": "Scalable est injoignable. Réessayez dans un instant.",
+      "name_used": "Une autre entrée utilise déjà ce nom.",
+      "name_invalid": "Le nom doit contenir au moins une lettre ou un chiffre."
+    },
+    "abort": {
+      "already_configured": "Ce portefeuille est déjà configuré.",
+      "no_portfolio": "Le compte n'a pas de portefeuille de courtage.",
+      "wrong_account": "Il s'agissait d'un autre compte Scalable que celui auquel cette entrée appartient.",
+      "reauth_successful": "Reconnexion réussie."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Scalable Capital",
+        "description": "Que souhaitez-vous modifier ?",
+        "menu_options": {
+          "settings": "Paramètres",
+          "reauth": "Se reconnecter à Scalable"
+        }
+      },
+      "settings": {
+        "title": "Paramètres",
+        "data": {
+          "scan_interval": "Intervalle de mise à jour",
+          "remove_stale": "Supprimer ce que Scalable ne liste plus"
+        },
+        "data_description": {
+          "scan_interval": "La fréquence à laquelle Scalable est interrogé, en minutes. Chaque mise à jour coûte quelques requêtes, plus une par position et par entrée de la liste de suivi.",
+          "remove_stale": "Les positions vendues, les entrées retirées de la watchlist et les alertes de prix supprimées sont retirées de Home Assistant à la prochaine mise à jour - leurs appareils, leurs entités et l'historique enregistré. Désactivé, elles restent et s'affichent comme indisponibles."
+        }
+      },
+      "reauth": {
+        "title": "Se reconnecter à Scalable",
+        "description": "Utile après avoir changé le niveau d'accès chez Scalable, ou lorsque les valeurs ne se mettent plus à jour. Validez pour obtenir un nouveau lien de connexion.{detail}",
+        "data": {
+          "register_again": "Enregistrer de nouveau Home Assistant auprès de Scalable"
+        },
+        "data_description": {
+          "register_again": "Seulement si la page de connexion de Scalable indique qu'elle ne connaît pas cette application."
+        }
+      },
+      "sign_in": {
+        "title": "Se connecter à Scalable",
+        "description": "1. Ouvrez [la page de connexion de Scalable]({auth_url}), connectez-vous, confirmez le second facteur et autorisez **Home Assistant**.\n2. Votre navigateur arrive ensuite sur une page qui ne se charge pas - son adresse commence par `http://127.0.0.1:47861`. C'est normal.\n3. Copiez toute cette adresse depuis la barre d'adresse et collez-la ci-dessous. Elle ne fonctionne qu'une fois et seulement quelques minutes.{detail}",
+        "data": {
+          "redirect_url": "Adresse de la barre d'adresse"
+        }
+      }
+    },
+    "error": {
+      "register_failed": "Scalable a refusé l'enregistrement.",
+      "authorize_denied": "L'autorisation a été refusée du côté de Scalable.",
+      "state_mismatch": "Cette adresse appartient à une autre tentative de connexion. Utilisez de nouveau le lien ci-dessus.",
+      "no_code": "Cette adresse ne contient pas de code de connexion. Copiez toute l'adresse, y compris ce qui suit le point d'interrogation.",
+      "code_rejected": "Scalable n'a pas accepté le code - il ne fonctionne qu'une fois et seulement quelques minutes. Utilisez de nouveau le lien ci-dessus.",
+      "cannot_connect": "Scalable est injoignable. Réessayez dans un instant."
+    },
+    "abort": {
+      "wrong_account": "Il s'agissait d'un autre compte Scalable que celui auquel cette entrée appartient.",
+      "reauth_successful": "Reconnexion réussie."
+    }
+  },
+  "config_subentries": {
+    "group": {
+      "initiate_flow": {
+        "user": "Ajouter un groupe"
+      },
+      "entry_type": "Groupe",
+      "step": {}
+    }
+  },
+  "entity": {
+    "sensor": {
+      "total": {
+        "name": "Valeur totale"
+      },
+      "cash": {
+        "name": "Solde"
+      },
+      "securities": {
+        "name": "Titres"
+      },
+      "crypto": {
+        "name": "Crypto"
+      },
+      "change_day": {
+        "name": "Variation aujourd'hui"
+      },
+      "change_week": {
+        "name": "Variation 1 semaine"
+      },
+      "change_month": {
+        "name": "Variation 1 mois"
+      },
+      "change_ytd": {
+        "name": "Variation depuis le début de l'année"
+      },
+      "change_year": {
+        "name": "Variation 1 an"
+      },
+      "change_since_buy": {
+        "name": "Variation depuis l'achat"
+      },
+      "invested": {
+        "name": "Valeur d'achat"
+      },
+      "return": {
+        "name": "Rendement latent"
+      },
+      "return_pct": {
+        "name": "Rendement latent %"
+      },
+      "type_stock": {
+        "name": "Actions"
+      },
+      "type_etf": {
+        "name": "ETF"
+      },
+      "type_etc": {
+        "name": "Matières premières (ETC)"
+      },
+      "type_etn": {
+        "name": "ETN"
+      },
+      "type_etp": {
+        "name": "ETP"
+      },
+      "type_fund": {
+        "name": "Fonds"
+      },
+      "type_bond": {
+        "name": "Obligations"
+      },
+      "type_derivative": {
+        "name": "Produits dérivés"
+      },
+      "type_crypto": {
+        "name": "Crypto"
+      },
+      "type_other": {
+        "name": "Autres titres"
+      },
+      "value": {
+        "name": "Valeur"
+      },
+      "price": {
+        "name": "Cours"
+      },
+      "quantity": {
+        "name": "Quantité"
+      },
+      "open_orders": {
+        "name": "Ordres en cours"
+      },
+      "watch_price": {
+        "name": "{name} cours"
+      },
+      "watch_change_day": {
+        "name": "{name} variation aujourd'hui"
+      },
+      "alert": {
+        "name": "{name} alerte {price}"
+      },
+      "alerts_active": {
+        "name": "Alertes actives"
+      }
+    }
+  }
+}

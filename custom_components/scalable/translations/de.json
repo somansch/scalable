@@ -66,10 +66,12 @@
       "settings": {
         "title": "Einstellungen",
         "data": {
-          "scan_interval": "Abfrageintervall"
+          "scan_interval": "Abfrageintervall",
+          "remove_stale": "Entfernen, was Scalable nicht mehr auflistet"
         },
         "data_description": {
-          "scan_interval": "Wie oft Scalable abgefragt wird, in Minuten. Jede Abfrage kostet eine Handvoll Aufrufe, dazu einen je Position und Watchlist-Eintrag."
+          "scan_interval": "Wie oft Scalable abgefragt wird, in Minuten. Jede Abfrage kostet eine Handvoll Aufrufe, dazu einen je Position und Watchlist-Eintrag.",
+          "remove_stale": "Verkaufte Positionen, von der Watchlist genommene Einträge und gelöschte Preisalarme werden mit der nächsten Aktualisierung aus Home Assistant entfernt - ihre Geräte, ihre Entitäten und der dazu aufgezeichnete Verlauf. Aus bleiben sie stehen und zeigen „nicht verfügbar“."
         }
       },
       "reauth": {

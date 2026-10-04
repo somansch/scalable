@@ -1,0 +1,214 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Scalable Capital",
+        "description": "Deze integratie leest je Scalable-portefeuille via **Scalable MCP**, de verbinding die Scalable aan AI-assistenten biedt. Schakel die eerst in de webversie van Scalable in, onder **Profiel → Beveiliging → Agentic Investing**, en zet het **toegangsniveau** op alleen-lezen, tenzij je ook via een assistent handelt: deze integratie leest alleen, maar het toegangsniveau is wat Scalable zelf afdwingt.\n\nMet verzenden wordt deze Home Assistant bij Scalable geregistreerd - alleen een naam en het retouradres worden verstuurd. Op het volgende scherm staat de link om in te loggen.{detail}",
+        "data": {
+          "name": "Naam"
+        },
+        "data_description": {
+          "name": "Hoe dit item heet. Elke entiteits-ID begint er ook mee, dus een tweede Scalable-account heeft een eigen naam nodig."
+        }
+      },
+      "sign_in": {
+        "title": "Inloggen bij Scalable",
+        "description": "1. Open [de inlogpagina van Scalable]({auth_url}), log in, bevestig de tweede factor en geef **Home Assistant** toestemming.\n2. Je browser komt daarna op een pagina die niet laadt - het adres begint met `http://127.0.0.1:47861`. Dat is de bedoeling.\n3. Kopieer het hele adres uit de adresbalk en plak het hieronder. Het werkt één keer en maar een paar minuten.{detail}",
+        "data": {
+          "redirect_url": "Adres uit de adresbalk"
+        }
+      },
+      "portfolio": {
+        "title": "Welke portefeuille?",
+        "description": "Je account heeft meer dan één portefeuille. Scalable toont ze alleen met hun ID. Elke portefeuille is een eigen item - voeg de integratie opnieuw toe voor een andere.",
+        "data": {
+          "portfolio_id": "Portefeuille"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Opnieuw inloggen bij Scalable",
+        "description": "Scalable accepteert deze aanmelding niet meer. Verzend om een nieuwe inloglink te krijgen.{detail}",
+        "data": {
+          "register_again": "Home Assistant opnieuw bij Scalable registreren"
+        },
+        "data_description": {
+          "register_again": "Alleen als de inlogpagina van Scalable meldt dat ze deze toepassing niet kent."
+        }
+      }
+    },
+    "error": {
+      "register_failed": "Scalable heeft de registratie geweigerd.",
+      "authorize_denied": "De toestemming is aan de kant van Scalable geweigerd.",
+      "state_mismatch": "Dat adres hoort bij een andere inlogpoging. Gebruik de link hierboven opnieuw.",
+      "no_code": "Dat adres bevat geen inlogcode. Kopieer het hele adres, inclusief alles na het vraagteken.",
+      "code_rejected": "Scalable heeft de code niet geaccepteerd - die werkt één keer en maar een paar minuten. Gebruik de link hierboven opnieuw.",
+      "cannot_connect": "Scalable is niet bereikbaar. Probeer het zo opnieuw.",
+      "name_used": "Een ander item gebruikt deze naam al.",
+      "name_invalid": "De naam heeft minstens één letter of cijfer nodig."
+    },
+    "abort": {
+      "already_configured": "Deze portefeuille is al ingesteld.",
+      "no_portfolio": "Het account heeft geen brokerportefeuille.",
+      "wrong_account": "Dat was een ander Scalable-account dan dat waar dit item bij hoort.",
+      "reauth_successful": "Opnieuw ingelogd."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Scalable Capital",
+        "description": "Wat wil je wijzigen?",
+        "menu_options": {
+          "settings": "Instellingen",
+          "reauth": "Opnieuw inloggen bij Scalable"
+        }
+      },
+      "settings": {
+        "title": "Instellingen",
+        "data": {
+          "scan_interval": "Update-interval",
+          "remove_stale": "Verwijderen wat Scalable niet meer toont"
+        },
+        "data_description": {
+          "scan_interval": "Hoe vaak Scalable wordt bevraagd, in minuten. Elke update kost een handvol verzoeken, plus één per positie en per item op de volglijst.",
+          "remove_stale": "Verkochte posities, van de watchlist gehaalde items en verwijderde prijsalarmen worden bij de volgende update uit Home Assistant verwijderd - hun apparaten, hun entiteiten en de vastgelegde geschiedenis. Uit blijven ze staan en zijn ze niet beschikbaar."
+        }
+      },
+      "reauth": {
+        "title": "Opnieuw inloggen bij Scalable",
+        "description": "Handig na het wijzigen van het toegangsniveau bij Scalable, of wanneer waarden niet meer worden bijgewerkt. Verzend om een nieuwe inloglink te krijgen.{detail}",
+        "data": {
+          "register_again": "Home Assistant opnieuw bij Scalable registreren"
+        },
+        "data_description": {
+          "register_again": "Alleen als de inlogpagina van Scalable meldt dat ze deze toepassing niet kent."
+        }
+      },
+      "sign_in": {
+        "title": "Inloggen bij Scalable",
+        "description": "1. Open [de inlogpagina van Scalable]({auth_url}), log in, bevestig de tweede factor en geef **Home Assistant** toestemming.\n2. Je browser komt daarna op een pagina die niet laadt - het adres begint met `http://127.0.0.1:47861`. Dat is de bedoeling.\n3. Kopieer het hele adres uit de adresbalk en plak het hieronder. Het werkt één keer en maar een paar minuten.{detail}",
+        "data": {
+          "redirect_url": "Adres uit de adresbalk"
+        }
+      }
+    },
+    "error": {
+      "register_failed": "Scalable heeft de registratie geweigerd.",
+      "authorize_denied": "De toestemming is aan de kant van Scalable geweigerd.",
+      "state_mismatch": "Dat adres hoort bij een andere inlogpoging. Gebruik de link hierboven opnieuw.",
+      "no_code": "Dat adres bevat geen inlogcode. Kopieer het hele adres, inclusief alles na het vraagteken.",
+      "code_rejected": "Scalable heeft de code niet geaccepteerd - die werkt één keer en maar een paar minuten. Gebruik de link hierboven opnieuw.",
+      "cannot_connect": "Scalable is niet bereikbaar. Probeer het zo opnieuw."
+    },
+    "abort": {
+      "wrong_account": "Dat was een ander Scalable-account dan dat waar dit item bij hoort.",
+      "reauth_successful": "Opnieuw ingelogd."
+    }
+  },
+  "config_subentries": {
+    "group": {
+      "initiate_flow": {
+        "user": "Groep toevoegen"
+      },
+      "entry_type": "Groep",
+      "step": {}
+    }
+  },
+  "entity": {
+    "sensor": {
+      "total": {
+        "name": "Totale waarde"
+      },
+      "cash": {
+        "name": "Saldo"
+      },
+      "securities": {
+        "name": "Effecten"
+      },
+      "crypto": {
+        "name": "Crypto"
+      },
+      "change_day": {
+        "name": "Verandering vandaag"
+      },
+      "change_week": {
+        "name": "Verandering 1 week"
+      },
+      "change_month": {
+        "name": "Verandering 1 maand"
+      },
+      "change_ytd": {
+        "name": "Verandering sinds begin van het jaar"
+      },
+      "change_year": {
+        "name": "Verandering 1 jaar"
+      },
+      "change_since_buy": {
+        "name": "Verandering sinds aankoop"
+      },
+      "invested": {
+        "name": "Aankoopwaarde"
+      },
+      "return": {
+        "name": "Ongerealiseerd rendement"
+      },
+      "return_pct": {
+        "name": "Ongerealiseerd rendement %"
+      },
+      "type_stock": {
+        "name": "Aandelen"
+      },
+      "type_etf": {
+        "name": "ETF's"
+      },
+      "type_etc": {
+        "name": "Grondstoffen (ETC's)"
+      },
+      "type_etn": {
+        "name": "ETN's"
+      },
+      "type_etp": {
+        "name": "ETP's"
+      },
+      "type_fund": {
+        "name": "Fondsen"
+      },
+      "type_bond": {
+        "name": "Obligaties"
+      },
+      "type_derivative": {
+        "name": "Derivaten"
+      },
+      "type_crypto": {
+        "name": "Crypto"
+      },
+      "type_other": {
+        "name": "Overige effecten"
+      },
+      "value": {
+        "name": "Waarde"
+      },
+      "price": {
+        "name": "Koers"
+      },
+      "quantity": {
+        "name": "Aantal"
+      },
+      "open_orders": {
+        "name": "Openstaande orders"
+      },
+      "watch_price": {
+        "name": "{name} koers"
+      },
+      "watch_change_day": {
+        "name": "{name} verandering vandaag"
+      },
+      "alert": {
+        "name": "{name} alarm {price}"
+      },
+      "alerts_active": {
+        "name": "Actieve alarmen"
+      }
+    }
+  }
+}

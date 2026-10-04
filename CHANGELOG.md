@@ -2,6 +2,25 @@
 
 All notable changes to this integration are documented here.
 
+## v1.0.0
+
+### Added
+- **A dashboard card that reads like Scalable's web app.** It ships with the integration - nothing to copy, no resource to add: **Add card → Scalable Capital**. Its tabs are the web app's: **Overview** with the total value, its change over 1D, 1W, 1M, YTD, 1Y or since purchase, the cash balance, the positions and the watchlist, each entry with its value, open orders, a small curve, the change and the price; **Savings plans**; **Price alerts** with each alert's distance to the current price; **Insights** with the portfolio's return or value as a curve; and **Transactions** with a search and two filters.
+- **A page per security**, opened with a click on an entry: the price and its change, the sell and the buy price, a bell that leads to the security's price alerts, a moon while trading is closed, a chart from one day to the maximum that reads off the price under the pointer and marks the current price at its end, **Your position** - value, quantity, purchase value, average price, unrealised return - and the security's own transactions.
+- **A page per transaction**: ordered quantity, limit and stop price with their distance to the current price, validity, trading venue, execution price, amount, and the history of the order.
+- **A card editor** in two panels, the way the Annuals and Blitzer.de cards have it: **Settings** - which account, title, tabs, the tab and period the card opens on, what the overview and a security's page show, grouping by kind of security, order, what a list entry is made of - and **Layout** - card background, the colours for gain and loss, colour and font of every text, chart height, line width, fill, reference line and axis labels. Only what is changed is written to the dashboard.
+- **French, Italian, Spanish and Dutch.** The setup, the Configure dialog, every entity name and the card with its editor are translated; Home Assistant picks the language it is set to, and falls back to English for any other.
+- **Refresh now**: a small symbol beside the card's title reads Scalable again right away.
+- **Remove what Scalable no longer lists**, a switch under **Configure → Settings**. On, a sold position, an entry taken off the watchlist and a deleted price alert are removed from Home Assistant with the next update - their devices, their entities and the history recorded for them. Off by default: they stay and read unavailable, as before.
+
+### Changed
+- **Three more of Scalable's tools are read, eleven in all**: a security's price chart, a transaction's details and the savings plans - what the card shows. All three are checked like the others: Scalable itself has to declare them read-only, or they are not called.
+- **The transaction history is read on every update**, not only when a position's quantity changed: the card lists it. The open orders and the purchase values come out of the same answer.
+
+### Good to know
+- The card only shows. It cannot buy, sell, cancel an order or set an alert.
+- Scalable does not hand out logos or the portfolio's history. An entry gets a round symbol with its first letter, and the portfolio's own curve is drawn from what Home Assistant has recorded - it starts on the day the integration was set up.
+
 ## v0.1.0
 
 The first version.

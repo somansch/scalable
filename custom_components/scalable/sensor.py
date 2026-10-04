@@ -21,13 +21,13 @@ from homeassistant.components.sensor import (
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import PERCENTAGE
 from homeassistant.core import HomeAssistant, callback
-from homeassistant.helpers import device_registry as dr
+from homeassistant.helpers import device_registry as dr, entity_registry as er
 from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from homeassistant.util import slugify
 
-from .const import DOMAIN
+from .const import CONF_REMOVE_STALE, DOMAIN
 from .coordinator import Alert, Portfolio, Position, Quote, ScalableCoordinator, WatchItem
 from .groups import GROUP_GENERAL, GROUP_OTHER, async_group, async_place_device, type_key
 
@@ -249,8 +249,59 @@ async def async_setup_entry(
         if in_general:
             async_add_entities(in_general, config_subentry_id=general.subentry_id)
 
-    _add_new()
-    entry.async_on_unload(coordinator.async_add_listener(_add_new))
+    @callback
+    def _remove_stale() -> None:
+        """Take out what Scalable no longer lists, where the options ask for it.
+
+        A sold position goes with its device; a watchlist entry, a price alert
+        and the value of a kind of security nobody holds any more go as
+        entities, and the watchlist's and the alerts' device with the last of
+        them. Read off the registries rather than off what this run has added,
+        so that what an earlier run left behind goes as well. Whatever comes
+        back - a position bought again - is added like a new one.
+        """
+        data = coordinator.data
+        prefix = coordinator.unique_prefix
+        wanted = (
+            {f"{prefix}_watch_{isin}_{cls._key}" for isin in data.watchlist for cls in WATCH_SENSORS}
+            | {f"{prefix}_alert_{alert_id}" for alert_id in data.alerts}
+            | {f"{prefix}_type_{type_key(p.security_type)}" for p in data.positions.values()}
+        )
+        entity_registry = er.async_get(hass)
+        for entity in er.async_entries_for_config_entry(entity_registry, entry.entry_id):
+            unique_id = entity.unique_id
+            listed = unique_id.startswith(
+                (f"{prefix}_watch_", f"{prefix}_alert_", f"{prefix}_type_")
+            )
+            if listed and unique_id not in wanted:
+                entity_registry.async_remove(entity.entity_id)
+
+        kept = {portfolio_id} | {f"{portfolio_id}_{isin}" for isin in data.positions}
+        if data.watchlist:
+            kept.add(f"{portfolio_id}_watchlist")
+        if data.alerts:
+            kept.add(f"{portfolio_id}_alerts")
+        device_registry = dr.async_get(hass)
+        for device in dr.async_entries_for_config_entry(device_registry, entry.entry_id):
+            ours = {identifier for domain, identifier in device.identifiers if domain == DOMAIN}
+            if ours and not ours & kept:
+                device_registry.async_remove_device(device.id)
+
+        # So that whatever returns is added again rather than taken for known.
+        for isin in [isin for isin in filed if isin not in data.positions]:
+            del filed[isin]
+        watched.intersection_update(data.watchlist)
+        alerts.intersection_update(data.alerts)
+        types.intersection_update(type_key(p.security_type) for p in data.positions.values())
+
+    @callback
+    def _update() -> None:
+        if entry.options.get(CONF_REMOVE_STALE, False):
+            _remove_stale()
+        _add_new()
+
+    _update()
+    entry.async_on_unload(coordinator.async_add_listener(_update))
 
 
 class _ScalableSensor(CoordinatorEntity[ScalableCoordinator], SensorEntity):

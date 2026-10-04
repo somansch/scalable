@@ -1,0 +1,214 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Scalable Capital",
+        "description": "Questa integrazione legge il tuo portafoglio Scalable tramite **Scalable MCP**, la connessione che Scalable offre agli assistenti IA. Attivala prima nella versione web di Scalable, in **Profilo → Sicurezza → Agentic Investing**, e imposta il **livello di accesso** su sola lettura, a meno che tu non operi anche tramite un assistente: questa integrazione si limita a leggere, ma è il livello di accesso ciò che Scalable applica dal suo lato.\n\nInviando, questo Home Assistant viene registrato presso Scalable - vengono trasmessi solo un nome e l'indirizzo di ritorno. La schermata successiva contiene il link di accesso.{detail}",
+        "data": {
+          "name": "Nome"
+        },
+        "data_description": {
+          "name": "Il nome di questa voce. Con esso inizia anche ogni ID entità, quindi un secondo account Scalable ha bisogno di un nome proprio."
+        }
+      },
+      "sign_in": {
+        "title": "Accedi a Scalable",
+        "description": "1. Apri [la pagina di accesso di Scalable]({auth_url}), accedi, conferma il secondo fattore e autorizza **Home Assistant**.\n2. Il browser arriva poi su una pagina che non si carica - il suo indirizzo inizia con `http://127.0.0.1:47861`. È previsto.\n3. Copia l'intero indirizzo dalla barra degli indirizzi e incollalo qui sotto. Funziona una sola volta e solo per pochi minuti.{detail}",
+        "data": {
+          "redirect_url": "Indirizzo dalla barra degli indirizzi"
+        }
+      },
+      "portfolio": {
+        "title": "Quale portafoglio?",
+        "description": "Il tuo account ha più di un portafoglio. Scalable li elenca solo per ID. Ogni portafoglio è una voce a sé - aggiungi di nuovo l'integrazione per un altro.",
+        "data": {
+          "portfolio_id": "Portafoglio"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Accedi di nuovo a Scalable",
+        "description": "Scalable non accetta più questo accesso. Invia per ottenere un nuovo link di accesso.{detail}",
+        "data": {
+          "register_again": "Registra di nuovo Home Assistant presso Scalable"
+        },
+        "data_description": {
+          "register_again": "Solo se la pagina di accesso di Scalable indica di non conoscere questa applicazione."
+        }
+      }
+    },
+    "error": {
+      "register_failed": "Scalable ha rifiutato la registrazione.",
+      "authorize_denied": "L'autorizzazione è stata negata dal lato di Scalable.",
+      "state_mismatch": "Questo indirizzo appartiene a un altro tentativo di accesso. Usa di nuovo il link qui sopra.",
+      "no_code": "Questo indirizzo non contiene un codice di accesso. Copia l'intero indirizzo, compreso tutto ciò che segue il punto interrogativo.",
+      "code_rejected": "Scalable non ha accettato il codice - funziona una sola volta e solo per pochi minuti. Usa di nuovo il link qui sopra.",
+      "cannot_connect": "Impossibile raggiungere Scalable. Riprova tra poco.",
+      "name_used": "Un'altra voce usa già questo nome.",
+      "name_invalid": "Il nome deve contenere almeno una lettera o una cifra."
+    },
+    "abort": {
+      "already_configured": "Questo portafoglio è già configurato.",
+      "no_portfolio": "L'account non ha un portafoglio broker.",
+      "wrong_account": "Era un account Scalable diverso da quello a cui appartiene questa voce.",
+      "reauth_successful": "Accesso ripetuto con successo."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Scalable Capital",
+        "description": "Che cosa vuoi modificare?",
+        "menu_options": {
+          "settings": "Impostazioni",
+          "reauth": "Accedi di nuovo a Scalable"
+        }
+      },
+      "settings": {
+        "title": "Impostazioni",
+        "data": {
+          "scan_interval": "Intervallo di aggiornamento",
+          "remove_stale": "Rimuovi ciò che Scalable non elenca più"
+        },
+        "data_description": {
+          "scan_interval": "Ogni quanto viene interrogato Scalable, in minuti. Ogni aggiornamento costa alcune richieste, più una per posizione e per voce della watchlist.",
+          "remove_stale": "Le posizioni vendute, le voci tolte dalla watchlist e gli avvisi di prezzo eliminati vengono rimossi da Home Assistant al prossimo aggiornamento - i loro dispositivi, le loro entità e la cronologia registrata. Se disattivato, restano e risultano non disponibili."
+        }
+      },
+      "reauth": {
+        "title": "Accedi di nuovo a Scalable",
+        "description": "Utile dopo aver cambiato il livello di accesso in Scalable, o quando i valori non si aggiornano più. Invia per ottenere un nuovo link di accesso.{detail}",
+        "data": {
+          "register_again": "Registra di nuovo Home Assistant presso Scalable"
+        },
+        "data_description": {
+          "register_again": "Solo se la pagina di accesso di Scalable indica di non conoscere questa applicazione."
+        }
+      },
+      "sign_in": {
+        "title": "Accedi a Scalable",
+        "description": "1. Apri [la pagina di accesso di Scalable]({auth_url}), accedi, conferma il secondo fattore e autorizza **Home Assistant**.\n2. Il browser arriva poi su una pagina che non si carica - il suo indirizzo inizia con `http://127.0.0.1:47861`. È previsto.\n3. Copia l'intero indirizzo dalla barra degli indirizzi e incollalo qui sotto. Funziona una sola volta e solo per pochi minuti.{detail}",
+        "data": {
+          "redirect_url": "Indirizzo dalla barra degli indirizzi"
+        }
+      }
+    },
+    "error": {
+      "register_failed": "Scalable ha rifiutato la registrazione.",
+      "authorize_denied": "L'autorizzazione è stata negata dal lato di Scalable.",
+      "state_mismatch": "Questo indirizzo appartiene a un altro tentativo di accesso. Usa di nuovo il link qui sopra.",
+      "no_code": "Questo indirizzo non contiene un codice di accesso. Copia l'intero indirizzo, compreso tutto ciò che segue il punto interrogativo.",
+      "code_rejected": "Scalable non ha accettato il codice - funziona una sola volta e solo per pochi minuti. Usa di nuovo il link qui sopra.",
+      "cannot_connect": "Impossibile raggiungere Scalable. Riprova tra poco."
+    },
+    "abort": {
+      "wrong_account": "Era un account Scalable diverso da quello a cui appartiene questa voce.",
+      "reauth_successful": "Accesso ripetuto con successo."
+    }
+  },
+  "config_subentries": {
+    "group": {
+      "initiate_flow": {
+        "user": "Aggiungi gruppo"
+      },
+      "entry_type": "Gruppo",
+      "step": {}
+    }
+  },
+  "entity": {
+    "sensor": {
+      "total": {
+        "name": "Valore totale"
+      },
+      "cash": {
+        "name": "Liquidità"
+      },
+      "securities": {
+        "name": "Titoli"
+      },
+      "crypto": {
+        "name": "Cripto"
+      },
+      "change_day": {
+        "name": "Variazione oggi"
+      },
+      "change_week": {
+        "name": "Variazione 1 settimana"
+      },
+      "change_month": {
+        "name": "Variazione 1 mese"
+      },
+      "change_ytd": {
+        "name": "Variazione da inizio anno"
+      },
+      "change_year": {
+        "name": "Variazione 1 anno"
+      },
+      "change_since_buy": {
+        "name": "Variazione dall'acquisto"
+      },
+      "invested": {
+        "name": "Valore d'acquisto"
+      },
+      "return": {
+        "name": "Rendimento non realizzato"
+      },
+      "return_pct": {
+        "name": "Rendimento non realizzato %"
+      },
+      "type_stock": {
+        "name": "Azioni"
+      },
+      "type_etf": {
+        "name": "ETF"
+      },
+      "type_etc": {
+        "name": "Materie prime (ETC)"
+      },
+      "type_etn": {
+        "name": "ETN"
+      },
+      "type_etp": {
+        "name": "ETP"
+      },
+      "type_fund": {
+        "name": "Fondi"
+      },
+      "type_bond": {
+        "name": "Obbligazioni"
+      },
+      "type_derivative": {
+        "name": "Derivati"
+      },
+      "type_crypto": {
+        "name": "Cripto"
+      },
+      "type_other": {
+        "name": "Altri titoli"
+      },
+      "value": {
+        "name": "Valore"
+      },
+      "price": {
+        "name": "Prezzo"
+      },
+      "quantity": {
+        "name": "Quantità"
+      },
+      "open_orders": {
+        "name": "Ordini aperti"
+      },
+      "watch_price": {
+        "name": "{name} prezzo"
+      },
+      "watch_change_day": {
+        "name": "{name} variazione oggi"
+      },
+      "alert": {
+        "name": "{name} avviso {price}"
+      },
+      "alerts_active": {
+        "name": "Avvisi attivi"
+      }
+    }
+  }
+}
