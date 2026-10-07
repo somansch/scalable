@@ -163,7 +163,7 @@ Beside the title, a small symbol reads Scalable again right away instead of wait
 
 The total value with its change over the chosen period - **1D, 1W, 1M, YTD, 1Y, Since purchase** - and the portfolio's curve beside it; a click on the curve opens [Insights](#insights). Below, the cash balance, the positions under a heading per kind of security - Stocks, ETFs, … - the crypto value and the watchlist.
 
-Every entry carries its value, its open orders, a small curve, the change and the price. Under *Since purchase* a position shows its return in percent and euros instead. A section folds with a click on its heading.
+Every entry carries its value, its open orders - the clock is a link to them - a small curve, the change and the price. Under *Since purchase* a position shows its return in percent and euros instead. A section folds with a click on its heading.
 
 <img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-watchlist.png" alt="The lower part of the overview: the crypto value, and the watchlist with a curve, the change and the price per entry" width="60%">
 
@@ -191,7 +191,7 @@ While trading is closed, a moon stands in front of the price, and the one-day vi
 
 ### Transactions
 
-Open orders first, the rest under their day, with a search and two filters, **Type** and **Status**. Deposits and withdrawals carry their own symbol, the amount in green or red.
+Open orders first, the rest under their day, with a search and two filters, **Type** and **Status**. Deposits and withdrawals carry their own symbol, the amount in green or red; a sale's proceeds are green as well.
 
 A click opens the transaction's own page: ordered and executed quantity, limit and stop price with their distance to the current price, validity, trading venue, execution price, amount, the history of the order and the reference Scalable gives it.
 

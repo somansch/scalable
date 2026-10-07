@@ -217,7 +217,7 @@
       edRowValue: "Value of the position",
       edRowValueHelp: "Under the name: what the position is worth.",
       edRowOrders: "Open orders",
-      edRowOrdersHelp: "The small clock with the number of orders that have not run yet.",
+      edRowOrdersHelp: "The small clock with the number of orders that have not run yet. A click opens the order - or, with several, the Transactions tab filtered down to them.",
       edRowSparkline: "Curve",
       edRowChange: "Change",
       edRowPrice: "Price",
@@ -537,7 +537,7 @@
       edRowValue: "Wert der Position",
       edRowValueHelp: "Unter dem Namen: was die Position wert ist.",
       edRowOrders: "Offene Orders",
-      edRowOrdersHelp: "Die kleine Uhr mit der Zahl der Orders, die noch nicht ausgeführt sind.",
+      edRowOrdersHelp: "Die kleine Uhr mit der Zahl der Orders, die noch nicht ausgeführt sind. Ein Klick öffnet die Order - bei mehreren den Tab Transaktionen, gefiltert auf sie.",
       edRowSparkline: "Kurve",
       edRowChange: "Veränderung",
       edRowPrice: "Kurs",
@@ -857,7 +857,7 @@
       edRowValue: "Valeur de la position",
       edRowValueHelp: "Sous le nom : ce que vaut la position.",
       edRowOrders: "Ordres en cours",
-      edRowOrdersHelp: "La petite horloge avec le nombre d'ordres pas encore exécutés.",
+      edRowOrdersHelp: "La petite horloge avec le nombre d'ordres pas encore exécutés. Un clic ouvre l'ordre - ou, s'il y en a plusieurs, l'onglet Transactions filtré sur eux.",
       edRowSparkline: "Courbe",
       edRowChange: "Variation",
       edRowPrice: "Cours",
@@ -1177,7 +1177,7 @@
       edRowValue: "Valore della posizione",
       edRowValueHelp: "Sotto il nome: quanto vale la posizione.",
       edRowOrders: "Ordini aperti",
-      edRowOrdersHelp: "Il piccolo orologio con il numero di ordini non ancora eseguiti.",
+      edRowOrdersHelp: "Il piccolo orologio con il numero di ordini non ancora eseguiti. Un clic apre l'ordine - o, se sono più di uno, la scheda Transazioni filtrata su di essi.",
       edRowSparkline: "Curva",
       edRowChange: "Variazione",
       edRowPrice: "Prezzo",
@@ -1497,7 +1497,7 @@
       edRowValue: "Valor de la posición",
       edRowValueHelp: "Bajo el nombre: lo que vale la posición.",
       edRowOrders: "Órdenes abiertas",
-      edRowOrdersHelp: "El pequeño reloj con el número de órdenes que aún no se han ejecutado.",
+      edRowOrdersHelp: "El pequeño reloj con el número de órdenes que aún no se han ejecutado. Un clic abre la orden - o, si hay varias, la pestaña Transacciones filtrada a ellas.",
       edRowSparkline: "Curva",
       edRowChange: "Variación",
       edRowPrice: "Precio",
@@ -1817,7 +1817,7 @@
       edRowValue: "Waarde van de positie",
       edRowValueHelp: "Onder de naam: wat de positie waard is.",
       edRowOrders: "Open orders",
-      edRowOrdersHelp: "Het klokje met het aantal orders dat nog niet is uitgevoerd.",
+      edRowOrdersHelp: "Het klokje met het aantal orders dat nog niet is uitgevoerd. Een klik opent de order - of, bij meerdere, het tabblad Transacties, gefilterd op die orders.",
       edRowSparkline: "Curve",
       edRowChange: "Verandering",
       edRowPrice: "Koers",
@@ -2430,6 +2430,10 @@
       info.isin = trade.isin;
       info.units = toNumber(trade.quantity);
       info.amount = toNumber(trade.amount);
+      // The web app writes the proceeds of a sale in the gain colour and a
+      // purchase in plain text - money in, like a deposit below; a purchase
+      // is not a loss, so it gets no colour of its own.
+      if (trade.side === "SELL") info.tone = "gain";
     } else if (tx.kind === "cash" && tx.cash) {
       const key = CASH_LABELS[tx.cash.transactionType];
       info.kind = key ? str[key] : plain(tx.cash.transactionType);
@@ -2773,14 +2777,22 @@
       );
     }
 
+    // The orders that have not run yet, by the security they are for.
+    _openOrderList() {
+      return ((this._data && this._data.transactions) || []).filter(
+        (tx) =>
+          tx.kind === "security" &&
+          tx.security &&
+          tx.security.isin &&
+          !tx.isCancellation &&
+          TX_OPEN.includes(tx.status)
+      );
+    }
+
     _openOrders() {
       const open = {};
-      for (const tx of (this._data && this._data.transactions) || []) {
-        const isin = tx.security && tx.security.isin;
-        if (tx.kind !== "security" || !isin || tx.isCancellation || !TX_OPEN.includes(tx.status)) {
-          continue;
-        }
-        open[isin] = (open[isin] || 0) + 1;
+      for (const tx of this._openOrderList()) {
+        open[tx.security.isin] = (open[tx.security.isin] || 0) + 1;
       }
       return open;
     }
@@ -3038,10 +3050,12 @@
           const points = this._history("return", period.key, totals.gain);
           if (points && points.length > 1) {
             const values = points.map((point) => point.v);
-            spark = chartSvg(values, {
-              height: 40,
-              reference: period.key === "since" ? 0 : values[0],
-            });
+            // Coloured against the first point drawn, for every period: the
+            // curve is the return since the history began at install, not
+            // since purchase, so measured against the return's zero it was
+            // green however far it had fallen. The zero line belongs to
+            // Insights, where it is drawn.
+            spark = chartSvg(values, { height: 40, reference: values[0] });
           }
         }
         html +=
@@ -3162,7 +3176,7 @@
               ? `<span class="row-value" style="${elementStyle(config, "row_value")}">` +
                 `${escapeHtml(money(hass, item.value))}</span>`
               : "") +
-            (config.show_row_orders && orders ? this._badgeHtml(orders) : "") +
+            (config.show_row_orders && orders ? this._badgeHtml(orders, item.isin) : "") +
             `</div>`
           : "";
       return (
@@ -3185,9 +3199,15 @@
       );
     }
 
-    _badgeHtml(count) {
+    // The clock with the number of open orders - a link to them (see
+    // "orders" in _onClick). Inside a row, which is a link of its own, the
+    // badge is found first on the click's path, so the row does not open.
+    _badgeHtml(count, isin) {
+      const str = t(this._hass);
       return (
-        `<span class="badge" style="${elementStyle(this._config, "row_badge")}">` +
+        `<span class="badge link" data-action="orders" data-isin="${escapeHtml(isin)}"` +
+        ` tabindex="0" role="button" title="${escapeHtml(str.edRowOrders)}"` +
+        ` style="${elementStyle(this._config, "row_badge")}">` +
         `<ha-icon icon="mdi:clock-outline"></ha-icon>${count}</span>`
       );
     }
@@ -3343,7 +3363,7 @@
         `<div class="d-name" style="${elementStyle(config, "row_name")}">${escapeHtml(item.name)}</div>` +
         `<div class="d-sub">` +
         (held ? `<span class="row-value">${escapeHtml(money(hass, item.value))}</span>` : "") +
-        (orders ? this._badgeHtml(orders) : "") +
+        (orders ? this._badgeHtml(orders, item.isin) : "") +
         `<span class="isin">ISIN <b>${escapeHtml(item.isin)}</b></span>` +
         `</div></div>` +
         (alerts.length && config.show_tab_alerts
@@ -3803,6 +3823,32 @@
         case "tx":
           this._tx = el.dataset.id;
           break;
+        case "orders": {
+          // The clock on a position: one open order opens its page, behind
+          // the security's own so that Back leads there; several open the
+          // Transactions tab filtered down to them - or, without that tab,
+          // the security's page, which lists them at the top.
+          const isin = el.dataset.isin;
+          const orders = this._openOrderList().filter((tx) => tx.security.isin === isin);
+          if (orders.length === 1) {
+            if (this._detail !== isin) {
+              this._detail = isin;
+              this._detailPeriod = this._period === "since" ? "max" : this._period;
+            }
+            this._tx = orders[0].id;
+          } else if (this._config.show_tab_transactions) {
+            this._tab = "transactions";
+            this._detail = null;
+            this._tx = null;
+            this._txType = "";
+            this._txStatus = "open";
+            this._txSearch = this._item(isin).name || isin;
+          } else {
+            this._detail = isin;
+            this._detailPeriod = this._period === "since" ? "max" : this._period;
+          }
+          break;
+        }
         case "alerts":
           // From a security's page to its alerts.
           this._tab = "alerts";
@@ -5863,6 +5909,7 @@
              border-radius: 5px; font-size: 0.85em; color: var(--sc-warn);
              background: rgba(232, 197, 107, 0.16); }
     .badge ha-icon { --mdc-icon-size: 13px; }
+    .badge.link { cursor: pointer; }
     .row-spark { flex: none; width: var(--sc-spark-width, 90px); height: 30px; }
     .row-change { flex: none; min-width: 72px; text-align: right; font-size: 1.1em;
                   white-space: nowrap; color: var(--secondary-text-color); }

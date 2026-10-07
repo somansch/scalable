@@ -2,6 +2,17 @@
 
 All notable changes to this integration are documented here.
 
+## v1.0.1
+
+### Added
+- **The open-orders clock is a link.** The small clock with a count on a position - in the overview and on the security's page - opens the order it stands for: with one open order, that order's page, with Back leading to the security; with several, the Transactions tab filtered down to the open orders of that security, or the security's page where that tab is switched off. Keyboard too: Tab to it, Enter or Space.
+
+### Fixed
+- **The overview curve under Since purchase is coloured by its course.** It was green whenever the return since purchase was positive, even while it fell - measured against the return's zero line, which lies far below a curve that only begins at install. Like every other period it is now green above the point it starts from and in the loss colour below, so a falling curve reads as falling; the figure beside it is still the return since purchase.
+
+### Changed
+- **A sale's proceeds read in the gain colour.** In the transactions list - the Transactions tab and a security's own transactions - the amount of a sell order is written in the gain colour, the way the web app writes it; a purchase stays in plain text, as before, since a purchase is not a loss. Deposits and withdrawals already had their colours.
+
 ## v1.0.0
 
 ### Added

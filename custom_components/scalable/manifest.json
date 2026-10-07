@@ -10,5 +10,5 @@
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/somansch/scalable/issues",
   "requirements": ["mcp>=1.26.0"],
-  "version": "1.0.0"
+  "version": "1.0.1"
 }
