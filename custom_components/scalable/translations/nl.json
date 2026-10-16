@@ -71,7 +71,7 @@
         },
         "data_description": {
           "scan_interval": "Hoe vaak Scalable wordt bevraagd, in minuten. Elke update kost een handvol verzoeken, plus één per positie en per item op de volglijst.",
-          "remove_stale": "Verkochte posities, van de watchlist gehaalde items en verwijderde prijsalarmen worden bij de volgende update uit Home Assistant verwijderd - hun apparaten, hun entiteiten en de vastgelegde geschiedenis. Uit blijven ze staan en zijn ze niet beschikbaar."
+          "remove_stale": "Verkochte posities, van de watchlist gehaalde items en verwijderde prijsalarmen worden bij de volgende update uit Home Assistant verwijderd - hun apparaten, hun entiteiten, de vastgelegde geschiedenis en hun langetermijnstatistieken. Uit blijven ze staan en zijn ze niet beschikbaar."
         }
       },
       "reauth": {

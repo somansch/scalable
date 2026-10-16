@@ -1,7 +1,7 @@
 {
   "domain": "scalable",
   "name": "Scalable Capital",
-  "after_dependencies": ["lovelace"],
+  "after_dependencies": ["lovelace", "recorder"],
   "codeowners": ["@somansch"],
   "config_flow": true,
   "dependencies": ["frontend", "http", "websocket_api"],
@@ -10,5 +10,5 @@
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/somansch/scalable/issues",
   "requirements": ["mcp>=1.26.0"],
-  "version": "1.0.1"
+  "version": "1.0.2"
 }

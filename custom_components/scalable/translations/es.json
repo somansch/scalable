@@ -71,7 +71,7 @@
         },
         "data_description": {
           "scan_interval": "Cada cuánto se consulta a Scalable, en minutos. Cada actualización cuesta unas pocas peticiones, más una por posición y por entrada de la lista de seguimiento.",
-          "remove_stale": "Las posiciones vendidas, las entradas quitadas de la watchlist y las alertas de precio borradas se eliminan de Home Assistant con la próxima actualización: sus dispositivos, sus entidades y el historial registrado. Desactivado, permanecen y aparecen como no disponibles."
+          "remove_stale": "Las posiciones vendidas, las entradas quitadas de la watchlist y las alertas de precio borradas se eliminan de Home Assistant con la próxima actualización: sus dispositivos, sus entidades, el historial registrado y sus estadísticas a largo plazo. Desactivado, permanecen y aparecen como no disponibles."
         }
       },
       "reauth": {

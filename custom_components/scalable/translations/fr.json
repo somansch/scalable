@@ -71,7 +71,7 @@
         },
         "data_description": {
           "scan_interval": "La fréquence à laquelle Scalable est interrogé, en minutes. Chaque mise à jour coûte quelques requêtes, plus une par position et par entrée de la liste de suivi.",
-          "remove_stale": "Les positions vendues, les entrées retirées de la watchlist et les alertes de prix supprimées sont retirées de Home Assistant à la prochaine mise à jour - leurs appareils, leurs entités et l'historique enregistré. Désactivé, elles restent et s'affichent comme indisponibles."
+          "remove_stale": "Les positions vendues, les entrées retirées de la watchlist et les alertes de prix supprimées sont retirées de Home Assistant à la prochaine mise à jour - leurs appareils, leurs entités, l'historique enregistré et leurs statistiques à long terme. Désactivé, elles restent et s'affichent comme indisponibles."
         }
       },
       "reauth": {

@@ -2,6 +2,11 @@
 
 All notable changes to this integration are documented here.
 
+## v1.0.2
+
+### Fixed
+- **Remove what Scalable no longer lists takes the recorder's data with it.** The switch promised to remove "the history recorded" for a sold position, a watchlist entry taken off or a deleted price alert, and removed the devices and entities only; what the recorder had kept stayed - the states until the usual purge, the long-term statistics for good, as orphans under *Developer tools → Statistics*. Both go now, through the recorder itself: the states purged, the statistics cleared.
+
 ## v1.0.1
 
 ### Added

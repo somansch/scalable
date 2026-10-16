@@ -24,6 +24,7 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers import device_registry as dr, entity_registry as er
 from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
+from homeassistant.helpers.recorder import get_instance as get_recorder
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from homeassistant.util import slugify
 
@@ -259,6 +260,12 @@ async def async_setup_entry(
         them. Read off the registries rather than off what this run has added,
         so that what an earlier run left behind goes as well. Whatever comes
         back - a position bought again - is added like a new one.
+
+        What the recorder kept of them goes too: the states, through the
+        recorder's own purge, and the long-term statistics, which a removed
+        entity would otherwise leave behind for good - its statistic id is
+        its entity id, so they are gathered here before the registries
+        forget them.
         """
         data = coordinator.data
         prefix = coordinator.unique_prefix
@@ -268,12 +275,14 @@ async def async_setup_entry(
             | {f"{prefix}_type_{type_key(p.security_type)}" for p in data.positions.values()}
         )
         entity_registry = er.async_get(hass)
+        recorded: list[str] = []
         for entity in er.async_entries_for_config_entry(entity_registry, entry.entry_id):
             unique_id = entity.unique_id
             listed = unique_id.startswith(
                 (f"{prefix}_watch_", f"{prefix}_alert_", f"{prefix}_type_")
             )
             if listed and unique_id not in wanted:
+                recorded.append(entity.entity_id)
                 entity_registry.async_remove(entity.entity_id)
 
         kept = {portfolio_id} | {f"{portfolio_id}_{isin}" for isin in data.positions}
@@ -285,7 +294,25 @@ async def async_setup_entry(
         for device in dr.async_entries_for_config_entry(device_registry, entry.entry_id):
             ours = {identifier for domain, identifier in device.identifiers if domain == DOMAIN}
             if ours and not ours & kept:
+                recorded.extend(
+                    e.entity_id
+                    for e in er.async_entries_for_device(
+                        entity_registry, device.id, include_disabled_entities=True
+                    )
+                )
                 device_registry.async_remove_device(device.id)
+
+        if recorded and "recorder" in hass.config.components:
+            # Both are queued on the recorder's own thread; nothing here
+            # waits for them. The statistics by id, the way the recorder's
+            # own "clear statistics" does it; the states through the
+            # service, which is the one public way to purge an entity.
+            get_recorder(hass).async_clear_statistics(recorded)
+            hass.async_create_task(
+                hass.services.async_call(
+                    "recorder", "purge_entities", {"entity_id": recorded}
+                )
+            )
 
         # So that whatever returns is added again rather than taken for known.
         for isin in [isin for isin in filed if isin not in data.positions]:

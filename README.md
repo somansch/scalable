@@ -88,7 +88,7 @@ An account with more than one portfolio is asked which one; each portfolio is an
 
 The gear on the integration page:
 
-- **Settings** - the update interval in minutes, 5 to 1440, 15 by default; and **Remove what Scalable no longer lists**. Switched on, a sold position, an entry taken off the watchlist and a deleted price alert are removed from Home Assistant with the next update - devices, entities and the history recorded for them. Off, which is the default, they stay and read *unavailable*.
+- **Settings** - the update interval in minutes, 5 to 1440, 15 by default; and **Remove what Scalable no longer lists**. Switched on, a sold position, an entry taken off the watchlist and a deleted price alert are removed from Home Assistant with the next update - devices, entities, the history recorded for them and their long-term statistics. Off, which is the default, they stay and read *unavailable*.
 - **Sign in to Scalable again** - for instance after changing the access level in Scalable.
 
 ## Created entities

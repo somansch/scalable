@@ -71,7 +71,7 @@
         },
         "data_description": {
           "scan_interval": "Ogni quanto viene interrogato Scalable, in minuti. Ogni aggiornamento costa alcune richieste, più una per posizione e per voce della watchlist.",
-          "remove_stale": "Le posizioni vendute, le voci tolte dalla watchlist e gli avvisi di prezzo eliminati vengono rimossi da Home Assistant al prossimo aggiornamento - i loro dispositivi, le loro entità e la cronologia registrata. Se disattivato, restano e risultano non disponibili."
+          "remove_stale": "Le posizioni vendute, le voci tolte dalla watchlist e gli avvisi di prezzo eliminati vengono rimossi da Home Assistant al prossimo aggiornamento - i loro dispositivi, le loro entità, la cronologia registrata e le loro statistiche a lungo termine. Se disattivato, restano e risultano non disponibili."
         }
       },
       "reauth": {
