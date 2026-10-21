@@ -1,7 +1,7 @@
 # <img src="https://raw.githubusercontent.com/somansch/scalable/main/custom_components/scalable/brand/icon.png" width="40" height="40" align="top"> Scalable Capital Integration for Home Assistant - your broker portfolio as sensors and as a card
 
 [![GitHub release](https://img.shields.io/github/v/release/somansch/scalable)](https://github.com/somansch/scalable/releases/latest)
-[![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz/docs/faq/custom_repositories)
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://github.com/hacs/default)
 [![License](https://img.shields.io/github/license/somansch/scalable)](https://github.com/somansch/scalable/blob/main/LICENSE)
 [![Downloads](https://img.shields.io/github/downloads/somansch/scalable/total)](https://github.com/somansch/scalable/releases)
 [![Downloads@latest](https://img.shields.io/github/downloads/somansch/scalable/latest/total)](https://github.com/somansch/scalable/releases/latest)
@@ -32,7 +32,7 @@ Typical reasons to use it:
 ## Quick start
 
 1. In Scalable's **web** version, switch on **Scalable MCP** ([Before you start](#before-you-start)).
-2. **Install** via [HACS](#hacs) or [manually](#manual), then restart Home Assistant.
+2. **Install** via [HACS](#hacs-recommended) or [manually](#manual), then restart Home Assistant.
 3. **Settings → Devices & Services → Add Integration**, search for "Scalable Capital", give the entry a name and sign in to Scalable ([Setting up](#setting-up)).
 4. Put it on a dashboard: **Add card → Scalable Capital** gives you the [card that comes with the integration](#scalable-card). Or use the [sensors](#created-entities) in any card you like.
 
@@ -242,13 +242,13 @@ Two things, in one download:
 - The **integration** itself.
 - The **[Scalable card](#scalable-card)**. Served by the integration and handed to every dashboard, so there is no file to copy into `www` and no resource to register.
 
-### HACS
+### HACS (recommended)
 
-Scalable Capital is installed as a custom repository:
+Scalable Capital is part of the default HACS integration list:
 
 1. Open HACS in Home Assistant
-2. **⋮ → Custom repositories**, add `https://github.com/somansch/scalable` as **Integration**
-3. Search for "Scalable Capital" and click the "Download" button
+2. Search for "Scalable Capital"
+3. Click the "Download" button
 4. Restart HA
 
 ### Manual
