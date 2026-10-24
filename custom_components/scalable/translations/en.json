@@ -71,7 +71,7 @@
         },
         "data_description": {
           "scan_interval": "How often Scalable is asked, in minutes. Every update costs a handful of requests, plus one per position and watchlist entry.",
-          "remove_stale": "Sold positions, entries taken off the watchlist and deleted price alerts are removed from Home Assistant with the next update - their devices, their entities, the history recorded for them and their long-term statistics. Off, they stay and read unavailable."
+          "remove_stale": "Sold positions, entries taken off the watchlist, deleted price alerts and savings products that are gone - a fixed-term deposit that has matured, a closed overnight account or credit line - are removed from Home Assistant with the next update - their devices, their entities, the history recorded for them and their long-term statistics. Off, they stay and read unavailable."
         }
       },
       "reauth": {
@@ -208,6 +208,39 @@
       },
       "alerts_active": {
         "name": "Active alerts"
+      },
+      "overnight_balance": {
+        "name": "Overnight balance"
+      },
+      "overnight_interest_rate": {
+        "name": "Overnight interest rate"
+      },
+      "overnight_accrued": {
+        "name": "Overnight accrued interest"
+      },
+      "overnight_next_payout": {
+        "name": "Overnight next payout"
+      },
+      "fixed_term_amount": {
+        "name": "Amount"
+      },
+      "fixed_term_interest_rate": {
+        "name": "Interest rate"
+      },
+      "fixed_term_accrued": {
+        "name": "Accrued interest"
+      },
+      "fixed_term_maturity": {
+        "name": "End date"
+      },
+      "credit_used": {
+        "name": "Credit used"
+      },
+      "credit_line": {
+        "name": "Credit line"
+      },
+      "credit_available": {
+        "name": "Credit available"
       }
     }
   }

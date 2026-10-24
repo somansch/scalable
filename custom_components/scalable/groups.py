@@ -1,10 +1,13 @@
 """Groups: config subentries that sort the entry's devices on the integration page.
 
 Home Assistant shows every subentry of an entry as a group with its devices
-inside. One group, General, holds the broker itself and the watchlist; every
-kind of security the portfolio holds - stocks, ETFs, ... - gets a group of its
-own, created when the first position of that kind turns up. A group's key is its
-unique_id; its title is only a starting point, and the user's to rename.
+inside, one level deep. The groups follow Scalable's products: Broker holds the
+broker itself, the watchlist and the price alerts; every kind of security the
+portfolio holds - stocks, ETFs, ... - gets a group of its own beside it, titled
+"Broker · Stocks" since a group cannot sit inside another; the overnight
+account, the fixed-term deposits and the credit line have one each. A group is
+created when it is first needed. Its key is its unique_id; its title is only a
+starting point, and the user's to rename.
 """
 
 from __future__ import annotations
@@ -19,13 +22,16 @@ from homeassistant.util import slugify
 from .const import DOMAIN
 
 SUBENTRY_TYPE_GROUP = "group"
-GROUP_GENERAL = "general"
+GROUP_BROKER = "broker"
+GROUP_OVERNIGHT = "overnight"
+GROUP_FIXED = "fixed"
+GROUP_CREDIT = "credit"
 GROUP_OTHER = "other"
 
-# Scalable's security types, under the titles their groups start with. A type
-# that is not listed gets a group titled with Scalable's own name for it.
-TITLES = {
-    GROUP_GENERAL: "General",
+# The kinds of security Scalable names, under the titles their groups start
+# with. A kind that is not listed gets a group titled with Scalable's own name
+# for it, behind the broker's.
+KIND_TITLES = {
     "stock": "Stocks",
     "etf": "ETFs",
     "etc": "ETCs",
@@ -37,6 +43,19 @@ TITLES = {
     "crypto": "Crypto",
     GROUP_OTHER: "Other",
 }
+PRODUCT_TITLES = {
+    GROUP_BROKER: "Broker",
+    GROUP_OVERNIGHT: "Overnight savings",
+    GROUP_FIXED: "Fixed-term deposits",
+    GROUP_CREDIT: "Credit",
+}
+
+
+def group_title(key: str, security_type: str | None = None) -> str:
+    """The title a group starts with."""
+    if key in PRODUCT_TITLES:
+        return PRODUCT_TITLES[key]
+    return f"{PRODUCT_TITLES[GROUP_BROKER]} · {KIND_TITLES.get(key) or security_type or key}"
 
 
 def type_key(security_type: str | None) -> str:
@@ -55,11 +74,36 @@ def async_group(
     subentry = ConfigSubentry(
         data=MappingProxyType({}),
         subentry_type=SUBENTRY_TYPE_GROUP,
-        title=TITLES.get(key) or security_type or key,
+        title=group_title(key, security_type),
         unique_id=key,
     )
     hass.config_entries.async_add_subentry(entry, subentry)
     return subentry
+
+
+@callback
+def async_carry_over_groups(hass: HomeAssistant, entry: ConfigEntry) -> None:
+    """Bring the groups of an earlier version into the product scheme.
+
+    Up to 1.0.x the broker, the watchlist and the alerts sat under General and
+    a kind of security under its bare name. General becomes the Broker group -
+    its key changes, so the devices follow without moving - and a kind's group
+    is retitled behind the broker. A title the user has changed is left alone.
+    """
+    for subentry in list(entry.subentries.values()):
+        if subentry.subentry_type != SUBENTRY_TYPE_GROUP:
+            continue
+        if subentry.unique_id == "general":
+            hass.config_entries.async_update_subentry(
+                entry,
+                subentry,
+                unique_id=GROUP_BROKER,
+                title=PRODUCT_TITLES[GROUP_BROKER] if subentry.title == "General" else subentry.title,
+            )
+        elif subentry.unique_id in KIND_TITLES and subentry.title == KIND_TITLES[subentry.unique_id]:
+            hass.config_entries.async_update_subentry(
+                entry, subentry, title=group_title(subentry.unique_id)
+            )
 
 
 @callback

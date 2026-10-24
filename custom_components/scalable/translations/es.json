@@ -71,7 +71,7 @@
         },
         "data_description": {
           "scan_interval": "Cada cuánto se consulta a Scalable, en minutos. Cada actualización cuesta unas pocas peticiones, más una por posición y por entrada de la lista de seguimiento.",
-          "remove_stale": "Las posiciones vendidas, las entradas quitadas de la watchlist y las alertas de precio borradas se eliminan de Home Assistant con la próxima actualización: sus dispositivos, sus entidades, el historial registrado y sus estadísticas a largo plazo. Desactivado, permanecen y aparecen como no disponibles."
+          "remove_stale": "Las posiciones vendidas, las entradas quitadas de la watchlist, las alertas de precio borradas y los productos de ahorro desaparecidos - un depósito a plazo fijo vencido, una cuenta de ahorro o una línea de crédito cerradas - se eliminan de Home Assistant con la próxima actualización: sus dispositivos, sus entidades, el historial registrado y sus estadísticas a largo plazo. Desactivado, permanecen y aparecen como no disponibles."
         }
       },
       "reauth": {
@@ -208,6 +208,39 @@
       },
       "alerts_active": {
         "name": "Alertas activas"
+      },
+      "overnight_balance": {
+        "name": "Saldo de la cuenta de ahorro"
+      },
+      "overnight_interest_rate": {
+        "name": "Tipo de interés de la cuenta de ahorro"
+      },
+      "overnight_accrued": {
+        "name": "Intereses devengados de la cuenta de ahorro"
+      },
+      "overnight_next_payout": {
+        "name": "Próximo abono de la cuenta de ahorro"
+      },
+      "fixed_term_amount": {
+        "name": "Importe"
+      },
+      "fixed_term_interest_rate": {
+        "name": "Tipo de interés"
+      },
+      "fixed_term_accrued": {
+        "name": "Intereses devengados"
+      },
+      "fixed_term_maturity": {
+        "name": "Fecha de vencimiento"
+      },
+      "credit_used": {
+        "name": "Crédito utilizado"
+      },
+      "credit_line": {
+        "name": "Línea de crédito"
+      },
+      "credit_available": {
+        "name": "Crédito disponible"
       }
     }
   }

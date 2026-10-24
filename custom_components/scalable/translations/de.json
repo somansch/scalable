@@ -71,7 +71,7 @@
         },
         "data_description": {
           "scan_interval": "Wie oft Scalable abgefragt wird, in Minuten. Jede Abfrage kostet eine Handvoll Aufrufe, dazu einen je Position und Watchlist-Eintrag.",
-          "remove_stale": "Verkaufte Positionen, von der Watchlist genommene Einträge und gelöschte Preisalarme werden mit der nächsten Aktualisierung aus Home Assistant entfernt - ihre Geräte, ihre Entitäten, der dazu aufgezeichnete Verlauf und ihre Langzeitstatistik. Aus bleiben sie stehen und zeigen „nicht verfügbar“."
+          "remove_stale": "Verkaufte Positionen, von der Watchlist genommene Einträge, gelöschte Preisalarme und weggefallene Sparprodukte - ein ausgelaufenes Festgeld, ein aufgelöstes Tagesgeldkonto oder eine aufgelöste Kreditlinie - werden mit der nächsten Aktualisierung aus Home Assistant entfernt - ihre Geräte, ihre Entitäten, der dazu aufgezeichnete Verlauf und ihre Langzeitstatistik. Aus bleiben sie stehen und zeigen „nicht verfügbar“."
         }
       },
       "reauth": {
@@ -208,6 +208,39 @@
       },
       "alerts_active": {
         "name": "Aktive Alarme"
+      },
+      "overnight_balance": {
+        "name": "Tagesgeld Guthaben"
+      },
+      "overnight_interest_rate": {
+        "name": "Tagesgeld Zinsrate"
+      },
+      "overnight_accrued": {
+        "name": "Tagesgeld angesammelte Zinsen"
+      },
+      "overnight_next_payout": {
+        "name": "Tagesgeld nächste Gutschrift"
+      },
+      "fixed_term_amount": {
+        "name": "Betrag"
+      },
+      "fixed_term_interest_rate": {
+        "name": "Zinsrate"
+      },
+      "fixed_term_accrued": {
+        "name": "Angesammelte Zinsen"
+      },
+      "fixed_term_maturity": {
+        "name": "Enddatum"
+      },
+      "credit_used": {
+        "name": "Credit genutzt"
+      },
+      "credit_line": {
+        "name": "Kreditlinie"
+      },
+      "credit_available": {
+        "name": "Credit verfügbar"
       }
     }
   }

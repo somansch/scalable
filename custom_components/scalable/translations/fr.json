@@ -71,7 +71,7 @@
         },
         "data_description": {
           "scan_interval": "La fréquence à laquelle Scalable est interrogé, en minutes. Chaque mise à jour coûte quelques requêtes, plus une par position et par entrée de la liste de suivi.",
-          "remove_stale": "Les positions vendues, les entrées retirées de la watchlist et les alertes de prix supprimées sont retirées de Home Assistant à la prochaine mise à jour - leurs appareils, leurs entités, l'historique enregistré et leurs statistiques à long terme. Désactivé, elles restent et s'affichent comme indisponibles."
+          "remove_stale": "Les positions vendues, les entrées retirées de la watchlist, les alertes de prix supprimées et les produits d'épargne disparus - un dépôt à terme arrivé à échéance, un compte épargne ou une ligne de crédit clôturés - sont retirés de Home Assistant à la prochaine mise à jour - leurs appareils, leurs entités, l'historique enregistré et leurs statistiques à long terme. Désactivé, ils restent et s'affichent comme indisponibles."
         }
       },
       "reauth": {
@@ -208,6 +208,39 @@
       },
       "alerts_active": {
         "name": "Alertes actives"
+      },
+      "overnight_balance": {
+        "name": "Solde du compte épargne"
+      },
+      "overnight_interest_rate": {
+        "name": "Taux du compte épargne"
+      },
+      "overnight_accrued": {
+        "name": "Intérêts courus du compte épargne"
+      },
+      "overnight_next_payout": {
+        "name": "Prochain versement du compte épargne"
+      },
+      "fixed_term_amount": {
+        "name": "Montant"
+      },
+      "fixed_term_interest_rate": {
+        "name": "Taux d'intérêt"
+      },
+      "fixed_term_accrued": {
+        "name": "Intérêts courus"
+      },
+      "fixed_term_maturity": {
+        "name": "Date d'échéance"
+      },
+      "credit_used": {
+        "name": "Crédit utilisé"
+      },
+      "credit_line": {
+        "name": "Ligne de crédit"
+      },
+      "credit_available": {
+        "name": "Crédit disponible"
       }
     }
   }

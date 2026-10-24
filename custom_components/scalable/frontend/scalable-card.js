@@ -35,6 +35,7 @@
       p1d: "1D", p1w: "1W", p1m: "1M", p3m: "3M", p6m: "6M", pytd: "YTD", p1y: "1Y", pmax: "MAX",
       psince: "Since purchase",
       lblToday: "Today",
+      yesterday: "Yesterday",
       lblWeek: "Week",
       lblMonth: "Month",
       lbl3m: "3 months",
@@ -65,6 +66,8 @@
       updatedHours: (n) => `updated ${n} h ago`,
       back: "Back",
       refresh: "Refresh now",
+      signInNeeded: "Scalable asks for a new sign-in: Settings → Repairs.",
+      historyGap: "Nothing read",
       yourPosition: "Your position",
       atPurchase: "at purchase",
       units: "units",
@@ -73,6 +76,57 @@
       bid: "Sell",
       ask: "Buy",
       outdated: "Trading is closed",
+      productBroker: "Broker",
+      productOvernight: "Overnight savings",
+      productFixed: "Fixed-term deposit",
+      productCredit: "Credit",
+      creditUsed: "Used",
+      creditAvailable: "Available",
+      creditLine: "Credit line",
+      edShowCreditBar: "Usage bar",
+      edShowCreditBarHelp: "The bar of the credit line, used against free. Its looks are under Layout → General.",
+      edElCreditBar: "Usage bar",
+      edElCreditBarHelp: "The bar of the credit line.",
+      edCreditBarHeight: "Thickness",
+      edCreditBarHeightHelp: "Thickness of the bar, e.g. 8px.",
+      edCreditBarColorHelp: "Colour of the used part. Empty keeps Scalable's.",
+      balance: "Balance",
+      interestRate: "Interest rate",
+      nextPayout: "Next payout",
+      expectedAmount: "Expected amount",
+      accruedOf: (a) => `${a} accrued`,
+      investable: (a) => `${a} investable`,
+      amount: "Amount",
+      endDate: "End date",
+      renewalOn: "Auto-renewal on",
+      renewalOff: "Auto-renewal off",
+      termMonths: (n) => `${n} months`,
+      perYear: "p.a.",
+      products: "Product",
+      edProducts: "Offer the product dropdown",
+      edProductsHelp: "A dropdown under the title - on the title's line without one - that switches between the products offered above. Off, the card stays on the start product.",
+      edProductsBlock: "Products",
+      edShowProductHead: "Show the product head",
+      edShowProductHeadHelp: "Off, the page starts right under the title line.",
+      edShowProductIcon: "Show its symbol",
+      edShowProductIconHelp: "The disc with the product's symbol in front of the name.",
+      edElProductName: "Product name",
+      edElProductNameHelp: "The product's name at the top of its page.",
+      edElProductSub: "Line under the product name",
+      edElProductSubHelp: "The broker's plan, the overnight account's kind, a fixed-term account's term.",
+      edProductIcon: "Symbol",
+      edProductIconHelp: "The symbol on the disc. The web app's to begin with.",
+      edProductIconBg: "Disc behind the symbol",
+      edProductIconBgHelp: "The disc's colour. Empty keeps the web app's.",
+      edProductsBlockHelp: "Which products the card offers. A product switched off takes its settings with it, here and under Content, List and Layout.",
+      edProductFixed: "Fixed-term deposits",
+      edDefaultProduct: "Start with",
+      edDefaultProductHelp: "The product the card opens on. If it is not offered, the first that is.",
+      edShowOvernightTx: "Transactions under the overview",
+      edShowOvernightTabsHelp: "The line Overview, Transactions. Off leaves the account on its overview.",
+      edShowOvernightTxHelp: "The account's transactions under its figures. The Transactions tab has them in any case.",
+      edShowFixedRing: "Interest ring",
+      edShowFixedRingHelp: "The ring that runs through the term, with the interest run up so far in its middle.",
       transactions: "Transactions",
       txOpen: "Open",
       txNone: "No transactions",
@@ -150,9 +204,9 @@
       edHideTitle: "Hide",
       edHideTitleHelp: "Hide the title line, even when a title is set above.",
       edShowUpdated: "Show when it was last updated",
-      edShowUpdatedHelp: "Beside the title: how long ago Scalable was last read. Hidden with the title.",
+      edShowUpdatedHelp: "Beside the title: how long ago Scalable was last read. Stays when the title is hidden; red while Scalable asks for a new sign-in.",
       edShowRefresh: "Show the refresh symbol",
-      edShowRefreshHelp: "A small symbol beside the title that reads Scalable again right away instead of waiting for the next update. Hidden with the title.",
+      edShowRefreshHelp: "Reads Scalable again right away instead of waiting for the next update. Stays when the title is hidden; red while Scalable asks for a new sign-in.",
       edShowTabs: "Show the tabs",
       edShowTabsHelp: "The line Overview, Savings plans, Price alerts, Insights, Transactions. Off leaves the card on the tab chosen below.",
       edTabSavings: "Savings plans",
@@ -176,11 +230,11 @@
       edShowChange: "Change",
       edShowChangeHelp: "The change in euros over the chosen period, under the total value.",
       edShowTotalChart: "Curve",
-      edShowTotalChartHelp: "The return over the chosen period as a small curve beside the total value. A click on it opens Insights. It is drawn from what Home Assistant has recorded, so it starts when the integration was set up.",
+      edShowTotalChartHelp: "The return over the chosen period as a small curve beside the total value, from nought at the period's start, deposits taken out. A click opens Insights.",
       edBlockSections: "Sections",
       edBlockSectionsHelp: "Which sections the overview lists.",
       edShowCash: "Cash",
-      edShowCashHelp: "The cash balance.",
+      edShowCashHelp: "The cash balance - and, in brackets, what can be invested when that differs: with a credit line drawn on, with orders still open.",
       edShowPortfolio: "Portfolio",
       edShowPortfolioHelp: "The positions.",
       edShowCrypto: "Crypto",
@@ -260,6 +314,7 @@
       edPeriodActiveHelp: "Background of the chosen period.",
       edElTotal: "Total value",
       edElTotalHelp: "The large figure at the top of the overview.",
+      edElProductTotalHelp: "The large figure at the top of the product's page.",
       edElChange: "Change",
       edElChangeHelp: "The line under the total value. Its colour is the gain or loss colour.",
       edElSection: "Section headings",
@@ -277,7 +332,7 @@
       edChartAxis: "Axis labels",
       edChartAxisHelp: "Prices on the right - with the current one marked at the end of the curve - and dates along the bottom.",
       edHistoryNote: "Note under the portfolio's curve",
-      edHistoryNoteHelp: "The line under the Insights chart saying that the curve is recorded by Home Assistant and starts when the integration was set up.",
+      edHistoryNoteHelp: "The line under the Insights chart saying where its curve comes from.",
       edSparkWidth: "Curve width in the list",
       edSparkWidthHelp: "Width of the small curve in a list entry, in pixels.",
       edElRowName: "Name",
@@ -355,6 +410,7 @@
       p1d: "1T", p1w: "1W", p1m: "1M", p3m: "3M", p6m: "6M", pytd: "YTD", p1y: "1J", pmax: "MAX",
       psince: "Seit Kauf",
       lblToday: "Heute",
+      yesterday: "Gestern",
       lblWeek: "Woche",
       lblMonth: "Monat",
       lbl3m: "3 Monate",
@@ -385,6 +441,8 @@
       updatedHours: (n) => `vor ${n} Std. aktualisiert`,
       back: "Zurück",
       refresh: "Jetzt aktualisieren",
+      signInNeeded: "Scalable verlangt eine neue Anmeldung: Einstellungen → Reparaturen.",
+      historyGap: "Nichts gelesen",
       yourPosition: "Ihre Position",
       atPurchase: "bei Kauf",
       units: "Stück",
@@ -393,6 +451,57 @@
       bid: "Verkaufen",
       ask: "Kaufen",
       outdated: "Handel geschlossen",
+      productBroker: "Broker",
+      productOvernight: "Tagesgeld",
+      productFixed: "Festgeld",
+      productCredit: "Credit",
+      creditUsed: "Genutzt",
+      creditAvailable: "Verfügbar",
+      creditLine: "Kreditlinie",
+      edShowCreditBar: "Auslastungsbalken",
+      edShowCreditBarHelp: "Der Balken der Kreditlinie, genutzt gegen frei. Sein Aussehen steht unter Layout → Allgemein.",
+      edElCreditBar: "Auslastungsbalken",
+      edElCreditBarHelp: "Der Balken der Kreditlinie.",
+      edCreditBarHeight: "Dicke",
+      edCreditBarHeightHelp: "Dicke des Balkens, z. B. 8px.",
+      edCreditBarColorHelp: "Farbe des genutzten Teils. Leer bleibt die von Scalable.",
+      balance: "Guthaben",
+      interestRate: "Zinsrate",
+      nextPayout: "Nächste Gutschrift",
+      expectedAmount: "Voraussichtlicher Betrag",
+      accruedOf: (a) => `${a} angesammelt`,
+      investable: (a) => `${a} investierbar`,
+      amount: "Betrag",
+      endDate: "Enddatum",
+      renewalOn: "Wiederanlage aktiviert",
+      renewalOff: "Wiederanlage deaktiviert",
+      termMonths: (n) => `${n} Monate`,
+      perYear: "p.a.",
+      products: "Produkt",
+      edProducts: "Produkt-Dropdown anbieten",
+      edProductsHelp: "Ein Dropdown unter dem Titel - ohne Titel in dessen Zeile -, das zwischen den oben angebotenen Produkten umschaltet. Aus, bleibt die Karte beim Startprodukt.",
+      edProductsBlock: "Produkte",
+      edShowProductHead: "Produktkopf zeigen",
+      edShowProductHeadHelp: "Aus, beginnt die Seite direkt unter der Titelzeile.",
+      edShowProductIcon: "Sein Symbol zeigen",
+      edShowProductIconHelp: "Die Scheibe mit dem Symbol des Produkts vor dem Namen.",
+      edElProductName: "Produktname",
+      edElProductNameHelp: "Der Name des Produkts oben auf seiner Seite.",
+      edElProductSub: "Zeile unter dem Produktnamen",
+      edElProductSubHelp: "Der Tarif des Brokers, die Art des Tagesgeldkontos, die Laufzeit eines Festgelds.",
+      edProductIcon: "Symbol",
+      edProductIconHelp: "Das Symbol auf der Scheibe. Zu Beginn das der Web-App.",
+      edProductIconBg: "Scheibe hinter dem Symbol",
+      edProductIconBgHelp: "Die Farbe der Scheibe. Leer bleibt die der Web-App.",
+      edProductsBlockHelp: "Welche Produkte die Karte anbietet. Ein abgeschaltetes Produkt nimmt seine Einstellungen mit, hier und unter Inhalt, Liste und Layout.",
+      edProductFixed: "Festgelder",
+      edDefaultProduct: "Starten mit",
+      edDefaultProductHelp: "Das Produkt, mit dem die Karte öffnet. Ist es nicht angeboten, das erste angebotene.",
+      edShowOvernightTx: "Transaktionen unter der Übersicht",
+      edShowOvernightTabsHelp: "Die Zeile Überblick, Transaktionen. Aus bleibt das Konto auf seinem Überblick.",
+      edShowOvernightTxHelp: "Die Umsätze des Kontos unter seinen Zahlen. Der Reiter Transaktionen hat sie in jedem Fall.",
+      edShowFixedRing: "Zinsring",
+      edShowFixedRingHelp: "Der Ring, der durch die Laufzeit läuft, mit den bisher angesammelten Zinsen in der Mitte.",
       transactions: "Transaktionen",
       txOpen: "Offen",
       txNone: "Keine Transaktionen",
@@ -470,9 +579,9 @@
       edHideTitle: "Ausblenden",
       edHideTitleHelp: "Titelzeile ausblenden, auch wenn oben ein Titel gesetzt ist.",
       edShowUpdated: "Letzte Aktualisierung anzeigen",
-      edShowUpdatedHelp: "Neben dem Titel: wie lange Scalable zuletzt gelesen wurde. Verschwindet mit dem Titel.",
+      edShowUpdatedHelp: "Neben dem Titel: wie lange die letzte Lesung von Scalable her ist. Bleibt auch ohne Titel; rot, solange Scalable eine neue Anmeldung verlangt.",
       edShowRefresh: "Aktualisieren-Symbol anzeigen",
-      edShowRefreshHelp: "Ein kleines Symbol neben dem Titel, das Scalable sofort neu liest, statt auf die nächste Aktualisierung zu warten. Verschwindet mit dem Titel.",
+      edShowRefreshHelp: "Liest Scalable sofort neu, statt auf die nächste Aktualisierung zu warten. Bleibt auch ohne Titel; rot, solange Scalable eine neue Anmeldung verlangt.",
       edShowTabs: "Reiter anzeigen",
       edShowTabsHelp: "Die Zeile Überblick, Sparpläne, Preisalarme, Insights, Transaktionen. Aus lässt die Karte auf dem unten gewählten Reiter.",
       edTabSavings: "Sparpläne",
@@ -496,11 +605,11 @@
       edShowChange: "Veränderung",
       edShowChangeHelp: "Die Veränderung in Euro im gewählten Zeitraum, unter dem Gesamtwert.",
       edShowTotalChart: "Kurve",
-      edShowTotalChartHelp: "Die Rendite im gewählten Zeitraum als kleine Kurve neben dem Gesamtwert. Ein Klick darauf öffnet Insights. Sie stammt aus den Aufzeichnungen von Home Assistant und beginnt deshalb mit der Einrichtung der Integration.",
+      edShowTotalChartHelp: "Die Rendite im gewählten Zeitraum als kleine Kurve neben dem Gesamtwert, ab null zu Beginn des Zeitraums, Einzahlungen herausgerechnet. Ein Klick öffnet Insights.",
       edBlockSections: "Bereiche",
       edBlockSectionsHelp: "Welche Bereiche der Überblick auflistet.",
       edShowCash: "Guthaben",
-      edShowCashHelp: "Das Guthaben auf dem Verrechnungskonto.",
+      edShowCashHelp: "Das Guthaben auf dem Verrechnungskonto - und in Klammern, was investierbar ist, wenn sich das unterscheidet: bei genutzter Kreditlinie, bei offenen Orders.",
       edShowPortfolio: "Portfolio",
       edShowPortfolioHelp: "Die Positionen.",
       edShowCrypto: "Crypto",
@@ -580,6 +689,7 @@
       edPeriodActiveHelp: "Hintergrund des gewählten Zeitraums.",
       edElTotal: "Gesamtwert",
       edElTotalHelp: "Die große Zahl oben im Überblick.",
+      edElProductTotalHelp: "Die große Zahl oben auf der Seite des Produkts.",
       edElChange: "Veränderung",
       edElChangeHelp: "Die Zeile unter dem Gesamtwert. Ihre Farbe ist die Gewinn- oder Verlustfarbe.",
       edElSection: "Bereichsüberschriften",
@@ -597,7 +707,7 @@
       edChartAxis: "Achsenbeschriftung",
       edChartAxisHelp: "Kurse rechts - mit dem aktuellen am Ende der Kurve hervorgehoben - und Datumsangaben unten.",
       edHistoryNote: "Hinweis unter der Portfolio-Kurve",
-      edHistoryNoteHelp: "Die Zeile unter dem Insights-Diagramm, die sagt, dass die Kurve von Home Assistant aufgezeichnet wird und mit der Einrichtung der Integration beginnt.",
+      edHistoryNoteHelp: "Die Zeile unter dem Insights-Diagramm, die sagt, woher die Kurve stammt.",
       edSparkWidth: "Kurvenbreite in der Liste",
       edSparkWidthHelp: "Breite der kleinen Kurve in einem Listeneintrag, in Pixeln.",
       edElRowName: "Name",
@@ -675,6 +785,7 @@
       p1d: "1J", p1w: "1S", p1m: "1M", p3m: "3M", p6m: "6M", pytd: "YTD", p1y: "1A", pmax: "MAX",
       psince: "Depuis l'achat",
       lblToday: "Aujourd'hui",
+      yesterday: "Hier",
       lblWeek: "Semaine",
       lblMonth: "Mois",
       lbl3m: "3 mois",
@@ -705,6 +816,8 @@
       updatedHours: (n) => `mis à jour il y a ${n} h`,
       back: "Retour",
       refresh: "Actualiser maintenant",
+      signInNeeded: "Scalable demande une nouvelle connexion : Paramètres → Réparations.",
+      historyGap: "Rien lu",
       yourPosition: "Votre position",
       atPurchase: "à l'achat",
       units: "titres",
@@ -713,6 +826,57 @@
       bid: "Vendre",
       ask: "Acheter",
       outdated: "Négociation fermée",
+      productBroker: "Broker",
+      productOvernight: "Compte épargne",
+      productFixed: "Dépôt à terme",
+      productCredit: "Crédit",
+      creditUsed: "Utilisé",
+      creditAvailable: "Disponible",
+      creditLine: "Ligne de crédit",
+      edShowCreditBar: "Barre d'utilisation",
+      edShowCreditBarHelp: "La barre de la ligne de crédit, utilisé contre libre. Son aspect est sous Mise en page → Général.",
+      edElCreditBar: "Barre d'utilisation",
+      edElCreditBarHelp: "La barre de la ligne de crédit.",
+      edCreditBarHeight: "Épaisseur",
+      edCreditBarHeightHelp: "Épaisseur de la barre, p. ex. 8px.",
+      edCreditBarColorHelp: "Couleur de la part utilisée. Vide garde celle de Scalable.",
+      balance: "Solde",
+      interestRate: "Taux d'intérêt",
+      nextPayout: "Prochain versement",
+      expectedAmount: "Montant prévu",
+      accruedOf: (a) => `${a} courus`,
+      investable: (a) => `${a} investissables`,
+      amount: "Montant",
+      endDate: "Date de fin",
+      renewalOn: "Renouvellement automatique activé",
+      renewalOff: "Renouvellement automatique désactivé",
+      termMonths: (n) => `${n} mois`,
+      perYear: "p.a.",
+      products: "Produit",
+      edProducts: "Proposer le menu des produits",
+      edProductsHelp: "Un menu déroulant sous le titre - sur sa ligne s'il n'y en a pas - qui passe d'un produit proposé ci-dessus à l'autre. Désactivé, la carte reste sur le produit de départ.",
+      edProductsBlock: "Produits",
+      edShowProductHead: "Afficher l'en-tête du produit",
+      edShowProductHeadHelp: "Désactivé, la page commence juste sous la ligne de titre.",
+      edShowProductIcon: "Afficher son symbole",
+      edShowProductIconHelp: "Le disque avec le symbole du produit devant le nom.",
+      edElProductName: "Nom du produit",
+      edElProductNameHelp: "Le nom du produit en haut de sa page.",
+      edElProductSub: "Ligne sous le nom du produit",
+      edElProductSubHelp: "Le forfait du broker, le type du compte épargne, la durée d'un dépôt à terme.",
+      edProductIcon: "Symbole",
+      edProductIconHelp: "Le symbole sur le disque. Au départ celui de la web app.",
+      edProductIconBg: "Disque derrière le symbole",
+      edProductIconBgHelp: "La couleur du disque. Vide garde celle de la web app.",
+      edProductsBlockHelp: "Quels produits la carte propose. Un produit désactivé emporte ses réglages, ici et sous Contenu, Liste et Mise en page.",
+      edProductFixed: "Dépôts à terme",
+      edDefaultProduct: "Commencer par",
+      edDefaultProductHelp: "Le produit sur lequel la carte s'ouvre. S'il n'est pas proposé, le premier qui l'est.",
+      edShowOvernightTx: "Transactions sous l'aperçu",
+      edShowOvernightTabsHelp: "La ligne Aperçu, Transactions. Désactivé, le compte reste sur son aperçu.",
+      edShowOvernightTxHelp: "Les transactions du compte sous ses chiffres. L'onglet Transactions les a de toute façon.",
+      edShowFixedRing: "Anneau des intérêts",
+      edShowFixedRingHelp: "L'anneau qui parcourt la durée, avec les intérêts courus jusqu'ici en son centre.",
       transactions: "Transactions",
       txOpen: "En cours",
       txNone: "Aucune transaction",
@@ -790,9 +954,9 @@
       edHideTitle: "Masquer",
       edHideTitleHelp: "Masque la ligne de titre, même si un titre est défini ci-dessus.",
       edShowUpdated: "Afficher la dernière mise à jour",
-      edShowUpdatedHelp: "À côté du titre : depuis combien de temps Scalable a été lu. Masqué avec le titre.",
+      edShowUpdatedHelp: "À côté du titre : depuis combien de temps Scalable a été lu. Reste même sans titre ; rouge tant que Scalable demande une nouvelle connexion.",
       edShowRefresh: "Afficher le symbole d'actualisation",
-      edShowRefreshHelp: "Un petit symbole à côté du titre qui relit Scalable tout de suite au lieu d'attendre la prochaine mise à jour. Masqué avec le titre.",
+      edShowRefreshHelp: "Relit Scalable tout de suite au lieu d'attendre la prochaine mise à jour. Reste même sans titre ; rouge tant que Scalable demande une nouvelle connexion.",
       edShowTabs: "Afficher les onglets",
       edShowTabsHelp: "La ligne Aperçu, Plans d'épargne, Alertes de prix, Insights, Transactions. Désactivé, la carte reste sur l'onglet choisi ci-dessous.",
       edTabSavings: "Plans d'épargne",
@@ -816,11 +980,11 @@
       edShowChange: "Variation",
       edShowChangeHelp: "La variation en euros sur la période choisie, sous la valeur totale.",
       edShowTotalChart: "Courbe",
-      edShowTotalChartHelp: "Le rendement sur la période choisie, en petite courbe à côté de la valeur totale. Un clic dessus ouvre Insights. Elle est tracée à partir de ce que Home Assistant a enregistré et commence donc à la configuration de l'intégration.",
+      edShowTotalChartHelp: "Le rendement sur la période choisie, en petite courbe à côté de la valeur totale, à partir de zéro au début de la période, dépôts déduits. Un clic ouvre Insights.",
       edBlockSections: "Sections",
       edBlockSectionsHelp: "Les sections que l'aperçu affiche.",
       edShowCash: "Liquidités",
-      edShowCashHelp: "Le solde en espèces.",
+      edShowCashHelp: "Le solde en espèces - et, entre parenthèses, ce qui peut être investi quand cela diffère : ligne de crédit utilisée, ordres encore ouverts.",
       edShowPortfolio: "Portefeuille",
       edShowPortfolioHelp: "Les positions.",
       edShowCrypto: "Crypto",
@@ -900,6 +1064,7 @@
       edPeriodActiveHelp: "Arrière-plan de la période choisie.",
       edElTotal: "Valeur totale",
       edElTotalHelp: "Le grand chiffre en haut de l'aperçu.",
+      edElProductTotalHelp: "Le grand chiffre en haut de la page du produit.",
       edElChange: "Variation",
       edElChangeHelp: "La ligne sous la valeur totale. Sa couleur est celle du gain ou de la perte.",
       edElSection: "Titres de section",
@@ -917,7 +1082,7 @@
       edChartAxis: "Étiquettes des axes",
       edChartAxisHelp: "Les cours à droite - le cours actuel mis en évidence au bout de la courbe - et les dates en bas.",
       edHistoryNote: "Note sous la courbe du portefeuille",
-      edHistoryNoteHelp: "La ligne sous le graphique Insights indiquant que la courbe est enregistrée par Home Assistant et commence à la configuration de l'intégration.",
+      edHistoryNoteHelp: "La ligne sous le graphique Insights indiquant d'où vient la courbe.",
       edSparkWidth: "Largeur de la courbe dans la liste",
       edSparkWidthHelp: "Largeur de la petite courbe d'une entrée de la liste, en pixels.",
       edElRowName: "Nom",
@@ -995,6 +1160,7 @@
       p1d: "1G", p1w: "1S", p1m: "1M", p3m: "3M", p6m: "6M", pytd: "YTD", p1y: "1A", pmax: "MAX",
       psince: "Dall'acquisto",
       lblToday: "Oggi",
+      yesterday: "Ieri",
       lblWeek: "Settimana",
       lblMonth: "Mese",
       lbl3m: "3 mesi",
@@ -1025,6 +1191,8 @@
       updatedHours: (n) => `aggiornato ${n} h fa`,
       back: "Indietro",
       refresh: "Aggiorna ora",
+      signInNeeded: "Scalable chiede un nuovo accesso: Impostazioni → Riparazioni.",
+      historyGap: "Niente letto",
       yourPosition: "La tua posizione",
       atPurchase: "all'acquisto",
       units: "quote",
@@ -1033,6 +1201,57 @@
       bid: "Vendi",
       ask: "Compra",
       outdated: "Negoziazione chiusa",
+      productBroker: "Broker",
+      productOvernight: "Conto deposito",
+      productFixed: "Deposito vincolato",
+      productCredit: "Credito",
+      creditUsed: "Utilizzato",
+      creditAvailable: "Disponibile",
+      creditLine: "Linea di credito",
+      edShowCreditBar: "Barra di utilizzo",
+      edShowCreditBarHelp: "La barra della linea di credito, utilizzato contro libero. Il suo aspetto è sotto Layout → Generale.",
+      edElCreditBar: "Barra di utilizzo",
+      edElCreditBarHelp: "La barra della linea di credito.",
+      edCreditBarHeight: "Spessore",
+      edCreditBarHeightHelp: "Spessore della barra, ad es. 8px.",
+      edCreditBarColorHelp: "Colore della parte utilizzata. Vuoto mantiene quello di Scalable.",
+      balance: "Saldo",
+      interestRate: "Tasso d'interesse",
+      nextPayout: "Prossimo accredito",
+      expectedAmount: "Importo previsto",
+      accruedOf: (a) => `${a} maturati`,
+      investable: (a) => `${a} investibili`,
+      amount: "Importo",
+      endDate: "Data di fine",
+      renewalOn: "Rinnovo automatico attivo",
+      renewalOff: "Rinnovo automatico disattivato",
+      termMonths: (n) => `${n} mesi`,
+      perYear: "p.a.",
+      products: "Prodotto",
+      edProducts: "Offrire il menu dei prodotti",
+      edProductsHelp: "Un menu a tendina sotto il titolo - sulla sua riga se non c'è - che passa tra i prodotti offerti sopra. Spento, la scheda resta sul prodotto di partenza.",
+      edProductsBlock: "Prodotti",
+      edShowProductHead: "Mostra l'intestazione del prodotto",
+      edShowProductHeadHelp: "Spenta, la pagina inizia subito sotto la riga del titolo.",
+      edShowProductIcon: "Mostra il suo simbolo",
+      edShowProductIconHelp: "Il disco con il simbolo del prodotto davanti al nome.",
+      edElProductName: "Nome del prodotto",
+      edElProductNameHelp: "Il nome del prodotto in cima alla sua pagina.",
+      edElProductSub: "Riga sotto il nome del prodotto",
+      edElProductSubHelp: "Il piano del broker, il tipo del conto deposito, la durata di un deposito vincolato.",
+      edProductIcon: "Simbolo",
+      edProductIconHelp: "Il simbolo sul disco. All'inizio quello della web app.",
+      edProductIconBg: "Disco dietro il simbolo",
+      edProductIconBgHelp: "Il colore del disco. Vuoto mantiene quello della web app.",
+      edProductsBlockHelp: "Quali prodotti la scheda offre. Un prodotto spento porta via le sue impostazioni, qui e sotto Contenuto, Elenco e Layout.",
+      edProductFixed: "Depositi vincolati",
+      edDefaultProduct: "Iniziare con",
+      edDefaultProductHelp: "Il prodotto con cui la scheda si apre. Se non è offerto, il primo offerto.",
+      edShowOvernightTx: "Transazioni sotto la panoramica",
+      edShowOvernightTabsHelp: "La riga Panoramica, Transazioni. Spenta, il conto resta sulla sua panoramica.",
+      edShowOvernightTxHelp: "Le transazioni del conto sotto le sue cifre. La scheda Transazioni le ha comunque.",
+      edShowFixedRing: "Anello degli interessi",
+      edShowFixedRingHelp: "L'anello che percorre la durata, con gli interessi maturati finora al centro.",
       transactions: "Transazioni",
       txOpen: "Aperti",
       txNone: "Nessuna transazione",
@@ -1110,9 +1329,9 @@
       edHideTitle: "Nascondi",
       edHideTitleHelp: "Nasconde la riga del titolo, anche se sopra è impostato un titolo.",
       edShowUpdated: "Mostra l'ultimo aggiornamento",
-      edShowUpdatedHelp: "Accanto al titolo: da quanto tempo Scalable è stato letto. Nascosto insieme al titolo.",
+      edShowUpdatedHelp: "Accanto al titolo: da quanto tempo Scalable è stato letto. Resta anche senza titolo; rosso finché Scalable chiede un nuovo accesso.",
       edShowRefresh: "Mostra il simbolo di aggiornamento",
-      edShowRefreshHelp: "Un piccolo simbolo accanto al titolo che rilegge subito Scalable invece di attendere il prossimo aggiornamento. Nascosto insieme al titolo.",
+      edShowRefreshHelp: "Rilegge subito Scalable invece di attendere il prossimo aggiornamento. Resta anche senza titolo; rosso finché Scalable chiede un nuovo accesso.",
       edShowTabs: "Mostra le sezioni",
       edShowTabsHelp: "La riga Panoramica, Piani di accumulo, Avvisi di prezzo, Insights, Transazioni. Disattivato, la scheda resta sulla sezione scelta qui sotto.",
       edTabSavings: "Piani di accumulo",
@@ -1136,11 +1355,11 @@
       edShowChange: "Variazione",
       edShowChangeHelp: "La variazione in euro nel periodo scelto, sotto il valore totale.",
       edShowTotalChart: "Curva",
-      edShowTotalChartHelp: "Il rendimento nel periodo scelto come piccola curva accanto al valore totale. Un clic su di essa apre Insights. È tracciata da ciò che Home Assistant ha registrato, quindi parte da quando l'integrazione è stata configurata.",
+      edShowTotalChartHelp: "Il rendimento nel periodo scelto come piccola curva accanto al valore totale, da zero all'inizio del periodo, versamenti esclusi. Un clic apre Insights.",
       edBlockSections: "Aree",
       edBlockSectionsHelp: "Quali aree elenca la panoramica.",
       edShowCash: "Liquidità",
-      edShowCashHelp: "Il saldo di liquidità.",
+      edShowCashHelp: "Il saldo di liquidità - e, tra parentesi, quanto è investibile quando differisce: linea di credito utilizzata, ordini ancora aperti.",
       edShowPortfolio: "Portafoglio",
       edShowPortfolioHelp: "Le posizioni.",
       edShowCrypto: "Crypto",
@@ -1220,6 +1439,7 @@
       edPeriodActiveHelp: "Sfondo del periodo scelto.",
       edElTotal: "Valore totale",
       edElTotalHelp: "La cifra grande in cima alla panoramica.",
+      edElProductTotalHelp: "La cifra grande in cima alla pagina del prodotto.",
       edElChange: "Variazione",
       edElChangeHelp: "La riga sotto il valore totale. Il suo colore è quello del guadagno o della perdita.",
       edElSection: "Intestazioni delle aree",
@@ -1237,7 +1457,7 @@
       edChartAxis: "Etichette degli assi",
       edChartAxisHelp: "I prezzi a destra - con quello attuale evidenziato alla fine della curva - e le date in basso.",
       edHistoryNote: "Nota sotto la curva del portafoglio",
-      edHistoryNoteHelp: "La riga sotto il grafico Insights che dice che la curva è registrata da Home Assistant e parte da quando l'integrazione è stata configurata.",
+      edHistoryNoteHelp: "La riga sotto il grafico Insights che dice da dove viene la curva.",
       edSparkWidth: "Larghezza della curva nell'elenco",
       edSparkWidthHelp: "Larghezza della piccola curva in una voce dell'elenco, in pixel.",
       edElRowName: "Nome",
@@ -1315,6 +1535,7 @@
       p1d: "1D", p1w: "1S", p1m: "1M", p3m: "3M", p6m: "6M", pytd: "YTD", p1y: "1A", pmax: "MAX",
       psince: "Desde la compra",
       lblToday: "Hoy",
+      yesterday: "Ayer",
       lblWeek: "Semana",
       lblMonth: "Mes",
       lbl3m: "3 meses",
@@ -1345,6 +1566,8 @@
       updatedHours: (n) => `actualizado hace ${n} h`,
       back: "Atrás",
       refresh: "Actualizar ahora",
+      signInNeeded: "Scalable pide iniciar sesión de nuevo: Ajustes → Reparaciones.",
+      historyGap: "Nada leído",
       yourPosition: "Tu posición",
       atPurchase: "en la compra",
       units: "unidades",
@@ -1353,6 +1576,57 @@
       bid: "Vender",
       ask: "Comprar",
       outdated: "Negociación cerrada",
+      productBroker: "Broker",
+      productOvernight: "Cuenta de ahorro",
+      productFixed: "Depósito a plazo fijo",
+      productCredit: "Crédito",
+      creditUsed: "Utilizado",
+      creditAvailable: "Disponible",
+      creditLine: "Línea de crédito",
+      edShowCreditBar: "Barra de uso",
+      edShowCreditBarHelp: "La barra de la línea de crédito, utilizado frente a libre. Su aspecto está en Diseño → General.",
+      edElCreditBar: "Barra de uso",
+      edElCreditBarHelp: "La barra de la línea de crédito.",
+      edCreditBarHeight: "Grosor",
+      edCreditBarHeightHelp: "Grosor de la barra, p. ej. 8px.",
+      edCreditBarColorHelp: "Color de la parte utilizada. Vacío mantiene el de Scalable.",
+      balance: "Saldo",
+      interestRate: "Tipo de interés",
+      nextPayout: "Próximo abono",
+      expectedAmount: "Importe previsto",
+      accruedOf: (a) => `${a} devengados`,
+      investable: (a) => `${a} invertibles`,
+      amount: "Importe",
+      endDate: "Fecha de fin",
+      renewalOn: "Renovación automática activada",
+      renewalOff: "Renovación automática desactivada",
+      termMonths: (n) => `${n} meses`,
+      perYear: "anual",
+      products: "Producto",
+      edProducts: "Ofrecer el menú de productos",
+      edProductsHelp: "Un desplegable bajo el título - en su línea si no lo hay - que cambia entre los productos ofrecidos arriba. Desactivado, la tarjeta se queda en el producto inicial.",
+      edProductsBlock: "Productos",
+      edShowProductHead: "Mostrar la cabecera del producto",
+      edShowProductHeadHelp: "Desactivada, la página empieza justo bajo la línea del título.",
+      edShowProductIcon: "Mostrar su símbolo",
+      edShowProductIconHelp: "El disco con el símbolo del producto delante del nombre.",
+      edElProductName: "Nombre del producto",
+      edElProductNameHelp: "El nombre del producto en lo alto de su página.",
+      edElProductSub: "Línea bajo el nombre del producto",
+      edElProductSubHelp: "El plan del broker, el tipo de la cuenta de ahorro, el plazo de un depósito a plazo fijo.",
+      edProductIcon: "Símbolo",
+      edProductIconHelp: "El símbolo en el disco. Al principio el de la web app.",
+      edProductIconBg: "Disco tras el símbolo",
+      edProductIconBgHelp: "El color del disco. Vacío mantiene el de la web app.",
+      edProductsBlockHelp: "Qué productos ofrece la tarjeta. Un producto desactivado se lleva sus ajustes, aquí y en Contenido, Lista y Diseño.",
+      edProductFixed: "Depósitos a plazo fijo",
+      edDefaultProduct: "Empezar con",
+      edDefaultProductHelp: "El producto con el que se abre la tarjeta. Si no se ofrece, el primero que sí.",
+      edShowOvernightTx: "Transacciones bajo el resumen",
+      edShowOvernightTabsHelp: "La línea Resumen, Transacciones. Desactivada, la cuenta se queda en su resumen.",
+      edShowOvernightTxHelp: "Las transacciones de la cuenta bajo sus cifras. La pestaña Transacciones las tiene de todos modos.",
+      edShowFixedRing: "Anillo de intereses",
+      edShowFixedRingHelp: "El anillo que recorre el plazo, con los intereses devengados hasta ahora en su centro.",
       transactions: "Transacciones",
       txOpen: "Abiertas",
       txNone: "Sin transacciones",
@@ -1430,9 +1704,9 @@
       edHideTitle: "Ocultar",
       edHideTitleHelp: "Oculta la línea del título, aunque arriba haya un título.",
       edShowUpdated: "Mostrar la última actualización",
-      edShowUpdatedHelp: "Junto al título: cuánto hace que se leyó Scalable por última vez. Se oculta con el título.",
+      edShowUpdatedHelp: "Junto al título: cuánto hace que se leyó Scalable. Se mantiene sin título; rojo mientras Scalable pida iniciar sesión de nuevo.",
       edShowRefresh: "Mostrar el símbolo de actualización",
-      edShowRefreshHelp: "Un pequeño símbolo junto al título que vuelve a leer Scalable de inmediato en lugar de esperar a la próxima actualización. Se oculta con el título.",
+      edShowRefreshHelp: "Vuelve a leer Scalable de inmediato en lugar de esperar a la próxima actualización. Se mantiene sin título; rojo mientras Scalable pida iniciar sesión de nuevo.",
       edShowTabs: "Mostrar las pestañas",
       edShowTabsHelp: "La línea Resumen, Planes de ahorro, Alertas de precio, Insights, Transacciones. Desactivado deja la tarjeta en la pestaña elegida abajo.",
       edTabSavings: "Planes de ahorro",
@@ -1456,11 +1730,11 @@
       edShowChange: "Variación",
       edShowChangeHelp: "La variación en euros en el periodo elegido, bajo el valor total.",
       edShowTotalChart: "Curva",
-      edShowTotalChartHelp: "La rentabilidad en el periodo elegido como pequeña curva junto al valor total. Un clic en ella abre Insights. Se dibuja con lo que Home Assistant ha registrado, así que empieza cuando se configuró la integración.",
+      edShowTotalChartHelp: "La rentabilidad del periodo elegido como pequeña curva junto al valor total, desde cero al inicio del periodo, sin los ingresos. Un clic abre Insights.",
       edBlockSections: "Secciones",
       edBlockSectionsHelp: "Qué secciones lista el resumen.",
       edShowCash: "Efectivo",
-      edShowCashHelp: "El saldo en efectivo.",
+      edShowCashHelp: "El saldo en efectivo - y, entre paréntesis, lo invertible cuando difiere: línea de crédito utilizada, órdenes aún abiertas.",
       edShowPortfolio: "Cartera",
       edShowPortfolioHelp: "Las posiciones.",
       edShowCrypto: "Crypto",
@@ -1540,6 +1814,7 @@
       edPeriodActiveHelp: "Fondo del periodo elegido.",
       edElTotal: "Valor total",
       edElTotalHelp: "La cifra grande en la parte superior del resumen.",
+      edElProductTotalHelp: "La cifra grande en lo alto de la página del producto.",
       edElChange: "Variación",
       edElChangeHelp: "La línea bajo el valor total. Su color es el de ganancia o pérdida.",
       edElSection: "Encabezados de sección",
@@ -1557,7 +1832,7 @@
       edChartAxis: "Etiquetas de los ejes",
       edChartAxisHelp: "Los precios a la derecha - con el actual resaltado al final de la curva - y las fechas abajo.",
       edHistoryNote: "Nota bajo la curva de la cartera",
-      edHistoryNoteHelp: "La línea bajo el gráfico de Insights que indica que la curva la registra Home Assistant y empieza cuando se configuró la integración.",
+      edHistoryNoteHelp: "La línea bajo el gráfico de Insights que dice de dónde viene la curva.",
       edSparkWidth: "Ancho de la curva en la lista",
       edSparkWidthHelp: "Ancho de la pequeña curva en una entrada de la lista, en píxeles.",
       edElRowName: "Nombre",
@@ -1635,6 +1910,7 @@
       p1d: "1D", p1w: "1W", p1m: "1M", p3m: "3M", p6m: "6M", pytd: "YTD", p1y: "1J", pmax: "MAX",
       psince: "Sinds aankoop",
       lblToday: "Vandaag",
+      yesterday: "Gisteren",
       lblWeek: "Week",
       lblMonth: "Maand",
       lbl3m: "3 maanden",
@@ -1665,6 +1941,8 @@
       updatedHours: (n) => `${n} uur geleden bijgewerkt`,
       back: "Terug",
       refresh: "Nu bijwerken",
+      signInNeeded: "Scalable vraagt om opnieuw aan te melden: Instellingen → Reparaties.",
+      historyGap: "Niets gelezen",
       yourPosition: "Jouw positie",
       atPurchase: "bij aankoop",
       units: "stuks",
@@ -1673,6 +1951,57 @@
       bid: "Verkopen",
       ask: "Kopen",
       outdated: "Handel gesloten",
+      productBroker: "Broker",
+      productOvernight: "Spaarrekening",
+      productFixed: "Termijndeposito",
+      productCredit: "Krediet",
+      creditUsed: "Gebruikt",
+      creditAvailable: "Beschikbaar",
+      creditLine: "Kredietlijn",
+      edShowCreditBar: "Gebruiksbalk",
+      edShowCreditBarHelp: "De balk van de kredietlijn, gebruikt tegenover vrij. Het uiterlijk staat onder Opmaak → Algemeen.",
+      edElCreditBar: "Gebruiksbalk",
+      edElCreditBarHelp: "De balk van de kredietlijn.",
+      edCreditBarHeight: "Dikte",
+      edCreditBarHeightHelp: "Dikte van de balk, bijv. 8px.",
+      edCreditBarColorHelp: "Kleur van het gebruikte deel. Leeg houdt die van Scalable.",
+      balance: "Saldo",
+      interestRate: "Rentetarief",
+      nextPayout: "Volgende uitkering",
+      expectedAmount: "Verwacht bedrag",
+      accruedOf: (a) => `${a} opgebouwd`,
+      investable: (a) => `${a} belegbaar`,
+      amount: "Bedrag",
+      endDate: "Einddatum",
+      renewalOn: "Automatisch verlengen aan",
+      renewalOff: "Automatisch verlengen uit",
+      termMonths: (n) => `${n} maanden`,
+      perYear: "p.j.",
+      products: "Productkeuze",
+      edProducts: "Productkeuzelijst aanbieden",
+      edProductsHelp: "Een keuzelijst onder de titel - zonder titel op diens regel - die schakelt tussen de hierboven aangeboden producten. Uit blijft de kaart op het startproduct.",
+      edProductsBlock: "Producten",
+      edShowProductHead: "Productkop tonen",
+      edShowProductHeadHelp: "Uit begint de pagina direct onder de titelregel.",
+      edShowProductIcon: "Zijn symbool tonen",
+      edShowProductIconHelp: "De schijf met het symbool van het product voor de naam.",
+      edElProductName: "Productnaam",
+      edElProductNameHelp: "De naam van het product boven aan zijn pagina.",
+      edElProductSub: "Regel onder de productnaam",
+      edElProductSubHelp: "Het abonnement van de broker, de soort van de spaarrekening, de looptijd van een termijndeposito.",
+      edProductIcon: "Symbool",
+      edProductIconHelp: "Het symbool op de schijf. Om te beginnen dat van de web-app.",
+      edProductIconBg: "Schijf achter het symbool",
+      edProductIconBgHelp: "De kleur van de schijf. Leeg houdt die van de web-app.",
+      edProductsBlockHelp: "Welke producten de kaart aanbiedt. Een uitgeschakeld product neemt zijn instellingen mee, hier en onder Inhoud, Lijst en Opmaak.",
+      edProductFixed: "Termijndeposito's",
+      edDefaultProduct: "Beginnen met",
+      edDefaultProductHelp: "Het product waarmee de kaart opent. Als het niet wordt aangeboden, het eerste dat wel.",
+      edShowOvernightTx: "Transacties onder het overzicht",
+      edShowOvernightTabsHelp: "De regel Overzicht, Transacties. Uit blijft de rekening op haar overzicht.",
+      edShowOvernightTxHelp: "De transacties van de rekening onder haar cijfers. Het tabblad Transacties heeft ze hoe dan ook.",
+      edShowFixedRing: "Rentering",
+      edShowFixedRingHelp: "De ring die door de looptijd loopt, met de tot nu toe opgebouwde rente in het midden.",
       transactions: "Transacties",
       txOpen: "Open",
       txNone: "Geen transacties",
@@ -1750,9 +2079,9 @@
       edHideTitle: "Verbergen",
       edHideTitleHelp: "Verbergt de titelregel, ook als hierboven een titel is ingesteld.",
       edShowUpdated: "Laatste update tonen",
-      edShowUpdatedHelp: "Naast de titel: hoe lang geleden Scalable voor het laatst is gelezen. Verdwijnt samen met de titel.",
+      edShowUpdatedHelp: "Naast de titel: hoe lang geleden Scalable is gelezen. Blijft ook zonder titel; rood zolang Scalable om opnieuw aanmelden vraagt.",
       edShowRefresh: "Vernieuwsymbool tonen",
-      edShowRefreshHelp: "Een klein symbool naast de titel dat Scalable meteen opnieuw leest in plaats van op de volgende update te wachten. Verdwijnt met de titel.",
+      edShowRefreshHelp: "Leest Scalable meteen opnieuw in plaats van op de volgende update te wachten. Blijft ook zonder titel; rood zolang Scalable om opnieuw aanmelden vraagt.",
       edShowTabs: "Tabbladen tonen",
       edShowTabsHelp: "De regel Overzicht, Spaarplannen, Prijsalarmen, Insights, Transacties. Uit laat de kaart op het hieronder gekozen tabblad staan.",
       edTabSavings: "Spaarplannen",
@@ -1776,11 +2105,11 @@
       edShowChange: "Verandering",
       edShowChangeHelp: "De verandering in euro's over de gekozen periode, onder de totale waarde.",
       edShowTotalChart: "Curve",
-      edShowTotalChartHelp: "Het rendement over de gekozen periode als kleine curve naast de totale waarde. Een klik erop opent Insights. Ze wordt getekend uit wat Home Assistant heeft vastgelegd en begint dus bij het instellen van de integratie.",
+      edShowTotalChartHelp: "Het rendement over de gekozen periode als kleine curve naast de totale waarde, vanaf nul aan het begin van de periode, stortingen eruit gehaald. Een klik opent Insights.",
       edBlockSections: "Secties",
       edBlockSectionsHelp: "Welke secties het overzicht toont.",
       edShowCash: "Saldo",
-      edShowCashHelp: "Het kassaldo.",
+      edShowCashHelp: "Het kassaldo - en tussen haakjes wat belegbaar is als dat verschilt: bij een gebruikte kredietlijn, bij nog open orders.",
       edShowPortfolio: "Portefeuille",
       edShowPortfolioHelp: "De posities.",
       edShowCrypto: "Crypto",
@@ -1860,6 +2189,7 @@
       edPeriodActiveHelp: "Achtergrond van de gekozen periode.",
       edElTotal: "Totale waarde",
       edElTotalHelp: "Het grote getal bovenaan het overzicht.",
+      edElProductTotalHelp: "Het grote getal boven aan de pagina van het product.",
       edElChange: "Verandering",
       edElChangeHelp: "De regel onder de totale waarde. De kleur is de winst- of verlieskleur.",
       edElSection: "Sectiekoppen",
@@ -1877,7 +2207,7 @@
       edChartAxis: "Aslabels",
       edChartAxisHelp: "Koersen rechts - met de huidige gemarkeerd aan het einde van de curve - en datums onderaan.",
       edHistoryNote: "Notitie onder de portefeuillecurve",
-      edHistoryNoteHelp: "De regel onder de Insights-grafiek die zegt dat de curve door Home Assistant wordt vastgelegd en begint bij het instellen van de integratie.",
+      edHistoryNoteHelp: "De regel onder de Insights-grafiek die zegt waar de curve vandaan komt.",
       edSparkWidth: "Curvebreedte in de lijst",
       edSparkWidthHelp: "Breedte van de kleine curve in een lijstitem, in pixels.",
       edElRowName: "Naam",
@@ -1976,6 +2306,42 @@
     // The way to make the integration look again now, beside the moment it
     // last did.
     show_refresh: true,
+    // The dropdown at the top right - Broker, Tagesgeld, Festgeld - where
+    // the account has a savings product beside the broker.
+    show_products: true,
+    // Which of the account's products the card offers, and the one it
+    // opens on. A product that is not offered takes its settings with it.
+    product_broker: true,
+    product_overnight: true,
+    product_fixed: true,
+    product_credit: true,
+    default_product: "broker",
+    // The overnight page lists the account's transactions under its
+    // figures; the fixed-term page draws the ring through the term.
+    overnight_show_tabs: true,
+    overnight_show_tab_transactions: true,
+    overnight_default_tab: "overview",
+    show_overnight_transactions: true,
+    show_fixed_ring: true,
+    // The credit page draws the bar of the line, used against free.
+    show_credit_bar: true,
+    // Each product's head over the tabs - its symbol on a disc, its name
+    // and the line under it - with a switch for the head and for the symbol.
+    // Each product's symbol on its disc - the web app's to begin with, so
+    // the picker shows it; pruneDefaults keeps an unchanged one out of the
+    // card's YAML all the same.
+    broker_icon: "mdi:chart-line",
+    overnight_icon: "mdi:piggy-bank",
+    fixed_icon: "mdi:safe",
+    credit_icon: "mdi:wallet-plus",
+    broker_show_head: true,
+    broker_show_icon: true,
+    overnight_show_head: true,
+    overnight_show_icon: true,
+    fixed_show_head: true,
+    fixed_show_icon: true,
+    credit_show_head: true,
+    credit_show_icon: true,
     // The tab line of Scalable's web app. Overview is always there; the
     // other four each have a switch.
     show_tabs: true,
@@ -2026,8 +2392,22 @@
     ...look("title"),
     ...look("updated"),
     ...look("tabs", { tabs_active_color: "" }),
+    ...look("overnight_tabs", { overnight_tabs_active_color: "" }),
     ...look("period", { period_active_background_color: "" }),
     ...look("total"),
+    ...look("overnight_total"),
+    ...look("fixed_total"),
+    ...look("broker_name", { broker_icon_background_color: "" }),
+    ...look("broker_sub"),
+    ...look("overnight_name", { overnight_icon_background_color: "" }),
+    ...look("overnight_sub"),
+    ...look("fixed_name", { fixed_icon_background_color: "" }),
+    ...look("fixed_sub"),
+    ...look("credit_name", { credit_icon_background_color: "" }),
+    ...look("credit_total"),
+    // The bar of the credit line: its colour and its thickness.
+    credit_bar_color: "",
+    credit_bar_height: "",
     ...look("change"),
     ...look("section"),
     ...look("section_value"),
@@ -2109,17 +2489,148 @@
   // takes the first that yields enough points, so a portfolio recorded for
   // three days still gets a curve under "1Y" instead of three dots.
   const DAY = 86400000;
-  const HISTORY_RANGES = {
-    "1d": { back: DAY, periods: ["5minute"] },
-    "1w": { back: 7 * DAY, periods: ["hour", "5minute"] },
-    "1m": { back: 30 * DAY, periods: ["hour", "5minute"] },
-    "3m": { back: 91 * DAY, periods: ["day", "hour", "5minute"] },
-    "6m": { back: 182 * DAY, periods: ["day", "hour", "5minute"] },
-    "ytd": { back: null, periods: ["day", "hour", "5minute"] },
-    "1y": { back: 365 * DAY, periods: ["day", "hour", "5minute"] },
-    "since": { back: 3650 * DAY, periods: ["day", "hour", "5minute"] },
-    "max": { back: 3650 * DAY, periods: ["day", "hour", "5minute"] },
+  // Every period begins where the web app's does: with the close of the
+  // day before its first day - a week ago, the same day a month ago, the
+  // first of the year - not at this minute a week ago. That close is the
+  // first point, where the return stands at nought. One day is the trading
+  // day before the present one and the present one; on a weekend that is
+  // Thursday and Friday.
+  const TRADING_OPEN = 6;
+  const TRADING_CLOSE = 23;
+  const dayStart = (date) => new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const monthsBack = (now, months) => new Date(now.getFullYear(), now.getMonth() - months, now.getDate());
+  // Where the web app's clock stands: inside a trading day it is now; after
+  // the close it stays at 23:00 of that day until the next trading day
+  // opens at 06:00 - the charts stand still over the night and the
+  // weekend, and "one day" at 00:15 is still the day that closed.
+  const isWeekday = (date) => date.getDay() !== 0 && date.getDay() !== 6;
+  // Scalable keeps its hours in Germany, whatever clock the browser runs
+  // on: the hour and the weekday of a moment, read in Scalable's zone.
+  const MARKET_ZONE = "Europe/Berlin";
+  function marketClock(stamp) {
+    try {
+      const parts = new Intl.DateTimeFormat("en-US", {
+        timeZone: MARKET_ZONE, weekday: "short", hour: "numeric", minute: "numeric", hourCycle: "h23",
+      }).formatToParts(new Date(stamp));
+      const read = (type) => (parts.find((part) => part.type === type) || {}).value;
+      return {
+        weekday: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(read("weekday")),
+        hour: Number(read("hour")) + Number(read("minute")) / 60,
+      };
+    } catch (err) {
+      const at = new Date(stamp);
+      return { weekday: at.getDay(), hour: at.getHours() + at.getMinutes() / 60 };
+    }
+  }
+  const marketOpen = (stamp) => {
+    const clock = marketClock(stamp);
+    return clock.weekday !== 0 && clock.weekday !== 6 && clock.hour >= TRADING_OPEN && clock.hour < TRADING_CLOSE;
   };
+  function tradingNow() {
+    const now = new Date();
+    let day = dayStart(now);
+    if (isWeekday(day) && now.getTime() >= day.getTime() + TRADING_OPEN * 3600000) {
+      return new Date(Math.min(now.getTime(), day.getTime() + TRADING_CLOSE * 3600000));
+    }
+    do {
+      day = new Date(day.getFullYear(), day.getMonth(), day.getDate() - 1);
+    } while (!isWeekday(day));
+    return new Date(day.getTime() + TRADING_CLOSE * 3600000);
+  }
+  // Whether a security can be traded now. Scalable says so itself once
+  // trading has closed - the price is marked outdated - but says it late,
+  // so the hours Scalable trades in come first: weekdays from 06:00 to
+  // 23:00 in Germany, the same hours the charts run on. Crypto trades
+  // round the clock.
+  function tradingClosed(item) {
+    if (item && item.outdated === true) return true;
+    if (item && item.type === "CRYPTO") return false;
+    return !marketOpen(Date.now());
+  }
+  function tradingDayStart(before) {
+    let day = dayStart(tradingNow());
+    let left = before;
+    for (;;) {
+      if (day.getDay() !== 0 && day.getDay() !== 6) {
+        if (left === 0) return day;
+        left -= 1;
+      }
+      day = new Date(day.getFullYear(), day.getMonth(), day.getDate() - 1);
+    }
+  }
+  const HISTORY_RANGES = {
+    "1d": { start: () => tradingDayStart(1), periods: ["5minute"] },
+    "1w": { start: (now) => new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7), periods: ["hour", "5minute"] },
+    "1m": { start: (now) => monthsBack(now, 1), periods: ["hour", "5minute"] },
+    "3m": { start: (now) => monthsBack(now, 3), periods: ["day", "hour", "5minute"] },
+    "6m": { start: (now) => monthsBack(now, 6), periods: ["day", "hour", "5minute"] },
+    "ytd": { start: (now) => new Date(now.getFullYear(), 0, 1), periods: ["day", "hour", "5minute"] },
+    "1y": { start: (now) => new Date(now.getFullYear() - 1, now.getMonth(), now.getDate()), periods: ["day", "hour", "5minute"] },
+    "since": { start: (now) => new Date(now.getFullYear() - 10, now.getMonth(), now.getDate()), periods: ["day", "hour", "5minute"], pad: false },
+    "max": { start: (now) => new Date(now.getFullYear() - 10, now.getMonth(), now.getDate()), periods: ["day", "hour", "5minute"], pad: false },
+  };
+  // The web app's charts run on trading time - weekdays from 06:00 to
+  // 23:00, in the local time of the browser - with no nights and no
+  // weekends in them. The card's curves are cut to the same, so a weekend
+  // is not a flat line across the chart. Points a day apart are kept by
+  // the weekday alone.
+  // The spacing of a series - an hour, five minutes, a day - read off its
+  // first points.
+  function pointStep(points) {
+    const gaps = [];
+    for (let i = 1; i < Math.min(points.length, 24); i++) gaps.push(points[i].t - points[i - 1].t);
+    gaps.sort((a, b) => a - b);
+    return gaps.length ? gaps[Math.floor(gaps.length / 2)] : 3600000;
+  }
+  function inTradingTime(stamp, daily) {
+    if (daily) return isWeekday(new Date(stamp));
+    return marketOpen(stamp);
+  }
+  function tradingPoints(points) {
+    if (!points || points.length < 3) return points;
+    const daily = pointStep(points) >= 20 * 3600000;
+    const kept = points.filter((point) => inTradingTime(point.t, daily));
+    return kept.length >= 2 ? kept : points;
+  }
+  // A period that reaches back before the first record - three months, on
+  // a portfolio a month old - is padded flat from its start, at the
+  // series' own spacing and in trading time, the way the web app draws
+  // the months before an account existed as a line along nought.
+  function padBack(points, from) {
+    if (!points.length || points[0].t <= from) return points;
+    const step = pointStep(points);
+    const daily = step >= 20 * 3600000;
+    const pad = [];
+    for (let t = from; t < points[0].t && pad.length < 5000; t += step) {
+      if (inTradingTime(t, daily)) pad.push({ t, v: points[0].v, pad: true });
+    }
+    return pad.concat(points);
+  }
+  // Where the record has holes - hours in which nothing could be read, the
+  // sign-in having lapsed - the curve is not stretched across them: every
+  // missing slot of trading time gets a point of its own, flat on the last
+  // figure read and flagged, and the chart greys the stretch. A slot counts
+  // as missing only when a whole one fits between two points, so the hour
+  // the recorder has not summed up yet is no hole.
+  function fillGaps(points) {
+    if (!points || points.length < 2) return points;
+    const step = pointStep(points);
+    const daily = step >= 20 * 3600000;
+    const out = [points[0]];
+    for (let i = 1; i < points.length; i++) {
+      const prev = points[i - 1];
+      const point = points[i];
+      let added = 0;
+      for (let t = prev.t + step; t <= point.t - step && added < 5000; t += step) {
+        if (inTradingTime(t, daily)) {
+          out.push({ t, v: prev.v, gap: true });
+          added += 1;
+        }
+      }
+      out.push(point);
+    }
+    return out;
+  }
   const ENOUGH_POINTS = 12;
 
   // Statuses of an order that has not run yet - the web app's "Offen".
@@ -2229,6 +2740,21 @@
     }
   }
 
+  // The moment a chart's hover names, in the period's own form: on a day
+  // the day's name and the time, on a week and a month date and time,
+  // from three months up the date alone - the way the web app does it.
+  function chartWhen(hass, str, stamp, range) {
+    const date = { day: "2-digit", month: "2-digit", year: "numeric" };
+    const clock = { hour: "2-digit", minute: "2-digit" };
+    if (range === "1d") {
+      const gone = Math.round((dayStart(new Date()).getTime() - dayStart(new Date(stamp)).getTime()) / DAY);
+      const day = gone === 0 ? str.lblToday : gone === 1 ? str.yesterday : dateTime(hass, stamp, date);
+      return `${day}, ${dateTime(hass, stamp, clock)}`;
+    }
+    if (range === "1w" || range === "1m") return `${dateTime(hass, stamp, date)}, ${dateTime(hass, stamp, clock)}`;
+    return dateTime(hass, stamp, date);
+  }
+
   const FULL_TIME = {
     day: "2-digit", month: "short", year: "numeric",
     hour: "2-digit", minute: "2-digit", second: "2-digit",
@@ -2306,16 +2832,42 @@
     const pad = opts.pad === undefined ? 2 : opts.pad;
     if (!values || values.length < 2) return "";
     const reference = isNumber(opts.reference) ? opts.reference : values[0];
-    let low = Math.min(reference, ...values);
-    let high = Math.max(reference, ...values);
+    let low = isNumber(opts.low) ? opts.low : Math.min(reference, ...values);
+    let high = isNumber(opts.high) ? opts.high : Math.max(reference, ...values);
     if (high === low) { high += 1; low -= 1; }
     const y = (value) => pad + ((high - value) / (high - low)) * (height - 2 * pad);
     const step = 100 / (values.length - 1);
-    const stretch = (from, to) =>
-      values
-        .slice(from, to + 1)
-        .map((value, i) => `${i ? "L" : "M"}${((from + i) * step).toFixed(2)},${y(value).toFixed(2)}`)
-        .join("");
+    const gaps = opts.gaps || [];
+    const x = (i) => (i * step).toFixed(2);
+    // A path over a stretch of points, lifted at every flagged one.
+    const stretch = (from, to) => {
+      let d = "";
+      let drawing = false;
+      for (let i = from; i <= to; i++) {
+        if (gaps[i]) {
+          drawing = false;
+          continue;
+        }
+        d += `${drawing ? "L" : "M"}${x(i)},${y(values[i]).toFixed(2)}`;
+        drawing = true;
+      }
+      return d;
+    };
+    // The stretches between two points that are not flagged - the runs the
+    // fill is closed over - and the runs of flagged points, greyed.
+    const runs = (from, to, flagged) => {
+      const found = [];
+      let start = -1;
+      for (let i = from; i <= to + 1; i++) {
+        const is = i <= to && !!gaps[i] === flagged;
+        if (is && start < 0) start = i;
+        if (!is && start >= 0) {
+          found.push([start, i - 1]);
+          start = -1;
+        }
+      }
+      return found;
+    };
     // What came before the reference - the day before, in a one-day chart -
     // is drawn grey, the way the web app draws it: it is there for the eye
     // to see where the price came from, and is not part of the change.
@@ -2325,6 +2877,17 @@
     const lineStart = (cut * step).toFixed(2);
     const refY = y(reference);
     const split = Math.max(0, Math.min(1, refY / height));
+    const fillPath = runs(cut, values.length - 1, false)
+      .filter(([from, to]) => to > from)
+      .map(([from, to]) => `${stretch(from, to)}L${x(to)},${refY.toFixed(2)}L${x(from)},${refY.toFixed(2)}Z`)
+      .join("");
+    const bands = runs(0, values.length - 1, true)
+      .map(([from, to]) => {
+        const left = Math.max(0, from - 1);
+        const right = Math.min(values.length - 1, to + 1);
+        return `<rect class="gap" x="${x(left)}" y="0" width="${((right - left) * step).toFixed(2)}" height="${height}"/>`;
+      })
+      .join("");
     chartIds += 1;
     const id = `sc${chartIds}`;
     const width = opts.lineWidth || 1.5;
@@ -2345,12 +2908,10 @@
       `<stop offset="1" style="stop-color: var(--sc-loss); stop-opacity: 0.5"/>` +
       `</linearGradient>` +
       `</defs>` +
-      (opts.fill
-        ? `<path d="${line}L100,${refY.toFixed(2)}L${lineStart},${refY.toFixed(2)}Z"` +
-          ` fill="url(#${id}f)" stroke="none"/>`
-        : "") +
+      bands +
+      (opts.fill ? `<path d="${fillPath}" fill="url(#${id}f)" stroke="none"/>` : "") +
       (opts.showReference
-        ? `<line x1="0" x2="100" y1="${refY.toFixed(2)}" y2="${refY.toFixed(2)}" class="ref"` +
+        ? `<line x1="${lineStart}" x2="100" y1="${refY.toFixed(2)}" y2="${refY.toFixed(2)}" class="ref"` +
           ` vector-effect="non-scaling-stroke"/>`
         : "") +
       (before
@@ -2375,16 +2936,99 @@
     return Math.max(0, count - 1);
   }
 
+  // What was paid in and taken out while a curve ran, by the index of the
+  // point it moved: a deposit is no gain, so the return curve takes it out
+  // from there on. Scalable dates a deposit to midnight and the value moves
+  // when the cash arrives, hours later - so each is pinned to the jump
+  // nearest its amount within a day and a half of its booking. A jump that
+  // straddles a few points - the cash arrived as an hour turned, or the
+  // value climbed to it over a few hours - is taken as one, up to six
+  // points long, and the amount is shared out over it the way the value
+  // rose. One that made no jump worth the name counts from its own
+  // time instead. Only the points after the curve's base are looked at:
+  // what settled before the period began is in the base already - and a
+  // point carries the value at the end of its hour or day, so the base
+  // reaches to where the next point starts.
+  function cashFlows(transactions, points, cut) {
+    const flows = {};
+    // The first recorded point holds whatever was paid in before it - a
+    // padded stretch before it only repeats its value - so the base
+    // reaches to the end of that point's hour or day as well.
+    const recorded = Math.max(0, points.findIndex((point) => !point.pad));
+    const base = Math.max(
+      points[Math.min(cut + 1, points.length - 1)].t,
+      points[Math.min(recorded + 1, points.length - 1)].t
+    );
+    const window = 36 * 3600000;
+    for (const tx of transactions || []) {
+      if (!tx || tx.kind !== "cash" || !tx.cash) continue;
+      const type = tx.cash.transactionType;
+      if (type !== "DEPOSIT" && type !== "WITHDRAWAL") continue;
+      const raw = toNumber(tx.cash.amount);
+      if (!isNumber(raw) || !raw) continue;
+      const amount = type === "WITHDRAWAL" ? -Math.abs(raw) : Math.abs(raw);
+      const at = new Date(tx.lastEventAt).getTime();
+      if (!isNumber(at) || at < base - window) continue;
+      let best = null;
+      let bestOff = Infinity;
+      for (let i = cut + 1; i < points.length; i++) {
+        if (Math.abs(points[i].t - at) > window) continue;
+        for (let span = 1; span <= 6 && i + span - 1 < points.length; span++) {
+          const sum = points[i + span - 1].v - points[i - 1].v;
+          const off = Math.abs(sum - amount);
+          if (off < bestOff) { bestOff = off; best = { from: i, to: i + span - 1, sum }; }
+        }
+      }
+      if (best && bestOff <= Math.abs(amount) / 2 && best.sum) {
+        for (let i = best.from; i <= best.to; i++) {
+          flows[i] = (flows[i] || 0) + ((points[i].v - points[i - 1].v) * amount) / best.sum;
+        }
+        continue;
+      }
+      if (at <= base) continue;
+      const index = points.findIndex((point, i) => i > cut && point.t >= at);
+      if (index >= 0) flows[index] = (flows[index] || 0) + amount;
+    }
+    return flows;
+  }
+
   // Where a value sits between the chart's edges, in percent from the top -
   // the same arithmetic as chartSvg, for the labels laid over it.
+  // Round figures along a chart's side, the way the web app has them -
+  // 50, 100, 150 rather than 82.00 and -33.87: a step of 1, 2, 4 or 5
+  // times a power of ten, the smallest that puts the curve inside six
+  // intervals or fewer, and the chart's edges moved out to the round
+  // figures on either side of the curve.
+  function niceScale(low, high) {
+    const span = Math.max(high - low, 1e-9);
+    const magnitude = Math.pow(10, Math.floor(Math.log10(span)) - 1);
+    let step = magnitude;
+    for (const power of [1, 10, 100]) {
+      for (const unit of [1, 2, 4, 5]) {
+        step = unit * power * magnitude;
+        if (Math.ceil(high / step) - Math.floor(low / step) <= 6) break;
+      }
+      if (Math.ceil(high / step) - Math.floor(low / step) <= 6) break;
+    }
+    const bottom = Math.floor(low / step) * step;
+    const top = Math.ceil(high / step) * step;
+    const ticks = [];
+    for (let tick = top; tick >= bottom - step / 2; tick -= step) ticks.push(Math.round(tick * 1e6) / 1e6);
+    return { low: bottom, high: top, step, ticks };
+  }
+
   function chartScale(values, reference, height, pad) {
     const ref = isNumber(reference) ? reference : values[0];
     let low = Math.min(ref, ...values);
     let high = Math.max(ref, ...values);
     if (high === low) { high += 1; low -= 1; }
+    const nice = niceScale(low, high);
+    low = nice.low;
+    high = nice.high;
     return {
       low,
       high,
+      ticks: nice.ticks,
       top: (value) => ((pad + ((high - value) / (high - low)) * (height - 2 * pad)) / height) * 100,
     };
   }
@@ -2499,9 +3143,10 @@
       // The tab and the period the card opens on are settings; where it goes
       // from there is the reader's. So each is only reset when its setting
       // changes - which is what lets the editor's preview follow the field.
-      if (this._defaultTab !== this._config.default_tab) {
-        this._defaultTab = this._config.default_tab;
-        this._tab = this._config.default_tab;
+      const opening = `${this._config.default_tab}|${this._config.overnight_default_tab}`;
+      if (this._defaultTab !== opening) {
+        this._defaultTab = opening;
+        this._tab = this._openingTab(this._data ? this._productKey() : "broker");
         this._detail = null;
         this._tx = null;
       }
@@ -2551,9 +3196,20 @@
 
     connectedCallback() {
       this._subscribe();
-      // "updated 3 min ago" goes stale by itself.
+      // "updated 3 min ago" goes stale by itself - and when trading opens
+      // or closes between two updates, the moon has to come or go without
+      // waiting for the next one.
       if (!this._clock) {
-        this._clock = setInterval(() => this._renderUpdated(), 60000);
+        this._wasClosed = tradingClosed({});
+        this._clock = setInterval(() => {
+          const closed = tradingClosed({});
+          if (closed !== this._wasClosed) {
+            this._wasClosed = closed;
+            this._render();
+          } else {
+            this._renderUpdated();
+          }
+        }, 60000);
       }
       this._render();
     }
@@ -2674,9 +3330,59 @@
       const kept = this._histories[key];
       if (!kept || Date.now() - kept.at > 300000) this._fetchHistory(sensor, range);
       if (!kept) return undefined;
-      const points = kept.points.slice();
-      if (isNumber(current)) points.push({ t: Date.now(), v: current });
-      return points;
+      // Trading time only, from the close of the day before the period's
+      // first day - or, where the record starts later, padded flat from
+      // the period's start; the present, as the web app's clock has it,
+      // always goes on the end.
+      const def = HISTORY_RANGES[range] || HISTORY_RANGES["1m"];
+      const now = tradingNow();
+      const first = def.start(now).getTime();
+      const traded = tradingPoints(kept.points.slice());
+      const before = traded.filter((point) => point.t < first);
+      let points = traded.filter((point) => point.t >= first);
+      // Since purchase and MAX begin where the record does, unpadded.
+      points = before.length ? [before[before.length - 1]].concat(points) : def.pad === false ? points : padBack(points, first);
+      if (isNumber(current)) points.push({ t: now.getTime(), v: current });
+      return fillGaps(points);
+    }
+
+    // The return the way the web app draws it for a period: what the
+    // portfolio is worth, less what it was worth when the period began,
+    // less what was paid in and plus what was taken out since - so every
+    // period starts at nought and a deposit is no gain. Built from the
+    // value's history, which is what Home Assistant records; the "return"
+    // sensor has one basis for every period. A one-day curve keeps the day
+    // before, grey, the way the web app does: its cut says how many points
+    // that is. The curve ends on Scalable's own figure for the period
+    // where there is one. Points are undefined while they are on their way.
+    _returnHistory(range) {
+      return this._curveHistory(range, "return");
+    }
+
+    // The value's curve, or the return's, for a period - see
+    // _returnHistory. In a one-day chart the points of the trading day
+    // before are the grey stretch, and the day's base is its close.
+    _curveHistory(range, mode) {
+      const data = this._data || {};
+      const points = this._history("total", range, data.total);
+      if (!points || points.length < 2) return { points, cut: 0 };
+      let cut = 0;
+      if (range === "1d") {
+        const today = tradingDayStart(0).getTime();
+        cut = Math.max(0, points.filter((point) => point.t < today).length - 1);
+      }
+      if (mode === "value") return { points, cut };
+      const base = points[cut].v;
+      const flows = cashFlows(data.transactions, points, cut);
+      let moved = 0;
+      const out = points.map((point, i) => {
+        if (i > cut) moved += flows[i] || 0;
+        return { t: point.t, v: point.v - base - moved, gap: point.gap };
+      });
+      const period = CHART_PERIODS.find((p) => p.key === range) || OVERVIEW_PERIODS.find((p) => p.key === range);
+      const figure = period && data.returns ? data.returns[period.tf] : null;
+      if (isNumber(figure)) out[out.length - 1] = { t: out[out.length - 1].t, v: figure };
+      return { points: out, cut };
     }
 
     async _fetchHistory(sensor, range) {
@@ -2690,8 +3396,11 @@
       }
       this._historyPending.add(key);
       const def = HISTORY_RANGES[range] || HISTORY_RANGES["1m"];
-      const now = new Date();
-      const start = def.back ? new Date(now.getTime() - def.back) : new Date(now.getFullYear(), 0, 1);
+      const now = tradingNow();
+      // Four days before the period's first day, so the close of the
+      // trading day before it is in - across a weekend and a holiday.
+      const first = def.start(now);
+      const start = new Date(first.getFullYear(), first.getMonth(), first.getDate() - 4);
       let best = [];
       for (const period of def.periods) {
         let found = [];
@@ -2818,6 +3527,11 @@
     // ---------------------------------------------------------------- draw
     _tabs() {
       const config = this._config;
+      const product = this._productKey();
+      if (product === "overnight") {
+        return config.overnight_show_tab_transactions === false ? ["overview"] : ["overview", "transactions"];
+      }
+      if (product.startsWith("fixed:") || product === "credit") return ["overview"];
       const tabs = ["overview"];
       if (config.show_tab_savings) tabs.push("savings");
       if (config.show_tab_alerts) tabs.push("alerts");
@@ -2856,13 +3570,20 @@
       };
       setVar("--sc-gain", config.gain_color || GAIN);
       setVar("--sc-loss", config.loss_color || LOSS);
-      setVar("--sc-tab-active", config.tabs_active_color);
+      // The tab line's active colour is the product's: the overnight
+      // account has a tab line of its own.
+      setVar(
+        "--sc-tab-active",
+        this._productKey() === "overnight" ? config.overnight_tabs_active_color : config.tabs_active_color
+      );
       setVar("--sc-period-active", config.period_active_background_color);
       const px = (value) => (Number.isFinite(Number(value)) && Number(value) > 0 ? `${Number(value)}px` : "");
       setVar("--sc-chart-height", px(config.chart_height));
       setVar("--sc-spark-width", px(config.sparkline_width));
       setVar("--sc-logo-size", CSS.supports("width", config.logo_size) ? config.logo_size : "");
       setVar("--sc-divider-color", config.divider_color);
+      setVar("--sc-credit-bar", config.credit_bar_color);
+      setVar("--sc-credit-bar-height", CSS.supports("height", config.credit_bar_height) ? config.credit_bar_height : "");
       setVar("--sc-divider-width", CSS.supports("border-top-width", config.divider_width) ? config.divider_width : "");
       setVar("--sc-divider-style", config.divider_style);
       card.classList.toggle("dividers", config.show_divider === true);
@@ -2878,21 +3599,40 @@
       const tabs = this._tabs();
       if (!tabs.includes(this._tab)) this._tab = "overview";
       const data = this._data;
+      const product = this._productKey();
+      // A product with one tab has no tab line to show; the broker and the
+      // overnight account each have a switch of their own under Content.
+      const showTabs =
+        tabs.length > 1 &&
+        config[product === "overnight" ? "overnight_show_tabs" : "show_tabs"] !== false;
       this._series = {};
 
       const head = card.querySelector(".head");
-      head.hidden = config.show_title === false;
+      // The dropdown sits under the title. Without a title it takes the
+      // title's line, with the update time and the refresh symbol at the
+      // right of it; the line is only gone when neither is there.
+      const productSelect = this._productSelectHtml(str);
+      head.hidden =
+        config.show_title === false && !productSelect && !config.show_updated && !config.show_refresh;
+      head.classList.toggle("no-title", config.show_title === false);
+      // Scalable has ended the sign-in: the figures are the last ones read,
+      // and the line says so in red until the repair has been through.
+      const stale = !!(data && data.sign_in_needed);
       head.innerHTML =
-        `<span class="title" style="${elementStyle(config, "title")}">` +
-        `${escapeHtml(config.title || (data && data.name) || str.title)}</span>` +
+        (config.show_title === false
+          ? ""
+          : `<span class="title" style="${elementStyle(config, "title")}">` +
+            `${escapeHtml(config.title || (data && data.name) || str.title)}</span>`) +
         (config.show_updated
-          ? `<span class="updated" style="${elementStyle(config, "updated")}"></span>`
+          ? `<span class="updated${stale ? " stale" : ""}" style="${elementStyle(config, "updated")}"` +
+            `${stale ? ` title="${escapeHtml(str.signInNeeded)}"` : ""}></span>`
           : "") +
+        productSelect +
         (config.show_refresh
           ? `<button type="button" class="refresh${this._refreshing ? " busy" : ""}` +
-            `${this._refreshFailed ? " failed" : ""}"` +
+            `${this._refreshFailed || stale ? " failed" : ""}"` +
             ` data-action="refresh" title="${escapeHtml(
-              this._refreshFailed ? str.failed(this._refreshFailed) : str.refresh
+              stale ? str.signInNeeded : this._refreshFailed ? str.failed(this._refreshFailed) : str.refresh
             )}"` +
             ` aria-label="${escapeHtml(str.refresh)}"><ha-icon icon="mdi:refresh"></ha-icon></button>`
           : "");
@@ -2900,11 +3640,13 @@
 
       const nav = card.querySelector(".nav");
       const overviewOpen = this._tab === "overview" && !this._detail && !this._tx;
-      const showSwitch = config.show_period && overviewOpen && !!data;
-      nav.hidden = !config.show_tabs && !showSwitch;
+      const showSwitch = config.show_period && overviewOpen && !!data && product === "broker";
+      const productHead = data ? this._productHeadFor(product, str) : "";
+      nav.hidden = !showTabs && !showSwitch && !productHead;
       nav.innerHTML =
-        (config.show_tabs
-          ? `<div class="tabs" style="${elementStyle(config, "tabs")}">` +
+        productHead +
+        (showTabs
+          ? `<div class="tabs" style="${elementStyle(config, product === "overnight" ? "overnight_tabs" : "tabs")}">` +
             tabs
               .map(
                 (tab) =>
@@ -2929,7 +3671,16 @@
       let html;
       if (this._tx) html = this._txDetailHtml(str);
       else if (this._detail && this._item(this._detail)) html = this._detailHtml(str);
-      else {
+      else if (product === "overnight") {
+        this._detail = null;
+        html = this._tab === "transactions" ? this._overnightTxHtml(str) : this._overnightHtml(str);
+      } else if (product.startsWith("fixed:")) {
+        this._detail = null;
+        html = this._fixedTermHtml(str, product.slice(6));
+      } else if (product === "credit") {
+        this._detail = null;
+        html = this._creditHtml(str);
+      } else {
         this._detail = null;
         html = {
           overview: () => this._overviewHtml(str),
@@ -3035,6 +3786,309 @@
       );
     }
 
+    // ------------------------------------------------------- the products
+    //
+    // The web app's start page offers the account's products side by side:
+    // the broker, the overnight account ("Tagesgeld") and the fixed-term
+    // accounts ("Festgeld"). Here a dropdown at the top right switches the
+    // card between them; it is only there when there is something besides
+    // the broker to switch to.
+    _productOptions(str) {
+      const data = this._data || {};
+      const config = this._config || {};
+      const options = [];
+      if (config.product_broker !== false) options.push({ value: "broker", label: str.productBroker });
+      if (config.product_overnight !== false && data.overnight) {
+        options.push({ value: "overnight", label: data.overnight.name || str.productOvernight });
+      }
+      if (config.product_credit !== false && data.credit) options.push({ value: "credit", label: str.productCredit });
+      for (const account of config.product_fixed === false ? [] : data.fixed_terms || []) {
+        const term = account.months ? str.termMonths(account.months) : "";
+        options.push({
+          value: `fixed:${account.id}`,
+          label: [account.name || str.productFixed, term].filter(Boolean).join(" · "),
+        });
+      }
+      // Nothing offered at all still shows the broker: a card has to show
+      // something.
+      return options.length ? options : [{ value: "broker", label: str.productBroker }];
+    }
+
+    // Which product the card shows: the one picked in the dropdown, as long
+    // as it is still offered; else the one the card starts on - or, when
+    // that one is not offered either, the first that is. With the dropdown
+    // switched off the card is pinned to the start product.
+    // The tab a product opens on: the broker's and the overnight account's
+    // are settings, the others have only their overview.
+    _openingTab(product) {
+      if (product === "broker") return this._config.default_tab || "overview";
+      if (product === "overnight") return this._config.overnight_default_tab || "overview";
+      return "overview";
+    }
+
+    _productKey() {
+      if (!this._config) return "broker";
+      const options = this._productOptions(t(this._hass));
+      if (this._config.show_products !== false && this._product) {
+        if (options.some((option) => option.value === this._product)) return this._product;
+      }
+      const wanted = this._config.default_product || "broker";
+      const start = options.find(
+        (option) => option.value === wanted || (wanted === "fixed" && option.value.startsWith("fixed:"))
+      );
+      return (start || options[0]).value;
+    }
+
+    // The page head of the product picked - above its tabs, as the web app
+    // has it. Nothing for the broker, whose head is the card's own.
+    _productHeadFor(product, str) {
+      const data = this._data || {};
+      const icon = (kind, standard) => this._config[`${kind}_icon`] || DEFAULTS[`${kind}_icon`] || standard;
+      if (product === "broker") {
+        return this._productHeadHtml(icon("broker", "mdi:chart-line"), str.productBroker, this._brokerPlan(), "broker");
+      }
+      if (product === "overnight" && data.overnight) {
+        const account = data.overnight;
+        return this._productHeadHtml(icon("overnight", "mdi:piggy-bank"), account.name || str.productOvernight, str.productOvernight, "overnight");
+      }
+      if (product.startsWith("fixed:")) {
+        const account = (data.fixed_terms || []).find((item) => item.id === product.slice(6));
+        if (!account) return "";
+        const sub = [account.months ? str.termMonths(account.months) : "", str.productFixed].filter(Boolean).join(" · ");
+        return this._productHeadHtml(icon("fixed", "mdi:safe"), account.name || str.productFixed, sub, "fixed");
+      }
+      if (product === "credit" && data.credit) {
+        return this._productHeadHtml(icon("credit", "mdi:wallet-plus"), str.productCredit, "", "credit");
+      }
+      return "";
+    }
+
+    // The credit line, the way the web app shows it: what is drawn on it
+    // as the big figure, a bar of the line - used against free - and the
+    // three figures under it. The rate and the next interest date are not
+    // in Scalable's interface.
+    _creditHtml(str) {
+      const hass = this._hass;
+      const credit = this._data.credit;
+      if (!credit) return `<div class="empty">${escapeHtml(str.historyNone)}</div>`;
+      const share = credit.line > 0 ? Math.max(0, Math.min(1, (credit.used || 0) / credit.line)) : 0;
+      return (
+        this._productFigureHtml(credit.used, str.creditUsed, "credit", true) +
+        (this._config.show_credit_bar !== false
+          ? `<div class="credit-bar" role="img" aria-label="${escapeHtml(percent(hass, share, false))}">` +
+            `<span style="width: ${(share * 100).toFixed(1)}%"></span></div>`
+          : "") +
+        `<div class="kvs">` +
+        this._kvHtml("mdi:circle", str.creditUsed, money(hass, credit.used)) +
+        this._kvHtml("mdi:circle-outline", str.creditAvailable, money(hass, credit.available)) +
+        this._kvHtml("mdi:wallet-plus-outline", str.creditLine, money(hass, credit.line)) +
+        `</div>`
+      );
+    }
+
+    _productSelectHtml(str) {
+      const options = this._productOptions(str);
+      if (this._config.show_products === false || options.length < 2) return "";
+      const picked = this._productKey();
+      return (
+        `<div class="product-line"><select class="product" data-input="product" aria-label="${escapeHtml(str.products)}">` +
+        options
+          .map(
+            (option) =>
+              `<option value="${escapeHtml(option.value)}"${option.value === picked ? " selected" : ""}>` +
+              `${escapeHtml(option.label)}</option>`
+          )
+          .join("") +
+        `</select></div>`
+      );
+    }
+
+    // A product's page head, the way the web app draws it: the product's
+    // symbol on a disc, its name and a line under it.
+    _productHeadHtml(icon, name, sub, kind) {
+      const config = this._config;
+      if (config[`${kind}_show_head`] === false) return "";
+      // The disc's colour: the product's own setting, or the web app's -
+      // indigo for the broker, terracotta for the savings products.
+      const disc =
+        config[`${kind}_icon_background_color`] ||
+        (kind === "broker" ? "#5c6bc0" : kind === "credit" ? "#7cb342" : "#d97a5f");
+      return (
+        `<div class="d-head">` +
+        (config[`${kind}_show_icon`] !== false
+          ? `<span class="logo big product" style="background: ${escapeHtml(disc)}"><ha-icon icon="${icon}"></ha-icon></span>`
+          : "") +
+        `<div class="d-id"><div class="d-name" style="${elementStyle(config, `${kind}_name`)}">${escapeHtml(name)}</div>` +
+        (sub ? `<div class="d-sub" style="${elementStyle(config, `${kind}_sub`)}">${escapeHtml(sub)}</div>` : "") +
+        `</div></div>`
+      );
+    }
+
+    // The broker's plan - PRIME+, say. Scalable's interface does not name
+    // it anywhere, but bills it: the monthly fee booking reads "Entgelt
+    // PRIME+ Broker", and the plan is read off the latest of those. A plan
+    // without a fee leaves the line empty.
+    _brokerPlan() {
+      const fee = ((this._data && this._data.transactions) || []).find(
+        (tx) =>
+          tx.kind === "cash" && tx.cash && tx.cash.transactionType === "FEE" && /broker/i.test(tx.description || "")
+      );
+      const match = fee && /Entgelt\s+(.+?)\s+Broker/i.exec(fee.description || "");
+      return match ? match[1] : "";
+    }
+
+    _productFigureHtml(value, label, kind, labelAbove) {
+      const caption = `<div class="p-label${labelAbove ? " above" : ""}">${escapeHtml(label)}</div>`;
+      return (
+        `<div class="p-figure">` +
+        (labelAbove ? caption : "") +
+        `<div class="total" style="${elementStyle(this._config, `${kind}_total`)}">${splitHtml(this._hass, value, true)}</div>` +
+        (labelAbove ? "" : caption) +
+        `</div>`
+      );
+    }
+
+    _kvHtml(icon, label, value, sub) {
+      return (
+        `<div class="kv"><span class="kv-label"><ha-icon icon="${icon}"></ha-icon>${escapeHtml(label)}</span>` +
+        `<span class="kv-value">${escapeHtml(value)}` +
+        (sub ? `<span class="kv-sub">${escapeHtml(sub)}</span>` : "") +
+        `</span></div>`
+      );
+    }
+
+    // The overnight account's transactions in the shape the broker's have,
+    // so the one list draws both: money in, money out, interest.
+    _overnightTransactions() {
+      const account = this._data && this._data.overnight;
+      if (!account) return [];
+      const KINDS = {
+        CASH_TRANSFER_IN: "DEPOSIT",
+        CASH_TRANSFER_OUT: "WITHDRAWAL",
+        INTEREST: "INTEREST",
+        INTEREST_PAYOUT: "INTEREST",
+      };
+      return (account.transactions || []).map((tx) => ({
+        id: tx.id,
+        kind: "cash",
+        status: tx.status,
+        lastEventAt: tx.lastEventAt,
+        description: tx.description || "",
+        cash: {
+          transactionType: KINDS[tx.cashTransactionType] || tx.cashTransactionType,
+          amount: tx.amount,
+          relatedIsin: null,
+        },
+      }));
+    }
+
+    _overnightHtml(str) {
+      const hass = this._hass;
+      const account = this._data.overnight;
+      if (!account) return `<div class="empty">${escapeHtml(str.historyNone)}</div>`;
+      const long = { day: "2-digit", month: "long", year: "numeric" };
+      return (
+        this._productFigureHtml(account.balance, str.balance, "overnight") +
+        `<div class="kvs">` +
+        this._kvHtml("mdi:percent-circle-outline", str.interestRate, `${percent(hass, account.interest_rate, false)} ${str.perYear}`) +
+        this._kvHtml(
+          "mdi:calendar-month-outline",
+          str.nextPayout,
+          account.next_payout_date ? dateTime(hass, account.next_payout_date, long) : "–"
+        ) +
+        this._kvHtml(
+          "mdi:hand-coin-outline",
+          str.expectedAmount,
+          money(hass, account.next_payout),
+          str.accruedOf(money(hass, account.accrued))
+        ) +
+        `</div>` +
+        (this._config.show_overnight_transactions !== false
+          ? `<div class="p-title">${escapeHtml(str.tabTransactions)}</div>` +
+            `<div class="tx-list">${this._txListHtml(this._overnightTransactions(), str, true)}</div>`
+          : "")
+      );
+    }
+
+    _filteredOvernight(str) {
+      const hass = this._hass;
+      const search = (this._txSearch || "").trim().toLowerCase();
+      return this._overnightTransactions().filter((tx) => {
+        if (!search) return true;
+        const info = txInfo(tx, str, hass);
+        return [info.kind, info.name, info.end].some((text) => String(text || "").toLowerCase().includes(search));
+      });
+    }
+
+    _overnightTxHtml(str) {
+      return (
+        `<div class="tx-filters">` +
+        `<label class="search"><ha-icon icon="mdi:magnify"></ha-icon>` +
+        `<input type="search" data-input="search" placeholder="${escapeHtml(str.search)}"` +
+        ` value="${escapeHtml(this._txSearch || "")}"></label>` +
+        `</div>` +
+        `<div class="tx-list">${this._txListHtml(this._filteredOvernight(str), str, true)}</div>`
+      );
+    }
+
+    // A fixed-term account: its figures, and a ring that runs from the
+    // start of the term to its end with the interest run up so far in the
+    // middle - the web app's picture of it.
+    _fixedTermHtml(str, id) {
+      const hass = this._hass;
+      const account = (this._data.fixed_terms || []).find((item) => item.id === id);
+      if (!account) return `<div class="empty">${escapeHtml(str.historyNone)}</div>`;
+      const long = { day: "2-digit", month: "long", year: "numeric" };
+      const start = account.start ? new Date(account.start).getTime() : NaN;
+      const end = account.maturity ? new Date(account.maturity).getTime() : NaN;
+      const share = Number.isFinite(start) && Number.isFinite(end) && end > start
+        ? Math.max(0, Math.min(1, (Date.now() - start) / (end - start)))
+        : 0;
+      const radius = 52;
+      const round = 2 * Math.PI * radius;
+      // Interest on a small sum is a small number: shown to nine places,
+      // as the web app shows it, rather than rounded away to 0.00 - the
+      // cents bright, the places beyond them dimmed.
+      const fine = (value) => {
+        if (!isNumber(value)) return escapeHtml("–");
+        try {
+          const parts = new Intl.NumberFormat(localeOf(hass), {
+            style: "currency", currency: "EUR", minimumFractionDigits: 2, maximumFractionDigits: 9,
+          }).formatToParts(value);
+          return parts
+            .map((part) =>
+              part.type === "fraction" && part.value.length > 2
+                ? `${escapeHtml(part.value.slice(0, 2))}<span class="dim">${escapeHtml(part.value.slice(2))}</span>`
+                : escapeHtml(part.value)
+            )
+            .join("");
+        } catch (err) {
+          return escapeHtml(money(hass, value));
+        }
+      };
+      return (
+        this._productFigureHtml(account.amount, str.balance, "fixed") +
+        `<div class="p-body"><div class="kvs">` +
+        this._kvHtml("mdi:percent-circle-outline", str.interestRate, `${percent(hass, account.nominal_rate, false)} ${str.perYear}`) +
+        this._kvHtml("mdi:tray-arrow-down", str.amount, money(hass, account.amount)) +
+        this._kvHtml(
+          "mdi:hand-coin-outline",
+          str.endDate,
+          account.maturity ? dateTime(hass, account.maturity, long) : "–",
+          account.auto_renewal === true ? str.renewalOn : account.auto_renewal === false ? str.renewalOff : ""
+        ) +
+        `</div>` +
+        (this._config.show_fixed_ring === false ? "" :
+        `<div class="ring"><svg viewBox="0 0 120 120" aria-hidden="true">` +
+        `<circle class="ring-track" cx="60" cy="60" r="${radius}"/>` +
+        `<circle class="ring-run" cx="60" cy="60" r="${radius}" stroke-dasharray="${(round * share).toFixed(2)} ${round.toFixed(2)}"` +
+        ` transform="rotate(-90 60 60)"/></svg>` +
+        `<div class="ring-text"><div class="ring-figure gain">+${fine(account.accrued)}</div>` +
+        `<div class="ring-label">${escapeHtml(str.interest)}</div></div></div>`) +
+        `</div>`
+      );
+    }
+
     _overviewHtml(str) {
       const config = this._config;
       const hass = this._hass;
@@ -3047,15 +4101,12 @@
         const change = data.returns ? data.returns[period.tf] : null;
         let spark = "";
         if (config.show_total_chart) {
-          const points = this._history("return", period.key, totals.gain);
+          const { points, cut } = this._returnHistory(period.key);
           if (points && points.length > 1) {
             const values = points.map((point) => point.v);
-            // Coloured against the first point drawn, for every period: the
-            // curve is the return since the history began at install, not
-            // since purchase, so measured against the return's zero it was
-            // green however far it had fallen. The zero line belongs to
-            // Insights, where it is drawn.
-            spark = chartSvg(values, { height: 40, reference: values[0] });
+            // Coloured against nought, where every period's curve starts.
+            // The zero line belongs to Insights, where it is drawn.
+            spark = chartSvg(values, { height: 40, reference: 0, cut, gaps: points.map((point) => !!point.gap) });
           }
         }
         html +=
@@ -3080,7 +4131,13 @@
       }
 
       if (config.show_cash) {
-        html += this._sectionHtml("cash", str.cash, escapeHtml(money(hass, data.cash)), "", null);
+        // Behind the balance, what can be invested - where it is not the
+        // balance itself: a credit line drawn on, orders still open.
+        const investable =
+          typeof data.buying_power === "number" && data.buying_power !== data.cash
+            ? ` <span class="sec-note">(${escapeHtml(str.investable(money(hass, data.buying_power)))})</span>`
+            : "";
+        html += this._sectionHtml("cash", str.cash, escapeHtml(money(hass, data.cash)) + investable, "", null);
       }
 
       const open = this._openOrders();
@@ -3213,7 +4270,97 @@
     }
 
     // A large chart with its labels, and what the pointer reads off it.
-    _bigChartHtml(id, points, reference, format, range, emptyText, cut) {
+    // The marks along the bottom of a day's or a week's chart, the way the
+    // web app places them - each where its day starts. A day: the day
+    // before and the present one by name, and the time in the middle of
+    // each. A week: every trading day by its short name, the first of them
+    // on the first point. Nothing - the usual, evenly spaced marks - for
+    // the other periods.
+    _axisMarks(str, points, cut, range) {
+      if (!points || points.length < 3) return null;
+      const hass = this._hass;
+      const last = points.length - 1;
+      const at = (index) => index / last;
+      const startOf = (day) => Math.max(0, points.findIndex((point) => point.t >= day));
+      if (range === "1d") {
+        if (!(cut > 0)) return null;
+        const clock = { hour: "2-digit", minute: "2-digit" };
+        // Named against the calendar, not the web app's clock: at 00:15
+        // the day that closed is "yesterday", the one before it a date.
+        const today = dayStart(new Date()).getTime();
+        const name = (stamp) => {
+          const gone = Math.round((today - dayStart(new Date(stamp)).getTime()) / DAY);
+          if (gone === 0) return str.lblToday;
+          if (gone === 1) return str.yesterday;
+          return dateTime(hass, stamp, { day: "2-digit", month: "2-digit", year: "numeric" });
+        };
+        const yesterday = startOf(tradingDayStart(1).getTime());
+        return [
+          { text: name(points[yesterday].t), at: at(yesterday) },
+          { text: dateTime(hass, points[Math.floor((yesterday + cut) / 2)].t, clock), at: at(Math.floor((yesterday + cut) / 2)) },
+          { text: name(points[cut + 1].t), at: at(cut + 1) },
+          { text: dateTime(hass, points[Math.floor((cut + 1 + last) / 2)].t, clock), at: at(Math.floor((cut + 1 + last) / 2)) },
+        ];
+      }
+      if (range === "1w") {
+        const marks = [];
+        let day = null;
+        points.forEach((point, index) => {
+          if (index === last && isNumber(this._data && this._data.total)) return;
+          const date = new Date(point.t);
+          const key = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+          if (key === day) return;
+          day = key;
+          const stamp = index === 0 ? new Date(point.t + 24 * 3600000) : date;
+          marks.push({ text: dateTime(hass, stamp.getTime(), { weekday: "short" }), at: at(index) });
+        });
+        // The first point is the close before: its mark names the day that
+        // follows, and the first real point of that day gets no second one.
+        if (marks.length > 1 && marks[1].text === marks[0].text) marks.splice(1, 1);
+        return marks;
+      }
+      const def = HISTORY_RANGES[range];
+      if (!def) return null;
+      const first = def.start(tradingNow());
+      const indexOf = (stamp) => points.findIndex((point, index) => index < last && point.t >= stamp);
+      const marks = [];
+      const push = (stamp, text) => {
+        const index = indexOf(stamp);
+        if (index < 0 || (marks.length && index <= marks[marks.length - 1].index)) return;
+        marks.push({ text, at: at(index), index });
+      };
+      if (range === "1m") {
+        // A mark a week, by the day of the month - with the month where
+        // it changes: 21, 28, 5 Oct, 12, 19.
+        let month = null;
+        for (let week = 0; week < 5; week++) {
+          const day = new Date(first.getFullYear(), first.getMonth(), first.getDate() + 7 * week);
+          const text = dateTime(hass, day.getTime(), month === null || day.getMonth() === month ? { day: "numeric" } : { day: "numeric", month: "short" });
+          month = day.getMonth();
+          push(day.getTime(), text);
+        }
+        return marks;
+      }
+      // Longer: the months, each at its first day - every third of them
+      // when there are more than eight, the way a year's chart reads - and
+      // the year where it changes. A year or more also marks its start.
+      const months = [];
+      const from = def.pad === false && points.length ? new Date(points[0].t) : first;
+      for (let m = new Date(from.getFullYear(), from.getMonth() + 1, 1); m.getTime() <= points[last].t; m = new Date(m.getFullYear(), m.getMonth() + 1, 1)) months.push(m);
+      const every = months.length > 8 ? 3 : 1;
+      const opening = def.pad === false && points.length ? new Date(points[0].t) : first;
+      let year = opening.getFullYear();
+      if (["1y", "since", "max"].includes(range)) push(opening.getTime(), dateTime(hass, opening.getTime(), { month: "short" }));
+      for (const m of months) {
+        if (every === 3 && m.getMonth() % 3 !== 0) continue;
+        const text = dateTime(hass, m.getTime(), m.getFullYear() === year ? { month: "short" } : { month: "short", year: "numeric" });
+        year = m.getFullYear();
+        push(m.getTime(), text);
+      }
+      return marks;
+    }
+
+    _bigChartHtml(id, points, reference, format, range, emptyText, cut, marks) {
       const config = this._config;
       const hass = this._hass;
       if (!points || points.length < 2) {
@@ -3227,11 +4374,13 @@
         points,
         tops: values.map((value) => scale.top(value)),
         format,
-        intraday: range === "1d",
+        range,
+        base: isNumber(reference) ? reference : values[0],
+        gapText: t(hass).historyGap,
       };
       let axis = "";
       if (config.chart_axis) {
-        const ticks = [0, 1, 2, 3].map((i) => scale.high - ((scale.high - scale.low) * i) / 3);
+        const ticks = scale.ticks;
         // Where the curve ends: its last figure, on a badge in the colour of
         // whether that is above or below the reference. A tick that would
         // stand under the badge gives way to it.
@@ -3244,9 +4393,9 @@
           : ["1w", "1m", "3m"].includes(range)
             ? { day: "numeric", month: "short" }
             : { month: "short", year: "2-digit" };
-        const stops = [0, 0.25, 0.5, 0.75, 1].map(
-          (share) => points[Math.round(share * (points.length - 1))].t
-        );
+        const stops = marks
+          ? []
+          : [0, 0.25, 0.5, 0.75, 1].map((share) => points[Math.round(share * (points.length - 1))].t);
         axis =
           `<div class="y-axis"><i>${escapeHtml(
             [...ticks, last]
@@ -3262,8 +4411,16 @@
                 `<span style="top: ${scale.top(tick).toFixed(2)}%">${escapeHtml(format(tick))}</span>`
             )
             .join("") +
-          `</div><div class="x-axis">` +
-          stops.map((time) => `<span>${escapeHtml(dateTime(hass, time, short))}</span>`).join("") +
+          (marks
+            ? `</div><div class="x-axis marked">` +
+              marks
+                .map(
+                  (mark) =>
+                    `<span class="mark" style="left: ${(mark.at * 100).toFixed(2)}%">${escapeHtml(mark.text)}</span>`
+                )
+                .join("")
+            : `</div><div class="x-axis">` +
+              stops.map((time) => `<span>${escapeHtml(dateTime(hass, time, short))}</span>`).join("")) +
           `</div>`;
       }
       return (
@@ -3273,7 +4430,10 @@
           height,
           pad,
           reference,
+          low: scale.low,
+          high: scale.high,
           cut,
+          gaps: points.map((point) => !!point.gap),
           fill: config.chart_fill,
           showReference: config.chart_reference,
           lineWidth: Number(config.chart_line_width) > 0 ? Number(config.chart_line_width) : 2,
@@ -3287,6 +4447,7 @@
     // What the pointer reads off a large chart: a line at the nearest
     // point, a dot on the curve, and that point's figure and moment.
     _wireCharts() {
+      const str = t(this._hass);
       for (const plot of this.shadowRoot.querySelectorAll(".plot")) {
         const series = this._series[plot.dataset.series];
         if (!series) continue;
@@ -3304,15 +4465,12 @@
           tip.hidden = false;
           cursor.style.left = `${left}%`;
           dot.style.top = `${series.tops[index]}%`;
-          tip.textContent =
-            `${series.format(point.v)} · ` +
-            dateTime(
-              this._hass,
-              point.t,
-              series.intraday
-                ? { hour: "2-digit", minute: "2-digit" }
-                : { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }
-            );
+          // The moment above, the figure beneath it in the colour of its side
+          // of the reference line - and nothing coloured where nothing was read.
+          const side = point.gap ? "" : point.v >= series.base ? " gain" : " loss";
+          tip.innerHTML =
+            `<span class="when">${escapeHtml(chartWhen(this._hass, str, point.t, series.range))}</span>` +
+            `<span class="val${side}">${escapeHtml(point.gap ? series.gapText : series.format(point.v))}</span>`;
           // Beside the line, on whichever side has the room.
           tip.style.left = left > 50 ? "auto" : `calc(${left}% + 8px)`;
           tip.style.right = left > 50 ? `calc(${100 - left}% + 8px)` : "auto";
@@ -3348,12 +4506,13 @@
       // many are still waiting, and a click away from the list of them.
       const alerts = (this._data.alerts || []).filter((alert) => alert.identifier === item.isin);
       const waiting = alerts.filter((alert) => alert.active).length;
-      // Scalable marks a price as outdated once trading has closed. The web
-      // app then shows a moon in front of it and, in the one-day view, the
+      // A moon in front of the price while the security cannot be traded:
+      // outside the trading hours, or once Scalable marks the price as
+      // outdated. Scalable's own mark also puts, in the one-day view, the
       // day the price is from in place of "Today".
-      const closed = item.outdated === true;
+      const closed = tradingClosed(item);
       const periodLabel =
-        closed && period.key === "1d" && item.time
+        item.outdated === true && period.key === "1d" && item.time
           ? dateTime(hass, item.time, { day: "2-digit", month: "2-digit", year: "numeric" })
           : str[period.label];
 
@@ -3386,8 +4545,8 @@
         `<span class="${tone}">${escapeHtml(money(hass, perf.per_unit, true))}</span></span></div>` +
         (config.show_detail_quote
           ? `<div class="d-quote">` +
-            `<span><span class="lbl">${escapeHtml(str.bid)}</span>${escapeHtml(price(hass, item.bid))}</span>` +
-            `<span><span class="lbl">${escapeHtml(str.ask)}</span>${escapeHtml(price(hass, item.ask))}</span>` +
+            `<span><span class="lbl">${escapeHtml(str.bid)}</span><span>${escapeHtml(price(hass, item.bid))}</span></span>` +
+            `<span><span class="lbl">${escapeHtml(str.ask)}</span><span>${escapeHtml(price(hass, item.ask))}</span></span>` +
             `</div>`
           : "") +
         `</div>`;
@@ -3454,7 +4613,7 @@
     }
 
     // The transactions, the open ones first and the rest under their day.
-    _txListHtml(list, str) {
+    _txListHtml(list, str, plain) {
       const hass = this._hass;
       if (!list.length) return `<div class="empty">${escapeHtml(str.txNone)}</div>`;
       const groups = new Map();
@@ -3475,7 +4634,9 @@
             members
               .map(
                 ({ tx, info }) =>
-                  `<div class="tx" data-action="tx" data-id="${escapeHtml(tx.id)}" tabindex="0" role="button">` +
+                  (plain
+                    ? `<div class="tx plain">`
+                    : `<div class="tx" data-action="tx" data-id="${escapeHtml(tx.id)}" tabindex="0" role="button">`) +
                   `<ha-icon class="tx-icon${info.open ? " open" : ""}" icon="${
                     info.open ? "mdi:clock-outline" : info.icon || "mdi:certificate-outline"
                   }"></ha-icon>` +
@@ -3763,9 +4924,9 @@
       const hass = this._hass;
       const mode = this._insMode === "value" ? "value" : "return";
       const range = HISTORY_RANGES[this._insPeriod] ? this._insPeriod : "1m";
-      const current = mode === "value" ? this._data.total : this._totals().gain;
-      const points = this._history(mode === "value" ? "total" : "return", range, current);
-      const last = points && points.length ? points[points.length - 1].v : current;
+      const curve = this._curveHistory(range, mode);
+      const points = curve.points;
+      const last = points && points.length ? points[points.length - 1].v : this._data.total;
       return (
         `<div class="ins-bar">` +
         this._switchHtml(CHART_PERIODS, range, "ins-period", str, "chart-tabs") +
@@ -3779,10 +4940,12 @@
         this._bigChartHtml(
           "insights",
           points,
-          mode === "return" ? 0 : null,
+          mode === "return" ? 0 : curve.cut > 0 ? points[curve.cut].v : null,
           (value) => money(hass, value),
           range,
-          points === undefined ? str.loading : str.historyNone
+          points === undefined ? str.loading : str.historyNone,
+          curve.cut,
+          this._axisMarks(str, points, curve.cut, range)
         ) +
         (this._config.show_history_note
           ? `<div class="note">${escapeHtml(str.historyNote)}</div>`
@@ -3889,12 +5052,22 @@
         // Only the list: the field being typed into stays as it is.
         const list = this.shadowRoot.querySelector(".tx-list");
         const str = t(this._hass);
-        if (list) list.innerHTML = this._txListHtml(this._filteredTransactions(str), str);
+        if (list) {
+          list.innerHTML = this._productKey() === "overnight"
+            ? this._txListHtml(this._filteredOvernight(str), str, true)
+            : this._txListHtml(this._filteredTransactions(str), str);
+        }
         return;
       }
       if (ev.type !== "change") return;
       if (what === "type") this._txType = el.value;
       if (what === "status") this._txStatus = el.value;
+      if (what === "product") {
+        this._product = el.value;
+        this._tab = this._openingTab(el.value);
+        this._detail = null;
+        this._tx = null;
+      }
       this._render();
     }
   }
@@ -3961,6 +5134,13 @@
   // actually renders in when nothing is set (see STYLE), so a swatch previews
   // the real colour rather than falling back to white. An element without a
   // `tab` stands under Layout -> General, the others under Layout -> List.
+  // A swatch's default colour: a fixed one, or one read off the config -
+  // the open tab's, say, which follows the gain colour.
+  const resolveFallback = (fallback, config) => (typeof fallback === "function" ? fallback(config) : fallback);
+
+  // The looks on Layout -> General that belong to the broker alone.
+  const BROKER_LOOKS = ["period", "change", "section", "section_value"];
+
   const DESIGN_ELEMENTS = {
     title: {
       label: "edElTitle",
@@ -3991,6 +5171,22 @@
         fallback: GAIN,
       },
       hidden: (config) => config.show_tabs === false,
+      product: "broker",
+    },
+    overnight_tabs: {
+      label: "edElTabs",
+      help: "edElTabsHelp",
+      colorHelp: "edColorHelp",
+      fontHelp: "edFontHelp",
+      fallback: "var(--secondary-text-color)",
+      extra: {
+        key: "overnight_tabs_active_color",
+        label: "edTabsActive",
+        help: "edTabsActiveHelp",
+        fallback: GAIN,
+      },
+      product: "overnight",
+      hidden: (config) => config.overnight_show_tabs === false,
     },
     period: {
       label: "edElPeriod",
@@ -4013,6 +5209,139 @@
       colorHelp: "edColorHelp",
       fontHelp: "edFontHelp",
       fallback: "var(--primary-text-color)",
+      product: "broker",
+    },
+    overnight_total: {
+      label: "edElTotal",
+      help: "edElProductTotalHelp",
+      colorHelp: "edColorHelp",
+      fontHelp: "edFontHelp",
+      fallback: "var(--primary-text-color)",
+      product: "overnight",
+    },
+    fixed_total: {
+      label: "edElTotal",
+      help: "edElProductTotalHelp",
+      colorHelp: "edColorHelp",
+      fontHelp: "edFontHelp",
+      fallback: "var(--primary-text-color)",
+      product: "fixed",
+    },
+    credit_name: {
+      label: "edElProductName",
+      help: "edElProductNameHelp",
+      colorHelp: "edColorHelp",
+      fontHelp: "edFontHelp",
+      fallback: "var(--primary-text-color)",
+      icon: { key: "credit_icon", label: "edProductIcon", help: "edProductIconHelp" },
+      extra: {
+        key: "credit_icon_background_color",
+        label: "edProductIconBg",
+        help: "edProductIconBgHelp",
+        fallback: "#7cb342",
+      },
+      product: "credit",
+      hidden: (config) => config.credit_show_head === false,
+      head: true,
+    },
+    credit_total: {
+      label: "edElTotal",
+      help: "edElProductTotalHelp",
+      colorHelp: "edColorHelp",
+      fontHelp: "edFontHelp",
+      fallback: "var(--primary-text-color)",
+      product: "credit",
+    },
+    credit_bar: {
+      label: "edElCreditBar",
+      help: "edElCreditBarHelp",
+      plainSize: { key: "credit_bar_height", label: "edCreditBarHeight", help: "edCreditBarHeightHelp" },
+      colorHelp: "edCreditBarColorHelp",
+      fallback: GAIN,
+      noFont: true,
+      product: "credit",
+      hidden: (config) => config.show_credit_bar === false,
+    },
+    broker_name: {
+      label: "edElProductName",
+      help: "edElProductNameHelp",
+      colorHelp: "edColorHelp",
+      fontHelp: "edFontHelp",
+      fallback: "var(--primary-text-color)",
+      icon: { key: "broker_icon", label: "edProductIcon", help: "edProductIconHelp" },
+      extra: {
+        key: "broker_icon_background_color",
+        label: "edProductIconBg",
+        help: "edProductIconBgHelp",
+        fallback: "#5c6bc0",
+      },
+      product: "broker",
+      hidden: (config) => config.broker_show_head === false,
+      head: true,
+    },
+    broker_sub: {
+      label: "edElProductSub",
+      help: "edElProductSubHelp",
+      colorHelp: "edColorHelp",
+      fontHelp: "edFontHelp",
+      fallback: "var(--secondary-text-color)",
+      product: "broker",
+      hidden: (config) => config.broker_show_head === false,
+      head: true,
+    },
+    overnight_name: {
+      label: "edElProductName",
+      help: "edElProductNameHelp",
+      colorHelp: "edColorHelp",
+      fontHelp: "edFontHelp",
+      fallback: "var(--primary-text-color)",
+      icon: { key: "overnight_icon", label: "edProductIcon", help: "edProductIconHelp" },
+      extra: {
+        key: "overnight_icon_background_color",
+        label: "edProductIconBg",
+        help: "edProductIconBgHelp",
+        fallback: "#d97a5f",
+      },
+      product: "overnight",
+      hidden: (config) => config.overnight_show_head === false,
+      head: true,
+    },
+    overnight_sub: {
+      label: "edElProductSub",
+      help: "edElProductSubHelp",
+      colorHelp: "edColorHelp",
+      fontHelp: "edFontHelp",
+      fallback: "var(--secondary-text-color)",
+      product: "overnight",
+      hidden: (config) => config.overnight_show_head === false,
+      head: true,
+    },
+    fixed_name: {
+      label: "edElProductName",
+      help: "edElProductNameHelp",
+      colorHelp: "edColorHelp",
+      fontHelp: "edFontHelp",
+      fallback: "var(--primary-text-color)",
+      icon: { key: "fixed_icon", label: "edProductIcon", help: "edProductIconHelp" },
+      extra: {
+        key: "fixed_icon_background_color",
+        label: "edProductIconBg",
+        help: "edProductIconBgHelp",
+        fallback: "#d97a5f",
+      },
+      product: "fixed",
+      hidden: (config) => config.fixed_show_head === false,
+      head: true,
+    },
+    fixed_sub: {
+      label: "edElProductSub",
+      help: "edElProductSubHelp",
+      colorHelp: "edColorHelp",
+      fontHelp: "edFontHelp",
+      fallback: "var(--secondary-text-color)",
+      product: "fixed",
+      hidden: (config) => config.fixed_show_head === false,
+      head: true,
     },
     change: {
       label: "edElChange",
@@ -4832,14 +6161,32 @@
             this._inlineToggle("show_title", str.edHideTitle, str.edHideTitleHelp, true)
           );
         body.appendChild(titleRow);
-        const updated = this._toggleRow("show_updated", str.edShowUpdated, str.edShowUpdatedHelp);
-        updated.dataset.withTitle = "";
-        body.appendChild(updated);
-        const refresh = this._toggleRow("show_refresh", str.edShowRefresh, str.edShowRefreshHelp);
-        refresh.dataset.withTitle = "";
-        body.appendChild(refresh);
+        body.appendChild(this._toggleRow("show_updated", str.edShowUpdated, str.edShowUpdatedHelp));
+        body.appendChild(this._toggleRow("show_refresh", str.edShowRefresh, str.edShowRefreshHelp));
+        // The products: which the card offers, whether a dropdown switches
+        // between them, and the one it opens on. Everything that belongs to
+        // one product stands under its name from here on.
+        body.appendChild(
+          this._contentBlock(str.edProductsBlock, str.edProductsBlockHelp, [
+            this._toggleRow("product_broker", str.productBroker, ""),
+            this._toggleRow("product_overnight", str.productOvernight, ""),
+            this._toggleRow("product_fixed", str.edProductFixed, ""),
+            this._toggleRow("product_credit", str.productCredit, ""),
+            this._toggleRow("show_products", str.edProducts, str.edProductsHelp),
+            this._fieldRow(str.edDefaultProduct, str.edDefaultProductHelp,
+              this._select("default_product", [
+                { value: "broker", label: str.productBroker },
+                { value: "overnight", label: str.productOvernight },
+                { value: "fixed", label: str.productFixed },
+                { value: "credit", label: str.productCredit },
+              ])),
+          ])
+        );
+      }
 
-        // The tab line, then which tabs it offers, indented beneath it.
+      if (groupKey === "content") {
+        // The tab line, then which tabs it offers, indented beneath it, the
+        // tab and the period the card opens on.
         body.appendChild(this._toggleRow("show_tabs", str.edShowTabs, str.edShowTabsHelp));
         for (const [key, label, help] of [
           ["show_tab_savings", "edTabSavings", "edTabSavingsHelp"],
@@ -4867,9 +6214,6 @@
               OVERVIEW_PERIODS.map((period) => ({ value: period.key, label: str[period.name] }))
             ))
         );
-      }
-
-      if (groupKey === "content") {
         // The overview, in two halves side by side: what stands at its top,
         // and which sections follow.
         const pair = document.createElement("div");
@@ -4964,9 +6308,41 @@
           body.appendChild(this._gainBlock(str));
         }
         const wanted = groupKey === "list" ? "list" : undefined;
+        // On the General tab the title, the update time, the tabs and the
+        // big figure dress the whole card; the period switch, the change and
+        // the section headings are the broker's, and stand under its name.
+        // Each product's group opens with the looks of its head - the name,
+        // the line under it, the disc - and the broker's goes on with the
+        // period switch, the change and the section headings.
+        const groups = groupKey === "display"
+          ? {
+              broker: this._productGroup("broker", str.productBroker),
+              overnight: this._productGroup("overnight", str.productOvernight),
+              fixed: this._productGroup("fixed", str.productFixed),
+              credit: this._productGroup("credit", str.productCredit),
+            }
+          : null;
+        // A group opens with its head - the name, the line, the disc - and
+        // goes on with the product's other elements in the table's order,
+        // whatever order the table lists them in.
+        const bucket = {
+          broker: { head: [], rest: [] },
+          overnight: { head: [], rest: [] },
+          fixed: { head: [], rest: [] },
+          credit: { head: [], rest: [] },
+        };
         for (const [prefix, el] of Object.entries(DESIGN_ELEMENTS)) {
           if (el.tab !== wanted) continue;
-          body.appendChild(this._designElement(prefix, el, str));
+          const block = this._designElement(prefix, el, str);
+          if (groups && el.product) (el.head ? bucket[el.product].head : bucket[el.product].rest).push(block);
+          else if (groups && BROKER_LOOKS.includes(prefix)) bucket.broker.rest.push(block);
+          else body.appendChild(block);
+        }
+        if (groups) {
+          for (const [kind, group] of Object.entries(groups)) {
+            for (const block of [...bucket[kind].head, ...bucket[kind].rest]) group.appendChild(block);
+            body.appendChild(group);
+          }
         }
       }
 
@@ -4990,7 +6366,69 @@
         );
       }
 
+      // The Content and List tabs, and Layout's Chart and List, are the
+      // broker's: everything in them stands under its name, and under
+      // Content the two savings products follow with what is theirs. A
+      // product that is not offered takes its part away.
+      if (["content", "rows", "chart", "list"].includes(groupKey)) {
+        const own = [...body.children].filter((child) => !child.classList.contains("off-note"));
+        // Under Content every product's group opens with its head: the two
+        // switches for the head and for its symbol.
+        const headRows = (kind) =>
+          groupKey === "content"
+            ? [
+                this._toggleRow(`${kind}_show_head`, str.edShowProductHead, str.edShowProductHeadHelp),
+                indented(this._toggleRow(`${kind}_show_icon`, str.edShowProductIcon, str.edShowProductIconHelp), "withHead" + kind),
+              ]
+            : [];
+        const broker = this._productGroup("broker", str.productBroker, headRows("broker"));
+        for (const child of own) broker.appendChild(child);
+        body.appendChild(broker);
+        if (groupKey === "content") {
+          body.appendChild(
+            this._productGroup("overnight", str.productOvernight, [
+              ...headRows("overnight"),
+              this._toggleRow("overnight_show_tabs", str.edShowTabs, str.edShowOvernightTabsHelp),
+              indented(
+                this._toggleRow("overnight_show_tab_transactions", str.edTabTransactions, str.edTabTransactionsHelp),
+                "withOvernightTabs"
+              ),
+              this._fieldRow(str.edDefaultTab, str.edDefaultTabHelp,
+                this._select("overnight_default_tab", [
+                  { value: "overview", label: str.tabOverview },
+                  { value: "transactions", label: str.tabTransactions },
+                ])),
+              this._toggleRow("show_overnight_transactions", str.edShowOvernightTx, str.edShowOvernightTxHelp),
+            ])
+          );
+          body.appendChild(
+            this._productGroup("fixed", str.productFixed, [
+              ...headRows("fixed"),
+              this._toggleRow("show_fixed_ring", str.edShowFixedRing, str.edShowFixedRingHelp),
+            ])
+          );
+          body.appendChild(
+            this._productGroup("credit", str.productCredit, [
+              ...headRows("credit"),
+              this._toggleRow("show_credit_bar", str.edShowCreditBar, str.edShowCreditBarHelp),
+            ])
+          );
+        }
+      }
       return body;
+    }
+
+    // A product's settings under its name - hidden, name and all, while the
+    // product is not offered.
+    _productGroup(kind, title, rows) {
+      const group = document.createElement("div");
+      group.className = "product-group";
+      group.dataset.product = kind;
+      const heading = this._groupLabelRow(title, "", false);
+      heading.classList.add("product-heading");
+      group.appendChild(heading);
+      for (const row of rows || []) if (row) group.appendChild(row);
+      return group;
     }
 
     _render() {
@@ -5230,6 +6668,30 @@
         const value = this._config[el.dataset.key];
         if (value !== el.value) el.value = value;
       });
+      // "Start with" offers the products switched on above - and when the
+      // one chosen has just been switched off, moves to the first that is.
+      const start = this.shadowRoot.querySelector('select[data-field="default_product"]');
+      if (start) {
+        const on = [
+          ["broker", str.productBroker, this._config.product_broker !== false],
+          ["overnight", str.productOvernight, this._config.product_overnight !== false],
+          ["fixed", str.productFixed, this._config.product_fixed !== false],
+          ["credit", str.productCredit, this._config.product_credit !== false],
+        ].filter(([, , offered]) => offered);
+        const offered = on.length ? on : [["broker", str.productBroker, true]];
+        const have = [...start.options].map((option) => option.value).join(",");
+        if (have !== offered.map(([value]) => value).join(",")) {
+          start.innerHTML = "";
+          for (const [value, label] of offered) {
+            const option = document.createElement("option");
+            option.value = value;
+            option.textContent = label;
+            start.appendChild(option);
+          }
+        }
+        const chosen = this._config.default_product || "broker";
+        if (!offered.some(([value]) => value === chosen)) this._set("default_product", offered[0][0]);
+      }
       this.shadowRoot.querySelectorAll("input[data-field], select[data-field]").forEach((el) => {
         const value = this._config[el.dataset.field];
         const next = value === undefined || value === null ? "" : String(value);
@@ -5273,6 +6735,18 @@
       this.shadowRoot.querySelectorAll("[data-with-tabs]").forEach((row) => {
         row.hidden = this._config.show_tabs === false;
       });
+      this.shadowRoot.querySelectorAll("[data-with-overnight-tabs]").forEach((row) => {
+        row.hidden = this._config.overnight_show_tabs === false;
+      });
+      for (const kind of ["broker", "overnight", "fixed", "credit"]) {
+        this.shadowRoot.querySelectorAll(`[data-with-head${kind}]`).forEach((row) => {
+          row.hidden = this._config[`${kind}_show_head`] === false;
+        });
+      }
+      // A product that is not offered takes its settings with it.
+      this.shadowRoot.querySelectorAll("[data-product]").forEach((group) => {
+        group.hidden = this._config[`product_${group.dataset.product}`] === false;
+      });
       // The card background: its own colour swatch, its preview, and the
       // four rows that only mean something once it is switched on.
       this._syncColorRow(
@@ -5294,10 +6768,10 @@
       this._syncColorRow("loss_color", this._config.loss_color || "", LOSS, str);
       for (const [prefix, el] of Object.entries(DESIGN_ELEMENTS)) {
         if (!el.noColor) {
-          this._syncColorRow(`${prefix}_color`, this._config[`${prefix}_color`] || "", el.fallback, str);
+          this._syncColorRow(`${prefix}_color`, this._config[`${prefix}_color`] || "", resolveFallback(el.fallback, this._config), str);
         }
         if (el.extra) {
-          this._syncColorRow(el.extra.key, this._config[el.extra.key] || "", el.extra.fallback, str);
+          this._syncColorRow(el.extra.key, this._config[el.extra.key] || "", resolveFallback(el.extra.fallback, this._config), str);
         }
         // A background colour only means anything while there is a
         // background. The row is hidden rather than removed, so its wiring
@@ -5463,6 +6937,9 @@
       margin-bottom: 8px;
     }
     .content-block { min-width: 0; }
+    .product-group { margin-top: 18px; }
+    .product-group .product-heading .field-label { font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+    .product-group + .product-group { margin-top: 26px; }
     .content-block .group-label-row { margin-bottom: 8px; }
     .content-block .toggle-row { margin-bottom: 10px; }
     /* Stands in for a tab's settings while the list is off. */
@@ -5784,6 +7261,10 @@
        browser's own [hidden] rule - so a hidden part would keep its box. */
     [hidden] { display: none !important; }
     :host { display: block; height: 100%; }
+    /* Scalable's own colour, as the web app draws the open tab and the
+       chosen period with it - not the gain colour, which the user may
+       change without the tabs following. */
+    ha-card { --sc-brand: #7ee2c8; }
     ha-card { padding: 16px 18px 14px; display: flex; flex-direction: column;
               height: 100%; box-sizing: border-box; overflow: hidden;
               container-type: inline-size; position: relative;
@@ -5812,10 +7293,48 @@
     .view { flex: 1 1 auto; min-height: 0; overflow-y: auto; overflow-x: hidden; }
     button { font: inherit; }
     button:focus-visible, [tabindex]:focus-visible {
-      outline: 2px solid var(--sc-tab-active, var(--sc-gain)); outline-offset: 2px; border-radius: 6px;
+      outline: 2px solid var(--sc-tab-active, var(--sc-brand)); outline-offset: 2px; border-radius: 6px;
     }
 
     .head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+    /* The product dropdown, drawn as the TomTom card draws its area dropdown:
+       on a line of its own under the title - or, without a title, first on
+       the title's line, the update time and the refresh symbol at its right. */
+    .head { flex-wrap: wrap; align-items: center; }
+    .product-line { order: 10; flex: 0 0 100%; min-width: 0; }
+    .head.no-title .product-line { order: -1; flex: 1 1 auto; }
+    .head select.product { display: block; width: auto; max-width: 100%; font: inherit; font-size: .85rem;
+                           padding: 4px 8px; border-radius: 12px; color: var(--primary-text-color);
+                           background: var(--card-background-color); border: 1px solid var(--divider-color); }
+    /* The symbol sits centred on its disc: the icon is a flex box of its
+       own, so its SVG neither hangs under a baseline nor leaves a gap. */
+    .logo.product { color: #fff; --mdc-icon-size: 28px; line-height: 0; }
+    .logo.product ha-icon { display: flex; align-items: center; justify-content: center; }
+    .p-figure { margin-top: 18px; }
+    .p-label { margin-top: 2px; color: var(--secondary-text-color); }
+    .p-title { margin-top: 22px; font-size: 1.15em; font-weight: 500; color: var(--primary-text-color); }
+    .p-body { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 32px; }
+    .p-body .kvs { flex: 1 1 260px; min-width: 0; }
+    .kvs { margin-top: 10px; }
+    .kv-label { display: inline-flex; align-items: center; gap: 10px; color: var(--secondary-text-color); }
+    .kv-label ha-icon { --mdc-icon-size: 22px; color: var(--primary-text-color); }
+    .tx.plain { cursor: default; }
+    /* The credit line as a bar: what is drawn on it, bright, against the
+       rest, dim - the web app's picture of it. */
+    .credit-bar { height: var(--sc-credit-bar-height, 8px); margin: 14px 0 6px; border-radius: 999px; overflow: hidden;
+                  background: color-mix(in srgb, var(--sc-credit-bar, var(--sc-brand)) 30%, transparent); }
+    .credit-bar span { display: block; height: 100%; border-radius: 999px; background: var(--sc-credit-bar, var(--sc-brand)); }
+    .p-label.above { margin: 0 0 4px; }
+    .ring { position: relative; flex: none; width: 180px; height: 180px; margin: 12px auto 0; }
+    .ring svg { width: 100%; height: 100%; }
+    .ring-track { fill: none; stroke: var(--divider-color); stroke-width: 6; }
+    .ring-run { fill: none; stroke: var(--sc-gain); stroke-width: 6; stroke-linecap: round; }
+    .ring-text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center;
+                 justify-content: center; text-align: center; padding: 0 20px; }
+    .ring-figure { font-size: 1.25em; font-weight: 600; }
+    .ring-label { color: var(--secondary-text-color); }
+    .ring-figure .dim { opacity: 0.55; }
+    .nav .d-head { flex-basis: 100%; margin-bottom: 6px; }
     .title { font-size: 1.25em; font-weight: 500; color: var(--primary-text-color);
              overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .updated { margin-left: auto; font-size: 0.85em; color: var(--secondary-text-color);
@@ -5826,6 +7345,7 @@
     .title + .refresh { margin-left: auto; }
     .refresh:hover { color: var(--primary-text-color); }
     .refresh.failed { color: var(--error-color, #db4437); }
+    .updated.stale { color: var(--error-color, #db4437); }
     .refresh.busy ha-icon { animation: sc-turn 1s linear infinite; }
     @keyframes sc-turn { to { transform: rotate(360deg); } }
 
@@ -5835,26 +7355,27 @@
     .tab { all: unset; cursor: pointer; padding: 8px 2px; border-bottom: 2px solid transparent;
            white-space: nowrap; }
     .tab:hover { color: var(--primary-text-color); }
-    .tab.active { color: var(--sc-tab-active, var(--sc-gain));
-                  border-bottom-color: var(--sc-tab-active, var(--sc-gain)); }
+    .tab.active { color: var(--sc-tab-active, var(--sc-brand));
+                  border-bottom-color: var(--sc-tab-active, var(--sc-brand)); }
 
     .period-switch { display: inline-flex; margin-left: auto; padding: 3px; border-radius: 999px;
                      background: rgba(127, 127, 127, 0.16); color: var(--primary-text-color);
                      font-weight: 500; }
     .period-switch button { all: unset; cursor: pointer; padding: 4px 10px; border-radius: 999px;
                             white-space: nowrap; }
-    .period-switch button.active { background: var(--sc-period-active, var(--sc-gain)); color: #0e1113; }
+    .period-switch button.active { background: var(--sc-period-active, var(--sc-brand)); color: #0e1113; }
 
     .chart-tabs { display: flex; flex-wrap: wrap; gap: 0 2px; margin-top: 8px;
                   border-bottom: 1px solid var(--divider-color); color: var(--primary-text-color);
                   font-weight: 500; }
     .chart-tabs button { all: unset; cursor: pointer; padding: 8px 12px;
                          border-bottom: 2px solid transparent; margin-bottom: -1px; }
-    .chart-tabs button.active { color: var(--sc-tab-active, var(--sc-gain));
-                                border-bottom-color: var(--sc-tab-active, var(--sc-gain)); }
+    .chart-tabs button.active { color: var(--sc-tab-active, var(--sc-brand));
+                                border-bottom-color: var(--sc-tab-active, var(--sc-brand)); }
 
     svg { display: block; width: 100%; height: 100%; overflow: visible; }
     svg .before { stroke: var(--secondary-text-color); opacity: 0.55; }
+    svg .gap { fill: var(--secondary-text-color); opacity: 0.14; }
     svg .ref { stroke: var(--secondary-text-color); stroke-width: 1; stroke-dasharray: 3 3;
                opacity: 0.6; }
 
@@ -5878,6 +7399,7 @@
     .sec-title { font-size: 1.25em; font-weight: 600; color: var(--primary-text-color); }
     .sec-title.block { margin: 22px 0 10px; }
     .sec-value { margin-top: 2px; font-size: 1.2em; color: var(--secondary-text-color); }
+    .sec-value .sec-note { font-size: 0.85em; }
     .sec-return { font-size: 1.05em; white-space: nowrap; }
     .chev { flex: none; padding: 6px; border-radius: 50%; background: rgba(127, 127, 127, 0.14);
             color: var(--primary-text-color); --mdc-icon-size: 20px; }
@@ -5944,9 +7466,11 @@
     .d-perf { display: flex; flex-direction: column; gap: 4px; font-size: 1.1em; }
     .d-perf .lbl { margin-left: 0; }
     .bar { margin: 0 8px; color: var(--divider-color); }
-    .d-quote { margin-left: auto; display: flex; flex-wrap: wrap; gap: 4px 16px;
-               color: var(--primary-text-color); }
-    .d-quote .lbl { margin: 0 6px 0 0; }
+    .d-quote { margin-left: auto; display: flex; gap: 4px 18px; }
+    /* The word over its figure, centred, as the web app's Sell and Buy
+       buttons carry theirs - narrow enough to stand beside the price. */
+    .d-quote > span { display: flex; flex-direction: column; align-items: center; }
+    .d-quote .lbl { margin: 0; font-size: 0.85em; }
 
     /* The large charts. */
     .chart-big { display: grid; grid-template-columns: minmax(0, 1fr); margin-top: 12px; }
@@ -5964,14 +7488,25 @@
     .y-axis .now.down { background: var(--sc-loss); }
     .x-axis { grid-column: 1; display: flex; justify-content: space-between; margin-top: 6px;
               font-size: 0.8em; color: var(--secondary-text-color); }
+    /* The marked axis keeps the plain one's line box - a blank line of its
+       own - so the marks laid over it add no height and the card does not
+       grow by the few pixels that would put a scrollbar on it. */
+    .x-axis.marked { position: relative; display: block; }
+    .x-axis.marked::before { content: " "; }
+    .x-axis .mark { position: absolute; top: 0; white-space: nowrap; }
     .cursor { position: absolute; top: 0; bottom: 0; width: 0; pointer-events: none;
               border-left: 1px solid var(--secondary-text-color); }
     .dot { position: absolute; left: -4.5px; width: 8px; height: 8px; margin-top: -4px;
            border-radius: 50%; background: var(--primary-text-color); }
-    .tip { position: absolute; top: 4px; padding: 3px 8px; border-radius: 6px; font-size: 0.85em;
+    .tip { position: absolute; top: 4px; padding: 5px 10px; border-radius: 6px; font-size: 0.85em;
            white-space: nowrap; pointer-events: none; color: var(--primary-text-color);
+           text-align: center; line-height: 1.4;
            background: var(--secondary-background-color, #222);
            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35); }
+    .tip .when { display: block; font-size: 0.92em; color: var(--secondary-text-color); }
+    .tip .val { display: block; font-weight: 600; }
+    .tip .val.gain { color: var(--sc-gain); }
+    .tip .val.loss { color: var(--sc-loss); }
 
     .pos { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; }
     .pos-big { font-size: 1.5em; font-weight: 600; color: var(--primary-text-color); }

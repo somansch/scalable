@@ -16,11 +16,12 @@ import voluptuous as vol
 from homeassistant.components import websocket_api
 from homeassistant.config_entries import ConfigEntryState
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.exceptions import ConfigEntryAuthFailed
 from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 
 from .const import CHART_TIMEFRAMES, DOMAIN, SIGNAL_ENTRY_LOADED
-from .coordinator import Portfolio, Position, Quote, ScalableCoordinator
+from .coordinator import FixedTerm, Overnight, Portfolio, Position, Quote, ScalableCoordinator
 from .errors import ScalableError
 
 # The portfolio's own figures the card draws a curve of, from the statistics
@@ -85,13 +86,69 @@ def _position(position: Position) -> dict[str, Any]:
     }
 
 
+def _overnight(account: Overnight) -> dict[str, Any]:
+    return {
+        "id": account.account_id,
+        "name": account.name,
+        "active": account.active,
+        "balance": account.balance,
+        "interest_rate": account.interest_rate,
+        "accrued": account.accrued,
+        "interest_bearing": account.interest_bearing,
+        "lifetime_interest": account.lifetime_interest,
+        "next_payout": account.next_payout,
+        "next_payout_date": _iso(account.next_payout_date),
+        "transactions": list(account.transactions),
+    }
+
+
+def _fixed_term(account: FixedTerm) -> dict[str, Any]:
+    return {
+        "id": account.account_id,
+        "name": account.name,
+        "state": account.state,
+        "amount": account.amount,
+        "currency": account.currency,
+        "months": account.months,
+        "nominal_rate": account.nominal_rate,
+        "effective_rate": account.effective_rate,
+        "start": _iso(account.start),
+        "maturity": _iso(account.maturity),
+        "accrued": account.accrued,
+        "payout": account.payout,
+        "auto_renewal": account.auto_renewal,
+    }
+
+
+def _sign_in_needed(hass: HomeAssistant, coordinator: ScalableCoordinator) -> bool:
+    """Whether Scalable has ended the sign-in and a repair is waiting for the user.
+
+    The coordinator keeps the failure that ended its last update; a lapsed
+    sign-in also leaves a reauth flow open on the entry, which stays until
+    the user has been through it.
+    """
+    if isinstance(coordinator.last_exception, ConfigEntryAuthFailed):
+        return True
+    entry_id = coordinator.config_entry.entry_id
+    return any(
+        flow["context"].get("source") == "reauth" and flow["context"].get("entry_id") == entry_id
+        for flow in hass.config_entries.flow.async_progress_by_handler(DOMAIN)
+    )
+
+
 def _snapshot(hass: HomeAssistant, coordinator: ScalableCoordinator) -> dict[str, Any]:
-    """Everything the last update found, in the shape the card reads."""
+    """Everything the last update found, in the shape the card reads.
+
+    With it, whether the last update went through and whether Scalable is
+    waiting for a new sign-in - the figures are then the last ones read.
+    """
     data: Portfolio = coordinator.data
     registry = er.async_get(hass)
     return {
         "entry_id": coordinator.config_entry.entry_id,
         "name": coordinator.entry_name,
+        "ok": coordinator.last_update_success,
+        "sign_in_needed": _sign_in_needed(hass, coordinator),
         "updated": _iso(coordinator.last_read),
         "valued": _iso(data.valuation_time),
         "total": data.total,
@@ -120,6 +177,17 @@ def _snapshot(hass: HomeAssistant, coordinator: ScalableCoordinator) -> dict[str
         ],
         "transactions": list(data.transactions),
         "savings_plans": list(data.savings_plans),
+        "overnight": _overnight(data.overnight) if data.overnight else None,
+        "fixed_terms": [_fixed_term(item) for item in data.fixed_terms],
+        "credit": (
+            {
+                "line": data.credit_line,
+                "used": data.credit_used,
+                "available": round(data.credit_line - (data.credit_used or 0), 2),
+            }
+            if data.credit_line
+            else None
+        ),
         "sensors": {
             key: registry.async_get_entity_id(
                 "sensor", DOMAIN, f"{coordinator.unique_prefix}_{key}"

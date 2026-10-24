@@ -29,8 +29,27 @@ from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from homeassistant.util import slugify
 
 from .const import CONF_REMOVE_STALE, DOMAIN
-from .coordinator import Alert, Portfolio, Position, Quote, ScalableCoordinator, WatchItem
-from .groups import GROUP_GENERAL, GROUP_OTHER, async_group, async_place_device, type_key
+from .coordinator import (
+    Alert,
+    FixedTerm,
+    Overnight,
+    Portfolio,
+    Position,
+    Quote,
+    ScalableCoordinator,
+    WatchItem,
+)
+from .groups import (
+    GROUP_BROKER,
+    GROUP_CREDIT,
+    GROUP_FIXED,
+    GROUP_OTHER,
+    GROUP_OVERNIGHT,
+    async_carry_over_groups,
+    async_group,
+    async_place_device,
+    type_key,
+)
 
 MANUFACTURER = "Scalable Capital"
 # The ISO 4217 code, as a monetary sensor's unit is meant to be.
@@ -186,37 +205,41 @@ async def async_setup_entry(
 ) -> None:
     """The portfolio's sensors now; a position's, a kind's, a watchlist entry's as it turns up.
 
-    Every device is filed under a group (see groups.py): the broker and the
-    watchlist under General, a position under its kind of security.
+    Every device is filed under a group (see groups.py): the broker, the
+    watchlist and the alerts under Broker, a position under its kind of
+    security, the savings products and the credit line under their own.
     """
     coordinator: ScalableCoordinator = entry.runtime_data
     portfolio_id = coordinator.data.portfolio_id
-    general = async_group(hass, entry, GROUP_GENERAL)
-    async_place_device(hass, entry, portfolio_id, general)
-    async_place_device(hass, entry, f"{portfolio_id}_watchlist", general)
-    async_place_device(hass, entry, f"{portfolio_id}_alerts", general)
+    async_carry_over_groups(hass, entry)
+    broker = async_group(hass, entry, GROUP_BROKER)
+    async_place_device(hass, entry, portfolio_id, broker)
+    async_place_device(hass, entry, f"{portfolio_id}_watchlist", broker)
+    async_place_device(hass, entry, f"{portfolio_id}_alerts", broker)
     # Positions and the watchlist hang off the portfolio's device, which a device
     # info can only name by its registry id - so the portfolio's is registered first.
     parent = dr.async_get(hass).async_get_or_create(
         config_entry_id=entry.entry_id,
-        config_subentry_id=general.subentry_id,
+        config_subentry_id=broker.subentry_id,
         **_portfolio_device(coordinator),
     )
 
     async_add_entities(
         (PortfolioSensor(coordinator, description) for description in PORTFOLIO_SENSORS),
-        config_subentry_id=general.subentry_id,
+        config_subentry_id=broker.subentry_id,
     )
 
     filed: dict[str, str] = {}
     watched: set[str] = set()
     alerts: set[str] = set()
     types: set[str] = set()
+    savings: set[str] = set()
 
     @callback
     def _add_new() -> None:
         data = coordinator.data
         in_general: list[SensorEntity] = []
+        in_group: dict[str, list[SensorEntity]] = {}
         for isin, position in data.positions.items():
             key = type_key(position.security_type)
             if key not in types:
@@ -241,6 +264,36 @@ async def async_setup_entry(
             if isin not in watched:
                 watched.add(isin)
                 in_general.extend(cls(coordinator, parent.id, item) for cls in WATCH_SENSORS)
+        # The savings products, as they turn up: the overnight account once,
+        # every fixed-term account the first time it is listed.
+        if data.overnight and "overnight" not in savings:
+            savings.add("overnight")
+            async_place_device(
+                hass, entry, f"{portfolio_id}_overnight", async_group(hass, entry, GROUP_OVERNIGHT)
+            )
+            in_group.setdefault(GROUP_OVERNIGHT, []).extend(
+                cls(coordinator, parent.id) for cls in OVERNIGHT_SENSORS
+            )
+        for account in data.fixed_terms:
+            if account.account_id not in savings:
+                savings.add(account.account_id)
+                async_place_device(
+                    hass,
+                    entry,
+                    f"{portfolio_id}_fixed_{account.account_id}",
+                    async_group(hass, entry, GROUP_FIXED),
+                )
+                in_group.setdefault(GROUP_FIXED, []).extend(
+                    cls(coordinator, parent.id, account) for cls in FIXED_TERM_SENSORS
+                )
+        if data.credit_line and "credit" not in savings:
+            savings.add("credit")
+            async_place_device(
+                hass, entry, f"{portfolio_id}_credit", async_group(hass, entry, GROUP_CREDIT)
+            )
+            in_group.setdefault(GROUP_CREDIT, []).extend(
+                cls(coordinator, parent.id) for cls in CREDIT_SENSORS
+            )
         if data.alerts and not alerts:
             in_general.append(ActiveAlertsSensor(coordinator, parent.id))
         for alert_id, alert in data.alerts.items():
@@ -248,7 +301,11 @@ async def async_setup_entry(
                 alerts.add(alert_id)
                 in_general.append(AlertSensor(coordinator, parent.id, alert))
         if in_general:
-            async_add_entities(in_general, config_subentry_id=general.subentry_id)
+            async_add_entities(in_general, config_subentry_id=broker.subentry_id)
+        for key, entities in in_group.items():
+            async_add_entities(
+                entities, config_subentry_id=async_group(hass, entry, key).subentry_id
+            )
 
     @callback
     def _remove_stale() -> None:
@@ -290,6 +347,11 @@ async def async_setup_entry(
             kept.add(f"{portfolio_id}_watchlist")
         if data.alerts:
             kept.add(f"{portfolio_id}_alerts")
+        if data.overnight:
+            kept.add(f"{portfolio_id}_overnight")
+        kept.update(f"{portfolio_id}_fixed_{a.account_id}" for a in data.fixed_terms)
+        if data.credit_line:
+            kept.add(f"{portfolio_id}_credit")
         device_registry = dr.async_get(hass)
         for device in dr.async_entries_for_config_entry(device_registry, entry.entry_id):
             ours = {identifier for domain, identifier in device.identifiers if domain == DOMAIN}
@@ -713,6 +775,337 @@ class WatchChangeDay(_WatchSensor):
 
 
 WATCH_SENSORS: tuple[type[_WatchSensor], ...] = (WatchPrice, WatchChangeDay)
+
+
+# --- The savings products ----------------------------------------------------------
+#
+# The overnight account and every fixed-term account are devices of their own,
+# hanging off the portfolio's like the watchlist does. Their rates are
+# fractions at Scalable and percentages here.
+
+
+def _percent_of(fraction: float | None) -> float | None:
+    return _round(fraction * 100, 4) if isinstance(fraction, (int, float)) else None
+
+
+class _OvernightSensor(_ScalableSensor):
+    """Something about the overnight account - unavailable once it is gone."""
+
+    _key: str
+
+    def __init__(self, coordinator: ScalableCoordinator, parent_device_id: str) -> None:
+        super().__init__(coordinator)
+        portfolio_id = coordinator.data.portfolio_id
+        self._attr_translation_key = f"overnight_{self._key}"
+        self._attr_unique_id = f"{coordinator.unique_prefix}_overnight_{self._key}"
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, f"{portfolio_id}_overnight")},
+            name=f"{coordinator.entry_name} Overnight",
+            manufacturer=MANUFACTURER,
+            model="Overnight savings",
+            via_device_id=parent_device_id,
+            entry_type=DeviceEntryType.SERVICE,
+        )
+        self.entity_id = f"sensor.{coordinator.prefix}_overnight_{self._key}"
+
+    @property
+    def account(self) -> Overnight | None:
+        return self.coordinator.data.overnight
+
+    @property
+    def available(self) -> bool:
+        return super().available and self.account is not None
+
+    def _value(self, account: Overnight) -> float | None:
+        raise NotImplementedError
+
+    def _attributes(self, account: Overnight) -> dict[str, Any] | None:
+        return None
+
+    @property
+    def native_value(self) -> float | None:
+        return self._value(self.account) if self.account else None
+
+    @property
+    def extra_state_attributes(self) -> dict[str, Any] | None:
+        return self._attributes(self.account) if self.account else None
+
+
+class OvernightBalance(_OvernightSensor):
+    """What is on the overnight account."""
+
+    _key = "balance"
+
+    def __init__(self, *args: Any) -> None:
+        super().__init__(*args)
+        self._monetary()
+
+    def _value(self, account: Overnight) -> float | None:
+        return account.balance
+
+    def _attributes(self, account: Overnight) -> dict[str, Any]:
+        return {
+            "account_name": account.name,
+            "active": account.active,
+            "interest_bearing": account.interest_bearing,
+            "lifetime_interest": account.lifetime_interest,
+        }
+
+
+class OvernightInterestRate(_OvernightSensor):
+    """The account's interest rate, in percent per year."""
+
+    _key = "interest_rate"
+
+    def __init__(self, *args: Any) -> None:
+        super().__init__(*args)
+        self._percentage()
+
+    def _value(self, account: Overnight) -> float | None:
+        return _percent_of(account.interest_rate)
+
+
+class OvernightAccrued(_OvernightSensor):
+    """Interest run up since the last payout."""
+
+    _key = "accrued"
+
+    def __init__(self, *args: Any) -> None:
+        super().__init__(*args)
+        self._monetary()
+
+    def _value(self, account: Overnight) -> float | None:
+        return account.accrued
+
+    def _attributes(self, account: Overnight) -> dict[str, Any]:
+        return {"lifetime_interest": account.lifetime_interest}
+
+
+class OvernightNextPayout(_OvernightSensor):
+    """What the next payout is expected to bring, and when."""
+
+    _key = "next_payout"
+
+    def __init__(self, *args: Any) -> None:
+        super().__init__(*args)
+        self._monetary()
+
+    def _value(self, account: Overnight) -> float | None:
+        return account.next_payout
+
+    def _attributes(self, account: Overnight) -> dict[str, Any]:
+        return {"next_payout_date": account.next_payout_date}
+
+
+OVERNIGHT_SENSORS: tuple[type[_OvernightSensor], ...] = (
+    OvernightBalance,
+    OvernightInterestRate,
+    OvernightAccrued,
+    OvernightNextPayout,
+)
+
+
+class _FixedTermSensor(_ScalableSensor):
+    """Something about one fixed-term account - unavailable once it is gone."""
+
+    _key: str
+
+    def __init__(
+        self, coordinator: ScalableCoordinator, parent_device_id: str, account: FixedTerm
+    ) -> None:
+        super().__init__(coordinator)
+        portfolio_id = coordinator.data.portfolio_id
+        self._account_id = account.account_id
+        self._attr_translation_key = f"fixed_term_{self._key}"
+        self._attr_unique_id = f"{coordinator.unique_prefix}_fixed_{account.account_id}_{self._key}"
+        term = f"{account.months} months" if account.months else "Fixed-term"
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, f"{portfolio_id}_fixed_{account.account_id}")},
+            name=f"{coordinator.entry_name} {account.name}",
+            manufacturer=MANUFACTURER,
+            model=f"Fixed-term, {term}" if account.months else term,
+            model_id=account.account_id,
+            via_device_id=parent_device_id,
+            entry_type=DeviceEntryType.SERVICE,
+        )
+        self.entity_id = (
+            f"sensor.{coordinator.prefix}_{slugify(account.name)}_{slugify(account.account_id)[:6]}_{self._key}"
+        )
+
+    @property
+    def account(self) -> FixedTerm | None:
+        return next(
+            (item for item in self.coordinator.data.fixed_terms if item.account_id == self._account_id),
+            None,
+        )
+
+    @property
+    def available(self) -> bool:
+        return super().available and self.account is not None
+
+    def _value(self, account: FixedTerm) -> Any:
+        raise NotImplementedError
+
+    def _attributes(self, account: FixedTerm) -> dict[str, Any] | None:
+        return None
+
+    @property
+    def native_value(self) -> Any:
+        return self._value(self.account) if self.account else None
+
+    @property
+    def extra_state_attributes(self) -> dict[str, Any] | None:
+        return self._attributes(self.account) if self.account else None
+
+
+class FixedTermAmount(_FixedTermSensor):
+    """What was put into the account."""
+
+    _key = "amount"
+
+    def __init__(self, *args: Any) -> None:
+        super().__init__(*args)
+        self._monetary()
+
+    def _value(self, account: FixedTerm) -> float | None:
+        return account.amount
+
+    def _attributes(self, account: FixedTerm) -> dict[str, Any]:
+        return {
+            "account_name": account.name,
+            "state": account.state,
+            "months": account.months,
+            "start": account.start,
+            "maturity": account.maturity,
+            "auto_renewal": account.auto_renewal,
+            "estimated_payout": account.payout,
+        }
+
+
+class FixedTermInterestRate(_FixedTermSensor):
+    """The nominal interest rate, in percent per year."""
+
+    _key = "interest_rate"
+
+    def __init__(self, *args: Any) -> None:
+        super().__init__(*args)
+        self._percentage()
+
+    def _value(self, account: FixedTerm) -> float | None:
+        return _percent_of(account.nominal_rate)
+
+    def _attributes(self, account: FixedTerm) -> dict[str, Any]:
+        return {"effective_rate": _percent_of(account.effective_rate)}
+
+
+class FixedTermAccrued(_FixedTermSensor):
+    """Gross interest run up so far."""
+
+    _key = "accrued"
+
+    def __init__(self, *args: Any) -> None:
+        super().__init__(*args)
+        self._monetary()
+        self._attr_suggested_display_precision = 4
+
+    def _value(self, account: FixedTerm) -> float | None:
+        return account.accrued
+
+    def _attributes(self, account: FixedTerm) -> dict[str, Any]:
+        return {"estimated_payout": account.payout}
+
+
+class FixedTermMaturity(_FixedTermSensor):
+    """When the term ends."""
+
+    _key = "maturity"
+    _attr_device_class = SensorDeviceClass.TIMESTAMP
+
+    def _value(self, account: FixedTerm) -> Any:
+        return account.maturity
+
+    def _attributes(self, account: FixedTerm) -> dict[str, Any]:
+        return {"start": account.start, "months": account.months, "auto_renewal": account.auto_renewal}
+
+
+class _CreditSensor(_ScalableSensor):
+    """Something about the securities credit line - one device for it,
+    unavailable once no line is set up any more."""
+
+    _key: str
+
+    def __init__(self, coordinator: ScalableCoordinator, parent_device_id: str) -> None:
+        super().__init__(coordinator)
+        portfolio_id = coordinator.data.portfolio_id
+        self._attr_translation_key = f"credit_{self._key}"
+        self._attr_unique_id = f"{coordinator.unique_prefix}_credit_{self._key}"
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, f"{portfolio_id}_credit")},
+            name=f"{coordinator.entry_name} Credit",
+            manufacturer=MANUFACTURER,
+            model="Credit",
+            via_device_id=parent_device_id,
+            entry_type=DeviceEntryType.SERVICE,
+        )
+        self.entity_id = f"sensor.{coordinator.prefix}_credit_{self._key}"
+        self._monetary()
+
+    @property
+    def available(self) -> bool:
+        return super().available and bool(self.coordinator.data.credit_line)
+
+    @property
+    def extra_state_attributes(self) -> dict[str, Any]:
+        data = self.coordinator.data
+        return {
+            "credit_line": data.credit_line,
+            "used": data.credit_used,
+            "available": round((data.credit_line or 0) - (data.credit_used or 0), 2),
+        }
+
+
+class CreditUsed(_CreditSensor):
+    """What is drawn on the credit line."""
+
+    _key = "used"
+
+    @property
+    def native_value(self) -> float | None:
+        return self.coordinator.data.credit_used
+
+
+class CreditLine(_CreditSensor):
+    """The credit line itself."""
+
+    _key = "line"
+
+    @property
+    def native_value(self) -> float | None:
+        return self.coordinator.data.credit_line
+
+
+class CreditAvailable(_CreditSensor):
+    """What is left of it."""
+
+    _key = "available"
+
+    @property
+    def native_value(self) -> float | None:
+        data = self.coordinator.data
+        if not data.credit_line:
+            return None
+        return round(data.credit_line - (data.credit_used or 0), 2)
+
+
+CREDIT_SENSORS: tuple[type[_CreditSensor], ...] = (CreditUsed, CreditLine, CreditAvailable)
+
+
+FIXED_TERM_SENSORS: tuple[type[_FixedTermSensor], ...] = (
+    FixedTermAmount,
+    FixedTermInterestRate,
+    FixedTermAccrued,
+    FixedTermMaturity,
+)
 
 
 # --- Price alerts ------------------------------------------------------------------

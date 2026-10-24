@@ -32,7 +32,11 @@ from .const import (
     TOOL_ALERTS,
     TOOL_CASH,
     TOOL_CHART,
+    TOOL_FIXED_TERM,
+    TOOL_FIXED_TERMS,
     TOOL_HOLDINGS,
+    TOOL_OVERNIGHT,
+    TOOL_OVERNIGHT_TRANSACTIONS,
     TOOL_OVERVIEW,
     TOOL_QUOTE,
     TOOL_SAVINGS_PLANS,
@@ -171,6 +175,49 @@ class Alert:
 
 
 @dataclass(frozen=True, slots=True)
+class Overnight:
+    """The overnight savings account - "Tagesgeld" - as one update found it.
+
+    The rates are fractions, 0.026 for 2.6 %. The account Scalable resolves
+    by itself is the one read: an account with several of them gets the
+    first.
+    """
+
+    account_id: str
+    name: str
+    active: bool | None
+    balance: float | None
+    interest_rate: float | None
+    accrued: float | None
+    """Interest run up since the last payout."""
+    interest_bearing: float | None
+    lifetime_interest: float | None
+    next_payout: float | None
+    next_payout_date: datetime | None
+    transactions: tuple[dict[str, Any], ...] = ()
+    """The account's history as Scalable lists it, newest first - for the card."""
+
+
+@dataclass(frozen=True, slots=True)
+class FixedTerm:
+    """One fixed-term account - "Festgeld" - with what its detail page says."""
+
+    account_id: str
+    name: str
+    state: str | None
+    amount: float | None
+    currency: str | None
+    months: int | None
+    nominal_rate: float | None
+    effective_rate: float | None
+    start: datetime | None
+    maturity: datetime | None
+    accrued: float | None
+    payout: float | None
+    auto_renewal: bool | None
+
+
+@dataclass(frozen=True, slots=True)
 class Portfolio:
     """The whole portfolio, as one update found it."""
 
@@ -190,6 +237,54 @@ class Portfolio:
     transactions: tuple[dict[str, Any], ...] = ()
     """The whole history as Scalable lists it, newest first - for the card."""
     savings_plans: tuple[dict[str, Any], ...] = ()
+    overnight: Overnight | None = None
+    """The overnight account - None where the user has none."""
+    fixed_terms: tuple[FixedTerm, ...] = ()
+    credit_line: float | None = None
+    """The securities credit line, where one is set up - 0 or None where not."""
+    credit_used: float | None = None
+    """What is drawn on it. The rate and the next interest date are not in
+    Scalable's interface."""
+
+
+def _overnight(answer: dict[str, Any], history: list[dict[str, Any]]) -> Overnight | None:
+    account_id = answer.get("savingsAccountId")
+    if not account_id:
+        return None
+    account = answer.get("account") or {}
+    summary = answer.get("summary") or {}
+    return Overnight(
+        account_id=str(account_id),
+        name=account.get("displayName") or "Overnight",
+        active=account.get("isActive"),
+        balance=_number(summary.get("balance")),
+        interest_rate=_number(summary.get("interestRate")),
+        accrued=_number(summary.get("currentAccruedAmount")),
+        interest_bearing=_number(summary.get("currentInterestBearingAmount")),
+        lifetime_interest=_number(summary.get("depositAccruedLifetimeAmount")),
+        next_payout=_number(summary.get("estimatedNextPayoutAmount")),
+        next_payout_date=_time(summary.get("nextPayoutDate")),
+        transactions=tuple(history),
+    )
+
+
+def _fixed_term(item: dict[str, Any]) -> FixedTerm:
+    months = item.get("fixedTermMonths")
+    return FixedTerm(
+        account_id=str(item["fixedTermAccountId"]),
+        name=item.get("displayName") or "Fixed-term",
+        state=item.get("state"),
+        amount=_number(item.get("depositAmount")),
+        currency=item.get("currency"),
+        months=int(months) if isinstance(months, (int, float)) else None,
+        nominal_rate=_number(item.get("nominalInterestRate")),
+        effective_rate=_number(item.get("effectiveInterestRate")),
+        start=_time(item.get("contractualStartDate")),
+        maturity=_time(item.get("maturityDate")),
+        accrued=_number(item.get("currentAccruedGrossInterest")),
+        payout=_number(item.get("estimatedPayoutAmount")),
+        auto_renewal=item.get("autoRenewalEnabled"),
+    )
 
 
 def _quote(answer: dict[str, Any] | None, fallback: dict[str, Any] | None) -> Quote:
@@ -350,18 +445,80 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
         self, session: ScalableSession, selected: dict[str, Any], **filters: Any
     ) -> list[dict[str, Any]]:
         """Every page of the transaction list, under the given filters."""
+        return await self._async_pages(session, TOOL_TRANSACTIONS, {**selected, **filters})
+
+    async def _async_pages(
+        self, session: ScalableSession, tool: str, arguments: dict[str, Any]
+    ) -> list[dict[str, Any]]:
+        """Every page of a transaction list - the broker's or the overnight
+        account's, which page the same way."""
         found: list[dict[str, Any]] = []
         cursor: str | None = None
         for _ in range(_MAX_PAGES):
-            arguments = {**selected, "pageSize": _PAGE_SIZE, **filters}
+            call = {**arguments, "pageSize": _PAGE_SIZE}
             if cursor:
-                arguments["cursor"] = cursor
-            answer = await session.async_call(TOOL_TRANSACTIONS, arguments)
+                call["cursor"] = cursor
+            answer = await session.async_call(tool, call)
             found.extend(tx for tx in answer.get("transactions") or [] if isinstance(tx, dict))
             cursor = (answer.get("page") or {}).get("nextCursor")
             if not cursor:
                 break
         return found
+
+    async def _async_overnight(self, session: ScalableSession) -> Overnight | None:
+        """The overnight account with its history - None where there is none,
+        or where Scalable will not say: the broker does not depend on it."""
+        try:
+            answer = await session.async_call(TOOL_OVERNIGHT, {})
+        except ScalableAuthError:
+            raise
+        except ScalableError as err:
+            _LOGGER.debug("No overnight account: %s", err)
+            return None
+        account_id = answer.get("savingsAccountId")
+        if not account_id:
+            return None
+        try:
+            history = await self._async_pages(
+                session, TOOL_OVERNIGHT_TRANSACTIONS, {"savingsAccountId": account_id}
+            )
+        except ScalableAuthError:
+            raise
+        except ScalableError as err:
+            _LOGGER.debug("No overnight transactions: %s", err)
+            history = []
+        history.sort(key=lambda tx: tx.get("lastEventAt") or "", reverse=True)
+        return _overnight(answer, history)
+
+    async def _async_fixed_terms(self, session: ScalableSession) -> tuple[FixedTerm, ...]:
+        """Every fixed-term account, each with what its detail page adds."""
+        try:
+            listed = (await session.async_call(TOOL_FIXED_TERMS, {})).get("accounts") or []
+        except ScalableAuthError:
+            raise
+        except ScalableError as err:
+            _LOGGER.debug("No fixed-term accounts: %s", err)
+            return ()
+        found: list[FixedTerm] = []
+        for item in listed:
+            if not isinstance(item, dict) or not item.get("fixedTermAccountId"):
+                continue
+            detail: dict[str, Any] = item
+            try:
+                detail = {
+                    **item,
+                    **(
+                        await session.async_call(
+                            TOOL_FIXED_TERM, {"fixedTermAccountId": item["fixedTermAccountId"]}
+                        )
+                    ),
+                }
+            except ScalableAuthError:
+                raise
+            except ScalableError as err:
+                _LOGGER.debug("No detail for fixed-term %s: %s", item["fixedTermAccountId"], err)
+            found.append(_fixed_term(detail))
+        return tuple(found)
 
     async def _async_fetch(self, session: ScalableSession, portfolio_id: str) -> Portfolio:
         selected = {"portfolioId": portfolio_id}
@@ -369,7 +526,10 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
             TOOL_OVERVIEW, {**selected, "includeYearToDate": True}
         )
         holdings = await session.async_call(TOOL_HOLDINGS, selected)
-        cash = (await session.async_call(TOOL_CASH, selected)).get("cash") or {}
+        breakdown = await session.async_call(TOOL_CASH, selected)
+        cash = breakdown.get("cash") or {}
+        # The credit line and what is drawn on it come with the same answer.
+        credit = breakdown.get("credit") or {}
         watched = (await session.async_call(TOOL_WATCHLIST, selected)).get("items") or []
         alerts = (await session.async_call(TOOL_ALERTS, selected)).get("items") or []
         # The whole history on every update: the card lists it, the open orders
@@ -385,6 +545,8 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
         except ScalableError as err:
             _LOGGER.debug("No savings plans: %s", err)
             plans = []
+        overnight = await self._async_overnight(session)
+        fixed_terms = await self._async_fixed_terms(session)
 
         # Crypto is left out of the positions on purpose: Scalable lists its whole
         # coin range there, every coin at quantity zero, and coins carry no quote
@@ -452,6 +614,10 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
             },
             transactions=tuple(history),
             savings_plans=tuple(item for item in plans if isinstance(item, dict)),
+            overnight=overnight,
+            fixed_terms=fixed_terms,
+            credit_line=_number(credit.get("availableCreditLine")),
+            credit_used=_number(credit.get("loaned")),
         )
 
     async def _async_update_data(self) -> Portfolio:

@@ -10,11 +10,11 @@
 
 > **Unofficial.** Not affiliated with, endorsed by or supported by Scalable Capital. "Scalable" and its logo are trademarks of Scalable Capital GmbH.
 
-<img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-overview.png" alt="The Scalable card's overview: the total value with its change over the month and a curve beside it, the cash balance, and the portfolio's positions under Stocks and ETFs, each with its value, open orders, a small curve, its change and its price" width="60%">
+<img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-overview.png" alt="The Scalable card's overview: the broker's head with its plan, the total value with today's change and a curve beside it, the cash balance with what can be invested, and the positions under Stocks and ETFs, each with its open orders, a small curve and its change; beside it the watchlist, and a second card on the overnight savings account" width="60%">
 
 ## Overview
 
-Checking on a portfolio usually means opening the broker's app. This integration brings a Scalable Capital broker portfolio into Home Assistant in addition, laid out the way Scalable's own web app lays it out: the overview with its balance, every position with what it cost and what it has made, the watchlist, the price alerts and the transactions.
+Checking on a portfolio usually means opening the broker's app. This integration brings a Scalable Capital broker portfolio into Home Assistant in addition, laid out the way Scalable's own web app lays it out: the overview with its balance, every position with what it cost and what it has made, the watchlist, the price alerts and the transactions - and beside the broker the overnight savings account, the fixed-term deposits and the securities credit line.
 
 It reads through **Scalable MCP**, the connection Scalable offers to AI assistants - Scalable publishes no other interface for software that is not its own app. Home Assistant already ships what is needed to talk to it, so there is no add-on and no extra program to install.
 
@@ -22,9 +22,10 @@ Typical reasons to use it:
 
 - **See the portfolio on a dashboard.** The [Scalable card](#scalable-card) comes with the integration and reads like Scalable's web app: the same tabs, the same period switch, a page per security and per order. Nothing to download and no resource to register.
 - **Know what a position has made.** Value, purchase value, average price and the unrealised return for every position - a figure Scalable does not report on its own and the integration works out from the transactions.
+- **See the savings and the credit too.** The overnight account, every fixed-term deposit and the credit line, as sensors and as pages of the card, one dropdown away from the broker.
 - **Follow the watchlist and the price alerts** without opening the app: a price and today's change per entry, and how far each alert still is from the current price.
 - **Use the figures anywhere.** Every value is a plain sensor, so history graphs, statistics, templates and automations work as with any other sensor.
-- **Keep it apart by kind.** Stocks, ETFs and every other kind of security get a group of their own on the integration page and a value of their own.
+- **Keep it apart by product and kind.** The broker, the overnight account, the fixed-term deposits and the credit line each get a group on the integration page; every kind of security - stocks, ETFs, … - gets one beside the broker's, and a value of its own.
 - **Look, nothing more.** It only reads - see [Reading only](#reading-only) for what that rests on.
 
 **Questions, feedback, or just want to see what others are doing with it?** Join the discussion on the [Home Assistant Community thread](https://community.home-assistant.io/t/scalable-capital-bring-your-broker-depot-into-home-assistant/1027344).
@@ -49,12 +50,12 @@ That is the whole setup. Everything below covers the individual parts in more de
 **How the portfolio arrives**
 
 - [Created entities](#created-entities) - every sensor and every attribute, for your own templates
-  - [Broker](#broker), [A position](#a-position), [Watchlist](#watchlist), [Price alerts](#price-alerts)
+  - [Broker](#broker), [A position](#a-position), [Overnight, fixed-term and credit](#overnight-fixed-term-and-credit), [Watchlist](#watchlist), [Price alerts](#price-alerts)
 
 **Showing it on a dashboard**
 
 - [Scalable card](#scalable-card) - the card that comes with the integration
-  - [Overview](#overview-1), [A security's page](#a-securitys-page), [Price alerts and savings plans](#price-alerts-and-savings-plans), [Transactions](#transactions), [Insights](#insights)
+  - [Overview](#overview-1), [A security's page](#a-securitys-page), [Price alerts and savings plans](#price-alerts-and-savings-plans), [Transactions](#transactions), [Insights](#insights), [Overnight savings, fixed-term deposits and credit](#overnight-savings-fixed-term-deposits-and-credit)
   - [Settings](#settings) - the editor
   - [What differs from the web app](#what-differs-from-the-web-app)
 
@@ -80,7 +81,7 @@ Set its **access level** to **Read only** unless you also trade through an AI as
 2. Submitting registers this Home Assistant with Scalable - a name and a return address, nothing about you.
 3. **Sign in to Scalable.** Open the link, sign in, confirm the second factor and authorise **Home Assistant**. Your browser then lands on a page that **does not load**; its address starts with `http://127.0.0.1:47861`. That is expected: Scalable only lets an application return to the computer the browser runs on. Copy the whole address from the address bar and paste it into the form. It works once and only for a few minutes.
 
-That is done once. The sign-in is renewed in the background from then on; when Scalable ends it, Home Assistant asks you to sign in again.
+That is done once. The sign-in is renewed in the background from then on; when Scalable ends it, Home Assistant asks you to sign in again - under Settings → Repairs - and the card says so: its update time and its refresh symbol turn red until that is done, and the Insights curves grey the stretch nothing was read for.
 
 An account with more than one portfolio is asked which one; each portfolio is an entry of its own.
 
@@ -88,7 +89,7 @@ An account with more than one portfolio is asked which one; each portfolio is an
 
 The gear on the integration page:
 
-- **Settings** - the update interval in minutes, 5 to 1440, 15 by default; and **Remove what Scalable no longer lists**. Switched on, a sold position, an entry taken off the watchlist and a deleted price alert are removed from Home Assistant with the next update - devices, entities, the history recorded for them and their long-term statistics. Off, which is the default, they stay and read *unavailable*.
+- **Settings** - the update interval in minutes, 5 to 1440, 15 by default; and **Remove what Scalable no longer lists**. Switched on, a sold position, an entry taken off the watchlist, a deleted price alert and a savings product that is gone - a matured fixed-term deposit, a closed overnight account or credit line - are removed from Home Assistant with the next update - devices, entities, the history recorded for them and their long-term statistics. Off, which is the default, they stay and read *unavailable*.
 - **Sign in to Scalable again** - for instance after changing the access level in Scalable.
 
 ## Created entities
@@ -97,10 +98,13 @@ The integration page groups the devices:
 
 | Group | Devices |
 |---|---|
-| **General** | *‹Name› Broker*, *‹Name› Watchlist*, *‹Name› Price alerts* |
-| **Stocks**, **ETFs**, … | one device per position, under its kind of security |
+| **Broker** | *‹Name› Broker*, *‹Name› Watchlist*, *‹Name› Price alerts* |
+| **Broker · Stocks**, **Broker · ETFs**, … | one device per position, under its kind of security |
+| **Overnight savings** | *‹Name› Overnight* |
+| **Fixed-term deposits** | one device per fixed-term account |
+| **Credit** | *‹Name› Credit* |
 
-A group for a kind of security appears with the first position of that kind. Groups can be renamed.
+A group appears when it is first needed - a kind of security with the first position of that kind, a product when the account has it. Home Assistant shows one level of groups, which is why a kind of security stands beside the broker's group rather than inside it. Groups can be renamed; the groups of an earlier version are carried over.
 
 Entity ids below assume the name *Scalable*.
 
@@ -137,6 +141,24 @@ The change per period comes as `change_day`, `change_week`, `change_month`, `cha
 
 A sold position's sensors turn *unavailable*; its device can then be deleted - or is deleted for you, see **Remove what Scalable no longer lists** under [Configure](#configure).
 
+### Overnight, fixed-term and credit
+
+The products beside the broker, each a device of its own: the overnight account - "Tagesgeld" -, every fixed-term account - "Festgeld" - and the securities credit line. Rates are in percent per year.
+
+| Entity | What it holds |
+|---|---|
+| `sensor.scalable_overnight_balance` | What is on the overnight account; attributes `account_name`, `active`, `interest_bearing`, `lifetime_interest` |
+| `sensor.scalable_overnight_interest_rate` | The account's interest rate |
+| `sensor.scalable_overnight_accrued` | Interest run up since the last payout; attribute `lifetime_interest` |
+| `sensor.scalable_overnight_next_payout` | What the next payout is expected to bring; attribute `next_payout_date` |
+| `sensor.scalable_<name>_<id>_amount` | What went into the fixed-term account; attributes `state`, `months`, `start`, `maturity`, `auto_renewal`, `estimated_payout` |
+| `…_interest_rate` | The nominal rate; attribute `effective_rate` |
+| `…_accrued` | Gross interest run up so far; attribute `estimated_payout` |
+| `…_maturity` | When the term ends; attributes `start`, `months`, `auto_renewal` |
+| `sensor.scalable_credit_used` / `_line` / `_available` | The securities credit line - what is drawn on it, the line, what is left; each with the three as attributes. Only where a line is set up. Scalable's interface does not give the rate or the next interest date |
+
+An account Scalable no longer lists reads unavailable. The overnight account read is the one Scalable resolves by itself; junior accounts are not offered by Scalable's interface.
+
 ### Watchlist
 
 Per entry `sensor.scalable_watchlist_‹name›_price` and `…_change_day`, the price with the same attributes as a position's.
@@ -147,7 +169,7 @@ Per entry `sensor.scalable_watchlist_‹name›_price` and `…_change_day`, the
 
 ## Scalable card
 
-The integration's own card: the portfolio the way Scalable's web app shows it, with the same tabs - **Overview, Savings plans, Price alerts, Insights, Transactions**.
+The integration's own card: the portfolio the way Scalable's web app shows it, with the same tabs - **Overview, Savings plans, Price alerts, Insights, Transactions**. Where the account has more than the broker, a dropdown under the title switches to the [overnight savings, a fixed-term deposit or the credit](#overnight-savings-fixed-term-deposits-and-credit), the way the web app's start page offers them. Every product opens with its head: its symbol on a disc, its name and, for the broker, the plan, read off its monthly fee booking.
 
 It comes with the integration. There is nothing to download, nothing to copy into `www` and nothing to register as a dashboard resource - restart Home Assistant after installing and the card is there, under **Scalable Capital** in the card picker. The entry that shows up under **Settings → Dashboards → Resources** is the integration's own: it writes it, keeps it pointing at the version it serves, and takes it out again with the last entry. In YAML it is just:
 
@@ -157,11 +179,11 @@ type: custom:scalable-card
 
 The card **only shows**. It has no buttons to buy, sell, cancel an order or set an alert, and the integration behind it cannot do any of that either.
 
-Beside the title, a small symbol reads Scalable again right away instead of waiting for the next update.
+Beside the title stand the time of the last update and a small symbol that reads Scalable again right away instead of waiting for the next one. Both turn red while Scalable waits for a new sign-in, and both stay when the title is hidden - the dropdown then takes the title's line.
 
 ### Overview
 
-The total value with its change over the chosen period - **1D, 1W, 1M, YTD, 1Y, Since purchase** - and the portfolio's curve beside it; a click on the curve opens [Insights](#insights). Below, the cash balance, the positions under a heading per kind of security - Stocks, ETFs, … - the crypto value and the watchlist.
+The total value with its change over the chosen period - **1D, 1W, 1M, YTD, 1Y, Since purchase** - and the portfolio's curve beside it; a click on the curve opens [Insights](#insights). Below, the cash balance - with what can be invested in brackets where that differs, as with a credit line drawn on - the positions under a heading per kind of security - Stocks, ETFs, … - the crypto value and the watchlist.
 
 Every entry carries its value, its open orders - the clock is a link to them - a small curve, the change and the price. Under *Since purchase* a position shows its return in percent and euros instead. A section folds with a click on its heading.
 
@@ -172,12 +194,12 @@ Every entry carries its value, its open orders - the clock is a link to them - a
 A click on an entry opens the security's own page:
 
 - the price with its change over the chosen period, and the two prices of Scalable's **Sell** and **Buy** buttons;
-- a chart over **1D** to **MAX** that reads off the price under the pointer and marks the current price at its end, green above the period's starting price and red below it;
+- a chart over **1D** to **MAX** that reads off the moment and the price under the pointer and marks the current price at its end, green above the period's starting price and red below it;
 - a bell with the number of its waiting price alerts, which leads to them;
 - **Your position** - value, purchase value, quantity, average price and unrealised return;
 - the security's own transactions and open orders.
 
-While trading is closed, a moon stands in front of the price, and the one-day view names the day the price is from instead of *Today*.
+While the security cannot be traded - outside weekdays 06:00 to 23:00 German time, the hours Scalable trades in and the charts run on, or once Scalable marks the price as outdated - a moon stands in front of the price; crypto trades round the clock. Once Scalable marks the price as outdated, the one-day view names the day the price is from instead of *Today*.
 
 <img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-active-asset.png" alt="A position's page: Caterpillar with its price, the month's change, the sell and the buy price, the bell with one alert, a month's price chart with the current price marked at its end, the position's value, quantity and return, and its open sell order" width="45%"> <img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-watchlist-asset.png" alt="A watchlist entry's page: the year-to-date chart, green above the starting price and red below it, with no position and no transactions" width="45%">
 
@@ -199,16 +221,28 @@ A click opens the transaction's own page: ordered and executed quantity, limit a
 
 ### Insights
 
-The portfolio's **Total return** or **Portfolio value** as a curve, over **1D** to **MAX**.
+The portfolio's **Total return** or **Portfolio value** as a curve, over **1D** to **MAX**. Both curves run on trading time, the way the web app's do - weekdays from 06:00 to 23:00 German time, whatever clock the browser runs on, with no nights and no weekends in them - and every period opens on the close of the day before its first day, which is where the return stands at nought: **1W** a week ago, **1M** the same day a month ago, **YTD** on 1 January. The clock stands still from the close to the next open, so at midnight the charts are what they were at 23:00. **1D** is the trading day before, in grey, and the present one; a period that reaches back before the first record runs flat from its start. Along the bottom a day names its two days, a week its trading days, a month every seventh day and the longer periods their months. The return is drawn the way the web app draws it: from nought at the period's start, with deposits and withdrawals taken out, so a payment into the account is no gain; the curve ends on Scalable's own figure for the period. Both curves come out of the value Home Assistant has recorded for the portfolio.
+
+The pointer reads off the moment and the figure: the time on a day, date and time on a week or a month, the date from three months up. Where nothing was recorded - Scalable waiting for a new sign-in, Home Assistant switched off - the curve breaks and the stretch is grey.
 
 <img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-insights.png" alt="The Insights tab: the portfolio's total return over a month as a curve, red below zero and green above" width="60%">
+
+### Overnight savings, fixed-term deposits and credit
+
+**Overnight savings** shows the balance, the interest rate, the next payout and what it is expected to bring, and the account's transactions with a search - under the figures, on a tab of their own, or both.
+
+**A fixed-term deposit** shows its amount, rate and end date, and a ring that runs through the term with the interest run up so far, to nine places: the cents bright, the rest dimmed, as the web app has it.
+
+**Credit** shows what is drawn on the securities credit line, a bar of the line - used against free - and below it what is used, what is left and the line itself.
+
+<img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-overnight.png" alt="The overnight savings page: the balance, the interest rate, the next payout date, the expected amount with the interest accrued so far, and the account's transactions" width="32%"> <img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-fixed-term.png" alt="A six-month fixed-term deposit: the balance, the interest rate, the amount and the end date with auto-renewal off, and the ring with the interest run up so far" width="32%"> <img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-credit.png" alt="The credit page: what is used, the usage bar of the credit line, and the used, available and total amounts below" width="32%">
 
 ### Settings
 
 The editor has two panels, each with three tabs, the way the Annuals and Blitzer.de cards have them:
 
-- **Settings** - *General* (which account, the title, which tabs, the tab and the period the card opens on), *Content* (what the overview's head and sections show, grouping the positions by kind, their order, what a security's page shows) and *List* (what an entry is made of and what a click on it does).
-- **Layout** - *General* (card background, the colours for gain and loss, and colour and font of the title, the tabs, the period switch, the total value and the headings), *Chart* (height, line width, fill, reference line, axis labels, the note under the portfolio's curve) and *List* (colour and font of every part of an entry).
+- **Settings** - *General* (which account, the title, which of the account's products the card offers - broker, overnight, fixed-term, credit - whether a dropdown switches between them and which it starts on), *Content* (every product's group opens with its head over the tabs - its symbol on a disc, its name and the line under it, the broker's plan read off its fee booking - with a switch for the head and one for the symbol; under **Broker**: the tab line and its tabs, the tab and the period the card opens on, what the overview's head and sections show, grouping the positions by kind, their order, what a security's page shows; under **Overnight savings**: its tab line, its Transactions tab, the tab it opens on and what its page shows; under **Fixed-term deposit** and **Credit**: what their pages show) and *List* (what a broker entry is made of and what a click on it does). A product that is not offered takes its settings with it.
+- **Layout** - *General* (card background, the colours for gain and loss, colour and font of the title and the update time; then every product's group, opening with its head - the name with the symbol and the colour of the disc behind it, and the line under the name where the product has one - and going on with what the product has: the broker its tabs, the big figure, the period switch, the change and the section headings; the overnight account its tabs and its figure; a fixed-term account its figure; the credit its figure and the usage bar, its colour and thickness), *Chart* (under **Broker**: height, line width, fill, reference line, axis labels, the note under the portfolio's curve) and *List* (under **Broker**: colour and font of every part of an entry).
 
 Every field carries an **i** describing it. Only what you change is written to the dashboard: a card left as it is stores nothing but its type.
 
@@ -217,18 +251,18 @@ Every field carries an **i** describing it. Only what you change is written to t
 Three things, because Scalable does not hand them out:
 
 - **Logos.** An entry gets a round symbol with its first letter.
-- **The portfolio's own curve** - beside the total value and under Insights - is drawn from what Home Assistant has recorded for the portfolio's sensors. It therefore starts on the day the integration was set up, not on the day the portfolio was opened.
+- **The portfolio's own curve** - beside the total value and under Insights - is drawn from what Home Assistant has recorded for the portfolio's value. It therefore reaches back to the day the integration was set up, not to the day the portfolio was opened, and shows a grey gap where nothing was recorded.
 - **Crypto** is one figure; single coins are not listed.
 
 ## Reading only
 
-Scalable's sign-in does not come in a read-only variety: what narrows it is the **access level** you set for Scalable MCP in your account (see [Before you start](#before-you-start)). On this side, the integration names eleven of Scalable's tools - overview, positions, quotes, cash, watchlist, transactions, a transaction's details, price charts, price alerts, savings plans, portfolio list - and checks at every start and once a day that Scalable itself still declares each of them read-only. A tool that loses that declaration is not called at all.
+Scalable's sign-in does not come in a read-only variety: what narrows it is the **access level** you set for Scalable MCP in your account (see [Before you start](#before-you-start)). On this side, the integration names fifteen of Scalable's tools - overview, positions, quotes, cash, watchlist, transactions, a transaction's details, price charts, price alerts, savings plans, portfolio list, the overnight account and its transactions, the fixed-term accounts and a fixed-term account's details - and checks at every start and once a day that Scalable itself still declares each of them read-only. A tool that loses that declaration is not called at all.
 
 ## Good to know
 
 - **"Today"** is the last trading day against the close before it. On a weekend it still describes Friday.
 - **Crypto** is counted in the portfolio's crypto value; single coins are not positions yet.
-- **Every update** costs a handful of requests plus one per position and watchlist entry. The card adds one request per security and period for its curves, kept for five minutes (one day) up to twelve hours (maximum), and one per transaction page opened.
+- **Every update** costs a handful of requests plus one per position, watchlist entry and fixed-term account. The card adds one request per security and period for its curves, kept for five minutes (one day) up to twelve hours (maximum), and one per transaction page opened.
 - Scalable MCP is a young interface. If Scalable changes it, this integration has to follow.
 
 ## Installation

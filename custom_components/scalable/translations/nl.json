@@ -71,7 +71,7 @@
         },
         "data_description": {
           "scan_interval": "Hoe vaak Scalable wordt bevraagd, in minuten. Elke update kost een handvol verzoeken, plus één per positie en per item op de volglijst.",
-          "remove_stale": "Verkochte posities, van de watchlist gehaalde items en verwijderde prijsalarmen worden bij de volgende update uit Home Assistant verwijderd - hun apparaten, hun entiteiten, de vastgelegde geschiedenis en hun langetermijnstatistieken. Uit blijven ze staan en zijn ze niet beschikbaar."
+          "remove_stale": "Verkochte posities, van de watchlist gehaalde items, verwijderde prijsalarmen en verdwenen spaarproducten - een afgelopen termijndeposito, een opgeheven spaarrekening of kredietlijn - worden bij de volgende update uit Home Assistant verwijderd - hun apparaten, hun entiteiten, de vastgelegde geschiedenis en hun langetermijnstatistieken. Uit blijven ze staan en zijn ze niet beschikbaar."
         }
       },
       "reauth": {
@@ -208,6 +208,39 @@
       },
       "alerts_active": {
         "name": "Actieve alarmen"
+      },
+      "overnight_balance": {
+        "name": "Saldo spaarrekening"
+      },
+      "overnight_interest_rate": {
+        "name": "Rente spaarrekening"
+      },
+      "overnight_accrued": {
+        "name": "Opgebouwde rente spaarrekening"
+      },
+      "overnight_next_payout": {
+        "name": "Volgende uitkering spaarrekening"
+      },
+      "fixed_term_amount": {
+        "name": "Bedrag"
+      },
+      "fixed_term_interest_rate": {
+        "name": "Rentetarief"
+      },
+      "fixed_term_accrued": {
+        "name": "Opgebouwde rente"
+      },
+      "fixed_term_maturity": {
+        "name": "Einddatum"
+      },
+      "credit_used": {
+        "name": "Krediet gebruikt"
+      },
+      "credit_line": {
+        "name": "Kredietlijn"
+      },
+      "credit_available": {
+        "name": "Krediet beschikbaar"
       }
     }
   }

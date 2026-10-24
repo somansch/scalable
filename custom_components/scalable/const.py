@@ -68,8 +68,18 @@ TOOL_ALERTS = "list_price_alerts"
 TOOL_CHART = "get_security_chart"
 TOOL_TRANSACTION = "get_transaction_details"
 TOOL_SAVINGS_PLANS = "list_savings_plans"
+# The savings products beside the broker: the overnight account with its
+# transactions, and the fixed-term accounts with their details.
+TOOL_OVERNIGHT = "get_overnight_summary"
+TOOL_OVERNIGHT_TRANSACTIONS = "list_overnight_transactions"
+TOOL_FIXED_TERMS = "list_fixed_term_accounts"
+TOOL_FIXED_TERM = "get_fixed_term_account"
 READ_TOOLS = frozenset(
     {
+        TOOL_OVERNIGHT,
+        TOOL_OVERNIGHT_TRANSACTIONS,
+        TOOL_FIXED_TERMS,
+        TOOL_FIXED_TERM,
         TOOL_PORTFOLIOS,
         TOOL_OVERVIEW,
         TOOL_HOLDINGS,

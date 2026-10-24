@@ -71,7 +71,7 @@
         },
         "data_description": {
           "scan_interval": "Ogni quanto viene interrogato Scalable, in minuti. Ogni aggiornamento costa alcune richieste, più una per posizione e per voce della watchlist.",
-          "remove_stale": "Le posizioni vendute, le voci tolte dalla watchlist e gli avvisi di prezzo eliminati vengono rimossi da Home Assistant al prossimo aggiornamento - i loro dispositivi, le loro entità, la cronologia registrata e le loro statistiche a lungo termine. Se disattivato, restano e risultano non disponibili."
+          "remove_stale": "Le posizioni vendute, le voci tolte dalla watchlist, gli avvisi di prezzo eliminati e i prodotti di risparmio scomparsi - un deposito vincolato giunto a scadenza, un conto deposito o una linea di credito chiusi - vengono rimossi da Home Assistant al prossimo aggiornamento - i loro dispositivi, le loro entità, la cronologia registrata e le loro statistiche a lungo termine. Se disattivato, restano e risultano non disponibili."
         }
       },
       "reauth": {
@@ -208,6 +208,39 @@
       },
       "alerts_active": {
         "name": "Avvisi attivi"
+      },
+      "overnight_balance": {
+        "name": "Saldo conto deposito"
+      },
+      "overnight_interest_rate": {
+        "name": "Tasso conto deposito"
+      },
+      "overnight_accrued": {
+        "name": "Interessi maturati conto deposito"
+      },
+      "overnight_next_payout": {
+        "name": "Prossimo accredito conto deposito"
+      },
+      "fixed_term_amount": {
+        "name": "Importo"
+      },
+      "fixed_term_interest_rate": {
+        "name": "Tasso d'interesse"
+      },
+      "fixed_term_accrued": {
+        "name": "Interessi maturati"
+      },
+      "fixed_term_maturity": {
+        "name": "Data di scadenza"
+      },
+      "credit_used": {
+        "name": "Credito utilizzato"
+      },
+      "credit_line": {
+        "name": "Linea di credito"
+      },
+      "credit_available": {
+        "name": "Credito disponibile"
       }
     }
   }
