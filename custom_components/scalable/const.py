@@ -74,8 +74,12 @@ TOOL_OVERNIGHT = "get_overnight_summary"
 TOOL_OVERNIGHT_TRANSACTIONS = "list_overnight_transactions"
 TOOL_FIXED_TERMS = "list_fixed_term_accounts"
 TOOL_FIXED_TERM = "get_fixed_term_account"
+# The portfolio groups the user made in Scalable's app - "Meine Aktien",
+# "Meine ETFs" - with their valuation and their holdings, for the card.
+TOOL_GROUPS = "list_portfolio_groups"
 READ_TOOLS = frozenset(
     {
+        TOOL_GROUPS,
         TOOL_OVERNIGHT,
         TOOL_OVERNIGHT_TRANSACTIONS,
         TOOL_FIXED_TERMS,

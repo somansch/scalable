@@ -212,6 +212,7 @@ async def async_setup_entry(
     coordinator: ScalableCoordinator = entry.runtime_data
     portfolio_id = coordinator.data.portfolio_id
     async_carry_over_groups(hass, entry)
+    _async_carry_over_overnight(hass, entry, coordinator)
     broker = async_group(hass, entry, GROUP_BROKER)
     async_place_device(hass, entry, portfolio_id, broker)
     async_place_device(hass, entry, f"{portfolio_id}_watchlist", broker)
@@ -264,15 +265,21 @@ async def async_setup_entry(
             if isin not in watched:
                 watched.add(isin)
                 in_general.extend(cls(coordinator, parent.id, item) for cls in WATCH_SENSORS)
-        # The savings products, as they turn up: the overnight account once,
+        # The savings products, as they turn up: every overnight account and
         # every fixed-term account the first time it is listed.
-        if data.overnight and "overnight" not in savings:
-            savings.add("overnight")
+        for account in data.overnights:
+            key = f"overnight_{account.account_id}"
+            if key in savings:
+                continue
+            savings.add(key)
             async_place_device(
-                hass, entry, f"{portfolio_id}_overnight", async_group(hass, entry, GROUP_OVERNIGHT)
+                hass,
+                entry,
+                f"{portfolio_id}_overnight_{account.account_id}",
+                async_group(hass, entry, GROUP_OVERNIGHT),
             )
             in_group.setdefault(GROUP_OVERNIGHT, []).extend(
-                cls(coordinator, parent.id) for cls in OVERNIGHT_SENSORS
+                cls(coordinator, parent.id, account) for cls in OVERNIGHT_SENSORS
             )
         for account in data.fixed_terms:
             if account.account_id not in savings:
@@ -347,8 +354,7 @@ async def async_setup_entry(
             kept.add(f"{portfolio_id}_watchlist")
         if data.alerts:
             kept.add(f"{portfolio_id}_alerts")
-        if data.overnight:
-            kept.add(f"{portfolio_id}_overnight")
+        kept.update(f"{portfolio_id}_overnight_{a.account_id}" for a in data.overnights)
         kept.update(f"{portfolio_id}_fixed_{a.account_id}" for a in data.fixed_terms)
         if data.credit_line:
             kept.add(f"{portfolio_id}_credit")
@@ -788,29 +794,81 @@ def _percent_of(fraction: float | None) -> float | None:
     return _round(fraction * 100, 4) if isinstance(fraction, (int, float)) else None
 
 
+@callback
+def _async_carry_over_overnight(
+    hass: HomeAssistant, entry: ConfigEntry, coordinator: ScalableCoordinator
+) -> None:
+    """Up to 2.0.0 there was one overnight account, under ids without the
+    account's own: the device "<portfolio>_overnight", the entities
+    "<prefix>_overnight_<key>". Those carry over to the first account
+    Scalable lists now - the only one an installation from then could have
+    had - so the entities keep their ids and their history."""
+    accounts = coordinator.data.overnights
+    if not accounts:
+        return
+    first = accounts[0]
+    portfolio_id = coordinator.data.portfolio_id
+    device_registry = dr.async_get(hass)
+    # Looked up among this entry's own devices: the registry's lookup by
+    # identifier alone is on its way out, identifiers not being unique
+    # across entries any more.
+    legacy = (DOMAIN, f"{portfolio_id}_overnight")
+    for device in dr.async_entries_for_config_entry(device_registry, entry.entry_id):
+        if legacy in device.identifiers:
+            device_registry.async_update_device(
+                device.id, new_identifiers={(DOMAIN, f"{portfolio_id}_overnight_{first.account_id}")}
+            )
+            break
+    entity_registry = er.async_get(hass)
+    for cls in OVERNIGHT_SENSORS:
+        old_id = f"{coordinator.unique_prefix}_overnight_{cls._key}"
+        entity_id = entity_registry.async_get_entity_id("sensor", DOMAIN, old_id)
+        if entity_id is None:
+            continue
+        entity_registry.async_update_entity(
+            entity_id, new_unique_id=f"{coordinator.unique_prefix}_overnight_{first.account_id}_{cls._key}"
+        )
+
+
 class _OvernightSensor(_ScalableSensor):
-    """Something about the overnight account - unavailable once it is gone."""
+    """Something about one overnight account - unavailable once it is gone."""
 
     _key: str
 
-    def __init__(self, coordinator: ScalableCoordinator, parent_device_id: str) -> None:
+    def __init__(
+        self, coordinator: ScalableCoordinator, parent_device_id: str, account: Overnight
+    ) -> None:
         super().__init__(coordinator)
         portfolio_id = coordinator.data.portfolio_id
+        self._account_id = account.account_id
         self._attr_translation_key = f"overnight_{self._key}"
-        self._attr_unique_id = f"{coordinator.unique_prefix}_overnight_{self._key}"
+        self._attr_unique_id = f"{coordinator.unique_prefix}_overnight_{account.account_id}_{self._key}"
+        kind = f", {account.owner_kind}" if account.owner_kind and account.owner_kind != "personal" else ""
         self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, f"{portfolio_id}_overnight")},
-            name=f"{coordinator.entry_name} Overnight",
+            identifiers={(DOMAIN, f"{portfolio_id}_overnight_{account.account_id}")},
+            name=f"{coordinator.entry_name} {account.name}",
             manufacturer=MANUFACTURER,
-            model="Overnight savings",
+            model=f"Overnight savings{kind}",
+            model_id=account.account_id,
             via_device_id=parent_device_id,
             entry_type=DeviceEntryType.SERVICE,
         )
-        self.entity_id = f"sensor.{coordinator.prefix}_overnight_{self._key}"
+        # The first account keeps the ids a single one had; a further one
+        # is told apart by its name and the start of its id, like a
+        # fixed-term account.
+        first = coordinator.data.overnights[0].account_id == account.account_id
+        self.entity_id = (
+            f"sensor.{coordinator.prefix}_overnight_{self._key}"
+            if first
+            else f"sensor.{coordinator.prefix}_overnight_{slugify(account.name)}_{slugify(account.account_id)[:6]}_{self._key}"
+        )
 
     @property
     def account(self) -> Overnight | None:
-        return self.coordinator.data.overnight
+        return next(
+            (item for item in self.coordinator.data.overnights if item.account_id == self._account_id),
+            None,
+        )
 
     @property
     def available(self) -> bool:
@@ -846,6 +904,7 @@ class OvernightBalance(_OvernightSensor):
     def _attributes(self, account: Overnight) -> dict[str, Any]:
         return {
             "account_name": account.name,
+            "owner_kind": account.owner_kind,
             "active": account.active,
             "interest_bearing": account.interest_bearing,
             "lifetime_interest": account.lifetime_interest,

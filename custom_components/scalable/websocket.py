@@ -21,7 +21,7 @@ from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 
 from .const import CHART_TIMEFRAMES, DOMAIN, SIGNAL_ENTRY_LOADED
-from .coordinator import FixedTerm, Overnight, Portfolio, Position, Quote, ScalableCoordinator
+from .coordinator import PortfolioGroup, FixedTerm, Overnight, Portfolio, Position, Quote, ScalableCoordinator
 from .errors import ScalableError
 
 # The portfolio's own figures the card draws a curve of, from the statistics
@@ -90,6 +90,7 @@ def _overnight(account: Overnight) -> dict[str, Any]:
     return {
         "id": account.account_id,
         "name": account.name,
+        "owner_kind": account.owner_kind,
         "active": account.active,
         "balance": account.balance,
         "interest_rate": account.interest_rate,
@@ -99,6 +100,21 @@ def _overnight(account: Overnight) -> dict[str, Any]:
         "next_payout": account.next_payout,
         "next_payout_date": _iso(account.next_payout_date),
         "transactions": list(account.transactions),
+    }
+
+
+def _group(group: PortfolioGroup) -> dict[str, Any]:
+    return {
+        "id": group.group_id,
+        "name": group.name,
+        "description": group.description,
+        "value": group.valuation,
+        "currency": group.currency,
+        "since_buy_fraction": group.since_buy,
+        "since_buy": group.since_buy_amount,
+        "pending_orders": group.pending_orders,
+        "savings_plans_amount": group.savings_plans_amount,
+        "isins": list(group.isins),
     }
 
 
@@ -177,8 +193,13 @@ def _snapshot(hass: HomeAssistant, coordinator: ScalableCoordinator) -> dict[str
         ],
         "transactions": list(data.transactions),
         "savings_plans": list(data.savings_plans),
-        "overnight": _overnight(data.overnight) if data.overnight else None,
+        # Every overnight account; "overnight" stays as the first one for a
+        # card from before 2.1.0 that is still open in a browser.
+        "overnights": [_overnight(item) for item in data.overnights],
+        "overnight": _overnight(data.overnights[0]) if data.overnights else None,
         "fixed_terms": [_fixed_term(item) for item in data.fixed_terms],
+        "groups": [_group(item) for item in data.groups],
+        "ungrouped": list(data.ungrouped),
         "credit": (
             {
                 "line": data.credit_line,

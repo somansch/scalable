@@ -2,6 +2,12 @@
 
 All notable changes to this integration are documented here.
 
+## v2.1.0
+
+### Added
+- **Every overnight account.** Scalable names the overnight account by itself only while there is one; with several - a personal and a junior account, say - it refused, and the integration showed none ([#1](https://github.com/somansch/scalable/issues/1)). It now reads the accounts Scalable names in that answer, one by one: a device per account under **Overnight savings**, and an entry per account in the card's product dropdown. An installation that had one account keeps its entity ids and their history. Should Scalable change the wording of that answer, the log says so.
+- **Scalable's portfolio groups on the card.** Groups made in Scalable's app - "My stocks", "My ETFs" - arrange the overview's positions the way the app does: each group folded to its name and value, its return since purchase beside it, a click opens it; what lies outside every group stands under **Ungrouped**. **Scalable's groups** under **Settings → Content → Portfolio** switches it on in place of **Group by kind** - one arrangement or the other, or neither; a card from before keeps its kinds.
+
 ## v2.0.0
 
 ### Added

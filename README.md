@@ -100,7 +100,7 @@ The integration page groups the devices:
 |---|---|
 | **Broker** | *‹Name› Broker*, *‹Name› Watchlist*, *‹Name› Price alerts* |
 | **Broker · Stocks**, **Broker · ETFs**, … | one device per position, under its kind of security |
-| **Overnight savings** | *‹Name› Overnight* |
+| **Overnight savings** | one device per overnight account - personal and junior |
 | **Fixed-term deposits** | one device per fixed-term account |
 | **Credit** | *‹Name› Credit* |
 
@@ -143,11 +143,11 @@ A sold position's sensors turn *unavailable*; its device can then be deleted - o
 
 ### Overnight, fixed-term and credit
 
-The products beside the broker, each a device of its own: the overnight account - "Tagesgeld" -, every fixed-term account - "Festgeld" - and the securities credit line. Rates are in percent per year.
+The products beside the broker, each a device of its own: every overnight account - a child's junior account included -, every fixed-term account and the securities credit line. Rates are in percent per year. The first overnight account keeps the ids below; a further one is told apart by its name and the start of its id, the way a fixed-term account is: `sensor.scalable_overnight_<name>_<id>_balance`.
 
 | Entity | What it holds |
 |---|---|
-| `sensor.scalable_overnight_balance` | What is on the overnight account; attributes `account_name`, `active`, `interest_bearing`, `lifetime_interest` |
+| `sensor.scalable_overnight_balance` | What is on the overnight account; attributes `account_name`, `owner_kind` (`personal` or `junior`), `active`, `interest_bearing`, `lifetime_interest` |
 | `sensor.scalable_overnight_interest_rate` | The account's interest rate |
 | `sensor.scalable_overnight_accrued` | Interest run up since the last payout; attribute `lifetime_interest` |
 | `sensor.scalable_overnight_next_payout` | What the next payout is expected to bring; attribute `next_payout_date` |
@@ -157,7 +157,7 @@ The products beside the broker, each a device of its own: the overnight account 
 | `…_maturity` | When the term ends; attributes `start`, `months`, `auto_renewal` |
 | `sensor.scalable_credit_used` / `_line` / `_available` | The securities credit line - what is drawn on it, the line, what is left; each with the three as attributes. Only where a line is set up. Scalable's interface does not give the rate or the next interest date |
 
-An account Scalable no longer lists reads unavailable. The overnight account read is the one Scalable resolves by itself; junior accounts are not offered by Scalable's interface.
+An account Scalable no longer lists reads unavailable. With one overnight account Scalable names it by itself; with several it lists them in its answer, and the integration reads every one of them by its id - personal and junior alike. Fixed-term junior accounts are not offered by Scalable's interface.
 
 ### Watchlist
 
@@ -183,7 +183,7 @@ Beside the title stand the time of the last update and a small symbol that reads
 
 ### Overview
 
-The total value with its change over the chosen period - **1D, 1W, 1M, YTD, 1Y, Since purchase** - and the portfolio's curve beside it; a click on the curve opens [Insights](#insights). Below, the cash balance - with what can be invested in brackets where that differs, as with a credit line drawn on - the positions under a heading per kind of security - Stocks, ETFs, … - the crypto value and the watchlist.
+The total value with its change over the chosen period - **1D, 1W, 1M, YTD, 1Y, Since purchase** - and the portfolio's curve beside it; a click on the curve opens [Insights](#insights). Below, the cash balance - with what can be invested in brackets where that differs, as with a credit line drawn on - the positions under a heading per kind of security - Stocks, ETFs, … - or, with **Scalable's groups** switched on in place of the kinds and groups made in Scalable's app, under those groups, each folded to its name and value until opened, the positions outside every group under **Ungrouped** - the crypto value and the watchlist.
 
 Every entry carries its value, its open orders - the clock is a link to them - a small curve, the change and the price. Under *Since purchase* a position shows its return in percent and euros instead. A section folds with a click on its heading.
 
@@ -241,7 +241,7 @@ The pointer reads off the moment and the figure: the time on a day, date and tim
 
 The editor has two panels, each with three tabs, the way the Annuals and Blitzer.de cards have them:
 
-- **Settings** - *General* (which account, the title, which of the account's products the card offers - broker, overnight, fixed-term, credit - whether a dropdown switches between them and which it starts on), *Content* (every product's group opens with its head over the tabs - its symbol on a disc, its name and the line under it, the broker's plan read off its fee booking - with a switch for the head and one for the symbol; under **Broker**: the tab line and its tabs, the tab and the period the card opens on, what the overview's head and sections show, grouping the positions by kind, their order, what a security's page shows; under **Overnight savings**: its tab line, its Transactions tab, the tab it opens on and what its page shows; under **Fixed-term deposit** and **Credit**: what their pages show) and *List* (what a broker entry is made of and what a click on it does). A product that is not offered takes its settings with it.
+- **Settings** - *General* (which account, the title, which of the account's products the card offers - broker, overnight, fixed-term, credit - whether a dropdown switches between them and which it starts on), *Content* (every product's group opens with its head over the tabs - its symbol on a disc, its name and the line under it, the broker's plan read off its fee booking - with a switch for the head and one for the symbol; under **Broker**: the tab line and its tabs, the tab and the period the card opens on, what the overview's head and sections show, grouping the positions by kind or by Scalable's groups, their order, what a security's page shows; under **Overnight savings**: its tab line, its Transactions tab, the tab it opens on and what its page shows; under **Fixed-term deposit** and **Credit**: what their pages show) and *List* (what a broker entry is made of and what a click on it does). A product that is not offered takes its settings with it.
 - **Layout** - *General* (card background, the colours for gain and loss, colour and font of the title and the update time; then every product's group, opening with its head - the name with the symbol and the colour of the disc behind it, and the line under the name where the product has one - and going on with what the product has: the broker its tabs, the big figure, the period switch, the change and the section headings; the overnight account its tabs and its figure; a fixed-term account its figure; the credit its figure and the usage bar, its colour and thickness), *Chart* (under **Broker**: height, line width, fill, reference line, axis labels, the note under the portfolio's curve) and *List* (under **Broker**: colour and font of every part of an entry).
 
 Every field carries an **i** describing it. Only what you change is written to the dashboard: a card left as it is stores nothing but its type.

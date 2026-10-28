@@ -111,7 +111,7 @@ class ScalableSession:
             message = error.get("message", "")
             if code in _AUTH_CODES:
                 raise ScalableAuthError(f"{name}: {code} {message}".strip())
-            raise ScalableError(f"{name}: {code} {message}".strip())
+            raise ScalableError(f"{name}: {code} {message}".strip(), code=str(code), detail=str(message))
         return data
 
 

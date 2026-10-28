@@ -11,6 +11,7 @@ import asyncio
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 import logging
+import re
 from time import monotonic
 from typing import Any
 
@@ -34,6 +35,7 @@ from .const import (
     TOOL_CHART,
     TOOL_FIXED_TERM,
     TOOL_FIXED_TERMS,
+    TOOL_GROUPS,
     TOOL_HOLDINGS,
     TOOL_OVERNIGHT,
     TOOL_OVERNIGHT_TRANSACTIONS,
@@ -178,13 +180,15 @@ class Alert:
 class Overnight:
     """The overnight savings account - "Tagesgeld" - as one update found it.
 
-    The rates are fractions, 0.026 for 2.6 %. The account Scalable resolves
-    by itself is the one read: an account with several of them gets the
-    first.
+    The rates are fractions, 0.026 for 2.6 %. With one active account
+    Scalable resolves it by itself; with several it names them in its
+    answer, and each is then read by its id - see _async_overnights.
     """
 
     account_id: str
     name: str
+    owner_kind: str | None
+    """"personal", or "junior" for a child's account."""
     active: bool | None
     balance: float | None
     interest_rate: float | None
@@ -218,6 +222,24 @@ class FixedTerm:
 
 
 @dataclass(frozen=True, slots=True)
+class PortfolioGroup:
+    """One of the groups the user made in Scalable's app - "Meine Aktien" -
+    with its valuation and the positions it holds."""
+
+    group_id: str
+    name: str
+    description: str
+    valuation: float | None
+    currency: str | None
+    since_buy: float | None
+    """The return since purchase as a fraction, -0.0349 for -3.49 %."""
+    since_buy_amount: float | None
+    pending_orders: int
+    savings_plans_amount: float | None
+    isins: tuple[str, ...]
+
+
+@dataclass(frozen=True, slots=True)
 class Portfolio:
     """The whole portfolio, as one update found it."""
 
@@ -237,9 +259,13 @@ class Portfolio:
     transactions: tuple[dict[str, Any], ...] = ()
     """The whole history as Scalable lists it, newest first - for the card."""
     savings_plans: tuple[dict[str, Any], ...] = ()
-    overnight: Overnight | None = None
-    """The overnight account - None where the user has none."""
+    overnights: tuple[Overnight, ...] = ()
+    """Every overnight account, personal and junior - empty where the user has none."""
     fixed_terms: tuple[FixedTerm, ...] = ()
+    groups: tuple[PortfolioGroup, ...] = ()
+    """The user's portfolio groups, in Scalable's order - empty without any."""
+    ungrouped: tuple[str, ...] = ()
+    """The ISINs held outside every group - what the card lists under "Ungrouped"."""
     credit_line: float | None = None
     """The securities credit line, where one is set up - 0 or None where not."""
     credit_used: float | None = None
@@ -256,6 +282,7 @@ def _overnight(answer: dict[str, Any], history: list[dict[str, Any]]) -> Overnig
     return Overnight(
         account_id=str(account_id),
         name=account.get("displayName") or "Overnight",
+        owner_kind=account.get("ownerKind"),
         active=account.get("isActive"),
         balance=_number(summary.get("balance")),
         interest_rate=_number(summary.get("interestRate")),
@@ -266,6 +293,40 @@ def _overnight(answer: dict[str, Any], history: list[dict[str, Any]]) -> Overnig
         next_payout_date=_time(summary.get("nextPayoutDate")),
         transactions=tuple(history),
     )
+
+
+def _group(item: dict[str, Any]) -> PortfolioGroup:
+    performance = item.get("performance") or {}
+    since = performance.get("sinceBuy") or {}
+    return PortfolioGroup(
+        group_id=str(item["groupId"]),
+        name=item.get("name") or "",
+        description=item.get("description") or "",
+        valuation=_number(performance.get("valuation")),
+        currency=performance.get("currency"),
+        since_buy=_number(since.get("performance")),
+        since_buy_amount=_number(since.get("simpleAbsoluteReturn")),
+        pending_orders=int(item.get("pendingOrderCount") or 0),
+        savings_plans_amount=_number(item.get("savingsPlansAmount")),
+        isins=tuple(
+            str(holding["isin"])
+            for holding in item.get("holdings") or []
+            if isinstance(holding, dict) and holding.get("isin")
+        ),
+    )
+
+
+# How Scalable names the accounts when it will not pick one: "Multiple
+# active overnight savings accounts were found [<id> (<name>, <kind>),
+# <id> (<name>, <kind>)]. Provide savingsAccountId ...". The ids are what
+# the next calls need; the rest is read for the log.
+_ACCOUNT_LIST = re.compile(r"([A-Za-z0-9]{16,40}) \(([^()]*)\)")
+_SEVERAL_ACCOUNTS = "portfolio_context_required"
+
+
+def _accounts_named(detail: str) -> list[str]:
+    """The account ids an answer about several accounts names."""
+    return [match.group(1) for match in _ACCOUNT_LIST.finditer(detail or "")]
 
 
 def _fixed_term(item: dict[str, Any]) -> FixedTerm:
@@ -465,16 +526,52 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
                 break
         return found
 
-    async def _async_overnight(self, session: ScalableSession) -> Overnight | None:
-        """The overnight account with its history - None where there is none,
-        or where Scalable will not say: the broker does not depend on it."""
+    async def _async_overnights(self, session: ScalableSession) -> tuple[Overnight, ...]:
+        """Every overnight account with its history - none where the user has
+        none, or where Scalable will not say: the broker does not depend on
+        them.
+
+        Scalable picks the account by itself while there is one. With several
+        - a personal and a junior account, say - it refuses, and names them
+        in its answer; each is then asked for by its id.
+        """
         try:
             answer = await session.async_call(TOOL_OVERNIGHT, {})
         except ScalableAuthError:
             raise
         except ScalableError as err:
-            _LOGGER.debug("No overnight account: %s", err)
-            return None
+            if err.code != _SEVERAL_ACCOUNTS:
+                _LOGGER.debug("No overnight account: %s", err)
+                return ()
+            ids = _accounts_named(err.detail)
+            if not ids:
+                # The wording has moved and the ids with it: said out loud,
+                # since the accounts are there and nothing shows them.
+                _LOGGER.warning(
+                    "Scalable has several overnight accounts but the integration could not "
+                    "read their ids from its answer - please report this: %s",
+                    err.detail,
+                )
+                return ()
+            found: list[Overnight] = []
+            for account_id in ids:
+                try:
+                    one = await session.async_call(TOOL_OVERNIGHT, {"savingsAccountId": account_id})
+                except ScalableAuthError:
+                    raise
+                except ScalableError as err_one:
+                    _LOGGER.debug("No overnight account %s: %s", account_id, err_one)
+                    continue
+                account = await self._async_overnight_with_history(session, one)
+                if account is not None:
+                    found.append(account)
+            return tuple(found)
+        account = await self._async_overnight_with_history(session, answer)
+        return (account,) if account is not None else ()
+
+    async def _async_overnight_with_history(
+        self, session: ScalableSession, answer: dict[str, Any]
+    ) -> Overnight | None:
         account_id = answer.get("savingsAccountId")
         if not account_id:
             return None
@@ -485,10 +582,32 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
         except ScalableAuthError:
             raise
         except ScalableError as err:
-            _LOGGER.debug("No overnight transactions: %s", err)
+            _LOGGER.debug("No overnight transactions for %s: %s", account_id, err)
             history = []
         history.sort(key=lambda tx: tx.get("lastEventAt") or "", reverse=True)
         return _overnight(answer, history)
+
+    async def _async_groups(
+        self, session: ScalableSession, selected: dict[str, Any]
+    ) -> tuple[tuple[PortfolioGroup, ...], tuple[str, ...]]:
+        """The user's portfolio groups and what lies outside them - none where
+        Scalable will not say: the card lists the positions ungrouped then."""
+        try:
+            answer = await session.async_call(TOOL_GROUPS, selected)
+        except ScalableAuthError:
+            raise
+        except ScalableError as err:
+            _LOGGER.debug("No portfolio groups: %s", err)
+            return (), ()
+        groups = tuple(
+            _group(item) for item in answer.get("items") or [] if isinstance(item, dict) and item.get("groupId")
+        )
+        ungrouped = tuple(
+            str(holding["isin"])
+            for holding in answer.get("ungroupedHoldings") or []
+            if isinstance(holding, dict) and holding.get("isin")
+        )
+        return groups, ungrouped
 
     async def _async_fixed_terms(self, session: ScalableSession) -> tuple[FixedTerm, ...]:
         """Every fixed-term account, each with what its detail page adds."""
@@ -545,8 +664,9 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
         except ScalableError as err:
             _LOGGER.debug("No savings plans: %s", err)
             plans = []
-        overnight = await self._async_overnight(session)
+        overnights = await self._async_overnights(session)
         fixed_terms = await self._async_fixed_terms(session)
+        groups, ungrouped = await self._async_groups(session, selected)
 
         # Crypto is left out of the positions on purpose: Scalable lists its whole
         # coin range there, every coin at quantity zero, and coins carry no quote
@@ -614,8 +734,10 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
             },
             transactions=tuple(history),
             savings_plans=tuple(item for item in plans if isinstance(item, dict)),
-            overnight=overnight,
+            overnights=overnights,
             fixed_terms=fixed_terms,
+            groups=groups,
+            ungrouped=ungrouped,
             credit_line=_number(credit.get("availableCreditLine")),
             credit_used=_number(credit.get("loaned")),
         )
