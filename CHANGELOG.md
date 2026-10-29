@@ -2,6 +2,11 @@
 
 All notable changes to this integration are documented here.
 
+## v2.1.1
+
+### Fixed
+- **Several overnight accounts, for real this time.** Scalable answers the "several accounts" refusal as an error result whose text is the JSON document, not as a structured error; 2.1.0 read only the latter, so the account ids never reached the code that asks for each ([#1](https://github.com/somansch/scalable/issues/1)). Both shapes are read now, and the account list is no longer cut off at 300 characters before the ids are taken from it.
+
 ## v2.1.0
 
 ### Added

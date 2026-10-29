@@ -14,6 +14,7 @@ from __future__ import annotations
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 from datetime import datetime, timedelta
+import json
 import logging
 from typing import Any
 
@@ -48,6 +49,19 @@ def _read_only(tool: Tool) -> bool:
         and annotations.readOnlyHint is True
         and annotations.destructiveHint is not True
     )
+
+
+def _error_in_text(text: str) -> dict[str, Any] | None:
+    """The {"error": {...}} document in a tool's text, if that is what it is."""
+    text = (text or "").strip()
+    if not text.startswith("{"):
+        return None
+    try:
+        parsed = json.loads(text)
+    except ValueError:
+        return None
+    error = parsed.get("error") if isinstance(parsed, dict) else None
+    return error if isinstance(error, dict) else None
 
 
 def _translate(err: BaseException) -> ScalableError:
@@ -101,17 +115,25 @@ class ScalableSession:
             raise ScalableError(f"{name!r} is not one of the tools this integration calls")
         result = await self._session.call_tool(name, arguments)
         data = result.structuredContent or {}
-        if result.isError:
-            text = " ".join(
-                item.text for item in result.content if isinstance(item, TextContent)
-            )
-            raise ScalableError(f"{name}: {text[:300] or 'error'}")
-        if error := data.get("error"):
+        text = " ".join(item.text for item in result.content if isinstance(item, TextContent))
+        error = data.get("error") if isinstance(data, dict) else None
+        if not isinstance(error, dict):
+            # Scalable answers some refusals as an error result whose text is
+            # the same JSON document a structured answer would carry - the
+            # "several overnight accounts" one among them. Read it the same
+            # way, so the code and the message reach the caller that acts on
+            # them, rather than a flattened string that nobody can parse.
+            error = _error_in_text(text)
+        if isinstance(error, dict):
             code = error.get("code", "?")
             message = error.get("message", "")
             if code in _AUTH_CODES:
                 raise ScalableAuthError(f"{name}: {code} {message}".strip())
-            raise ScalableError(f"{name}: {code} {message}".strip(), code=str(code), detail=str(message))
+            raise ScalableError(
+                f"{name}: {code} {str(message)[:300]}".strip(), code=str(code), detail=str(message)
+            )
+        if result.isError:
+            raise ScalableError(f"{name}: {text[:300] or 'error'}")
         return data
 
 
