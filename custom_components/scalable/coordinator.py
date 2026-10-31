@@ -8,7 +8,8 @@ beside them, and the watchlist.
 from __future__ import annotations
 
 import asyncio
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
+import json
 from datetime import datetime, timedelta
 import logging
 import re
@@ -19,6 +20,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryAuthFailed
+from homeassistant.helpers.storage import Store
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from homeassistant.util import dt as dt_util, slugify
 
@@ -38,6 +40,7 @@ from .const import (
     TOOL_GROUPS,
     TOOL_HOLDINGS,
     TOOL_OVERNIGHT,
+    TOOL_PROFILE,
     TOOL_OVERNIGHT_TRANSACTIONS,
     TOOL_OVERVIEW,
     TOOL_QUOTE,
@@ -187,6 +190,7 @@ class Overnight:
 
     account_id: str
     name: str
+    """What Scalable calls it - "Tagesgeld" for every one of them."""
     owner_kind: str | None
     """"personal", or "junior" for a child's account."""
     active: bool | None
@@ -199,6 +203,10 @@ class Overnight:
     next_payout: float | None
     next_payout_date: datetime | None
     transactions: tuple[dict[str, Any], ...] = ()
+    label: str = ""
+    """What the device and the card's product picker call it: the name,
+    "junior" for a child's account, the owner's first name for a personal
+    one - the way Scalable's app tells them apart. See _labelled."""
     """The account's history as Scalable lists it, newest first - for the card."""
 
 
@@ -322,11 +330,57 @@ def _group(item: dict[str, Any]) -> PortfolioGroup:
 # the next calls need; the rest is read for the log.
 _ACCOUNT_LIST = re.compile(r"([A-Za-z0-9]{16,40}) \(([^()]*)\)")
 _SEVERAL_ACCOUNTS = "portfolio_context_required"
+# An id on its own, for the "selection" an answer carries: whatever
+# Scalable says there about the accounts it chose between.
+_ACCOUNT_ID = re.compile(r"\b[A-Za-z0-9]{20,40}\b")
+# Where the account ids once found are kept, per entry: Scalable names them
+# only while it refuses to pick one, and from one day to the next it may
+# pick one by itself - and then the others would be gone with nothing said.
+_ACCOUNTS_STORE_KEY = f"{DOMAIN}.overnight_accounts"
+_ACCOUNTS_STORE_VERSION = 1
+# The codes with which an account asked for by id is not there any more:
+# then its id is forgotten. Any other refusal keeps it for the next update.
+_GONE_CODES = ("not_found", "invalid", "unknown", "closed")
 
 
 def _accounts_named(detail: str) -> list[str]:
     """The account ids an answer about several accounts names."""
     return [match.group(1) for match in _ACCOUNT_LIST.finditer(detail or "")]
+
+
+def _accounts_in_selection(answer: dict[str, Any]) -> list[str]:
+    """The ids an answer's "selection" mentions, whatever shape it has."""
+    selection = answer.get("selection")
+    if not selection:
+        return []
+    try:
+        text = json.dumps(selection)
+    except (TypeError, ValueError):
+        return []
+    return [m.group(0) for m in _ACCOUNT_ID.finditer(text)]
+
+
+def _labelled(accounts: list[Overnight], owner: str | None) -> tuple[Overnight, ...]:
+    """The accounts with their labels: the name Scalable gives them -
+    "Tagesgeld" for all of them - told apart the way Scalable's app does:
+    a child's account by "junior", a personal one by the owner's first
+    name; and where that still leaves two alike, by a number."""
+    labelled: list[Overnight] = []
+    taken: dict[str, int] = {}
+    for account in accounts:
+        parts = [account.name]
+        kind = (account.owner_kind or "").lower()
+        if kind and kind != "personal":
+            if kind not in account.name.lower():
+                parts.append(kind)
+        elif owner:
+            parts.append(owner)
+        label = " ".join(parts)
+        taken[label] = taken.get(label, 0) + 1
+        if taken[label] > 1:
+            label = f"{label} {taken[label]}"
+        labelled.append(replace(account, label=label))
+    return tuple(labelled)
 
 
 def _fixed_term(item: dict[str, Any]) -> FixedTerm:
@@ -501,6 +555,57 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
         # When Scalable was last read successfully - not when it last valued
         # the portfolio, which on a Sunday is two days ago.
         self.last_read: datetime | None = None
+        # The overnight account ids found so far - see _async_overnights -
+        # and the store they survive a restart in. None until read.
+        self._overnight_ids: set[str] | None = None
+        self._accounts_store: Store[dict[str, list[str]]] = Store(
+            hass, _ACCOUNTS_STORE_VERSION, _ACCOUNTS_STORE_KEY
+        )
+        # The owner's first name, for the overnight accounts' labels; asked
+        # once a session and kept.
+        self._owner: str | None = None
+        self._owner_asked = False
+        # What has been said about a product that does not answer: the first
+        # time at info, with the code, so that a log at the default level
+        # shows what is missing and why; afterwards at debug.
+        self._said: set[str] = set()
+
+    def _say(self, key: str, message: str, *args: Any) -> None:
+        if key in self._said:
+            _LOGGER.debug(message, *args)
+        else:
+            self._said.add(key)
+            _LOGGER.info(message, *args)
+
+    async def _async_known_overnights(self) -> set[str]:
+        if self._overnight_ids is None:
+            kept = await self._accounts_store.async_load() or {}
+            ids = kept.get(self.config_entry.entry_id) if isinstance(kept, dict) else None
+            self._overnight_ids = {str(i) for i in ids} if isinstance(ids, list) else set()
+        return self._overnight_ids
+
+    async def _async_remember_overnights(self, ids: set[str]) -> None:
+        if ids == self._overnight_ids:
+            return
+        self._overnight_ids = set(ids)
+        kept = await self._accounts_store.async_load() or {}
+        if not isinstance(kept, dict):
+            kept = {}
+        kept[self.config_entry.entry_id] = sorted(ids)
+        await self._accounts_store.async_save(kept)
+
+    async def _async_owner(self, session: ScalableSession) -> str | None:
+        """The owner's first name, once; None where the profile says nothing."""
+        if not self._owner_asked:
+            self._owner_asked = True
+            try:
+                profile = (await session.async_call(TOOL_PROFILE, {})).get("profile") or {}
+                self._owner = (profile.get("firstName") or profile.get("displayName") or "").strip() or None
+            except ScalableAuthError:
+                raise
+            except ScalableError as err:
+                self._say("profile", "No profile from Scalable (%s): the overnight accounts are labelled without the owner's name", err)
+        return self._owner
 
     async def _async_transactions(
         self, session: ScalableSession, selected: dict[str, Any], **filters: Any
@@ -532,42 +637,77 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
         them.
 
         Scalable picks the account by itself while there is one. With several
-        - a personal and a junior account, say - it refuses, and names them
-        in its answer; each is then asked for by its id.
+        - a personal and a junior account, say - it used to refuse and name
+        them in its answer; it may also pick one by itself and say nothing of
+        the others. So every id ever seen - in a refusal, in an answer, in
+        what an answer says about its selection - is kept, and every kept
+        account is asked for by its id on every update. One that Scalable
+        no longer knows is forgotten again.
         """
+        known = set(await self._async_known_overnights())
+        answers: dict[str, dict[str, Any]] = {}
         try:
             answer = await session.async_call(TOOL_OVERNIGHT, {})
         except ScalableAuthError:
             raise
         except ScalableError as err:
             if err.code != _SEVERAL_ACCOUNTS:
-                _LOGGER.debug("No overnight account: %s", err)
-                return ()
-            ids = _accounts_named(err.detail)
-            if not ids:
-                # The wording has moved and the ids with it: said out loud,
-                # since the accounts are there and nothing shows them.
-                _LOGGER.warning(
-                    "Scalable has several overnight accounts but the integration could not "
-                    "read their ids from its answer - please report this: %s",
-                    err.detail,
+                self._say(f"overnight:{err.code}", "No overnight account from Scalable (%s)", err)
+                if not known:
+                    return ()
+            else:
+                ids = _accounts_named(err.detail)
+                if not ids:
+                    # The wording has moved and the ids with it: said out loud,
+                    # since the accounts are there and nothing shows them.
+                    _LOGGER.warning(
+                        "Scalable has several overnight accounts but the integration could not "
+                        "read their ids from its answer - please report this: %s",
+                        err.detail,
+                    )
+                known.update(ids)
+        else:
+            chosen = answer.get("savingsAccountId")
+            if chosen:
+                answers[str(chosen)] = answer
+                known.add(str(chosen))
+            named = _accounts_in_selection(answer)
+            if named:
+                _LOGGER.debug("Overnight selection names %s: %s", named, answer.get("selection"))
+                known.update(named)
+        for account_id in sorted(known):
+            if account_id in answers:
+                continue
+            try:
+                answers[account_id] = await session.async_call(
+                    TOOL_OVERNIGHT, {"savingsAccountId": account_id}
                 )
-                return ()
-            found: list[Overnight] = []
-            for account_id in ids:
-                try:
-                    one = await session.async_call(TOOL_OVERNIGHT, {"savingsAccountId": account_id})
-                except ScalableAuthError:
-                    raise
-                except ScalableError as err_one:
-                    _LOGGER.debug("No overnight account %s: %s", account_id, err_one)
-                    continue
-                account = await self._async_overnight_with_history(session, one)
-                if account is not None:
-                    found.append(account)
-            return tuple(found)
-        account = await self._async_overnight_with_history(session, answer)
-        return (account,) if account is not None else ()
+            except ScalableAuthError:
+                raise
+            except ScalableError as err_one:
+                code = (err_one.code or "").lower()
+                if any(word in code for word in _GONE_CODES):
+                    _LOGGER.info("Overnight account %s is gone (%s): forgotten", account_id, err_one)
+                    known.discard(account_id)
+                else:
+                    self._say(f"overnight:{account_id}:{code}", "No overnight account %s this time (%s)", account_id, err_one)
+        found: list[Overnight] = []
+        for account_id, one in answers.items():
+            if str(one.get("savingsAccountId") or account_id) != account_id:
+                # Asked for one, answered with another: Scalable resolved
+                # past the id. Not kept under the id asked for.
+                known.discard(account_id)
+                continue
+            account = await self._async_overnight_with_history(session, one)
+            if account is not None:
+                found.append(account)
+        await self._async_remember_overnights(known)
+        found.sort(key=lambda acc: ((acc.owner_kind or "personal") != "personal", acc.account_id))
+        _LOGGER.debug(
+            "Overnight accounts: %d found of %d known (%s)",
+            len(found), len(known), ", ".join(f"{acc.account_id} {acc.name}/{acc.owner_kind}" for acc in found) or "-",
+        )
+        return _labelled(found, await self._async_owner(session))
 
     async def _async_overnight_with_history(
         self, session: ScalableSession, answer: dict[str, Any]
@@ -597,7 +737,7 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
         except ScalableAuthError:
             raise
         except ScalableError as err:
-            _LOGGER.debug("No portfolio groups: %s", err)
+            self._say(f"groups:{err.code}", "No portfolio groups from Scalable (%s)", err)
             return (), ()
         groups = tuple(
             _group(item) for item in answer.get("items") or [] if isinstance(item, dict) and item.get("groupId")
@@ -616,7 +756,7 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
         except ScalableAuthError:
             raise
         except ScalableError as err:
-            _LOGGER.debug("No fixed-term accounts: %s", err)
+            self._say(f"fixed:{err.code}", "No fixed-term accounts from Scalable (%s)", err)
             return ()
         found: list[FixedTerm] = []
         for item in listed:
@@ -690,6 +830,12 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
                 _LOGGER.debug("No quote for %s: %s", isin, err)
 
         valuation = overview.get("valuation") or {}
+        _LOGGER.debug(
+            "Fetched portfolio %s: %d positions, %d watched, %d alerts, %d transactions, "
+            "%d savings plans, %d overnight accounts, %d fixed-term accounts, %d groups",
+            portfolio_id, len(held_items), len(watched), len(alerts), len(history),
+            len(plans), len(overnights), len(fixed_terms), len(groups),
+        )
         return Portfolio(
             portfolio_id=overview.get("portfolioId") or portfolio_id,
             total=_number(valuation.get("total")),

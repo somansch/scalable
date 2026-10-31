@@ -846,7 +846,9 @@ class _OvernightSensor(_ScalableSensor):
         kind = f", {account.owner_kind}" if account.owner_kind and account.owner_kind != "personal" else ""
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, f"{portfolio_id}_overnight_{account.account_id}")},
-            name=f"{coordinator.entry_name} {account.name}",
+            # Named the way Scalable's app names it - "Tagesgeld junior",
+            # "Tagesgeld Anna" - like a position is named after its security.
+            name=account.label or account.name,
             manufacturer=MANUFACTURER,
             model=f"Overnight savings{kind}",
             model_id=account.account_id,

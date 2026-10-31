@@ -13,7 +13,6 @@ from pathlib import Path
 from homeassistant.components.frontend import add_extra_js_url
 from homeassistant.components.http import StaticPathConfig
 from homeassistant.core import HomeAssistant
-from homeassistant.loader import async_get_integration
 from homeassistant.setup import async_when_setup
 
 from .const import DOMAIN
@@ -32,6 +31,9 @@ CARD_FILE = "scalable-card.js"
 CARD_LOADER_FILE = "scalable-card-loader.js"
 # The two files we serve, by name: an entry in the dashboards' resource list
 # pointing at one of them is ours to keep current - see lovelace_resource.py.
+# Where the version the card is served under is kept, for the websocket
+# command the loader asks after every reconnect - see the loader.
+CARD_VERSION_DATA = f"{DOMAIN}_card_version"
 CARD_RESOURCE_PATHS = (
     f"{CARD_URL_BASE}/{CARD_FILE}",
     f"{CARD_URL_BASE}/{CARD_LOADER_FILE}",
@@ -76,11 +78,25 @@ async def async_register_card(hass: HomeAssistant) -> None:
     # when that one does not arrive. Without the loader on disk the card is
     # handed over directly - a card that cannot retry still beats no card.
     #
-    # The version travels as a query string, so a browser holding the previous
-    # card fetches the new one after an update rather than after a hard reload.
-    integration = await async_get_integration(hass, DOMAIN)
+    # A cache-buster travels as a query string, so a browser holding the
+    # previous card fetches the new one after an update rather than after a
+    # hard reload. It is the files' modification time, not the integration's
+    # version: a version only changes with a release, while the file changes
+    # with a beta or a hotfix copied in by hand - and under an unchanged
+    # "?v=" the browser kept running the old module. The newer of the two
+    # files decides. Read off the event loop; it is a stat, but on disk. The
+    # loader asks for this number after every reconnect and fetches a newer
+    # card into the page - see the loader.
+    def _newest_mtime() -> int:
+        stamps = [card.stat().st_mtime]
+        if loader.is_file():
+            stamps.append(loader.stat().st_mtime)
+        return int(max(stamps))
+
+    version = await hass.async_add_executor_job(_newest_mtime)
+    hass.data[CARD_VERSION_DATA] = version
     name = CARD_LOADER_FILE if loader.is_file() else CARD_FILE
-    url = f"{CARD_URL_BASE}/{name}?v={integration.version}"
+    url = f"{CARD_URL_BASE}/{name}?v={version}"
     add_extra_js_url(hass, url)
 
     # The same URL in the dashboards' own resource list. The list belongs to

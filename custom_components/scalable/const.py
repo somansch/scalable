@@ -77,9 +77,13 @@ TOOL_FIXED_TERM = "get_fixed_term_account"
 # The portfolio groups the user made in Scalable's app - "Meine Aktien",
 # "Meine ETFs" - with their valuation and their holdings, for the card.
 TOOL_GROUPS = "list_portfolio_groups"
+# Who is signed in: the first name the overnight account is labelled with,
+# the way Scalable's app labels it.
+TOOL_PROFILE = "get_account_profile"
 READ_TOOLS = frozenset(
     {
         TOOL_GROUPS,
+        TOOL_PROFILE,
         TOOL_OVERNIGHT,
         TOOL_OVERNIGHT_TRANSACTIONS,
         TOOL_FIXED_TERMS,

@@ -4,7 +4,16 @@ All notable changes to this integration are documented here.
 
 ## v2.1.1
 
+### Changed
+- **The overnight accounts are called what the app calls them.** Every one of them is "Tagesgeld" to Scalable, so the device and the card's product picker used to show the entry's name and that word, twice alike with two accounts. Now a child's account reads "Tagesgeld junior" and a personal one carries the owner's first name, "Tagesgeld Anna", the way Scalable's app tells them apart - and like a position is named after its security, without the entry's name in front. Two that still read alike are numbered.
+- **The log says what an update found, and what is missing.** With debug logging on, every update ends with one line of counts - positions, watched securities, alerts, transactions, savings plans, overnight and fixed-term accounts, groups. A product Scalable will not answer for is said once at info level, with Scalable's code, instead of only at debug ([#1](https://github.com/somansch/scalable/issues/1)).
+
+### Added
+- **An updated card reaches every open page by itself.** A dashboard that is open while Home Assistant restarts is not served again, and the dashboards' resources are read once per page - so a new version of the card used to show up only after a reload, and only after a hard one where a service worker kept the old file. The card's loader, which stays in the page, now asks the integration after every reconnect which version it serves and fetches a newer one into the page; the new file takes over the registered elements and redraws every card and editor on the page, the editor's open panel and tabs included. No reload, no message. The first installation is the one page that cannot do this - it holds nothing of the card yet - and still needs the page loaded once.
+
 ### Fixed
+- **The card editor's tooltips open the right way inside a Bubble Card pop-up editor.** Opened from the pencil in Bubble Card's pop-up editor, the page under the dialogs ends up scrolled away; the card then took the page's body, an overflow-hidden box far above the window, for something that clips the dialog, so a tooltip in a top row stayed above its icon, cut off, instead of opening below it. A fixed dialog is not clipped by the page it floats over, and the tooltips now know that.
+- **Overnight accounts no longer vanish when Scalable picks one by itself.** The accounts were known only from the refusal Scalable sent while it would not choose between them; the day it chose one on its own - "selection: auto_resolve" in its answer - the others were gone from Home Assistant with nothing in the log ([#1](https://github.com/somansch/scalable/issues/1)). Every account id once seen - in a refusal, in an answer, in what an answer says about its selection - is now kept per entry, and every kept account is asked for by its id on every update; one Scalable no longer knows is forgotten again.
 - **Several overnight accounts, for real this time.** Scalable answers the "several accounts" refusal as an error result whose text is the JSON document, not as a structured error; 2.1.0 read only the latter, so the account ids never reached the code that asks for each ([#1](https://github.com/somansch/scalable/issues/1)). Both shapes are read now, and the account list is no longer cut off at 300 characters before the ids are taken from it.
 
 ## v2.1.0

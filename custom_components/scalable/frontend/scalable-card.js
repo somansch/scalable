@@ -5730,9 +5730,15 @@
           panel.dataset.super === key && !panel.classList.contains("open")
         );
       });
+      // Remembered on the element, not only in the DOM: the form is built
+      // again by a new version of this file taking the element over, and
+      // that puts it back the way it was.
+      const open = this.shadowRoot.querySelector(".super-panel.open");
+      this._openSuper = open ? open.dataset.super : null;
     }
 
     _selectTab(superKey, groupKey) {
+      this._activeTabs = { ...(this._activeTabs || {}), [superKey]: groupKey };
       const panel = this.shadowRoot.querySelector(`.super-panel[data-super="${superKey}"]`);
       if (!panel) return;
       panel.querySelectorAll(".tab").forEach((tab) => {
@@ -6632,6 +6638,9 @@
       if (!this.shadowRoot) this.attachShadow({ mode: "open" });
 
       if (!this.shadowRoot.querySelector(".super-panel")) {
+        // What was open before, if this is a rebuild: see _toggleSuper.
+        const openSuper = this._openSuper || null;
+        const activeTabs = { ...(this._activeTabs || {}) };
         this.shadowRoot.innerHTML = `<style>${EDITOR_STYLE}</style>`;
         for (const superGroup of SUPER_GROUPS) {
           const panel = document.createElement("div");
@@ -6674,6 +6683,12 @@
           }
           this.shadowRoot.appendChild(panel);
           this._selectTab(superGroup.key, superGroup.groups[0]);
+        }
+        for (const [superKey, groupKey] of Object.entries(activeTabs)) this._selectTab(superKey, groupKey);
+        if (openSuper) {
+          const panel = this.shadowRoot.querySelector(`.super-panel[data-super="${openSuper}"]`);
+          if (panel) panel.classList.add("open");
+          this._openSuper = openSuper;
         }
       }
 
@@ -6783,15 +6798,40 @@
         node.parentElement ||
         (node.getRootNode() && node.getRootNode().host) ||
         null;
+      // An ancestor becomes the box a fixed element is placed in when it
+      // has a transform, a filter or paint containment.
+      const holdsFixed = (style) =>
+        style.transform !== "none" ||
+        style.perspective !== "none" ||
+        style.filter !== "none" ||
+        (style.backdropFilter && style.backdropFilter !== "none") ||
+        (style.translate && style.translate !== "none") ||
+        (style.scale && style.scale !== "none") ||
+        (style.rotate && style.rotate !== "none") ||
+        /transform|perspective|filter/.test(style.willChange || "") ||
+        /paint|layout|strict|content/.test(style.contain || "") ||
+        (style.containerType && style.containerType !== "normal");
       const box = { top: 0, bottom: window.innerHeight, left: 0, right: window.innerWidth };
+      // Nothing above a fixed ancestor - the edit dialog - clips what is
+      // inside it, until an ancestor holds fixed boxes again. The page under
+      // the dialog can be scrolled away (Bubble Card's pop-up editor does
+      // that) while the dialog stays in view; <body> is then an
+      // overflow-hidden box far above the window, and counting it would put
+      // the whole dialog outside the box - a tooltip in a top row then stays
+      // above its icon, cut off, instead of opening below it.
+      let loose = false;
       for (let node = nextUp(anchor); node && node !== document.documentElement; node = nextUp(node)) {
         const style = getComputedStyle(node);
-        if (style.overflowX === "visible" && style.overflowY === "visible") continue;
-        const r = node.getBoundingClientRect();
-        box.top = Math.max(box.top, r.top);
-        box.bottom = Math.min(box.bottom, r.bottom);
-        box.left = Math.max(box.left, r.left);
-        box.right = Math.min(box.right, r.right);
+        if (loose && !holdsFixed(style)) continue;
+        loose = false;
+        if (style.overflowX !== "visible" || style.overflowY !== "visible") {
+          const r = node.getBoundingClientRect();
+          box.top = Math.max(box.top, r.top);
+          box.bottom = Math.min(box.bottom, r.bottom);
+          box.left = Math.max(box.left, r.left);
+          box.right = Math.min(box.right, r.right);
+        }
+        if (style.position === "fixed") loose = true;
       }
       return box;
     }
@@ -7823,17 +7863,107 @@
   // registered a moment earlier is invisible afterwards. So: define now,
   // remember which registry took it, and watch for that object being
   // replaced - see the Blitzer card, where this was measured.
+  // Which build of this file is running: the "?v=" it was fetched under,
+  // which the integration sets to the files' modification time. The loader
+  // imports a newer file into a page that is already running one, and this
+  // number is how the two tell which of them is newer - see defineAll.
+  const BUILD = (() => {
+    try {
+      return Number(new URL(import.meta.url).searchParams.get("v")) || 0;
+    } catch (err) {
+      return 0;
+    }
+  })();
   const TAGS = [
     [CARD_TAG, ScalableCard],
     [EDITOR_TAG, ScalableCardEditor],
   ];
+  const [LIVE_CARD, LIVE_EDITOR] = [TAGS[0][0], TAGS[1][0]];
+  const LIVE_LATEST = "__scalableLatest";
+  for (const [, cls] of TAGS) cls.build = BUILD;
   const WATCHING = "__scalableCardRegistryWatch";
   const WARNED = "__scalableCardDefineWarned";
 
+  // A tag can be defined once per registry, and this file runs again in a
+  // page that already runs it: the loader imports a newer version after
+  // Home Assistant restarted, so that nobody has to reload the page. The
+  // class that is registered stays - the browser will not take another -
+  // but everything it does is on its prototype, and that is what is handed
+  // over: every method, getter and setter of the new class, and its static
+  // side (getConfigElement, getStubConfig). Neither class has a constructor
+  // or a field of its own; a card holds all its state from setConfig on,
+  // which is also why a redraw afterwards is a setConfig with what the
+  // card has, and its hass again.
+  const adopt = (into, from) => {
+    for (const key of Reflect.ownKeys(from.prototype)) {
+      if (key === "constructor") continue;
+      Object.defineProperty(into.prototype, key, Object.getOwnPropertyDescriptor(from.prototype, key));
+    }
+    for (const key of Reflect.ownKeys(from)) {
+      if (key === "length" || key === "name" || key === "prototype") continue;
+      Object.defineProperty(into, key, Object.getOwnPropertyDescriptor(from, key));
+    }
+  };
+
+  // Every card and editor on the page, in the document and in every shadow
+  // root of it - the dashboard's, a dialog's, an editor's preview.
+  const liveElements = (tags) => {
+    const out = [];
+    const walk = (node) => {
+      if (!node) return;
+      if (node.localName && tags.includes(node.localName)) out.push(node);
+      if (node.shadowRoot) walk(node.shadowRoot);
+      for (const child of node.children || []) walk(child);
+    };
+    walk(document.documentElement);
+    return out;
+  };
+
+  const redraw = () => {
+    for (const el of liveElements([LIVE_CARD, LIVE_EDITOR])) {
+      try {
+        if (!el._config) continue;
+        // An editor's form is built once and then only has values pushed
+        // into it; a new version means building it again - with the panel
+        // and the tabs the person had open, so that the swap is not seen
+        // as the form folding up.
+        if (el.localName === LIVE_EDITOR && el.shadowRoot) {
+          // An element from before these fields existed: read what it has
+          // open off the DOM, so that _render puts it back.
+          const open = el.shadowRoot.querySelector(".super-panel.open");
+          el._openSuper = open ? open.dataset.super : null;
+          el._activeTabs = {};
+          for (const tab of el.shadowRoot.querySelectorAll(".super-panel .tab.active")) {
+            const panel = tab.closest(".super-panel");
+            if (panel) el._activeTabs[panel.dataset.super] = tab.dataset.key;
+          }
+          el.shadowRoot.innerHTML = "";
+        }
+        el.setConfig(el._config);
+        if (el._hass) el.hass = el._hass;
+      } catch (err) {
+        console.warn(`${LIVE_CARD}: could not redraw with the new version`, err);
+      }
+    }
+    const entry = (window.customCards || []).find((c) => c.type === LIVE_CARD);
+    if (entry && window.customCards[LIVE_LATEST]) Object.assign(entry, window.customCards[LIVE_LATEST]);
+  };
+
   const defineAll = () => {
     const registry = window.customElements;
+    let adopted = false;
     for (const [tag, cls] of TAGS) {
-      if (registry.get(tag)) continue;
+      const existing = registry.get(tag);
+      if (existing === cls) continue;
+      if (existing) {
+        // Only ever forward. The build of a file from before this mechanism
+        // is 0, and such a class is taken over by any versioned one.
+        if ((Number(existing.build) || 0) < BUILD) {
+          adopt(existing, cls);
+          adopted = true;
+        }
+        continue;
+      }
       try {
         registry.define(tag, cls);
       } catch (err) {
@@ -7845,6 +7975,7 @@
         }
       }
     }
+    if (adopted) redraw();
     return registry;
   };
 
@@ -7865,8 +7996,10 @@
   }
 
   window.customCards = window.customCards || [];
-  if (!window.customCards.some((c) => c.type === CARD_TAG)) {
-    window.customCards.push({
+  // What the card picker shows. Pushed by the first version to run in the
+  // page; a newer version keeps the entry and updates its words through
+  // redraw() above, which is why they are kept aside here too.
+  const pickerEntry = {
       type: CARD_TAG,
       name: "Scalable Capital",
       description: "A Scalable Capital broker portfolio, laid out the way Scalable's web app lays it out.",
@@ -7884,6 +8017,9 @@
         if (entry.config_entry_id) config.entry = entry.config_entry_id;
         return { config };
       },
-    });
-  }
+  };
+  window.customCards["__scalableLatest"] = pickerEntry;
+  const listed = window.customCards.find((c) => c.type === pickerEntry.type);
+  if (listed) Object.assign(listed, pickerEntry);
+  else window.customCards.push(pickerEntry);
 })();

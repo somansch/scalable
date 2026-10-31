@@ -20,6 +20,7 @@ from homeassistant.exceptions import ConfigEntryAuthFailed
 from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 
+from .bundle import CARD_VERSION_DATA
 from .const import CHART_TIMEFRAMES, DOMAIN, SIGNAL_ENTRY_LOADED
 from .coordinator import PortfolioGroup, FixedTerm, Overnight, Portfolio, Position, Quote, ScalableCoordinator
 from .errors import ScalableError
@@ -89,7 +90,7 @@ def _position(position: Position) -> dict[str, Any]:
 def _overnight(account: Overnight) -> dict[str, Any]:
     return {
         "id": account.account_id,
-        "name": account.name,
+        "name": account.label or account.name,
         "owner_kind": account.owner_kind,
         "active": account.active,
         "balance": account.balance,
@@ -358,6 +359,17 @@ async def websocket_refresh(
     connection.send_result(msg["id"])
 
 
+@websocket_api.websocket_command({vol.Required("type"): f"{DOMAIN}/card_version"})
+@callback
+def websocket_card_version(
+    hass: HomeAssistant, connection: websocket_api.ActiveConnection, msg: dict
+) -> None:
+    """The version the card is served under right now - what the loader in
+    an open page asks after Home Assistant has restarted, to fetch a newer
+    card into that page without anyone reloading it."""
+    connection.send_result(msg["id"], {"version": hass.data.get(CARD_VERSION_DATA) or 0})
+
+
 @callback
 def async_register(hass: HomeAssistant) -> None:
     """Make the five commands known."""
@@ -366,3 +378,4 @@ def async_register(hass: HomeAssistant) -> None:
     websocket_api.async_register_command(hass, websocket_charts)
     websocket_api.async_register_command(hass, websocket_transaction)
     websocket_api.async_register_command(hass, websocket_refresh)
+    websocket_api.async_register_command(hass, websocket_card_version)
