@@ -1,0 +1,7 @@
+refresh:
+  fields:
+    entry:
+      required: false
+      selector:
+        config_entry:
+          integration: scalable

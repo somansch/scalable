@@ -2648,9 +2648,10 @@
     return pad.concat(points);
   }
   // Where the record has holes - hours in which nothing could be read, the
-  // sign-in having lapsed - the curve is not stretched across them: every
-  // missing slot of trading time gets a point of its own, flat on the last
-  // figure read and flagged, and the chart greys the stretch. A slot counts
+  // sign-in having lapsed - every missing slot of trading time gets a point
+  // of its own, flagged, on the straight line between the last figure read
+  // and the first read after: the chart draws that stretch as a grey
+  // connection, and the hover says nothing was read there. A slot counts
   // as missing only when a whole one fits between two points, so the hour
   // the recorder has not summed up yet is no hole.
   function fillGaps(points) {
@@ -2661,10 +2662,12 @@
     for (let i = 1; i < points.length; i++) {
       const prev = points[i - 1];
       const point = points[i];
+      const span = point.t - prev.t;
       let added = 0;
       for (let t = prev.t + step; t <= point.t - step && added < 5000; t += step) {
         if (inTradingTime(t, daily)) {
-          out.push({ t, v: prev.v, gap: true });
+          const share = span > 0 ? (t - prev.t) / span : 0;
+          out.push({ t, v: prev.v + (point.v - prev.v) * share, gap: true });
           added += 1;
         }
       }
@@ -2922,11 +2925,16 @@
       .filter(([from, to]) => to > from)
       .map(([from, to]) => `${stretch(from, to)}L${x(to)},${refY.toFixed(2)}L${x(from)},${refY.toFixed(2)}Z`)
       .join("");
-    const bands = runs(0, values.length - 1, true)
+    // Across every hole a grey line, from the last figure read before it
+    // to the first read after - the flagged points lie on that line, so
+    // the path runs straight through them.
+    const bridges = runs(0, values.length - 1, true)
       .map(([from, to]) => {
         const left = Math.max(0, from - 1);
         const right = Math.min(values.length - 1, to + 1);
-        return `<rect class="gap" x="${x(left)}" y="0" width="${((right - left) * step).toFixed(2)}" height="${height}"/>`;
+        let d = "";
+        for (let i = left; i <= right; i++) d += `${d ? "L" : "M"}${x(i)},${y(values[i]).toFixed(2)}`;
+        return d;
       })
       .join("");
     chartIds += 1;
@@ -2949,8 +2957,11 @@
       `<stop offset="1" style="stop-color: var(--sc-loss); stop-opacity: 0.5"/>` +
       `</linearGradient>` +
       `</defs>` +
-      bands +
       (opts.fill ? `<path d="${fillPath}" fill="url(#${id}f)" stroke="none"/>` : "") +
+      (bridges
+        ? `<path d="${bridges}" class="gap" fill="none" stroke-width="${width}"` +
+          ` stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>`
+        : "") +
       (opts.showReference
         ? `<line x1="${lineStart}" x2="100" y1="${refY.toFixed(2)}" y2="${refY.toFixed(2)}" class="ref"` +
           ` vector-effect="non-scaling-stroke"/>`
@@ -7610,7 +7621,7 @@
 
     svg { display: block; width: 100%; height: 100%; overflow: visible; }
     svg .before { stroke: var(--secondary-text-color); opacity: 0.55; }
-    svg .gap { fill: var(--secondary-text-color); opacity: 0.14; }
+    svg .gap { stroke: var(--secondary-text-color); opacity: 0.55; }
     svg .ref { stroke: var(--secondary-text-color); stroke-width: 1; stroke-dasharray: 3 3;
                opacity: 0.6; }
 

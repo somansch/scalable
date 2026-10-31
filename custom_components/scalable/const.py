@@ -44,6 +44,9 @@ MAX_SCAN_INTERVAL = 1440
 # the watchlist, a deleted price alert - is taken out of Home Assistant too.
 # Off unless asked for: removing a device takes its history with it.
 CONF_REMOVE_STALE = "remove_stale"
+# Overnight account ids typed in by hand, comma-separated: for the accounts
+# Scalable picks past without naming them - see coordinator._async_overnights.
+CONF_OVERNIGHT_ACCOUNTS = "overnight_accounts"
 
 # Sent when an entry has finished setting up, with its id and its coordinator.
 # A card's subscription hangs on a coordinator, and a reload - saving the

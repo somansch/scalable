@@ -67,11 +67,13 @@
         "title": "Ajustes",
         "data": {
           "scan_interval": "Intervalo de actualización",
-          "remove_stale": "Eliminar lo que Scalable ya no lista"
+          "remove_stale": "Eliminar lo que Scalable ya no lista",
+          "overnight_accounts": "IDs de las cuentas de ahorro diario"
         },
         "data_description": {
           "scan_interval": "Cada cuánto se consulta a Scalable, en minutos. Cada actualización cuesta unas pocas peticiones, más una por posición y por entrada de la lista de seguimiento.",
-          "remove_stale": "Las posiciones vendidas, las entradas quitadas de la watchlist, las alertas de precio borradas y los productos de ahorro desaparecidos - un depósito a plazo fijo vencido, una cuenta de ahorro o una línea de crédito cerradas - se eliminan de Home Assistant con la próxima actualización: sus dispositivos, sus entidades, el historial registrado y sus estadísticas a largo plazo. Desactivado, permanecen y aparecen como no disponibles."
+          "remove_stale": "Las posiciones vendidas, las entradas quitadas de la watchlist, las alertas de precio borradas y los productos de ahorro desaparecidos - un depósito a plazo fijo vencido, una cuenta de ahorro o una línea de crédito cerradas - se eliminan de Home Assistant con la próxima actualización: sus dispositivos, sus entidades, el historial registrado y sus estadísticas a largo plazo. Desactivado, permanecen y aparecen como no disponibles.",
+          "overnight_accounts": "IDs de otras cuentas de ahorro diario, separadas por comas - por ejemplo, una cuenta junior junto a la personal. Se consultan en cada actualización como las encontradas. Scalable rechaza por ahora las cuentas junior incluso por su ID; aparecerán en cuanto vuelva a ofrecerlas."
         }
       },
       "reauth": {
@@ -241,7 +243,43 @@
       },
       "credit_available": {
         "name": "Crédito disponible"
+      },
+      "last_update": {
+        "name": "Última actualización"
       }
+    },
+    "button": {
+      "refresh": {
+        "name": "Actualizar"
+      }
+    },
+    "number": {
+      "update_interval": {
+        "name": "Intervalo de actualización"
+      }
+    }
+  },
+  "services": {
+    "refresh": {
+      "name": "Actualizar",
+      "description": "Vuelve a leer Scalable ahora y espera a que termine. Con respuesta, devuelve el valor de la cartera, el efectivo, los saldos y el momento de la lectura.",
+      "fields": {
+        "entry": {
+          "name": "Entrada",
+          "description": "La entrada de Scalable que se lee. Solo es necesaria cuando hay más de una configurada."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "no_entry": {
+      "message": "No hay ninguna entrada de Scalable configurada y cargada."
+    },
+    "entry_required": {
+      "message": "Hay varias entradas de Scalable cargadas: indica cuál con \"entry\"."
+    },
+    "entry_not_loaded": {
+      "message": "Esta entrada de Scalable no está configurada o no está cargada."
     }
   }
 }

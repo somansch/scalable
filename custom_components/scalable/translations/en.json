@@ -67,11 +67,13 @@
         "title": "Settings",
         "data": {
           "scan_interval": "Update interval",
-          "remove_stale": "Remove what Scalable no longer lists"
+          "remove_stale": "Remove what Scalable no longer lists",
+          "overnight_accounts": "Overnight account ids"
         },
         "data_description": {
           "scan_interval": "How often Scalable is asked, in minutes. Every update costs a handful of requests, plus one per position and watchlist entry.",
-          "remove_stale": "Sold positions, entries taken off the watchlist, deleted price alerts and savings products that are gone - a fixed-term deposit that has matured, a closed overnight account or credit line - are removed from Home Assistant with the next update - their devices, their entities, the history recorded for them and their long-term statistics. Off, they stay and read unavailable."
+          "remove_stale": "Sold positions, entries taken off the watchlist, deleted price alerts and savings products that are gone - a fixed-term deposit that has matured, a closed overnight account or credit line - are removed from Home Assistant with the next update - their devices, their entities, the history recorded for them and their long-term statistics. Off, they stay and read unavailable.",
+          "overnight_accounts": "Ids of further overnight accounts, comma-separated - a junior account beside the personal one, say. Asked for on every update like the ones found. Scalable currently refuses junior accounts even by their id; they come in once it gives them out again."
         }
       },
       "reauth": {
@@ -241,7 +243,43 @@
       },
       "credit_available": {
         "name": "Credit available"
+      },
+      "last_update": {
+        "name": "Last update"
       }
+    },
+    "button": {
+      "refresh": {
+        "name": "Refresh"
+      }
+    },
+    "number": {
+      "update_interval": {
+        "name": "Update interval"
+      }
+    }
+  },
+  "services": {
+    "refresh": {
+      "name": "Refresh",
+      "description": "Reads Scalable again now and waits for it. With a response, answers with the portfolio value, the cash, the balances and the moment of the read.",
+      "fields": {
+        "entry": {
+          "name": "Entry",
+          "description": "The Scalable entry to read. Needed only when more than one is set up."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "no_entry": {
+      "message": "No Scalable entry is set up and loaded."
+    },
+    "entry_required": {
+      "message": "Several Scalable entries are loaded: say which one with \"entry\"."
+    },
+    "entry_not_loaded": {
+      "message": "This Scalable entry is not set up or not loaded."
     }
   }
 }

@@ -67,11 +67,13 @@
         "title": "Instellingen",
         "data": {
           "scan_interval": "Update-interval",
-          "remove_stale": "Verwijderen wat Scalable niet meer toont"
+          "remove_stale": "Verwijderen wat Scalable niet meer toont",
+          "overnight_accounts": "ID's van de dagelijkse spaarrekeningen"
         },
         "data_description": {
           "scan_interval": "Hoe vaak Scalable wordt bevraagd, in minuten. Elke update kost een handvol verzoeken, plus één per positie en per item op de volglijst.",
-          "remove_stale": "Verkochte posities, van de watchlist gehaalde items, verwijderde prijsalarmen en verdwenen spaarproducten - een afgelopen termijndeposito, een opgeheven spaarrekening of kredietlijn - worden bij de volgende update uit Home Assistant verwijderd - hun apparaten, hun entiteiten, de vastgelegde geschiedenis en hun langetermijnstatistieken. Uit blijven ze staan en zijn ze niet beschikbaar."
+          "remove_stale": "Verkochte posities, van de watchlist gehaalde items, verwijderde prijsalarmen en verdwenen spaarproducten - een afgelopen termijndeposito, een opgeheven spaarrekening of kredietlijn - worden bij de volgende update uit Home Assistant verwijderd - hun apparaten, hun entiteiten, de vastgelegde geschiedenis en hun langetermijnstatistieken. Uit blijven ze staan en zijn ze niet beschikbaar.",
+          "overnight_accounts": "ID's van verdere dagelijkse spaarrekeningen, gescheiden door komma's - bijvoorbeeld een juniorrekening naast de persoonlijke. Worden bij elke update opgevraagd zoals de gevonden rekeningen. Scalable weigert juniorrekeningen op dit moment zelfs via hun ID; ze verschijnen zodra Scalable ze weer vrijgeeft."
         }
       },
       "reauth": {
@@ -241,7 +243,43 @@
       },
       "credit_available": {
         "name": "Krediet beschikbaar"
+      },
+      "last_update": {
+        "name": "Laatste update"
       }
+    },
+    "button": {
+      "refresh": {
+        "name": "Vernieuwen"
+      }
+    },
+    "number": {
+      "update_interval": {
+        "name": "Update-interval"
+      }
+    }
+  },
+  "services": {
+    "refresh": {
+      "name": "Vernieuwen",
+      "description": "Leest Scalable nu opnieuw en wacht tot dat klaar is. Met antwoord geeft het de portefeuillewaarde, het contante saldo, de saldi en het moment van lezen terug.",
+      "fields": {
+        "entry": {
+          "name": "Item",
+          "description": "Het Scalable-item dat gelezen wordt. Alleen nodig als er meer dan één is ingesteld."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "no_entry": {
+      "message": "Er is geen Scalable-item ingesteld en geladen."
+    },
+    "entry_required": {
+      "message": "Er zijn meerdere Scalable-items geladen: geef met \"entry\" aan welk."
+    },
+    "entry_not_loaded": {
+      "message": "Dit Scalable-item is niet ingesteld of niet geladen."
     }
   }
 }

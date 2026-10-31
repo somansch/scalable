@@ -26,6 +26,7 @@ from homeassistant.util import dt as dt_util, slugify
 
 from .api import ScalableMcp, ScalableSession
 from .const import (
+    CONF_OVERNIGHT_ACCOUNTS,
     CONF_PORTFOLIO_ID,
     CHART_TIMEFRAMES,
     CONF_SCAN_INTERVAL,
@@ -645,6 +646,15 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
         no longer knows is forgotten again.
         """
         known = set(await self._async_known_overnights())
+        # The ids typed into the options are asked for like the ones found,
+        # and never forgotten: they are the user's word against Scalable's
+        # silence, and a wrong one is said so once.
+        typed = {
+            part.strip()
+            for part in str(self.config_entry.options.get(CONF_OVERNIGHT_ACCOUNTS) or "").split(",")
+            if part.strip()
+        }
+        known.update(typed)
         answers: dict[str, dict[str, Any]] = {}
         try:
             answer = await session.async_call(TOOL_OVERNIGHT, {})
@@ -686,7 +696,9 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
                 raise
             except ScalableError as err_one:
                 code = (err_one.code or "").lower()
-                if any(word in code for word in _GONE_CODES):
+                if account_id in typed:
+                    self._say(f"overnight:{account_id}:typed", "Overnight account %s from the options does not answer (%s)", account_id, err_one)
+                elif any(word in code for word in _GONE_CODES):
                     _LOGGER.info("Overnight account %s is gone (%s): forgotten", account_id, err_one)
                     known.discard(account_id)
                 else:

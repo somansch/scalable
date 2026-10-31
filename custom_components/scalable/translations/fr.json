@@ -67,11 +67,13 @@
         "title": "Paramètres",
         "data": {
           "scan_interval": "Intervalle de mise à jour",
-          "remove_stale": "Supprimer ce que Scalable ne liste plus"
+          "remove_stale": "Supprimer ce que Scalable ne liste plus",
+          "overnight_accounts": "Identifiants des comptes épargne au jour le jour"
         },
         "data_description": {
           "scan_interval": "La fréquence à laquelle Scalable est interrogé, en minutes. Chaque mise à jour coûte quelques requêtes, plus une par position et par entrée de la liste de suivi.",
-          "remove_stale": "Les positions vendues, les entrées retirées de la watchlist, les alertes de prix supprimées et les produits d'épargne disparus - un dépôt à terme arrivé à échéance, un compte épargne ou une ligne de crédit clôturés - sont retirés de Home Assistant à la prochaine mise à jour - leurs appareils, leurs entités, l'historique enregistré et leurs statistiques à long terme. Désactivé, ils restent et s'affichent comme indisponibles."
+          "remove_stale": "Les positions vendues, les entrées retirées de la watchlist, les alertes de prix supprimées et les produits d'épargne disparus - un dépôt à terme arrivé à échéance, un compte épargne ou une ligne de crédit clôturés - sont retirés de Home Assistant à la prochaine mise à jour - leurs appareils, leurs entités, l'historique enregistré et leurs statistiques à long terme. Désactivé, ils restent et s'affichent comme indisponibles.",
+          "overnight_accounts": "Identifiants d'autres comptes épargne au jour le jour, séparés par des virgules - par exemple un compte junior à côté du compte personnel. Interrogés à chaque mise à jour comme ceux trouvés. Scalable refuse pour l'instant les comptes junior, même par leur identifiant ; ils apparaîtront dès qu'il les fournira de nouveau."
         }
       },
       "reauth": {
@@ -241,7 +243,43 @@
       },
       "credit_available": {
         "name": "Crédit disponible"
+      },
+      "last_update": {
+        "name": "Dernière mise à jour"
       }
+    },
+    "button": {
+      "refresh": {
+        "name": "Actualiser"
+      }
+    },
+    "number": {
+      "update_interval": {
+        "name": "Intervalle de mise à jour"
+      }
+    }
+  },
+  "services": {
+    "refresh": {
+      "name": "Actualiser",
+      "description": "Relit Scalable maintenant et attend la fin. Avec réponse, renvoie la valeur du portefeuille, les liquidités, les soldes et le moment de la lecture.",
+      "fields": {
+        "entry": {
+          "name": "Entrée",
+          "description": "L'entrée Scalable à lire. Nécessaire seulement quand plusieurs sont configurées."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "no_entry": {
+      "message": "Aucune entrée Scalable n'est configurée et chargée."
+    },
+    "entry_required": {
+      "message": "Plusieurs entrées Scalable sont chargées : indiquez laquelle avec « entry »."
+    },
+    "entry_not_loaded": {
+      "message": "Cette entrée Scalable n'est pas configurée ou pas chargée."
     }
   }
 }

@@ -51,6 +51,9 @@ That is the whole setup. Everything below covers the individual parts in more de
 
 - [Created entities](#created-entities) - every sensor and every attribute, for your own templates
   - [Broker](#broker), [A position](#a-position), [Overnight, fixed-term and credit](#overnight-fixed-term-and-credit), [Watchlist](#watchlist), [Price alerts](#price-alerts)
+- [Automation examples](#automation-examples)
+  - [Use in your own automations](#use-in-your-own-automations) - the entities an automation reads, a long interval with a refresh on demand
+  - [The refresh action](#the-refresh-action) - `scalable.refresh`, with its answer
 
 **Showing it on a dashboard**
 
@@ -92,6 +95,8 @@ The gear on the integration page:
 - **Settings** - the update interval in minutes, 5 to 1440, 15 by default; and **Remove what Scalable no longer lists**. Switched on, a sold position, an entry taken off the watchlist, a deleted price alert and a savings product that is gone - a matured fixed-term deposit, a closed overnight account or credit line - are removed from Home Assistant with the next update - devices, entities, the history recorded for them and their long-term statistics. Off, which is the default, they stay and read *unavailable*.
 - **Sign in to Scalable again** - for instance after changing the access level in Scalable.
 
+**Overnight account ids.** Scalable used to name its overnight accounts while it refused to pick one. Since the end of October 2026 it picks the personal account by itself and refuses the others - a child's junior account, say - even by their id ("not accessible"). Ids typed here, comma-separated, are asked for on every update like the ones found, and their accounts come in by themselves once Scalable gives them out again. An id is in the integration's debug log from an earlier refusal.
+
 ## Created entities
 
 The integration page groups the devices:
@@ -100,7 +105,7 @@ The integration page groups the devices:
 |---|---|
 | **Broker** | *‹Name› Broker*, *‹Name› Watchlist*, *‹Name› Price alerts* |
 | **Broker · Stocks**, **Broker · ETFs**, … | one device per position, under its kind of security |
-| **Overnight savings** | one device per overnight account - personal and junior |
+| **Overnight savings** | one device per overnight account Scalable gives out |
 | **Fixed-term deposits** | one device per fixed-term account |
 | **Credit** | *‹Name› Credit* |
 
@@ -120,6 +125,9 @@ Entity ids below assume the name *Scalable*.
 | `sensor.scalable_portfolio_invested` | Purchase value of all positions |
 | `sensor.scalable_portfolio_return` / `_return_pct` | Unrealised return of all positions |
 | `sensor.scalable_portfolio_type_stock`, `_type_etf`, … | Value per kind of security; attributes `positions`, `names`, `share_pct`, `invested`, `return`, `return_pct` |
+| `sensor.scalable_last_update` | When Scalable was last read successfully (diagnostic) |
+| `number.scalable_update_interval` | Minutes between two reads - the entry's option, settable here too (configuration) |
+| `button.scalable_refresh` | Reads Scalable again now |
 
 ### A position
 
@@ -143,7 +151,7 @@ A sold position's sensors turn *unavailable*; its device can then be deleted - o
 
 ### Overnight, fixed-term and credit
 
-The products beside the broker, each a device of its own: every overnight account - a child's junior account included -, every fixed-term account and the securities credit line. Rates are in percent per year. The first overnight account keeps the ids below; a further one is told apart by its name and the start of its id, the way a fixed-term account is: `sensor.scalable_overnight_<name>_<id>_balance`.
+The products beside the broker, each a device of its own: every overnight account Scalable gives out, every fixed-term account and the securities credit line. Rates are in percent per year. The first overnight account keeps the ids below; a further one is told apart by its name and the start of its id, the way a fixed-term account is: `sensor.scalable_overnight_<name>_<id>_balance`.
 
 | Entity | What it holds |
 |---|---|
@@ -157,7 +165,7 @@ The products beside the broker, each a device of its own: every overnight accoun
 | `…_maturity` | When the term ends; attributes `start`, `months`, `auto_renewal` |
 | `sensor.scalable_credit_used` / `_line` / `_available` | The securities credit line - what is drawn on it, the line, what is left; each with the three as attributes. Only where a line is set up. Scalable's interface does not give the rate or the next interest date |
 
-An account Scalable no longer lists reads unavailable. With one overnight account Scalable names it by itself; with several it lists them in its answer, and the integration reads every one of them by its id - personal and junior alike. Fixed-term junior accounts are not offered by Scalable's interface.
+An account Scalable no longer lists reads unavailable. Scalable's interface names the personal overnight account by itself. A child's junior account it currently refuses, even by its id; the integration keeps every account id it has seen and asks for it on every update, so such an account comes back by itself once Scalable gives it out again. Fixed-term junior accounts are not offered by Scalable's interface.
 
 ### Watchlist
 
@@ -166,6 +174,40 @@ Per entry `sensor.scalable_watchlist_‹name›_price` and `…_change_day`, the
 ### Price alerts
 
 `sensor.scalable_alerts_active` counts the alerts still waiting (attribute `triggered`). Each alert is a sensor, e.g. `sensor.scalable_alert_caterpillar_785_84`, whose state is the price it waits for; attributes `direction`, `active`, `triggered`, `triggered_time`, and - where the security is a position or on the watchlist - `current_price` and `distance_pct`.
+
+## Automation examples
+
+### Use in your own automations
+
+Every figure is a sensor, so an automation reads it like any other - the ids below assume the name *Scalable*:
+
+| What | Entity |
+|---|---|
+| Portfolio value | `sensor.scalable_portfolio_total`, with `_securities`, `_crypto` and `_cash` beside it |
+| Overnight balance | `sensor.scalable_overnight_balance` per account |
+| Fixed-term amount | `sensor.scalable_<account>_amount` per account |
+| Credit | `sensor.scalable_credit_used`, `_line`, `_available` |
+| Last update | `sensor.scalable_last_update` - when Scalable was last read successfully |
+| Update interval | `number.scalable_update_interval` - the entry's option, in minutes |
+| Refresh | `button.scalable_refresh` - reads Scalable again now |
+
+A long update interval for the everyday and a refresh when it matters: set the interval under [Configure](#configure) or through the number entity, and have the automation press the button - or call the action below, which also waits for the answer.
+
+### The refresh action
+
+**`scalable.refresh`** reads Scalable again now and waits for it. Called with a response, it answers with the portfolio value, the cash, the balances, the credit line and the moment of the read - so an automation can ask for fresh figures and act on them in the same run. `entry` names the entry, and is needed only when more than one is set up.
+
+```yaml
+- action: scalable.refresh
+  response_variable: scalable
+- condition: template
+  value_template: "{{ scalable.portfolio.cash > 1000 }}"
+- action: notify.mobile_app_phone
+  data:
+    message: "Cash at Scalable: {{ scalable.portfolio.cash }} EUR, read {{ scalable.updated }}"
+```
+
+The answer: `updated`, `portfolio` (`total`, `securities`, `crypto`, `cash`, `buying_power`, `valuation_time`), `overnight` (a list of `id`, `name`, `balance`, `interest_rate`), `fixed_term` (a list of `id`, `name`, `amount`, `maturity`) and `credit` (`line`, `used`).
 
 ## Scalable card
 
@@ -275,6 +317,7 @@ Two things, in one download:
 
 - The **integration** itself.
 - The **[Scalable card](#scalable-card)**. Served by the integration and handed to every dashboard, so there is no file to copy into `www` and no resource to register.
+  After the first installation, load the dashboard page once - a page that is already open holds nothing of the card yet. From then on an update reaches every open page by itself: after Home Assistant restarts, the card checks which version is served and takes the new one over in place, with no reload and no cache to clear.
 
 ### HACS (recommended)
 

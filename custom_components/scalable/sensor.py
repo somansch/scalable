@@ -19,7 +19,7 @@ from homeassistant.components.sensor import (
     SensorStateClass,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import PERCENTAGE
+from homeassistant.const import PERCENTAGE, EntityCategory
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers import device_registry as dr, entity_registry as er
 from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
@@ -226,7 +226,10 @@ async def async_setup_entry(
     )
 
     async_add_entities(
-        (PortfolioSensor(coordinator, description) for description in PORTFOLIO_SENSORS),
+        [
+            *(PortfolioSensor(coordinator, description) for description in PORTFOLIO_SENSORS),
+            LastUpdateSensor(coordinator),
+        ],
         config_subentry_id=broker.subentry_id,
     )
 
@@ -441,6 +444,27 @@ class PortfolioSensor(_ScalableSensor):
         if (attributes_fn := self.entity_description.attributes_fn) is None:
             return None
         return attributes_fn(self.coordinator.data)
+
+
+class LastUpdateSensor(_ScalableSensor):
+    """When Scalable was last read successfully - a diagnostic on the Broker
+    device, for an automation that wants to know how fresh the figures are.
+    Not when Scalable last valued the portfolio: that is the total's own
+    attribute, and on a Sunday it is two days old."""
+
+    _attr_translation_key = "last_update"
+    _attr_device_class = SensorDeviceClass.TIMESTAMP
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+
+    def __init__(self, coordinator: ScalableCoordinator) -> None:
+        super().__init__(coordinator)
+        self._attr_unique_id = f"{coordinator.unique_prefix}_last_update"
+        self._attr_device_info = _portfolio_device(coordinator)
+        self.entity_id = f"sensor.{coordinator.prefix}_last_update"
+
+    @property
+    def native_value(self):
+        return self.coordinator.last_read
 
 
 class TypeValueSensor(_ScalableSensor):

@@ -48,6 +48,7 @@ from .const import (
     CONF_PORTFOLIO_ID,
     CONF_REDIRECT_URL,
     CONF_REGISTER_AGAIN,
+    CONF_OVERNIGHT_ACCOUNTS,
     CONF_REMOVE_STALE,
     CONF_SCAN_INTERVAL,
     DEFAULT_NAME,
@@ -307,6 +308,7 @@ class ScalableOptionsFlow(_SignIn, OptionsFlowWithReload):
                     **self.config_entry.options,
                     CONF_SCAN_INTERVAL: int(user_input[CONF_SCAN_INTERVAL]),
                     CONF_REMOVE_STALE: bool(user_input.get(CONF_REMOVE_STALE, False)),
+                    CONF_OVERNIGHT_ACCOUNTS: (user_input.get(CONF_OVERNIGHT_ACCOUNTS) or "").strip(),
                 }
             )
         return self.async_show_form(
@@ -331,6 +333,12 @@ class ScalableOptionsFlow(_SignIn, OptionsFlowWithReload):
                         CONF_REMOVE_STALE,
                         default=self.config_entry.options.get(CONF_REMOVE_STALE, False),
                     ): BooleanSelector(),
+                    vol.Optional(
+                        CONF_OVERNIGHT_ACCOUNTS,
+                        description={
+                            "suggested_value": self.config_entry.options.get(CONF_OVERNIGHT_ACCOUNTS, "")
+                        },
+                    ): TextSelector(),
                 }
             ),
         )

@@ -67,11 +67,13 @@
         "title": "Einstellungen",
         "data": {
           "scan_interval": "Abfrageintervall",
-          "remove_stale": "Entfernen, was Scalable nicht mehr auflistet"
+          "remove_stale": "Entfernen, was Scalable nicht mehr auflistet",
+          "overnight_accounts": "IDs der Tagesgeldkonten"
         },
         "data_description": {
           "scan_interval": "Wie oft Scalable abgefragt wird, in Minuten. Jede Abfrage kostet eine Handvoll Aufrufe, dazu einen je Position und Watchlist-Eintrag.",
-          "remove_stale": "Verkaufte Positionen, von der Watchlist genommene Einträge, gelöschte Preisalarme und weggefallene Sparprodukte - ein ausgelaufenes Festgeld, ein aufgelöstes Tagesgeldkonto oder eine aufgelöste Kreditlinie - werden mit der nächsten Aktualisierung aus Home Assistant entfernt - ihre Geräte, ihre Entitäten, der dazu aufgezeichnete Verlauf und ihre Langzeitstatistik. Aus bleiben sie stehen und zeigen „nicht verfügbar“."
+          "remove_stale": "Verkaufte Positionen, von der Watchlist genommene Einträge, gelöschte Preisalarme und weggefallene Sparprodukte - ein ausgelaufenes Festgeld, ein aufgelöstes Tagesgeldkonto oder eine aufgelöste Kreditlinie - werden mit der nächsten Aktualisierung aus Home Assistant entfernt - ihre Geräte, ihre Entitäten, der dazu aufgezeichnete Verlauf und ihre Langzeitstatistik. Aus bleiben sie stehen und zeigen „nicht verfügbar“.",
+          "overnight_accounts": "IDs weiterer Tagesgeldkonten, durch Kommas getrennt - etwa ein Junior-Konto neben dem persönlichen. Werden bei jedem Update wie die gefundenen abgefragt. Scalable verweigert Junior-Konten derzeit selbst über ihre ID; sie erscheinen, sobald Scalable sie wieder herausgibt."
         }
       },
       "reauth": {
@@ -241,7 +243,43 @@
       },
       "credit_available": {
         "name": "Credit verfügbar"
+      },
+      "last_update": {
+        "name": "Letzte Aktualisierung"
       }
+    },
+    "button": {
+      "refresh": {
+        "name": "Aktualisieren"
+      }
+    },
+    "number": {
+      "update_interval": {
+        "name": "Aktualisierungsintervall"
+      }
+    }
+  },
+  "services": {
+    "refresh": {
+      "name": "Aktualisieren",
+      "description": "Liest Scalable jetzt neu und wartet darauf. Mit Antwort liefert sie Portfoliowert, Cash, Kontostände und den Zeitpunkt des Abrufs.",
+      "fields": {
+        "entry": {
+          "name": "Eintrag",
+          "description": "Der Scalable-Eintrag, der gelesen wird. Nur nötig, wenn mehrere eingerichtet sind."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "no_entry": {
+      "message": "Kein Scalable-Eintrag ist eingerichtet und geladen."
+    },
+    "entry_required": {
+      "message": "Mehrere Scalable-Einträge sind geladen: Gib mit „entry“ an, welcher gemeint ist."
+    },
+    "entry_not_loaded": {
+      "message": "Dieser Scalable-Eintrag ist nicht eingerichtet oder nicht geladen."
     }
   }
 }
