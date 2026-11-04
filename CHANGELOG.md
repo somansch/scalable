@@ -2,6 +2,12 @@
 
 All notable changes to this integration are documented here.
 
+## v2.2.1
+
+### Fixed
+- **Loads on Home Assistant 2026.11.** The November release ships version 2 of the MCP library this integration reads Scalable with, and that version renamed the error class, moved the transport from httpx to httpx2, pages the tool list by a params object, yields two streams instead of three and spells its result fields snake_case - so v2.2.0 failed to load there with "cannot import name 'McpError'". The client now reads whichever version is installed and works with both, on 2026.9 and 2026.10 as before. Version 2 also checks every tool answer against its schema with jsonschema, which reads its schema files from disk when first imported - in the event loop, which Home Assistant flags; the import now happens when the integration loads, off the loop.
+- **The colour menus in the card editor stay in view.** The menu beside every colour field opens towards the side with more room and is capped to it. Which room that was, the card measured against the first scrolling box above the editor - and in some dialogs that is not the box that actually clips the menu. Opened upwards near the top of a block, the menu then ran off the top of the dialog, with its first entries out of reach. It now measures against every box that really clips it, and keeps at least room for about three entries.
+
 ## v2.2.0
 
 ### Added

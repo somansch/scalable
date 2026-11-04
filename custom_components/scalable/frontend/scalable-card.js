@@ -6085,22 +6085,23 @@
         const isOpen = !menu.hidden;
         this.shadowRoot.querySelectorAll(".preset-menu").forEach((m) => (m.hidden = true));
         if (!isOpen) {
-          // The edit dialog scrolls internally and clips this menu well before
-          // the browser viewport does, so measure against the nearest actual
-          // scrolling ancestor - and on every open, since both the scroll
-          // offset and the button's position move between opens.
+          // The edit dialog clips this menu well before the browser viewport
+          // does, and its scrolling box is not always one a walk up from the
+          // editor finds - so measure against everything that really clips
+          // the menu, and on every open, since both the scroll offset and the
+          // button's position move between opens.
           //
           // Whichever side has more room wins, and the menu is then capped to
           // that room. Opening upward on its own was not enough: near the top
           // of the dialog the menu simply ran off the other end instead, with
           // its first entries out of reach.
           const rect = select.getBoundingClientRect();
-          const box = this._scrollAncestorRect();
+          const box = this._clipRect(select);
           const below = box.bottom - rect.bottom - 8;
           const above = rect.top - box.top - 8;
           const up = above > below;
           menu.classList.toggle("menu-up", up);
-          menu.style.maxHeight = `${Math.max(120, Math.min(260, up ? above : below))}px`;
+          menu.style.maxHeight = `${Math.max(96, Math.min(260, up ? above : below))}px`;
         }
         menu.hidden = isOpen;
       });
@@ -6792,9 +6793,8 @@
     // ancestor that clips its content - whether or not it scrolls right now.
     // The dialog's form column clips a tooltip above its top edge just the
     // same when the open tab is short enough to fit, and taking only a
-    // container that overflowed (_scrollAncestorRect, which the colour menus
-    // still use) let a tooltip be measured against the window and cut off
-    // anyway.
+    // container that overflowed let a tooltip be measured against the
+    // window and cut off anyway. The colour menus measure against it too.
     //
     // Walked from the anchor, not from this editor: the panel the "i" sits in
     // has overflow hidden for its rounded corners, and it lies inside this
@@ -6845,22 +6845,6 @@
         if (style.position === "fixed") loose = true;
       }
       return box;
-    }
-
-    // Walks out of this editor's own shadow root to find the dialog container
-    // that actually clips a dropdown - its bottom edge, not the window's.
-    _scrollAncestorRect() {
-      const nextUp = (node) =>
-        node.parentElement || (node.getRootNode() && node.getRootNode().host) || null;
-      let node = nextUp(this);
-      while (node && node !== document.body) {
-        const style = getComputedStyle(node);
-        if (/(auto|scroll)/.test(style.overflowY) && node.scrollHeight > node.clientHeight + 1) {
-          return node.getBoundingClientRect();
-        }
-        node = nextUp(node);
-      }
-      return { top: 0, bottom: window.innerHeight, left: 0, right: window.innerWidth };
     }
 
     // Resolves a theme variable or colour name to the hex the native colour
