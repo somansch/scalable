@@ -224,15 +224,17 @@
       edDefaultTab: "Opens on",
       edDefaultTabHelp: "The tab the card shows when the dashboard is opened.",
       edShowPeriod: "Show the period switch",
-      edShowPeriodHelp: "1D, 1W, 1M, YTD, 1Y and Since purchase on the overview. Off leaves the card on the period chosen below.",
-      edDefaultPeriod: "Period",
-      edDefaultPeriodHelp: "The period the overview starts on.",
+      edShowPeriodHelp: "The switch on the overview, with the periods ticked under Opens with. Off leaves the card on the period chosen there.",
+      edDefaultPeriod: "Opens with",
+      edDefaultPeriodHelp: "The period the overview starts on - any of the eight, on the switch or not. Beside it, while the switch is shown, which periods it offers.",
       edBlockHeader: "Header",
       edBlockHeaderHelp: "What stands at the top of the overview.",
       edShowTotal: "Total value",
       edShowTotalHelp: "The portfolio's total value, cash included.",
       edShowChange: "Change",
       edShowChangeHelp: "The change in euros over the chosen period, under the total value.",
+      edShowChangePct: "Change in percent",
+      edShowChangePctHelp: "In brackets after the period's name - and after the Total return under Insights - the change as a share of what the period began with: the value at its start plus what was paid in since.",
       edShowTotalChart: "Curve",
       edShowTotalChartHelp: "The return over the chosen period as a small curve beside the total value, from nought at the period's start, deposits taken out. A click opens Insights.",
       edBlockSections: "Sections",
@@ -603,15 +605,17 @@
       edDefaultTab: "Öffnet auf",
       edDefaultTabHelp: "Der Reiter, den die Karte beim Öffnen des Dashboards zeigt.",
       edShowPeriod: "Zeitraum-Umschalter anzeigen",
-      edShowPeriodHelp: "1T, 1W, 1M, YTD, 1J und Seit Kauf im Überblick. Aus lässt die Karte auf dem unten gewählten Zeitraum.",
-      edDefaultPeriod: "Zeitraum",
-      edDefaultPeriodHelp: "Der Zeitraum, mit dem der Überblick startet.",
+      edShowPeriodHelp: "Die Leiste im Überblick, mit den Zeiträumen, die unter „Startet mit“ angehakt sind. Aus lässt die Karte auf dem dort gewählten Zeitraum.",
+      edDefaultPeriod: "Startet mit",
+      edDefaultPeriodHelp: "Der Zeitraum, mit dem der Überblick startet - jeder der acht, ob in der Leiste oder nicht. Daneben, solange die Leiste gezeigt wird, welche Zeiträume sie anbietet.",
       edBlockHeader: "Kopf",
       edBlockHeaderHelp: "Was oben im Überblick steht.",
       edShowTotal: "Gesamtwert",
       edShowTotalHelp: "Der Gesamtwert des Portfolios inklusive Guthaben.",
       edShowChange: "Veränderung",
       edShowChangeHelp: "Die Veränderung in Euro im gewählten Zeitraum, unter dem Gesamtwert.",
+      edShowChangePct: "Veränderung in Prozent",
+      edShowChangePctHelp: "In Klammern hinter dem Zeitraum - und hinter der Gesamtrendite unter Insights - die Veränderung als Anteil dessen, womit der Zeitraum begann: der Wert zu seinem Beginn plus die Einzahlungen seitdem.",
       edShowTotalChart: "Kurve",
       edShowTotalChartHelp: "Die Rendite im gewählten Zeitraum als kleine Kurve neben dem Gesamtwert, ab null zu Beginn des Zeitraums, Einzahlungen herausgerechnet. Ein Klick öffnet Insights.",
       edBlockSections: "Bereiche",
@@ -982,15 +986,17 @@
       edDefaultTab: "S'ouvre sur",
       edDefaultTabHelp: "L'onglet que la carte affiche à l'ouverture du tableau de bord.",
       edShowPeriod: "Afficher le sélecteur de période",
-      edShowPeriodHelp: "1J, 1S, 1M, YTD, 1A et Depuis l'achat dans l'aperçu. Désactivé, la carte reste sur la période choisie ci-dessous.",
-      edDefaultPeriod: "Période",
-      edDefaultPeriodHelp: "La période sur laquelle l'aperçu démarre.",
+      edShowPeriodHelp: "Le sélecteur de l'aperçu, avec les périodes cochées sous « Démarre avec ». Désactivé, la carte reste sur la période choisie là.",
+      edDefaultPeriod: "Démarre avec",
+      edDefaultPeriodHelp: "La période sur laquelle l'aperçu démarre - n'importe laquelle des huit, dans le sélecteur ou non. À côté, tant que le sélecteur est affiché, les périodes qu'il propose.",
       edBlockHeader: "En-tête",
       edBlockHeaderHelp: "Ce qui figure en haut de l'aperçu.",
       edShowTotal: "Valeur totale",
       edShowTotalHelp: "La valeur totale du portefeuille, liquidités comprises.",
       edShowChange: "Variation",
       edShowChangeHelp: "La variation en euros sur la période choisie, sous la valeur totale.",
+      edShowChangePct: "Variation en pourcentage",
+      edShowChangePctHelp: "Entre parenthèses après le nom de la période - et après le rendement total sous Insights - la variation en part de ce avec quoi la période a commencé : la valeur à son début plus les versements depuis.",
       edShowTotalChart: "Courbe",
       edShowTotalChartHelp: "Le rendement sur la période choisie, en petite courbe à côté de la valeur totale, à partir de zéro au début de la période, dépôts déduits. Un clic ouvre Insights.",
       edBlockSections: "Sections",
@@ -1361,15 +1367,17 @@
       edDefaultTab: "Si apre su",
       edDefaultTabHelp: "La sezione che la scheda mostra all'apertura della dashboard.",
       edShowPeriod: "Mostra il selettore del periodo",
-      edShowPeriodHelp: "1G, 1S, 1M, YTD, 1A e Dall'acquisto nella panoramica. Disattivato, la scheda resta sul periodo scelto qui sotto.",
-      edDefaultPeriod: "Periodo",
-      edDefaultPeriodHelp: "Il periodo con cui parte la panoramica.",
+      edShowPeriodHelp: "Il selettore nella panoramica, con i periodi spuntati sotto «Si apre con». Spento, la scheda resta sul periodo scelto lì.",
+      edDefaultPeriod: "Si apre con",
+      edDefaultPeriodHelp: "Il periodo con cui si apre la panoramica - uno qualsiasi degli otto, nel selettore o no. Accanto, finché il selettore è mostrato, quali periodi offre.",
       edBlockHeader: "Intestazione",
       edBlockHeaderHelp: "Cosa compare in cima alla panoramica.",
       edShowTotal: "Valore totale",
       edShowTotalHelp: "Il valore totale del portafoglio, liquidità inclusa.",
       edShowChange: "Variazione",
       edShowChangeHelp: "La variazione in euro nel periodo scelto, sotto il valore totale.",
+      edShowChangePct: "Variazione in percentuale",
+      edShowChangePctHelp: "Tra parentesi dopo il nome del periodo - e dopo il rendimento totale sotto Insights - la variazione come quota di ciò con cui il periodo è iniziato: il valore al suo inizio più i versamenti da allora.",
       edShowTotalChart: "Curva",
       edShowTotalChartHelp: "Il rendimento nel periodo scelto come piccola curva accanto al valore totale, da zero all'inizio del periodo, versamenti esclusi. Un clic apre Insights.",
       edBlockSections: "Aree",
@@ -1740,15 +1748,17 @@
       edDefaultTab: "Se abre en",
       edDefaultTabHelp: "La pestaña que muestra la tarjeta al abrir el panel.",
       edShowPeriod: "Mostrar el selector de periodo",
-      edShowPeriodHelp: "1D, 1S, 1M, YTD, 1A y Desde la compra en el resumen. Desactivado deja la tarjeta en el periodo elegido abajo.",
-      edDefaultPeriod: "Periodo",
-      edDefaultPeriodHelp: "El periodo con el que empieza el resumen.",
+      edShowPeriodHelp: "El selector del resumen, con los periodos marcados bajo «Empieza con». Apagado, la tarjeta se queda en el periodo elegido ahí.",
+      edDefaultPeriod: "Empieza con",
+      edDefaultPeriodHelp: "El periodo con el que empieza el resumen - cualquiera de los ocho, esté en el selector o no. Al lado, mientras se muestra el selector, qué periodos ofrece.",
       edBlockHeader: "Cabecera",
       edBlockHeaderHelp: "Lo que aparece en la parte superior del resumen.",
       edShowTotal: "Valor total",
       edShowTotalHelp: "El valor total de la cartera, efectivo incluido.",
       edShowChange: "Variación",
       edShowChangeHelp: "La variación en euros en el periodo elegido, bajo el valor total.",
+      edShowChangePct: "Variación en porcentaje",
+      edShowChangePctHelp: "Entre paréntesis tras el nombre del periodo - y tras la rentabilidad total bajo Insights - la variación como parte de aquello con lo que empezó el periodo: el valor a su inicio más lo ingresado desde entonces.",
       edShowTotalChart: "Curva",
       edShowTotalChartHelp: "La rentabilidad del periodo elegido como pequeña curva junto al valor total, desde cero al inicio del periodo, sin los ingresos. Un clic abre Insights.",
       edBlockSections: "Secciones",
@@ -2119,15 +2129,17 @@
       edDefaultTab: "Opent op",
       edDefaultTabHelp: "Het tabblad dat de kaart toont wanneer het dashboard wordt geopend.",
       edShowPeriod: "Periodeschakelaar tonen",
-      edShowPeriodHelp: "1D, 1W, 1M, YTD, 1J en Sinds aankoop in het overzicht. Uit laat de kaart op de hieronder gekozen periode staan.",
-      edDefaultPeriod: "Periode",
-      edDefaultPeriodHelp: "De periode waarmee het overzicht begint.",
+      edShowPeriodHelp: "De schakelaar op het overzicht, met de periodes die onder 'Opent met' zijn aangevinkt. Uit laat de kaart op de daar gekozen periode.",
+      edDefaultPeriod: "Opent met",
+      edDefaultPeriodHelp: "De periode waarmee het overzicht opent - elk van de acht, op de schakelaar of niet. Ernaast, zolang de schakelaar wordt getoond, welke periodes hij aanbiedt.",
       edBlockHeader: "Kop",
       edBlockHeaderHelp: "Wat bovenaan het overzicht staat.",
       edShowTotal: "Totale waarde",
       edShowTotalHelp: "De totale waarde van de portefeuille, inclusief saldo.",
       edShowChange: "Verandering",
       edShowChangeHelp: "De verandering in euro's over de gekozen periode, onder de totale waarde.",
+      edShowChangePct: "Verandering in procent",
+      edShowChangePctHelp: "Tussen haakjes achter de naam van de periode - en achter het totaalrendement onder Insights - de verandering als aandeel van waarmee de periode begon: de waarde aan het begin plus wat sindsdien is gestort.",
       edShowTotalChart: "Curve",
       edShowTotalChartHelp: "Het rendement over de gekozen periode als kleine curve naast de totale waarde, vanaf nul aan het begin van de periode, stortingen eruit gehaald. Een klik opent Insights.",
       edBlockSections: "Secties",
@@ -2376,9 +2388,12 @@
     default_tab: "overview",
     show_period: true,
     default_period: "1d",
+    // Which periods the switch offers, in its own order (see OVERVIEW_PERIODS).
+    periods: ["1d", "1w", "1m", "3m", "6m", "ytd", "1y", "since"],
     // The overview's head.
     show_total: true,
     show_change: true,
+    show_change_pct: true,
     show_total_chart: true,
     // And its sections, in the order the web app lists them.
     show_cash: true,
@@ -2501,18 +2516,29 @@
 
   // ---------------------------------------------------------------- periods
   //
-  // The overview's switch, as the web app has it: five periods and "since
-  // purchase". `tf` is what Scalable calls the period in a quote's
+  // The overview's switch: the web app's five periods and "since purchase",
+  // and between them the 3 and 6 months the app keeps for a security's own
+  // page. `tf` is what Scalable calls the period in a quote's
   // performance list, `chart` what its chart tool calls it, `label` the word
   // the head puts beside the change.
   const OVERVIEW_PERIODS = [
     { key: "1d", name: "p1d", tf: "INTRADAY", chart: "one_day", label: "lblToday" },
     { key: "1w", name: "p1w", tf: "ONE_WEEK", chart: "seven_days", label: "lblWeek" },
     { key: "1m", name: "p1m", tf: "ONE_MONTH", chart: "one_month", label: "lblMonth" },
+    { key: "3m", name: "p3m", tf: "THREE_MONTHS", chart: "three_months", label: "lbl3m" },
+    { key: "6m", name: "p6m", tf: "SIX_MONTHS", chart: "six_months", label: "lbl6m" },
     { key: "ytd", name: "pytd", tf: "YEAR_TO_DATE", chart: "year_to_date", label: "lblYtd" },
     { key: "1y", name: "p1y", tf: "ONE_YEAR", chart: "one_year", label: "lblYear" },
     { key: "since", name: "psince", tf: "MAX", chart: null, label: "lblSince" },
   ];
+  // The periods the switch offers: those ticked under "Opens with" (periods
+  // in DEFAULTS), in the switch's own order whatever order they were ticked
+  // in - every one until the editor leaves some out.
+  function overviewPeriods(config) {
+    const on = Array.isArray(config.periods) ? config.periods : DEFAULTS.periods;
+    return OVERVIEW_PERIODS.filter((period) => on.includes(period.key));
+  }
+
   // A security's own page and Insights offer eight.
   const CHART_PERIODS = [
     { key: "1d", name: "p1d", tf: "INTRADAY", chart: "one_day", label: "lblToday" },
@@ -3692,7 +3718,8 @@
 
       const nav = card.querySelector(".nav");
       const overviewOpen = this._tab === "overview" && !this._detail && !this._tx;
-      const showSwitch = config.show_period && overviewOpen && !!data && product === "broker";
+      const showSwitch =
+        config.show_period && overviewOpen && !!data && product === "broker" && overviewPeriods(config).length > 0;
       const productHead = data ? this._productHeadFor(product, str) : "";
       nav.hidden = !showTabs && !showSwitch && !productHead;
       nav.innerHTML =
@@ -3709,7 +3736,7 @@
             `</div>`
           : "") +
         (showSwitch
-          ? this._switchHtml(OVERVIEW_PERIODS, this._period, "period", str, "period-switch", "period")
+          ? this._switchHtml(overviewPeriods(config), this._currentPeriod().key, "period", str, "period-switch", "period")
           : "");
 
       const view = card.querySelector(".view");
@@ -3794,20 +3821,22 @@
     // A row of choices of which one is on: the period switch, the period
     // tabs of a chart, the two curves of Insights.
     _switchHtml(options, selected, action, str, className, stylePrefix) {
-      return (
-        `<div class="${className}"` +
-        (stylePrefix ? ` style="${elementStyle(this._config, stylePrefix)}"` : "") +
-        `>` +
-        options
-          .map(
-            (option) =>
-              `<button type="button" class="${option.key === selected ? "active" : ""}"` +
-              ` data-action="${action}" data-key="${option.key}">` +
-              `${escapeHtml(str[option.name] || option.name)}</button>`
-          )
-          .join("") +
-        `</div>`
-      );
+      const buttons = options
+        .map(
+          (option) =>
+            `<button type="button" class="${option.key === selected ? "active" : ""}"` +
+            ` data-action="${action}" data-key="${option.key}">` +
+            `<span class="pill-text">${escapeHtml(str[option.name] || option.name)}</span></button>`
+        )
+        .join("");
+      const style = stylePrefix ? ` style="${elementStyle(this._config, stylePrefix)}"` : "";
+      // The pill is an inline run inside a block that places it: eight
+      // periods wrap onto a second row in a narrow card, and an inline box
+      // gives every row its own rounded background (see .period-switch).
+      if (className === "period-switch") {
+        return `<div class="period-wrap"><span class="period-switch"${style}>${buttons}</span></div>`;
+      }
+      return `<div class="${className}"${style}>${buttons}</div>`;
     }
 
     _sectionHtml(key, title, valueHtml, extraHtml, bodyHtml) {
@@ -4169,16 +4198,28 @@
       );
     }
 
+    // The overview's period: the one chosen - on the switch or not, since
+    // "Opens with" offers all eight whatever the switch carries.
+    _currentPeriod() {
+      return OVERVIEW_PERIODS.find((period) => period.key === this._period) || OVERVIEW_PERIODS[0];
+    }
+
     _overviewHtml(str) {
       const config = this._config;
       const hass = this._hass;
       const data = this._data;
-      const period = OVERVIEW_PERIODS.find((p) => p.key === this._period) || OVERVIEW_PERIODS[0];
+      const period = this._currentPeriod();
       const totals = this._totals();
       let html = "";
 
       if (config.show_total || config.show_change || config.show_total_chart) {
         const change = data.returns ? data.returns[period.tf] : null;
+        // The change as a share of what the period began with: the value at
+        // its start plus what was paid in since. Scalable takes the deposits
+        // out of its figure, so that base is the value now less the change,
+        // and no transaction needs looking up.
+        const base = isNumber(data.total) && isNumber(change) ? data.total - change : null;
+        const pct = config.show_change_pct !== false && base > 0 ? change / base : null;
         let spark = "";
         if (config.show_total_chart) {
           const { points, cut } = this._returnHistory(period.key);
@@ -4198,7 +4239,11 @@
           (config.show_change
             ? `<div class="change" style="${elementStyle(config, "change")}">` +
               `<span class="${gainClass(change)}">${money(hass, change, true)}</span>` +
-              `<span class="lbl">${escapeHtml(str[period.label])}</span></div>`
+              `<span class="lbl">${escapeHtml(str[period.label])}</span>` +
+              (pct !== null
+                ? `<span class="pct ${gainClass(change)}">(${percent(hass, pct)})</span>`
+                : "") +
+              `</div>`
             : "") +
           `</div>` +
           (config.show_total_chart
@@ -5055,6 +5100,11 @@
       const curve = this._curveHistory(range, mode);
       const points = curve.points;
       const last = points && points.length ? points[points.length - 1].v : this._data.total;
+      // The return as a share of what the period began with, as the head
+      // shows it - and only under the head's own switch.
+      const total = this._data.total;
+      const base = mode === "return" && isNumber(total) && isNumber(last) ? total - last : null;
+      const pct = this._config.show_change_pct !== false && base > 0 ? last / base : null;
       return (
         `<div class="ins-bar">` +
         this._switchHtml(CHART_PERIODS, range, "ins-period", str, "chart-tabs") +
@@ -5064,7 +5114,9 @@
         ) +
         `</div>` +
         `<div class="ins-figure ${mode === "return" ? gainClass(last) : ""}">` +
-        `${escapeHtml(money(hass, last, mode === "return"))}</div>` +
+        `<span>${escapeHtml(money(hass, last, mode === "return"))}</span>` +
+        (pct !== null ? `<span class="pct">(${percent(hass, pct)})</span>` : "") +
+        `</div>` +
         this._bigChartHtml(
           "insights",
           points,
@@ -5107,7 +5159,7 @@
         case "open":
           this._detail = el.dataset.isin;
           // On the period the overview stands on, as the web app opens it.
-          this._detailPeriod = this._period === "since" ? "max" : this._period;
+          this._detailPeriod = this._currentPeriod().key === "since" ? "max" : this._currentPeriod().key;
           break;
         case "detail-period":
           this._detailPeriod = key;
@@ -5129,7 +5181,7 @@
           if (orders.length === 1) {
             if (this._detail !== isin) {
               this._detail = isin;
-              this._detailPeriod = this._period === "since" ? "max" : this._period;
+              this._detailPeriod = this._currentPeriod().key === "since" ? "max" : this._currentPeriod().key;
             }
             this._tx = orders[0].id;
           } else if (this._config.show_tab_transactions) {
@@ -5141,7 +5193,7 @@
             this._txSearch = this._item(isin).name || isin;
           } else {
             this._detail = isin;
-            this._detailPeriod = this._period === "since" ? "max" : this._period;
+            this._detailPeriod = this._currentPeriod().key === "since" ? "max" : this._currentPeriod().key;
           }
           break;
         }
@@ -5164,7 +5216,7 @@
           // On the curve that was clicked: the return, over the same period.
           this._tab = "insights";
           this._insMode = "return";
-          this._insPeriod = this._period === "since" ? "max" : this._period;
+          this._insPeriod = this._currentPeriod().key === "since" ? "max" : this._currentPeriod().key;
           break;
         case "refresh":
           this._refresh();
@@ -6096,7 +6148,7 @@
           // of the dialog the menu simply ran off the other end instead, with
           // its first entries out of reach.
           const rect = select.getBoundingClientRect();
-          const box = this._clipRect(select);
+          const box = this._clipRect(select, false);
           const below = box.bottom - rect.bottom - 8;
           const above = rect.top - box.top - 8;
           const up = above > below;
@@ -6418,13 +6470,40 @@
             ]))
         );
         body.appendChild(this._toggleRow("show_period", str.edShowPeriod, str.edShowPeriodHelp));
-        body.appendChild(
-          this._fieldRow(str.edDefaultPeriod, str.edDefaultPeriodHelp,
-            this._select(
-              "default_period",
-              OVERVIEW_PERIODS.map((period) => ({ value: period.key, label: str[period.name] }))
-            ))
+        // "Opens with" and, beside it, a switch per period the bar can
+        // carry - the Annuals card's calendar navigation row. The dropdown
+        // offers all eight; the switches hide with the bar (see _syncValues).
+        const periodInput = document.createDocumentFragment();
+        periodInput.appendChild(
+          this._select(
+            "default_period",
+            OVERVIEW_PERIODS.map((period) => ({ value: period.key, label: str[period.name] }))
+          )
         );
+        const periodToggles = document.createElement("div");
+        periodToggles.className = "field-toggles";
+        for (const period of OVERVIEW_PERIODS) {
+          const group = document.createElement("div");
+          group.className = "toggle-group";
+          group.innerHTML = `
+            <label class="toggle">
+              <input type="checkbox" data-period="${period.key}">
+              <span class="track"></span>
+            </label>
+            <span class="toggle-label"></span>`;
+          group.querySelector(".toggle-label").textContent = str[period.name];
+          group.querySelector("input").addEventListener("change", (ev) => {
+            const on = new Set(overviewPeriods(this._config).map((p) => p.key));
+            if (ev.target.checked) on.add(period.key);
+            else on.delete(period.key);
+            this._set("periods", OVERVIEW_PERIODS.map((p) => p.key).filter((key) => on.has(key)));
+          });
+          periodToggles.appendChild(group);
+        }
+        periodInput.appendChild(periodToggles);
+        const periodRow = this._fieldRow(str.edDefaultPeriod, str.edDefaultPeriodHelp, periodInput);
+        periodRow.querySelector(".field-input-row").classList.add("period-input");
+        body.appendChild(periodRow);
         // The overview, in two halves side by side: what stands at its top,
         // and which sections follow.
         const pair = document.createElement("div");
@@ -6433,6 +6512,7 @@
           this._contentBlock(str.edBlockHeader, str.edBlockHeaderHelp, [
             this._toggleRow("show_total", str.edShowTotal, str.edShowTotalHelp),
             this._toggleRow("show_change", str.edShowChange, str.edShowChangeHelp),
+            indented(this._toggleRow("show_change_pct", str.edShowChangePct, str.edShowChangePctHelp), "withChange"),
             this._toggleRow("show_total_chart", str.edShowTotalChart, str.edShowTotalChartHelp),
           ])
         );
@@ -6748,69 +6828,103 @@
     // Overlapping the rows behind it is not a fault - it is what a floating
     // tooltip does, in Annuals as here. Being cut off is.
     _placeTooltip(anchor) {
-      const tip = anchor.querySelector(".tip");
-      if (!tip) return;
-      tip.style.cssText = "";
-      tip.classList.remove("tip-right", "tip-down");
+      let tip = anchor.querySelector(".tip");
+      if (!tip) {
+        tip = document.createElement("span");
+        tip.className = "tip";
+        anchor.appendChild(tip);
+      }
+      tip.textContent = anchor.dataset.tooltip || "";
+      // Put at 0,0 first: where that lands on screen is the corner of the
+      // box a fixed element is placed in - the window, or a transformed
+      // ancestor - and the offsets below are measured from it.
+      tip.style.left = "0px";
+      tip.style.top = "0px";
+      const origin = tip.getBoundingClientRect();
+      const width = origin.width;
+      const height = origin.height;
+      const icon = anchor.getBoundingClientRect();
       const pane = this.getBoundingClientRect();
       const box = this._clipRect(anchor);
-      let rect = tip.getBoundingClientRect();
-      const left = Math.max(pane.left, box.left) + 4;
-      const right = Math.min(pane.right, box.right) - 4;
-
-      // Right-aligned to the icon when opening rightward would run past the
-      // column - the same flip Annuals makes in CSS, decided by measurement so
-      // that a row it has no rule for is covered too.
-      if (rect.right > right) {
-        tip.classList.add("tip-right");
-        rect = tip.getBoundingClientRect();
+      // Inside the editor's own column - the dialog is twice as wide, with
+      // the preview beside the form - and inside whatever clips a fixed box.
+      const minX = Math.max(pane.left, box.left) + 4;
+      const maxX = Math.min(pane.right, box.right) - 4 - width;
+      let x = icon.left;
+      if (x > maxX) x = icon.right - width;
+      x = Math.max(minX, Math.min(x, maxX));
+      // Above the icon; below it when there is no room above; and when
+      // neither side has the room, the side that cuts less.
+      const minY = box.top + 4;
+      const maxY = box.bottom - 4 - height;
+      let y = icon.top - 6 - height;
+      if (y < minY) {
+        y = icon.bottom + 6;
+        if (y > maxY) y = Math.max(minY, Math.min(icon.top - 6 - height, maxY));
       }
-      // Still outside the column on either side - a wide tooltip on a narrow
-      // column, or an "i" that itself sits at or past the column's edge, the
-      // way a long switch label pushes it at 290px - so move it in by hand, as
-      // far as the column's width allows.
-      const maxLeft = right - rect.width;
-      if (rect.left < left || rect.left > maxLeft) {
-        const target = Math.max(left, Math.min(rect.left, maxLeft));
-        tip.style.left = `${target - anchor.getBoundingClientRect().left}px`;
-        tip.style.right = "auto";
-        rect = tip.getBoundingClientRect();
-      }
-      // Below the icon when there is no room above it. A tooltip too tall for
-      // either side takes the side that cuts less - a short window, or, on a
-      // narrow screen, a panel's last rows scrolled up to the top of the
-      // dialog, with that panel's own bottom edge just below them.
-      if (rect.top < box.top + 4) {
-        tip.classList.add("tip-down");
-        const below = tip.getBoundingClientRect();
-        const cutAbove = box.top + 4 - rect.top;
-        const cutBelow = below.bottom - (box.bottom - 4);
-        if (cutBelow > 0 && cutBelow > cutAbove) tip.classList.remove("tip-down");
-      }
+      tip.style.left = `${x - origin.left}px`;
+      tip.style.top = `${y - origin.top}px`;
+      // Not shown while the icon itself is scrolled out of sight: a fixed
+      // box would otherwise go on floating where its row used to be.
+      const seen = this._clipRect(anchor, false);
+      const iconSeen = icon.bottom > seen.top && icon.top < seen.bottom && icon.right > seen.left && icon.left < seen.right;
+      tip.style.visibility = iconSeen ? "" : "hidden";
+      this._followTooltip(anchor, icon);
     }
 
-    // The area a tooltip can be seen in: the window, narrowed by every
-    // ancestor that clips its content - whether or not it scrolls right now.
-    // The dialog's form column clips a tooltip above its top edge just the
-    // same when the open tab is short enough to fit, and taking only a
-    // container that overflowed let a tooltip be measured against the
-    // window and cut off anyway. The colour menus measure against it too.
+    // A fixed box does not move with the row it belongs to, so while the
+    // pointer rests on the icon - or, on a touch screen, until the next tap
+    // elsewhere, which is how long a tap keeps it hovered - it is placed
+    // again on every frame the icon has moved in: scrolling the form takes
+    // the tooltip along, and out of sight with the icon. One follower at a
+    // time; hovering the next icon hands over to it. It ends once the icon
+    // is no longer hovered - but only after it has been: iOS reports the
+    // touch before the finger lifts and applies :hover only afterwards, so
+    // a second is allowed for that to happen.
+    _followTooltip(anchor, rect) {
+      if (this._tipFollowing === anchor) return;
+      this._tipFollowing = anchor;
+      let last = rect;
+      let hovered = false;
+      const started = performance.now();
+      const step = () => {
+        if (this._tipFollowing !== anchor) return;
+        const onIcon = anchor.isConnected && anchor.matches(":hover");
+        if (onIcon) hovered = true;
+        if (!anchor.isConnected || (!onIcon && (hovered || performance.now() - started > 1000))) {
+          this._tipFollowing = null;
+          return;
+        }
+        if (!onIcon) {
+          requestAnimationFrame(step);
+          return;
+        }
+        const now = anchor.getBoundingClientRect();
+        if (now.top !== last.top || now.left !== last.left) {
+          last = now;
+          this._placeTooltip(anchor);
+        }
+        requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+
+    // The area a fixed tooltip can be seen in: the window, narrowed by the
+    // ancestor it is fixed to and every ancestor of that one which clips
+    // its content. The scrolling areas below that ancestor - the form
+    // column, the dialog body - do not clip a fixed box, which is the point
+    // of it (see _placeTooltip). An ancestor becomes the box a fixed
+    // element is placed in when it has a transform, a filter or paint
+    // containment - the edit dialog has one - and without any such
+    // ancestor the window alone is the bound. The walk follows the rendered
+    // tree, through the slot an element is shown in before its parent: the
+    // dialog slots the form column into its own shadow DOM.
     //
-    // Walked from the anchor, not from this editor: the panel the "i" sits in
-    // has overflow hidden for its rounded corners, and it lies inside this
-    // shadow root, where a walk that starts at the host never looks. And
-    // through the slot an element is shown in, not to its light-DOM parent:
-    // the form column is slotted into ha-dialog, whose own scrolling body -
-    // the one that scrolls when the preview is stacked below the form on a
-    // narrow screen - only exists in ha-dialog's shadow root.
-    _clipRect(anchor) {
+    // With fixed set to false, the area the icon itself can be seen in
+    // instead: every clipping ancestor counts, the scrolling ones included.
+    _clipRect(from, fixed = true) {
       const nextUp = (node) =>
-        node.assignedSlot ||
-        node.parentElement ||
-        (node.getRootNode() && node.getRootNode().host) ||
-        null;
-      // An ancestor becomes the box a fixed element is placed in when it
-      // has a transform, a filter or paint containment.
+        node.assignedSlot || node.parentElement || (node.getRootNode() && node.getRootNode().host) || null;
       const holdsFixed = (style) =>
         style.transform !== "none" ||
         style.perspective !== "none" ||
@@ -6822,16 +6936,21 @@
         /transform|perspective|filter/.test(style.willChange || "") ||
         /paint|layout|strict|content/.test(style.contain || "") ||
         (style.containerType && style.containerType !== "normal");
-      const box = { top: 0, bottom: window.innerHeight, left: 0, right: window.innerWidth };
-      // Nothing above a fixed ancestor - the edit dialog - clips what is
-      // inside it, until an ancestor holds fixed boxes again. The page under
-      // the dialog can be scrolled away (Bubble Card's pop-up editor does
-      // that) while the dialog stays in view; <body> is then an
-      // overflow-hidden box far above the window, and counting it would put
-      // the whole dialog outside the box - a tooltip in a top row then stays
-      // above its icon, cut off, instead of opening below it.
-      let loose = false;
-      for (let node = nextUp(anchor); node && node !== document.documentElement; node = nextUp(node)) {
+      // The layout viewport, the space getBoundingClientRect and a fixed
+      // box are measured in - not innerWidth/innerHeight, which on iOS
+      // shrink to the visible part of a pinch-zoomed page.
+      const root = document.documentElement;
+      const box = { top: 0, bottom: root.clientHeight, left: 0, right: root.clientWidth };
+      // A box that sits in the viewport rather than in its parents is not
+      // clipped by them, whatever their overflow: a fixed box, until an
+      // ancestor holds it - and everything above a fixed ancestor, which is
+      // the edit dialog. The page under the dialog can be scrolled away
+      // (Bubble Card's pop-up editor does that) while the dialog stays in
+      // view; <body> is then an overflow-hidden box far above the window,
+      // and it must not count, or every tooltip in the dialog is hidden
+      // for lying outside it.
+      let loose = fixed;
+      for (let node = nextUp(from || this); node && node !== root; node = nextUp(node)) {
         const style = getComputedStyle(node);
         if (loose && !holdsFixed(style)) continue;
         loose = false;
@@ -6922,6 +7041,16 @@
         const chosen = this._config.default_product || "broker";
         if (!offered.some(([value]) => value === chosen)) this._set("default_product", offered[0][0]);
       }
+      // The period switches beside "Opens with" follow the list, and go
+      // with the switch itself: nothing to pick for a bar that is not drawn.
+      const periodToggles = this.shadowRoot.querySelector(".period-input .field-toggles");
+      if (periodToggles) {
+        const onKeys = new Set(overviewPeriods(this._config).map((period) => period.key));
+        periodToggles.querySelectorAll("input[data-period]").forEach((toggle) => {
+          toggle.checked = onKeys.has(toggle.dataset.period);
+        });
+        periodToggles.hidden = this._config.show_period === false;
+      }
       this.shadowRoot.querySelectorAll("input[data-field], select[data-field]").forEach((el) => {
         const value = this._config[el.dataset.field];
         const next = value === undefined || value === null ? "" : String(value);
@@ -6964,6 +7093,9 @@
       });
       this.shadowRoot.querySelectorAll("[data-with-tabs]").forEach((row) => {
         row.hidden = this._config.show_tabs === false;
+      });
+      this.shadowRoot.querySelectorAll("[data-with-change]").forEach((row) => {
+        row.hidden = this._config.show_change === false;
       });
       this.shadowRoot.querySelectorAll("[data-with-overnight-tabs]").forEach((row) => {
         row.hidden = this._config.overnight_show_tabs === false;
@@ -7229,9 +7361,9 @@
     .tooltip-anchor { position: relative; display: flex; cursor: help; }
     .tooltip-anchor ha-icon { --mdc-icon-size: 16px; opacity: 0.6; }
     .tip {
-      position: absolute;
-      bottom: calc(100% + 6px);
+      position: fixed;
       left: 0;
+      top: 0;
       z-index: 20;
       width: max-content;
       max-width: 220px;
@@ -7246,18 +7378,11 @@
       text-transform: none;
       letter-spacing: normal;
       white-space: normal;
-      text-align: left;
+      text-align: start;
       visibility: hidden;
       pointer-events: none;
     }
     .tooltip-anchor:hover .tip { visibility: visible; }
-    /* Annuals' own two rules, for the places its layout - and ours - puts an
-       "i" close to the right edge: open right-aligned, expanding leftward,
-       instead of the usual left-aligned opening. */
-    .toggle-group .tip { left: auto; right: 0; }
-    .row-shape-body .tip { left: auto; right: 0; }
-    .tip.tip-right { left: auto; right: 0; }
-    .tip.tip-down { bottom: auto; top: calc(100% + 6px); }
     /* Marks a row as a dependent sub-option of the block above it -
        indented, smaller, with a left border, so it reads as belonging to
        that block rather than as a peer field. */
@@ -7355,6 +7480,19 @@
        colour row - takes a line of its own at the row's right end rather
        than squeezing in beside the colour controls. */
     .field-input-row > .toggle-group { flex-basis: 100%; justify-content: flex-end; margin-top: 4px; }
+    /* "Opens with": the dropdown and the eight period switches on one line,
+       the switches wrapping among themselves when the column is narrow. */
+    .field-input-row.period-input select { flex: 0 0 auto; width: auto; min-width: 0; max-width: 100%; }
+    .field-input-row.period-input > div.field-toggles {
+      display: flex;
+      flex-wrap: wrap;
+      flex: 1 1 auto;
+      justify-content: flex-start;
+      gap: 6px 8px;
+      align-items: center;
+    }
+    .period-input .toggle-group { flex-basis: auto; margin-top: 0; }
+    .period-input .toggle-label { font-size: 0.8em; }
     .field-input-row > .field-toggles {
       flex-basis: 100%;
       display: flex;
@@ -7588,11 +7726,25 @@
     .tab.active { color: var(--sc-tab-active, var(--sc-brand));
                   border-bottom-color: var(--sc-tab-active, var(--sc-brand)); }
 
-    .period-switch { display: inline-flex; margin-left: auto; padding: 3px; border-radius: 999px;
+    /* Eight periods are wider than a narrow card: the switch wraps onto a
+       second row then, still hugging the right edge. The pill is an inline
+       box, and box-decoration-break: clone gives every row it wraps onto its
+       own rounded background and padding - two single-row pills, not one
+       tall box. The wrap's line height leaves room between the rows. */
+    .period-wrap { margin-left: auto; max-width: 100%; min-width: 0; text-align: end; line-height: 40px; }
+    /* The grey pill is the inline run's own background: its height is the
+       font's content area plus 6px of padding each way. Every button is an
+       inline-block on the same baseline with the same font and the same
+       6px of padding, so its active pill is exactly as tall as the grey one
+       and concentric in it, and the word stands where the font puts it,
+       which for Roboto is the middle. */
+    .period-switch { display: inline; padding: 6px 3px; border-radius: 999px;
+                     -webkit-box-decoration-break: clone; box-decoration-break: clone;
                      background: rgba(127, 127, 127, 0.16); color: var(--primary-text-color);
                      font-weight: 500; }
-    .period-switch button { all: unset; cursor: pointer; padding: 4px 10px; border-radius: 999px;
-                            white-space: nowrap; }
+    .period-switch button { all: unset; display: inline-block; vertical-align: baseline; cursor: pointer;
+                            padding: 6px 10px; border-radius: 999px; white-space: nowrap;
+                            line-height: normal; }
     .period-switch button.active { background: var(--sc-period-active, var(--sc-brand)); color: #0e1113; }
 
     .chart-tabs { display: flex; flex-wrap: wrap; gap: 0 2px; margin-top: 8px;
@@ -7620,6 +7772,13 @@
     .total .frac { display: flex; flex-direction: column; margin-left: 4px; font-size: 0.42em;
                    font-weight: 500; line-height: 1.05; opacity: 0.85; }
     .change { margin-top: 10px; font-weight: 500; }
+    /* A figure never breaks inside: the minus stays with its number, the
+       bracket with its percent. The line breaks between the three parts. */
+    .change > span { white-space: nowrap; }
+    .change .pct { margin-left: 6px; }
+    /* The period's name moves to the next line whole rather than breaking
+       inside - "Since purchase" is two words. */
+    .change .lbl { white-space: nowrap; }
     .lbl { margin-left: 8px; color: var(--secondary-text-color); }
 
     .sec { margin-top: 18px; }
@@ -7819,6 +7978,8 @@
     .ins-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
     .ins-bar .chart-tabs { flex: 1 1 auto; margin-top: 0; }
     .ins-figure { margin-top: 14px; font-size: 1.2em; color: var(--primary-text-color); }
+    .ins-figure > span { white-space: nowrap; }
+    .ins-figure .pct { margin-left: 6px; }
     .note { margin-top: 10px; font-size: 0.8em; color: var(--secondary-text-color); }
 
     /* Last, so that a rise or a fall keeps its colour wherever it stands. */

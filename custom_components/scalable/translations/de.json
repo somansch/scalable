@@ -139,6 +139,12 @@
       "change_month": {
         "name": "Veränderung 1 Monat"
       },
+      "change_3_months": {
+        "name": "Veränderung 3 Monate"
+      },
+      "change_6_months": {
+        "name": "Veränderung 6 Monate"
+      },
       "change_ytd": {
         "name": "Veränderung seit Jahresbeginn"
       },

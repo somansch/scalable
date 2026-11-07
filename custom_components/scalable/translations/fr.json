@@ -139,6 +139,12 @@
       "change_month": {
         "name": "Variation 1 mois"
       },
+      "change_3_months": {
+        "name": "Variation 3 mois"
+      },
+      "change_6_months": {
+        "name": "Variation 6 mois"
+      },
       "change_ytd": {
         "name": "Variation depuis le début de l'année"
       },

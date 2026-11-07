@@ -2,6 +2,16 @@
 
 All notable changes to this integration are documented here.
 
+## v2.3.0
+
+### Added
+- **3 months and 6 months on the overview's period switch.** The web app keeps the two for a security's own page; the card now offers them for the whole portfolio too - the change in the head, every position's change and the portfolio curve follow the switch as for the other periods. **Opens with** under **Settings → Content → Broker** says which the overview starts on - any of the eight - and, beside it, which the switch offers: a switch per period, the way the Annuals card's calendar navigation has it.
+- **The change in percent, in brackets after the period's name - and after the Total return under Insights.** Scalable only reports the change in euros; the percentage is the change as a share of what the period began with - the value at its start plus what was paid in since, which is the value now less the change, so a deposit inside the period does not read as a gain. **Change in percent** under **Settings → Content → Broker** switches it off.
+- **Change 3 months** and **Change 6 months** as sensors on the Broker device, beside the other periods.
+
+### Fixed
+- **A tooltip in a tab's last row stays whole.** The editor's panels clip what runs past their rounded corners, and a tooltip opening below the last row of a tab - the only way when that row is scrolled to the top of the dialog - ran into that edge and lost its last lines on a narrow screen, where a tooltip is tall. The tooltips are placed in the window now, the way the TomTom and Annuals editors place theirs, so no panel edge cuts them.
+
 ## v2.2.1
 
 ### Fixed

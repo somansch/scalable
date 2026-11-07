@@ -162,6 +162,8 @@ PORTFOLIO_SENSORS: tuple[PortfolioSensorDescription, ...] = (
     _money("change_day", _return_of("INTRADAY")),
     _money("change_week", _return_of("ONE_WEEK")),
     _money("change_month", _return_of("ONE_MONTH")),
+    _money("change_3_months", _return_of("THREE_MONTHS")),
+    _money("change_6_months", _return_of("SIX_MONTHS")),
     _money("change_ytd", _return_of("YEAR_TO_DATE")),
     _money("change_year", _return_of("ONE_YEAR")),
     _money("change_since_buy", _return_of("MAX")),

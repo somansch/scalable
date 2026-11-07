@@ -1,10 +1,12 @@
 # <img src="https://raw.githubusercontent.com/somansch/scalable/main/custom_components/scalable/brand/icon.png" width="40" height="40" align="top"> Scalable Capital Integration for Home Assistant - your broker portfolio as sensors and as a card
 
-[![GitHub release](https://img.shields.io/github/v/release/somansch/scalable)](https://github.com/somansch/scalable/releases/latest)
-[![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://github.com/hacs/default)
-[![License](https://img.shields.io/github/license/somansch/scalable)](https://github.com/somansch/scalable/blob/main/LICENSE)
-[![Downloads](https://img.shields.io/github/downloads/somansch/scalable/total)](https://github.com/somansch/scalable/releases)
-[![Downloads@latest](https://img.shields.io/github/downloads/somansch/scalable/latest/total)](https://github.com/somansch/scalable/releases/latest)
+[![Marketplace (HACS)](https://img.shields.io/badge/Marketplace%20%28HACS%29-Default-41BDF5?style=for-the-badge&logo=homeassistantcommunitystore&logoColor=white)](https://my.home-assistant.io/redirect/marketplace_repository/?owner=somansch&repository=scalable&category=Integration)
+[![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2026.9%2B-41BDF5?style=for-the-badge&logo=homeassistant&logoColor=white)](https://www.home-assistant.io/)
+[![License](https://img.shields.io/github/license/somansch/scalable?style=for-the-badge)](https://github.com/somansch/scalable/blob/main/LICENSE)
+[![Downloads](https://img.shields.io/github/downloads/somansch/scalable/total?style=for-the-badge&label=Downloads)](https://github.com/somansch/scalable/releases)
+[![Downloads latest](https://img.shields.io/github/downloads/somansch/scalable/latest/total?style=for-the-badge&label=Downloads%20latest)](https://github.com/somansch/scalable/releases/latest)
+[![Version](https://img.shields.io/github/v/release/somansch/scalable?style=for-the-badge&label=Version&color=e83ef7)](https://github.com/somansch/scalable/releases/latest)
+[![Buy me a coffee](https://img.shields.io/badge/-Buy%20me%20a%20%E2%98%95%2F%F0%9F%8D%BA-ff6b6b?style=for-the-badge&logo=buymeacoffee&logoColor=white)](https://buymeacoffee.com/ou4lgpvlju)
 
 **Available languages:** English, Deutsch, Français, Italiano, Español, Nederlands
 
@@ -33,7 +35,7 @@ Typical reasons to use it:
 ## Quick start
 
 1. In Scalable's **web** version, switch on **Scalable MCP** ([Before you start](#before-you-start)).
-2. **Install** via [HACS](#hacs-recommended) or [manually](#manual), then restart Home Assistant.
+2. **Install** via [Marketplace (HACS)](#marketplace-hacs) or [manually](#manual), then restart Home Assistant.
 3. **Settings → Devices & Services → Add Integration**, search for "Scalable Capital", give the entry a name and sign in to Scalable ([Setting up](#setting-up)).
 4. Put it on a dashboard: **Add card → Scalable Capital** gives you the [card that comes with the integration](#scalable-card). Or use the [sensors](#created-entities) in any card you like.
 
@@ -121,7 +123,7 @@ Entity ids below assume the name *Scalable*.
 | `sensor.scalable_portfolio_cash` | Cash balance; attributes `buying_power`, `pending_buy_orders` |
 | `sensor.scalable_portfolio_securities` | Value of all securities |
 | `sensor.scalable_portfolio_crypto` | Value of all crypto |
-| `sensor.scalable_portfolio_change_day` / `_week` / `_month` / `_ytd` / `_year` / `_since_buy` | The change in euros per period, as the web app's switch shows it |
+| `sensor.scalable_portfolio_change_day` / `_week` / `_month` / `_3_months` / `_6_months` / `_ytd` / `_year` / `_since_buy` | The change in euros per period, as the web app's switch shows it |
 | `sensor.scalable_portfolio_invested` | Purchase value of all positions |
 | `sensor.scalable_portfolio_return` / `_return_pct` | Unrealised return of all positions |
 | `sensor.scalable_portfolio_type_stock`, `_type_etf`, … | Value per kind of security; attributes `positions`, `names`, `share_pct`, `invested`, `return`, `return_pct` |
@@ -225,7 +227,7 @@ Beside the title stand the time of the last update and a small symbol that reads
 
 ### Overview
 
-The total value with its change over the chosen period - **1D, 1W, 1M, YTD, 1Y, Since purchase** - and the portfolio's curve beside it; a click on the curve opens [Insights](#insights). Below, the cash balance - with what can be invested in brackets where that differs, as with a credit line drawn on - the positions under a heading per kind of security - Stocks, ETFs, … - or, with **Scalable's groups** switched on in place of the kinds and groups made in Scalable's app, under those groups, each folded to its name and value until opened, the positions outside every group under **Ungrouped** - the crypto value and the watchlist.
+The total value with its change over the chosen period - **1D, 1W, 1M, 3M, 6M, YTD, 1Y, Since purchase** - in euros and, in brackets after the period's name, in percent - and the portfolio's curve beside it; **Opens with** under **Settings → Content → Broker** says which of the eight the switch offers and which it starts on; a click on the curve opens [Insights](#insights). Below, the cash balance - with what can be invested in brackets where that differs, as with a credit line drawn on - the positions under a heading per kind of security - Stocks, ETFs, … - or, with **Scalable's groups** switched on in place of the kinds and groups made in Scalable's app, under those groups, each folded to its name and value until opened, the positions outside every group under **Ungrouped** - the crypto value and the watchlist.
 
 Every entry carries its value, its open orders - the clock is a link to them - a small curve, the change and the price. Under *Since purchase* a position shows its return in percent and euros instead. A section folds with a click on its heading.
 
@@ -296,6 +298,10 @@ Three things, because Scalable does not hand them out:
 - **The portfolio's own curve** - beside the total value and under Insights - is drawn from what Home Assistant has recorded for the portfolio's value. It therefore reaches back to the day the integration was set up, not to the day the portfolio was opened, and shows a grey gap where nothing was recorded.
 - **Crypto** is one figure; single coins are not listed.
 
+And two things the card adds. **3M** and **6M** stand on the overview's switch, which the web app keeps for a security's own page. And the change stands in percent, in brackets after the period's name and after the **Total return** under Insights: Scalable reports the change in euros only, with deposits and withdrawals taken out, so the percentage is that change as a share of what the period began with - the value at its start plus what was paid in since, which is the value now less the change. A deposit inside the period is therefore no gain, and a period that reaches back before the account was opened counts from nought. **Change in percent** under **Settings → Content → Broker** switches it off.
+
+<img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-percentage-3m-6m.png" alt="The overview's head with the period switch from 1D to Since purchase, 3M and 6M among them, and under the total value today's change in euros followed by Today and the change in percent in brackets" width="60%">
+
 ## Reading only
 
 Scalable's sign-in does not come in a read-only variety: what narrows it is the **access level** you set for Scalable MCP in your account (see [Before you start](#before-you-start)). On this side, the integration names fifteen of Scalable's tools - overview, positions, quotes, cash, watchlist, transactions, a transaction's details, price charts, price alerts, savings plans, portfolio list, the overnight account and its transactions, the fixed-term accounts and a fixed-term account's details - and checks at every start and once a day that Scalable itself still declares each of them read-only. A tool that loses that declaration is not called at all.
@@ -319,14 +325,15 @@ Two things, in one download:
 - The **[Scalable card](#scalable-card)**. Served by the integration and handed to every dashboard, so there is no file to copy into `www` and no resource to register.
   After the first installation, load the dashboard page once - a page that is already open holds nothing of the card yet. From then on an update reaches every open page by itself: after Home Assistant restarts, the card checks which version is served and takes the new one over in place, with no reload and no cache to clear.
 
-### HACS (recommended)
+### Marketplace (HACS)
 
-Scalable Capital is part of the default HACS integration list:
+The recommended way. Scalable Capital is in the default list of the Marketplace - the store Home Assistant 2026.11 ships, HACS on earlier versions - so there is no repository to add:
 
-1. Open HACS in Home Assistant
-2. Search for "Scalable Capital"
-3. Click the "Download" button
-4. Restart HA
+[![Open Marketplace repository on My Home Assistant](https://my.home-assistant.io/badges/marketplace_repository.svg)](https://my.home-assistant.io/redirect/marketplace_repository/?owner=somansch&repository=scalable&category=Integration)
+
+1. Click the button above, or open Marketplace (HACS) in Home Assistant and search for "Scalable Capital"
+2. Click **Download**
+3. Restart Home Assistant
 
 ### Manual
 

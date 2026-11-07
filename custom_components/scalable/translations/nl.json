@@ -139,6 +139,12 @@
       "change_month": {
         "name": "Verandering 1 maand"
       },
+      "change_3_months": {
+        "name": "Verandering 3 maanden"
+      },
+      "change_6_months": {
+        "name": "Verandering 6 maanden"
+      },
       "change_ytd": {
         "name": "Verandering sinds begin van het jaar"
       },
