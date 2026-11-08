@@ -35,7 +35,9 @@ from .const import (
     DOMAIN,
     TOOL_ALERTS,
     TOOL_CASH,
+    NEWS_KEEP,
     TOOL_CHART,
+    TOOL_NEWS,
     TOOL_FIXED_TERM,
     TOOL_FIXED_TERMS,
     TOOL_GROUPS,
@@ -126,6 +128,8 @@ class Position:
     invested: float | None
     """What the units still held cost. None where the history cannot say."""
     orders: tuple[Order, ...] = ()
+    savings_plan: dict[str, Any] | None = None
+    """The plan saving into this security - amount per run and frequency - or None."""
 
     @property
     def value(self) -> float | None:
@@ -272,6 +276,10 @@ class Portfolio:
     """Every overnight account, personal and junior - empty where the user has none."""
     fixed_terms: tuple[FixedTerm, ...] = ()
     groups: tuple[PortfolioGroup, ...] = ()
+    planned: dict[str, Position] = field(default_factory=dict)
+    """Securities a savings plan buys into that are not held yet - quantity 0.
+
+    The web app lists them in the portfolio; they get no sensors here."""
     """The user's portfolio groups, in Scalable's order - empty without any."""
     ungrouped: tuple[str, ...] = ()
     """The ISINs held outside every group - what the card lists under "Ungrouped"."""
@@ -447,6 +455,14 @@ def _security_type(answer: dict[str, Any] | None) -> str | None:
     return ((answer or {}).get("security") or {}).get("securityType")
 
 
+def _savings_plan(item: dict[str, Any]) -> dict[str, Any] | None:
+    """The plan on a holding, as amount per run and frequency, or None."""
+    plan = item.get("savingsPlan")
+    if not isinstance(plan, dict):
+        return None
+    return {"amount": _number(plan.get("amount")), "frequency": plan.get("frequency")}
+
+
 def _held_quantity(item: Any) -> float:
     if not isinstance(item, dict) or not item.get("isin"):
         return 0.0
@@ -553,6 +569,7 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
         self._session_lock = asyncio.Lock()
         self._charts: dict[tuple[str, str], tuple[float, dict[str, Any]]] = {}
         self._details: dict[str, tuple[float, dict[str, Any]]] = {}
+        self._news: dict[tuple[str, str], tuple[float, dict[str, Any] | None]] = {}
         # When Scalable was last read successfully - not when it last valued
         # the portfolio, which on a Sunday is two days ago.
         self.last_read: datetime | None = None
@@ -826,11 +843,25 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
         held_items = [
             item for item in holdings.get("holdings") or [] if _held_quantity(item) > 0
         ]
+        # A security a savings plan buys into, with no units yet: listed by
+        # Scalable with a plan and no position.
+        planned_items = [
+            item
+            for item in holdings.get("holdings") or []
+            if isinstance(item, dict)
+            and item.get("isin")
+            and _held_quantity(item) <= 0
+            and isinstance(item.get("savingsPlan"), dict)
+        ]
         held = {item["isin"]: _held_quantity(item) for item in held_items}
         invested = cost_basis(history, held)
 
         quotes: dict[str, dict[str, Any]] = {}
-        wanted = [*held, *(item["isin"] for item in watched if item.get("isin"))]
+        wanted = [
+            *held,
+            *(item["isin"] for item in planned_items),
+            *(item["isin"] for item in watched if item.get("isin")),
+        ]
         for isin in dict.fromkeys(wanted):
             try:
                 quotes[isin] = await session.async_call(TOOL_QUOTE, {**selected, "isin": isin})
@@ -871,8 +902,22 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
                     quote=_quote(quotes.get(item["isin"]), item.get("currentQuote")),
                     invested=invested.get(item["isin"]),
                     orders=waiting.get(item["isin"], ()),
+                    savings_plan=_savings_plan(item),
                 )
                 for item in held_items
+            },
+            planned={
+                item["isin"]: Position(
+                    isin=item["isin"],
+                    name=item.get("name") or item["isin"],
+                    security_type=_security_type(quotes.get(item["isin"])),
+                    quantity=0.0,
+                    quote=_quote(quotes.get(item["isin"]), item.get("currentQuote")),
+                    invested=None,
+                    orders=waiting.get(item["isin"], ()),
+                    savings_plan=_savings_plan(item),
+                )
+                for item in planned_items
             },
             watchlist={
                 item["isin"]: WatchItem(
@@ -967,6 +1012,69 @@ class ScalableCoordinator(DataUpdateCoordinator[Portfolio]):
                     }
                     self._charts[(isin, timeframe)] = (monotonic(), chart)
                     found[isin] = chart
+        return found
+
+    async def async_news(
+        self, isins: list[str], locale: str
+    ) -> dict[str, dict[str, Any] | None]:
+        """Scalable's Market Insights for each security, in one language.
+
+        The AI summary of the news about the security - a line and the full
+        text - and the headlines it was made from. None for a security
+        Scalable has nothing on, which is most of them outside Germany.
+        Answers are kept for NEWS_KEEP seconds.
+        """
+        now = monotonic()
+        found: dict[str, dict[str, Any] | None] = {}
+        missing: list[str] = []
+        for isin in dict.fromkeys(isins):
+            kept = self._news.get((isin, locale))
+            if kept and now - kept[0] < NEWS_KEEP:
+                found[isin] = kept[1]
+            else:
+                missing.append(isin)
+        if not missing:
+            return found
+        async with self._session_lock:
+            token = await async_valid_access_token(self.hass, self.config_entry)
+            async with self.api.async_session(token) as session:
+                for isin in missing:
+                    try:
+                        answer = await session.async_call(
+                            TOOL_NEWS, {"isin": isin, "locale": locale}
+                        )
+                    except ScalableAuthError:
+                        raise
+                    except ScalableError as err:
+                        _LOGGER.debug("No news for %s: %s", isin, err)
+                        found[isin] = None
+                        continue
+                    summary = answer.get("summary") or {}
+                    news = None
+                    if isinstance(summary, dict) and summary.get("short"):
+                        news = {
+                            "short": summary["short"],
+                            "long": summary.get("long") or summary["short"],
+                            "updated": summary.get("lastUpdatedAt"),
+                            # The headlines only: Scalable hands out no link
+                            # to the articles, and no tool reads one.
+                            # Newest first; Scalable lists them in no order.
+                            "sources": sorted(
+                                (
+                                    {
+                                        "headline": source.get("headline"),
+                                        "source": source.get("sourceName"),
+                                        "time": source.get("publicationTimeUtc"),
+                                    }
+                                    for source in answer.get("sources") or []
+                                    if isinstance(source, dict) and source.get("headline")
+                                ),
+                                key=lambda source: source["time"] or "",
+                                reverse=True,
+                            ),
+                        }
+                    self._news[(isin, locale)] = (monotonic(), news)
+                    found[isin] = news
         return found
 
     async def async_transaction(self, transaction_id: str) -> dict[str, Any]:

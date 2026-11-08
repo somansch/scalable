@@ -83,6 +83,13 @@ TOOL_GROUPS = "list_portfolio_groups"
 # Who is signed in: the first name the overnight account is labelled with,
 # the way Scalable's app labels it.
 TOOL_PROFILE = "get_account_profile"
+# Scalable's "Market Insights": an AI summary of the news about one security
+# and the headlines it was made from, in English or German only.
+TOOL_NEWS = "get_security_news"
+NEWS_LOCALES = ("en_US", "de_DE")
+# The summary changes about once a day; an hour between two readings of the
+# same security keeps a dashboard that is opened often cheap.
+NEWS_KEEP = 3600
 READ_TOOLS = frozenset(
     {
         TOOL_GROUPS,
@@ -102,6 +109,7 @@ READ_TOOLS = frozenset(
         TOOL_CHART,
         TOOL_TRANSACTION,
         TOOL_SAVINGS_PLANS,
+        TOOL_NEWS,
     }
 )
 

@@ -2,6 +2,24 @@
 
 All notable changes to this integration are documented here.
 
+## v2.4.0
+
+### Added
+- **Market Insights.** Scalable's AI summary of the news about a security, as on its page in the app: one line on the security's page between the price and the chart, a click away from the whole text, the note Scalable puts under it and the headlines it was made from, newest first. Where Scalable has a summary, a sparkle after the value on an entry of the portfolio or the watchlist opens the same pop-up from the list. Scalable hands out the headlines without a link, so the articles themselves stay in its app. **Market Insights** under **Settings → Content → Broker** and under **Settings → List** switches each off; **Layout** has the sparkle, the heading, the line and the pop-up's three texts.
+- **Savings plans in the overview.** A security a plan saves into stands in the portfolio under a heading of its own with its value, as the kinds do - from the day the plan exists, before the first run has bought anything. Grouped by kind, every security with a plan stands there, held or not; with Scalable's groups or no grouping, a held one keeps its place. **Savings plans** under **Settings → Content → Broker** switches the heading off. Every entry with a plan carries a badge with its amount; **Settings → List** and **Layout → List** have its switch, symbol and colours.
+- **Filters on the Transactions tab as in the web app.** **Date** offers the last 7, 30 and 365 days or a span of your own and names what was chosen; **Type** and **Status** are check lists that show how many are ticked. Expired and rejected orders can be told apart now - they used to count as executed.
+- **Search and sort on the Savings plans tab.** The search goes by name and ISIN; the sort button opens the web app's menu - name, savings rate or next run, each either way - and shows the order in force.
+- **A symbol of your own** for the open orders' badge and for the sparkle, under **Layout → List**.
+
+### Changed
+- **The Savings plans tab reads like the web app's.** The monthly savings rate over the plans - a plan that runs every two months counts half, a yearly one a twelfth - and per plan a badge with its amount, how often it runs and in how many days it is due. All five rhythms have their names, and an inflation adjustment is shown where one is set.
+- **The one-day view names its day.** On a weekend or a holiday the overview says which trading day the figures and the curve describe - Friday, say - in place of *Today*, and a date once that day is a week or more back.
+- **Layout shows what is drawn.** The big figures, the section headings, a position's value and the price are drawn bold, and the **Bold** switch now stands on for them and can take it away.
+
+### Fixed
+- **The columns of a list line up.** On a narrow card the change and the price drifted apart from entry to entry; every list now shares its columns across all its entries, right-aligned.
+- **The value beside a kind's heading follows its own switches.** It used to inherit the heading's bold.
+
 ## v2.3.0
 
 ### Added

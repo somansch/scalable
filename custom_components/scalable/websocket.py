@@ -21,7 +21,7 @@ from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 
 from .bundle import CARD_VERSION_DATA
-from .const import CHART_TIMEFRAMES, DOMAIN, SIGNAL_ENTRY_LOADED
+from .const import CHART_TIMEFRAMES, DOMAIN, NEWS_LOCALES, SIGNAL_ENTRY_LOADED
 from .coordinator import PortfolioGroup, FixedTerm, Overnight, Portfolio, Position, Quote, ScalableCoordinator
 from .errors import ScalableError
 
@@ -83,6 +83,7 @@ def _position(position: Position) -> dict[str, Any]:
         "average_price": position.average_price,
         "gain": position.gain,
         "gain_fraction": position.gain_fraction,
+        "savings_plan": position.savings_plan,
         **_quote(position.quote),
     }
 
@@ -175,6 +176,7 @@ def _snapshot(hass: HomeAssistant, coordinator: ScalableCoordinator) -> dict[str
         "buying_power": data.buying_power,
         "returns": data.returns,
         "positions": [_position(position) for position in data.positions.values()],
+        "planned": [_position(position) for position in data.planned.values()],
         "watchlist": [
             {"isin": item.isin, "name": item.name, "type": item.security_type, **_quote(item.quote)}
             for item in data.watchlist.values()
@@ -318,6 +320,29 @@ async def websocket_charts(
 
 @websocket_api.websocket_command(
     {
+        vol.Required("type"): "scalable/news",
+        vol.Optional("entry_id"): str,
+        vol.Required("isins"): vol.All([str], vol.Length(min=1, max=60)),
+        vol.Required("locale"): vol.In(NEWS_LOCALES),
+    }
+)
+@websocket_api.async_response
+async def websocket_news(
+    hass: HomeAssistant, connection: websocket_api.ActiveConnection, msg: dict[str, Any]
+) -> None:
+    """Scalable's Market Insights for each named security, in one language."""
+    if (coordinator := _coordinator(hass, connection, msg)) is None:
+        return
+    try:
+        news = await coordinator.async_news(msg["isins"], msg["locale"])
+    except ScalableError as err:
+        connection.send_error(msg["id"], "scalable_error", str(err))
+        return
+    connection.send_result(msg["id"], news)
+
+
+@websocket_api.websocket_command(
+    {
         vol.Required("type"): "scalable/transaction",
         vol.Optional("entry_id"): str,
         vol.Required("transaction_id"): str,
@@ -376,6 +401,7 @@ def async_register(hass: HomeAssistant) -> None:
     websocket_api.async_register_command(hass, websocket_entries)
     websocket_api.async_register_command(hass, websocket_subscribe)
     websocket_api.async_register_command(hass, websocket_charts)
+    websocket_api.async_register_command(hass, websocket_news)
     websocket_api.async_register_command(hass, websocket_transaction)
     websocket_api.async_register_command(hass, websocket_refresh)
     websocket_api.async_register_command(hass, websocket_card_version)

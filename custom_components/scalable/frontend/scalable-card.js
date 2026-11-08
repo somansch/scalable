@@ -138,6 +138,20 @@
       fType: "Type",
       fStatus: "Status",
       fAll: "All",
+      fTaxes: "Taxes",
+      fFees: "Fees",
+      fDate: "Date",
+      dAny: "Any time",
+      dLast7: "Last 7 days",
+      dLast30: "Last 30 days",
+      dLast365: "Last 365 days",
+      dCustom: "Custom…",
+      dFrom: "Start date",
+      dTo: "End date",
+      dApply: "Apply",
+      savingsPlanTx: "Savings plan",
+      corporate: "Corporate action",
+      reinvestment: "Reinvestment",
       buy: "Buy",
       sell: "Sell",
       deposit: "Deposit",
@@ -182,10 +196,26 @@
       reachedOn: (v) => `Reached on ${v}`,
       savingsNone: "No savings plans",
       savingsTotal: "Total per run",
-      nextExec: (v) => `Next run ${v}`,
+      savingsMonthly: "Monthly savings rate",
+      spSearch: "Search my savings plans",
+      spNoMatch: "No savings plan matches",
+      spSort: "Sort",
+      spSortBy: "Sort by",
+      spSortNameAsc: "Name (A-Z)",
+      spSortNameDesc: "Name (Z-A)",
+      spSortAmountAsc: "Smallest savings rate",
+      spSortAmountDesc: "Largest savings rate",
+      spSortDueAsc: "Next run",
+      spSortDueDesc: "Latest run",
+      dueToday: "Due today",
+      dueTomorrow: "Due tomorrow",
+      dueIn: (n) => `Due in ${n} days`,
       freqMonthly: "monthly",
+      freqBiMonthly: "every 2 months",
       freqQuarterly: "quarterly",
+      freqSemiAnnually: "every 6 months",
       freqYearly: "yearly",
+      dynamization: (v) => `Inflation adjustment ${v} %`,
       insReturn: "Total return",
       insValue: "Portfolio value",
       historyNone: "Nothing recorded for this period yet",
@@ -251,6 +281,8 @@
       edBlockPortfolioHelp: "How the positions are arranged.",
       edGroupByType: "Group by kind",
       edGroupByTypeHelp: "Stocks, ETFs and every other kind of security under a heading of its own, with its value. Switching this on switches Scalable's groups off.",
+      edPortfolioSavings: "Savings plans",
+      edPortfolioSavingsHelp: "The savings plans' own heading in the overview: the securities a plan saves into, with their value. Off, a security not held yet is left out and a held one stands under its kind.",
       edSort: "Order",
       edSortHelp: "The order of the positions and of the watchlist.",
       sortName: "By name",
@@ -266,6 +298,14 @@
       edDetailPositionHelp: "Value, quantity, purchase value and unrealised return.",
       edDetailTransactions: "Transactions",
       edDetailTransactionsHelp: "The security's own transactions and open orders.",
+      edDetailNews: "Market Insights",
+      edDetailNewsHelp: "Scalable's AI summary of the news about the security, as on its page in the app: one line here, the full text and its sources in a pop-up. Only while Scalable has one.",
+      newsTitle: "Market Insights",
+      newsAi: "AI-generated",
+      newsDisclaimer: (source) => `AI summary of ${source} reports. Not investment advice. Check the facts: AI can make mistakes.`,
+      newsSources: (n) => (n === 1 ? "1 source" : `${n} sources`),
+      newsSourcesTitle: "Sources searched",
+      close: "Close",
       edRowClick: "Click on an entry",
       edRowClickHelp: "What a click on a position or a watchlist entry does.",
       rowClickDetail: "Opens its detail page",
@@ -278,6 +318,17 @@
       edRowValueHelp: "Under the name: what the position is worth.",
       edRowOrders: "Open orders",
       edRowOrdersHelp: "The small clock with the number of orders that have not run yet. A click opens the order - or, with several, the Transactions tab filtered down to them.",
+      edRowNews: "Market Insights",
+      edRowNewsHelp: "The sparkle under an entry's name - after the value of a position - while Scalable has a news summary on the security. A click opens it in the pop-up, without the security's page.",
+      edRowPlan: "Savings plan",
+      edRowPlanHelp: "The badge with the amount per run on a security that has a savings plan.",
+      edElRowPlan: "Savings plan",
+      edElRowPlanHelp: "The badge with the plan's amount.",
+      edRowPlanBackground: "Show background",
+      edRowPlanBg: "Background",
+      edRowPlanBgHelp: "Background of the badge.",
+      edRowPlanIcon: "Symbol",
+      edRowPlanIconHelp: "The symbol on the badge. The two arrows to begin with.",
       edRowSparkline: "Curve",
       edRowChange: "Change",
       edRowPrice: "Price",
@@ -350,6 +401,29 @@
       edRowBadgeBackground: "Show background",
       edRowBadgeBg: "Background",
       edRowBadgeBgHelp: "Background of the badge.",
+      edRowBadgeIcon: "Symbol",
+      edRowBadgeIconHelp: "The symbol on the badge. The clock to begin with.",
+      edInsightIcon: "Symbol",
+      edInsightIconHelp: "The symbol on the badge. Scalable's sparkle to begin with.",
+      edElRowInsight: "Market Insights",
+      edElRowInsightHelp: "The sparkle on an entry that has Market Insights.",
+      edRowInsightBackground: "Show background",
+      edRowInsightBg: "Background",
+      edRowInsightBgHelp: "Background of the sparkle's badge.",
+      edElNewsTitle: "Market Insights heading",
+      edElNewsTitleHelp: "The heading of the Market Insights block on a security's page.",
+      edNewsIcon: "Sparkle",
+      edNewsIconHelp: "Colour of the sparkle in front of the heading.",
+      edElNewsText: "Market Insights text",
+      edElNewsTextHelp: "The summary's line under the heading on a security's page.",
+      edInsightSize: "Size",
+      edInsightSizeHelp: "Size of the sparkle, e.g. 14px.",
+      edElNewsPopupTitle: "Market Insights pop-up heading",
+      edElNewsPopupTitleHelp: "The heading of the pop-up with the whole summary and its sources.",
+      edElNewsPopupText: "Market Insights pop-up text",
+      edElNewsPopupTextHelp: "The summary's paragraphs and the headlines of the sources in the pop-up.",
+      edElNewsPopupNote: "Market Insights pop-up note",
+      edElNewsPopupNoteHelp: "The note under the summary, and the source and date over each headline.",
       edElRowChange: "Change",
       edElRowChangeHelp: "The percentage. Its colour is the gain or loss colour.",
       edElRowPrice: "Price",
@@ -519,6 +593,20 @@
       fType: "Typ",
       fStatus: "Status",
       fAll: "Alle",
+      fTaxes: "Steuern",
+      fFees: "Gebühren",
+      fDate: "Datum",
+      dAny: "Jederzeit",
+      dLast7: "Letzte 7 Tage",
+      dLast30: "Letzte 30 Tage",
+      dLast365: "Letzte 365 Tage",
+      dCustom: "Benutzerdefiniert…",
+      dFrom: "Anfangsdatum",
+      dTo: "Enddatum",
+      dApply: "Anwenden",
+      savingsPlanTx: "Sparplan",
+      corporate: "Kapitalmaßnahme",
+      reinvestment: "Wiederanlage",
       buy: "Kauf",
       sell: "Verkauf",
       deposit: "Einzahlung",
@@ -563,10 +651,26 @@
       reachedOn: (v) => `Erreicht am ${v}`,
       savingsNone: "Keine Sparpläne",
       savingsTotal: "Sparrate gesamt",
-      nextExec: (v) => `Nächste Ausführung ${v}`,
+      savingsMonthly: "Monatliche Sparrate",
+      spSearch: "Meine Sparpläne durchsuchen",
+      spNoMatch: "Kein Sparplan passt",
+      spSort: "Sortieren",
+      spSortBy: "Sortieren nach",
+      spSortNameAsc: "Name (A-Z)",
+      spSortNameDesc: "Name (Z-A)",
+      spSortAmountAsc: "Kleinste Sparrate",
+      spSortAmountDesc: "Größte Sparrate",
+      spSortDueAsc: "Nächste Ausführung",
+      spSortDueDesc: "Späteste Ausführung",
+      dueToday: "Anstehend heute",
+      dueTomorrow: "Anstehend morgen",
+      dueIn: (n) => `Anstehend in ${n} Tagen`,
       freqMonthly: "monatlich",
-      freqQuarterly: "vierteljährlich",
+      freqBiMonthly: "alle 2 Monate",
+      freqQuarterly: "quartalsweise",
+      freqSemiAnnually: "alle 6 Monate",
       freqYearly: "jährlich",
+      dynamization: (v) => `Inflationsanpassung ${v} %`,
       insReturn: "Gesamtrendite",
       insValue: "Portfoliowert",
       historyNone: "Für diesen Zeitraum ist noch nichts aufgezeichnet",
@@ -632,6 +736,8 @@
       edBlockPortfolioHelp: "Wie die Positionen angeordnet sind.",
       edGroupByType: "Nach Art gruppieren",
       edGroupByTypeHelp: "Aktien, ETFs und jede andere Wertpapierart unter einer eigenen Überschrift mit ihrem Wert. Einschalten schaltet Gruppen von Scalable aus.",
+      edPortfolioSavings: "Sparpläne",
+      edPortfolioSavingsHelp: "Die eigene Überschrift der Sparpläne in der Übersicht: die Papiere, in die ein Plan spart, mit ihrem Wert. Aus lässt ein noch nicht gehaltenes Papier weg und stellt ein gehaltenes unter seine Gattung.",
       edSort: "Reihenfolge",
       edSortHelp: "Die Reihenfolge der Positionen und der Watchlist.",
       sortName: "Nach Name",
@@ -647,6 +753,14 @@
       edDetailPositionHelp: "Wert, Stückzahl, Kaufwert und unrealisierte Rendite.",
       edDetailTransactions: "Transaktionen",
       edDetailTransactionsHelp: "Die Transaktionen und offenen Orders dieses Wertpapiers.",
+      edDetailNews: "Market Insights",
+      edDetailNewsHelp: "Scalables KI-Zusammenfassung der Nachrichten zum Wertpapier, wie auf dessen Seite in der App: eine Zeile hier, der ganze Text und seine Quellen in einem Pop-up. Nur solange Scalable eine hat.",
+      newsTitle: "Market Insights",
+      newsAi: "KI-generiert",
+      newsDisclaimer: (source) => `KI-Zusammenfassung von ${source}-Berichten. Keine Anlageberatung. Angaben prüfen, da KI Fehler machen kann.`,
+      newsSources: (n) => (n === 1 ? "1 Quelle" : `${n} Quellen`),
+      newsSourcesTitle: "Quellen durchsucht",
+      close: "Schließen",
       edRowClick: "Klick auf einen Eintrag",
       edRowClickHelp: "Was ein Klick auf eine Position oder einen Watchlist-Eintrag tut.",
       rowClickDetail: "Öffnet die Detailseite",
@@ -659,6 +773,17 @@
       edRowValueHelp: "Unter dem Namen: was die Position wert ist.",
       edRowOrders: "Offene Orders",
       edRowOrdersHelp: "Die kleine Uhr mit der Zahl der Orders, die noch nicht ausgeführt sind. Ein Klick öffnet die Order - bei mehreren den Tab Transaktionen, gefiltert auf sie.",
+      edRowNews: "Market Insights",
+      edRowNewsHelp: "Der Funke unter dem Namen eines Eintrags - bei einer Position hinter dem Wert -, solange Scalable eine Nachrichten-Zusammenfassung zum Wertpapier hat. Ein Klick öffnet sie im Pop-up, ohne die Seite des Wertpapiers.",
+      edRowPlan: "Sparplan",
+      edRowPlanHelp: "Die Plakette mit dem Betrag je Ausführung an einem Wertpapier mit Sparplan.",
+      edElRowPlan: "Sparplan",
+      edElRowPlanHelp: "Die Plakette mit dem Betrag des Sparplans.",
+      edRowPlanBackground: "Hintergrund anzeigen",
+      edRowPlanBg: "Hintergrund",
+      edRowPlanBgHelp: "Hintergrund der Plakette.",
+      edRowPlanIcon: "Symbol",
+      edRowPlanIconHelp: "Das Symbol auf der Plakette. Zu Beginn die zwei Pfeile.",
       edRowSparkline: "Kurve",
       edRowChange: "Veränderung",
       edRowPrice: "Kurs",
@@ -731,6 +856,29 @@
       edRowBadgeBackground: "Hintergrund anzeigen",
       edRowBadgeBg: "Hintergrund",
       edRowBadgeBgHelp: "Hintergrund der Plakette.",
+      edRowBadgeIcon: "Symbol",
+      edRowBadgeIconHelp: "Das Symbol auf der Plakette. Zu Beginn die Uhr.",
+      edInsightIcon: "Symbol",
+      edInsightIconHelp: "Das Symbol auf der Plakette. Zu Beginn Scalables Funke.",
+      edElRowInsight: "Market Insights",
+      edElRowInsightHelp: "Der Funke an einem Eintrag, zu dem es Market Insights gibt.",
+      edRowInsightBackground: "Hintergrund anzeigen",
+      edRowInsightBg: "Hintergrund",
+      edRowInsightBgHelp: "Hintergrund der Plakette mit dem Funken.",
+      edElNewsTitle: "Market-Insights-Überschrift",
+      edElNewsTitleHelp: "Die Überschrift des Market-Insights-Blocks auf der Seite eines Wertpapiers.",
+      edNewsIcon: "Funke",
+      edNewsIconHelp: "Farbe des Funkens vor der Überschrift.",
+      edElNewsText: "Market-Insights-Text",
+      edElNewsTextHelp: "Die Zeile der Zusammenfassung unter der Überschrift auf der Seite eines Wertpapiers.",
+      edInsightSize: "Größe",
+      edInsightSizeHelp: "Größe des Funkens, z. B. 14px.",
+      edElNewsPopupTitle: "Market-Insights-Pop-up-Überschrift",
+      edElNewsPopupTitleHelp: "Die Überschrift des Pop-ups mit der ganzen Zusammenfassung und ihren Quellen.",
+      edElNewsPopupText: "Market-Insights-Pop-up-Text",
+      edElNewsPopupTextHelp: "Die Absätze der Zusammenfassung und die Schlagzeilen der Quellen im Pop-up.",
+      edElNewsPopupNote: "Market-Insights-Pop-up-Hinweis",
+      edElNewsPopupNoteHelp: "Der Hinweis unter der Zusammenfassung sowie Quelle und Datum über jeder Schlagzeile.",
       edElRowChange: "Veränderung",
       edElRowChangeHelp: "Der Prozentwert. Seine Farbe ist die Gewinn- oder Verlustfarbe.",
       edElRowPrice: "Kurs",
@@ -900,6 +1048,20 @@
       fType: "Type",
       fStatus: "Statut",
       fAll: "Tous",
+      fTaxes: "Impôts",
+      fFees: "Frais",
+      fDate: "Date",
+      dAny: "À tout moment",
+      dLast7: "7 derniers jours",
+      dLast30: "30 derniers jours",
+      dLast365: "365 derniers jours",
+      dCustom: "Personnalisé…",
+      dFrom: "Date de début",
+      dTo: "Date de fin",
+      dApply: "Appliquer",
+      savingsPlanTx: "Plan d'épargne",
+      corporate: "Opération sur titres",
+      reinvestment: "Réinvestissement",
       buy: "Achat",
       sell: "Vente",
       deposit: "Dépôt",
@@ -944,10 +1106,26 @@
       reachedOn: (v) => `Atteint le ${v}`,
       savingsNone: "Aucun plan d'épargne",
       savingsTotal: "Total par exécution",
-      nextExec: (v) => `Prochaine exécution ${v}`,
+      savingsMonthly: "Épargne mensuelle",
+      spSearch: "Rechercher dans mes plans d'épargne",
+      spNoMatch: "Aucun plan d'épargne ne correspond",
+      spSort: "Trier",
+      spSortBy: "Trier par",
+      spSortNameAsc: "Nom (A-Z)",
+      spSortNameDesc: "Nom (Z-A)",
+      spSortAmountAsc: "Versement le plus faible",
+      spSortAmountDesc: "Versement le plus élevé",
+      spSortDueAsc: "Prochaine exécution",
+      spSortDueDesc: "Exécution la plus lointaine",
+      dueToday: "Prévu aujourd'hui",
+      dueTomorrow: "Prévu demain",
+      dueIn: (n) => `Prévu dans ${n} jours`,
       freqMonthly: "mensuel",
       freqQuarterly: "trimestriel",
+      freqBiMonthly: "tous les 2 mois",
+      freqSemiAnnually: "tous les 6 mois",
       freqYearly: "annuel",
+      dynamization: (v) => `Ajustement à l'inflation ${v} %`,
       insReturn: "Rendement total",
       insValue: "Valeur du portefeuille",
       historyNone: "Rien n'est encore enregistré pour cette période",
@@ -1013,6 +1191,8 @@
       edBlockPortfolioHelp: "La façon dont les positions sont disposées.",
       edGroupByType: "Grouper par type",
       edGroupByTypeHelp: "Actions, ETF et chaque autre type de titre sous son propre intitulé, avec sa valeur. L'activer désactive Groupes de Scalable.",
+      edPortfolioSavings: "Plans d'épargne",
+      edPortfolioSavingsHelp: "L'en-tête propre aux plans d'épargne dans la vue d'ensemble : les titres alimentés par un plan, avec leur valeur. Désactivé, un titre pas encore détenu disparaît et un titre détenu reste sous son type.",
       edSort: "Ordre",
       edSortHelp: "L'ordre des positions et de la watchlist.",
       sortName: "Par nom",
@@ -1028,6 +1208,14 @@
       edDetailPositionHelp: "Valeur, quantité, valeur d'achat et rendement latent.",
       edDetailTransactions: "Transactions",
       edDetailTransactionsHelp: "Les transactions et les ordres en cours de ce titre.",
+      edDetailNews: "Market Insights",
+      edDetailNewsHelp: "La synthèse IA de Scalable sur l'actualité du titre, comme sur sa page dans l'application : une ligne ici, le texte complet et ses sources dans une fenêtre. Seulement quand Scalable en a une.",
+      newsTitle: "Market Insights",
+      newsAi: "généré par IA",
+      newsDisclaimer: (source) => `Synthèse IA d'articles ${source}. Pas un conseil en investissement. Vérifiez les informations : l'IA peut se tromper.`,
+      newsSources: (n) => (n === 1 ? "1 source" : `${n} sources`),
+      newsSourcesTitle: "Sources consultées",
+      close: "Fermer",
       edRowClick: "Clic sur une entrée",
       edRowClickHelp: "Ce que fait un clic sur une position ou une entrée de la watchlist.",
       rowClickDetail: "Ouvre sa page de détail",
@@ -1040,6 +1228,17 @@
       edRowValueHelp: "Sous le nom : ce que vaut la position.",
       edRowOrders: "Ordres en cours",
       edRowOrdersHelp: "La petite horloge avec le nombre d'ordres pas encore exécutés. Un clic ouvre l'ordre - ou, s'il y en a plusieurs, l'onglet Transactions filtré sur eux.",
+      edRowNews: "Market Insights",
+      edRowNewsHelp: "L'étincelle sous le nom d'une entrée - après la valeur pour une position - tant que Scalable a une synthèse de l'actualité du titre. Un clic l'ouvre dans la fenêtre, sans passer par la page du titre.",
+      edRowPlan: "Plan d'épargne",
+      edRowPlanHelp: "Le badge avec le montant par exécution sur un titre ayant un plan d'épargne.",
+      edElRowPlan: "Plan d'épargne",
+      edElRowPlanHelp: "Le badge avec le montant du plan d'épargne.",
+      edRowPlanBackground: "Afficher l'arrière-plan",
+      edRowPlanBg: "Arrière-plan",
+      edRowPlanBgHelp: "Arrière-plan du badge.",
+      edRowPlanIcon: "Symbole",
+      edRowPlanIconHelp: "Le symbole du badge. Au départ, les deux flèches.",
       edRowSparkline: "Courbe",
       edRowChange: "Variation",
       edRowPrice: "Cours",
@@ -1112,6 +1311,29 @@
       edRowBadgeBackground: "Afficher l'arrière-plan",
       edRowBadgeBg: "Arrière-plan",
       edRowBadgeBgHelp: "Arrière-plan du badge.",
+      edRowBadgeIcon: "Symbole",
+      edRowBadgeIconHelp: "Le symbole du badge. Au départ, l'horloge.",
+      edInsightIcon: "Symbole",
+      edInsightIconHelp: "Le symbole du badge. Au départ, l'étincelle de Scalable.",
+      edElRowInsight: "Market Insights",
+      edElRowInsightHelp: "L'étincelle sur une entrée qui a des Market Insights.",
+      edRowInsightBackground: "Afficher l'arrière-plan",
+      edRowInsightBg: "Arrière-plan",
+      edRowInsightBgHelp: "Arrière-plan du badge de l'étincelle.",
+      edElNewsTitle: "En-tête Market Insights",
+      edElNewsTitleHelp: "L'en-tête du bloc Market Insights sur la page d'un titre.",
+      edNewsIcon: "Étincelle",
+      edNewsIconHelp: "Couleur de l'étincelle devant l'en-tête.",
+      edElNewsText: "Texte Market Insights",
+      edElNewsTextHelp: "La ligne de la synthèse sous l'en-tête, sur la page d'un titre.",
+      edInsightSize: "Taille",
+      edInsightSizeHelp: "Taille de l'étincelle, p. ex. 14px.",
+      edElNewsPopupTitle: "En-tête de la fenêtre Market Insights",
+      edElNewsPopupTitleHelp: "L'en-tête de la fenêtre avec la synthèse complète et ses sources.",
+      edElNewsPopupText: "Texte de la fenêtre Market Insights",
+      edElNewsPopupTextHelp: "Les paragraphes de la synthèse et les manchettes des sources dans la fenêtre.",
+      edElNewsPopupNote: "Note de la fenêtre Market Insights",
+      edElNewsPopupNoteHelp: "La note sous la synthèse, ainsi que la source et la date au-dessus de chaque manchette.",
       edElRowChange: "Variation",
       edElRowChangeHelp: "Le pourcentage. Sa couleur est celle du gain ou de la perte.",
       edElRowPrice: "Cours",
@@ -1281,6 +1503,20 @@
       fType: "Tipo",
       fStatus: "Stato",
       fAll: "Tutti",
+      fTaxes: "Tasse",
+      fFees: "Commissioni",
+      fDate: "Data",
+      dAny: "Sempre",
+      dLast7: "Ultimi 7 giorni",
+      dLast30: "Ultimi 30 giorni",
+      dLast365: "Ultimi 365 giorni",
+      dCustom: "Personalizzato…",
+      dFrom: "Data di inizio",
+      dTo: "Data di fine",
+      dApply: "Applica",
+      savingsPlanTx: "Piano di accumulo",
+      corporate: "Operazione societaria",
+      reinvestment: "Reinvestimento",
       buy: "Acquisto",
       sell: "Vendita",
       deposit: "Versamento",
@@ -1325,10 +1561,26 @@
       reachedOn: (v) => `Raggiunto il ${v}`,
       savingsNone: "Nessun piano di accumulo",
       savingsTotal: "Totale per esecuzione",
-      nextExec: (v) => `Prossima esecuzione ${v}`,
+      savingsMonthly: "Rata mensile",
+      spSearch: "Cerca nei miei piani di accumulo",
+      spNoMatch: "Nessun piano di accumulo corrisponde",
+      spSort: "Ordina",
+      spSortBy: "Ordina per",
+      spSortNameAsc: "Nome (A-Z)",
+      spSortNameDesc: "Nome (Z-A)",
+      spSortAmountAsc: "Rata più bassa",
+      spSortAmountDesc: "Rata più alta",
+      spSortDueAsc: "Prossima esecuzione",
+      spSortDueDesc: "Esecuzione più lontana",
+      dueToday: "In programma oggi",
+      dueTomorrow: "In programma domani",
+      dueIn: (n) => `In programma tra ${n} giorni`,
       freqMonthly: "mensile",
       freqQuarterly: "trimestrale",
+      freqBiMonthly: "ogni 2 mesi",
+      freqSemiAnnually: "ogni 6 mesi",
       freqYearly: "annuale",
+      dynamization: (v) => `Adeguamento all'inflazione ${v} %`,
       insReturn: "Rendimento totale",
       insValue: "Valore del portafoglio",
       historyNone: "Non c'è ancora nulla di registrato per questo periodo",
@@ -1394,6 +1646,8 @@
       edBlockPortfolioHelp: "Come sono disposte le posizioni.",
       edGroupByType: "Raggruppa per tipo",
       edGroupByTypeHelp: "Azioni, ETF e ogni altro tipo di titolo sotto una propria intestazione, con il suo valore. Attivarlo disattiva Gruppi di Scalable.",
+      edPortfolioSavings: "Piani di accumulo",
+      edPortfolioSavingsHelp: "L'intestazione propria dei piani di accumulo nella panoramica: i titoli alimentati da un piano, con il loro valore. Se disattivata, un titolo non ancora detenuto scompare e uno detenuto resta sotto il suo tipo.",
       edSort: "Ordine",
       edSortHelp: "L'ordine delle posizioni e della watchlist.",
       sortName: "Per nome",
@@ -1409,6 +1663,14 @@
       edDetailPositionHelp: "Valore, quantità, valore di acquisto e rendimento non realizzato.",
       edDetailTransactions: "Transazioni",
       edDetailTransactionsHelp: "Le transazioni e gli ordini aperti di questo titolo.",
+      edDetailNews: "Market Insights",
+      edDetailNewsHelp: "La sintesi IA di Scalable sulle notizie del titolo, come sulla sua pagina nell'app: una riga qui, il testo completo e le sue fonti in una finestra. Solo quando Scalable ne ha una.",
+      newsTitle: "Market Insights",
+      newsAi: "generato dall'IA",
+      newsDisclaimer: (source) => `Sintesi IA di articoli ${source}. Non è una consulenza sugli investimenti. Verifica i dati: l'IA può sbagliare.`,
+      newsSources: (n) => (n === 1 ? "1 fonte" : `${n} fonti`),
+      newsSourcesTitle: "Fonti consultate",
+      close: "Chiudi",
       edRowClick: "Clic su una voce",
       edRowClickHelp: "Cosa fa un clic su una posizione o su una voce della watchlist.",
       rowClickDetail: "Apre la pagina di dettaglio",
@@ -1421,6 +1683,17 @@
       edRowValueHelp: "Sotto il nome: quanto vale la posizione.",
       edRowOrders: "Ordini aperti",
       edRowOrdersHelp: "Il piccolo orologio con il numero di ordini non ancora eseguiti. Un clic apre l'ordine - o, se sono più di uno, la scheda Transazioni filtrata su di essi.",
+      edRowNews: "Market Insights",
+      edRowNewsHelp: "La scintilla sotto il nome di una voce - dopo il valore per una posizione - finché Scalable ha una sintesi delle notizie sul titolo. Un clic la apre nella finestra, senza passare dalla pagina del titolo.",
+      edRowPlan: "Piano di accumulo",
+      edRowPlanHelp: "Il badge con l'importo per esecuzione su un titolo con un piano di accumulo.",
+      edElRowPlan: "Piano di accumulo",
+      edElRowPlanHelp: "Il badge con l'importo del piano di accumulo.",
+      edRowPlanBackground: "Mostra lo sfondo",
+      edRowPlanBg: "Sfondo",
+      edRowPlanBgHelp: "Sfondo del badge.",
+      edRowPlanIcon: "Simbolo",
+      edRowPlanIconHelp: "Il simbolo del badge. All'inizio le due frecce.",
       edRowSparkline: "Curva",
       edRowChange: "Variazione",
       edRowPrice: "Prezzo",
@@ -1493,6 +1766,29 @@
       edRowBadgeBackground: "Mostra lo sfondo",
       edRowBadgeBg: "Sfondo",
       edRowBadgeBgHelp: "Sfondo del badge.",
+      edRowBadgeIcon: "Simbolo",
+      edRowBadgeIconHelp: "Il simbolo del badge. All'inizio l'orologio.",
+      edInsightIcon: "Simbolo",
+      edInsightIconHelp: "Il simbolo del badge. All'inizio la scintilla di Scalable.",
+      edElRowInsight: "Market Insights",
+      edElRowInsightHelp: "La scintilla su una voce che ha Market Insights.",
+      edRowInsightBackground: "Mostra lo sfondo",
+      edRowInsightBg: "Sfondo",
+      edRowInsightBgHelp: "Sfondo del badge con la scintilla.",
+      edElNewsTitle: "Intestazione Market Insights",
+      edElNewsTitleHelp: "L'intestazione del blocco Market Insights sulla pagina di un titolo.",
+      edNewsIcon: "Scintilla",
+      edNewsIconHelp: "Colore della scintilla davanti all'intestazione.",
+      edElNewsText: "Testo Market Insights",
+      edElNewsTextHelp: "La riga della sintesi sotto l'intestazione, sulla pagina di un titolo.",
+      edInsightSize: "Dimensione",
+      edInsightSizeHelp: "Dimensione della scintilla, ad es. 14px.",
+      edElNewsPopupTitle: "Intestazione della finestra Market Insights",
+      edElNewsPopupTitleHelp: "L'intestazione della finestra con la sintesi completa e le sue fonti.",
+      edElNewsPopupText: "Testo della finestra Market Insights",
+      edElNewsPopupTextHelp: "I paragrafi della sintesi e i titoli delle fonti nella finestra.",
+      edElNewsPopupNote: "Nota della finestra Market Insights",
+      edElNewsPopupNoteHelp: "La nota sotto la sintesi, e la fonte e la data sopra ogni titolo.",
       edElRowChange: "Variazione",
       edElRowChangeHelp: "La percentuale. Il suo colore è quello del guadagno o della perdita.",
       edElRowPrice: "Prezzo",
@@ -1662,6 +1958,20 @@
       fType: "Tipo",
       fStatus: "Estado",
       fAll: "Todos",
+      fTaxes: "Impuestos",
+      fFees: "Comisiones",
+      fDate: "Fecha",
+      dAny: "Siempre",
+      dLast7: "Últimos 7 días",
+      dLast30: "Últimos 30 días",
+      dLast365: "Últimos 365 días",
+      dCustom: "Personalizado…",
+      dFrom: "Fecha de inicio",
+      dTo: "Fecha de fin",
+      dApply: "Aplicar",
+      savingsPlanTx: "Plan de ahorro",
+      corporate: "Operación corporativa",
+      reinvestment: "Reinversión",
       buy: "Compra",
       sell: "Venta",
       deposit: "Ingreso",
@@ -1706,10 +2016,26 @@
       reachedOn: (v) => `Alcanzado el ${v}`,
       savingsNone: "Sin planes de ahorro",
       savingsTotal: "Total por ejecución",
-      nextExec: (v) => `Próxima ejecución ${v}`,
+      savingsMonthly: "Aportación mensual",
+      spSearch: "Buscar en mis planes de ahorro",
+      spNoMatch: "Ningún plan de ahorro coincide",
+      spSort: "Ordenar",
+      spSortBy: "Ordenar por",
+      spSortNameAsc: "Nombre (A-Z)",
+      spSortNameDesc: "Nombre (Z-A)",
+      spSortAmountAsc: "Aportación más baja",
+      spSortAmountDesc: "Aportación más alta",
+      spSortDueAsc: "Próxima ejecución",
+      spSortDueDesc: "Ejecución más lejana",
+      dueToday: "Pendiente hoy",
+      dueTomorrow: "Pendiente mañana",
+      dueIn: (n) => `Pendiente en ${n} días`,
       freqMonthly: "mensual",
       freqQuarterly: "trimestral",
+      freqBiMonthly: "cada 2 meses",
+      freqSemiAnnually: "cada 6 meses",
       freqYearly: "anual",
+      dynamization: (v) => `Ajuste a la inflación ${v} %`,
       insReturn: "Rentabilidad total",
       insValue: "Valor de la cartera",
       historyNone: "Aún no hay nada registrado para este periodo",
@@ -1775,6 +2101,8 @@
       edBlockPortfolioHelp: "Cómo se ordenan las posiciones.",
       edGroupByType: "Agrupar por tipo",
       edGroupByTypeHelp: "Acciones, ETF y cualquier otro tipo de valor bajo su propio encabezado, con su valor. Activarlo desactiva Grupos de Scalable.",
+      edPortfolioSavings: "Planes de ahorro",
+      edPortfolioSavingsHelp: "El encabezado propio de los planes de ahorro en el resumen: los valores en los que ahorra un plan, con su valor. Desactivado, un valor aún no adquirido desaparece y uno en cartera queda bajo su tipo.",
       edSort: "Orden",
       edSortHelp: "El orden de las posiciones y de la watchlist.",
       sortName: "Por nombre",
@@ -1790,6 +2118,14 @@
       edDetailPositionHelp: "Valor, cantidad, valor de compra y rentabilidad no realizada.",
       edDetailTransactions: "Transacciones",
       edDetailTransactionsHelp: "Las transacciones y órdenes abiertas de este valor.",
+      edDetailNews: "Market Insights",
+      edDetailNewsHelp: "El resumen por IA de Scalable sobre las noticias del valor, como en su página de la app: una línea aquí, el texto completo y sus fuentes en una ventana. Solo cuando Scalable tiene uno.",
+      newsTitle: "Market Insights",
+      newsAi: "generado por IA",
+      newsDisclaimer: (source) => `Resumen por IA de noticias de ${source}. No es asesoramiento de inversión. Comprueba los datos: la IA puede equivocarse.`,
+      newsSources: (n) => (n === 1 ? "1 fuente" : `${n} fuentes`),
+      newsSourcesTitle: "Fuentes consultadas",
+      close: "Cerrar",
       edRowClick: "Clic en una entrada",
       edRowClickHelp: "Qué hace un clic en una posición o en una entrada de la watchlist.",
       rowClickDetail: "Abre su página de detalle",
@@ -1802,6 +2138,17 @@
       edRowValueHelp: "Bajo el nombre: lo que vale la posición.",
       edRowOrders: "Órdenes abiertas",
       edRowOrdersHelp: "El pequeño reloj con el número de órdenes que aún no se han ejecutado. Un clic abre la orden - o, si hay varias, la pestaña Transacciones filtrada a ellas.",
+      edRowNews: "Market Insights",
+      edRowNewsHelp: "El destello bajo el nombre de una entrada - tras el valor en una posición - mientras Scalable tenga un resumen de noticias del valor. Un clic lo abre en la ventana, sin pasar por la página del valor.",
+      edRowPlan: "Plan de ahorro",
+      edRowPlanHelp: "La insignia con el importe por ejecución en un valor con plan de ahorro.",
+      edElRowPlan: "Plan de ahorro",
+      edElRowPlanHelp: "La insignia con el importe del plan de ahorro.",
+      edRowPlanBackground: "Mostrar fondo",
+      edRowPlanBg: "Fondo",
+      edRowPlanBgHelp: "Fondo de la insignia.",
+      edRowPlanIcon: "Símbolo",
+      edRowPlanIconHelp: "El símbolo de la insignia. Al principio, las dos flechas.",
       edRowSparkline: "Curva",
       edRowChange: "Variación",
       edRowPrice: "Precio",
@@ -1874,6 +2221,29 @@
       edRowBadgeBackground: "Mostrar fondo",
       edRowBadgeBg: "Fondo",
       edRowBadgeBgHelp: "Fondo de la insignia.",
+      edRowBadgeIcon: "Símbolo",
+      edRowBadgeIconHelp: "El símbolo de la insignia. Al principio, el reloj.",
+      edInsightIcon: "Símbolo",
+      edInsightIconHelp: "El símbolo de la insignia. Al principio, el destello de Scalable.",
+      edElRowInsight: "Market Insights",
+      edElRowInsightHelp: "El destello en una entrada que tiene Market Insights.",
+      edRowInsightBackground: "Mostrar fondo",
+      edRowInsightBg: "Fondo",
+      edRowInsightBgHelp: "Fondo de la insignia del destello.",
+      edElNewsTitle: "Encabezado de Market Insights",
+      edElNewsTitleHelp: "El encabezado del bloque Market Insights en la página de un valor.",
+      edNewsIcon: "Destello",
+      edNewsIconHelp: "Color del destello delante del encabezado.",
+      edElNewsText: "Texto de Market Insights",
+      edElNewsTextHelp: "La línea del resumen bajo el encabezado, en la página de un valor.",
+      edInsightSize: "Tamaño",
+      edInsightSizeHelp: "Tamaño del destello, p. ej. 14px.",
+      edElNewsPopupTitle: "Encabezado de la ventana Market Insights",
+      edElNewsPopupTitleHelp: "El encabezado de la ventana con el resumen completo y sus fuentes.",
+      edElNewsPopupText: "Texto de la ventana Market Insights",
+      edElNewsPopupTextHelp: "Los párrafos del resumen y los titulares de las fuentes en la ventana.",
+      edElNewsPopupNote: "Nota de la ventana Market Insights",
+      edElNewsPopupNoteHelp: "La nota bajo el resumen, y la fuente y la fecha sobre cada titular.",
       edElRowChange: "Variación",
       edElRowChangeHelp: "El porcentaje. Su color es el de ganancia o pérdida.",
       edElRowPrice: "Precio",
@@ -2043,6 +2413,20 @@
       fType: "Type",
       fStatus: "Status",
       fAll: "Alle",
+      fTaxes: "Belastingen",
+      fFees: "Kosten",
+      fDate: "Datum",
+      dAny: "Altijd",
+      dLast7: "Laatste 7 dagen",
+      dLast30: "Laatste 30 dagen",
+      dLast365: "Laatste 365 dagen",
+      dCustom: "Aangepast…",
+      dFrom: "Begindatum",
+      dTo: "Einddatum",
+      dApply: "Toepassen",
+      savingsPlanTx: "Spaarplan",
+      corporate: "Bedrijfsactie",
+      reinvestment: "Herbelegging",
       buy: "Aankoop",
       sell: "Verkoop",
       deposit: "Storting",
@@ -2087,10 +2471,26 @@
       reachedOn: (v) => `Bereikt op ${v}`,
       savingsNone: "Geen spaarplannen",
       savingsTotal: "Totaal per uitvoering",
-      nextExec: (v) => `Volgende uitvoering ${v}`,
+      savingsMonthly: "Maandelijkse inleg",
+      spSearch: "Mijn spaarplannen doorzoeken",
+      spNoMatch: "Geen spaarplan gevonden",
+      spSort: "Sorteren",
+      spSortBy: "Sorteren op",
+      spSortNameAsc: "Naam (A-Z)",
+      spSortNameDesc: "Naam (Z-A)",
+      spSortAmountAsc: "Laagste inleg",
+      spSortAmountDesc: "Hoogste inleg",
+      spSortDueAsc: "Volgende uitvoering",
+      spSortDueDesc: "Verste uitvoering",
+      dueToday: "Vandaag gepland",
+      dueTomorrow: "Morgen gepland",
+      dueIn: (n) => `Gepland over ${n} dagen`,
       freqMonthly: "maandelijks",
       freqQuarterly: "per kwartaal",
+      freqBiMonthly: "elke 2 maanden",
+      freqSemiAnnually: "elke 6 maanden",
       freqYearly: "jaarlijks",
+      dynamization: (v) => `Inflatiecorrectie ${v} %`,
       insReturn: "Totaalrendement",
       insValue: "Portefeuillewaarde",
       historyNone: "Voor deze periode is nog niets vastgelegd",
@@ -2156,6 +2556,8 @@
       edBlockPortfolioHelp: "Hoe de posities zijn gerangschikt.",
       edGroupByType: "Groeperen op soort",
       edGroupByTypeHelp: "Aandelen, ETF's en elke andere soort effecten onder een eigen kop, met de waarde ervan. Inschakelen schakelt Groepen van Scalable uit.",
+      edPortfolioSavings: "Spaarplannen",
+      edPortfolioSavingsHelp: "De eigen kop van de spaarplannen in het overzicht: de effecten waarin een plan spaart, met hun waarde. Uit laat een nog niet aangehouden effect weg en zet een aangehouden effect onder zijn soort.",
       edSort: "Volgorde",
       edSortHelp: "De volgorde van de posities en van de watchlist.",
       sortName: "Op naam",
@@ -2171,6 +2573,14 @@
       edDetailPositionHelp: "Waarde, aantal, aankoopwaarde en ongerealiseerd rendement.",
       edDetailTransactions: "Transacties",
       edDetailTransactionsHelp: "De transacties en open orders van dit effect.",
+      edDetailNews: "Market Insights",
+      edDetailNewsHelp: "Scalables AI-samenvatting van het nieuws over het effect, zoals op de pagina in de app: één regel hier, de volledige tekst en de bronnen in een pop-up. Alleen als Scalable er een heeft.",
+      newsTitle: "Market Insights",
+      newsAi: "AI-gegenereerd",
+      newsDisclaimer: (source) => `AI-samenvatting van ${source}-berichten. Geen beleggingsadvies. Controleer de gegevens: AI kan fouten maken.`,
+      newsSources: (n) => (n === 1 ? "1 bron" : `${n} bronnen`),
+      newsSourcesTitle: "Geraadpleegde bronnen",
+      close: "Sluiten",
       edRowClick: "Klik op een item",
       edRowClickHelp: "Wat een klik op een positie of een watchlist-item doet.",
       rowClickDetail: "Opent de detailpagina",
@@ -2183,6 +2593,17 @@
       edRowValueHelp: "Onder de naam: wat de positie waard is.",
       edRowOrders: "Open orders",
       edRowOrdersHelp: "Het klokje met het aantal orders dat nog niet is uitgevoerd. Een klik opent de order - of, bij meerdere, het tabblad Transacties, gefilterd op die orders.",
+      edRowNews: "Market Insights",
+      edRowNewsHelp: "De vonk onder de naam van een regel - bij een positie na de waarde - zolang Scalable een nieuwssamenvatting over het effect heeft. Een klik opent die in de pop-up, zonder de pagina van het effect.",
+      edRowPlan: "Spaarplan",
+      edRowPlanHelp: "De badge met het bedrag per uitvoering bij een effect met een spaarplan.",
+      edElRowPlan: "Spaarplan",
+      edElRowPlanHelp: "De badge met het bedrag van het spaarplan.",
+      edRowPlanBackground: "Achtergrond tonen",
+      edRowPlanBg: "Achtergrond",
+      edRowPlanBgHelp: "Achtergrond van de badge.",
+      edRowPlanIcon: "Symbool",
+      edRowPlanIconHelp: "Het symbool op de badge. In het begin de twee pijlen.",
       edRowSparkline: "Curve",
       edRowChange: "Verandering",
       edRowPrice: "Koers",
@@ -2255,6 +2676,29 @@
       edRowBadgeBackground: "Achtergrond tonen",
       edRowBadgeBg: "Achtergrond",
       edRowBadgeBgHelp: "Achtergrond van de badge.",
+      edRowBadgeIcon: "Symbool",
+      edRowBadgeIconHelp: "Het symbool op de badge. In het begin de klok.",
+      edInsightIcon: "Symbool",
+      edInsightIconHelp: "Het symbool op de badge. In het begin de vonk van Scalable.",
+      edElRowInsight: "Market Insights",
+      edElRowInsightHelp: "De vonk bij een regel met Market Insights.",
+      edRowInsightBackground: "Achtergrond tonen",
+      edRowInsightBg: "Achtergrond",
+      edRowInsightBgHelp: "Achtergrond van de badge met de vonk.",
+      edElNewsTitle: "Kop van Market Insights",
+      edElNewsTitleHelp: "De kop van het blok Market Insights op de pagina van een effect.",
+      edNewsIcon: "Vonk",
+      edNewsIconHelp: "Kleur van de vonk voor de kop.",
+      edElNewsText: "Tekst van Market Insights",
+      edElNewsTextHelp: "De regel van de samenvatting onder de kop, op de pagina van een effect.",
+      edInsightSize: "Grootte",
+      edInsightSizeHelp: "Grootte van de vonk, bijv. 14px.",
+      edElNewsPopupTitle: "Kop van de pop-up Market Insights",
+      edElNewsPopupTitleHelp: "De kop van de pop-up met de volledige samenvatting en de bronnen.",
+      edElNewsPopupText: "Tekst van de pop-up Market Insights",
+      edElNewsPopupTextHelp: "De alinea's van de samenvatting en de koppen van de bronnen in de pop-up.",
+      edElNewsPopupNote: "Opmerking van de pop-up Market Insights",
+      edElNewsPopupNoteHelp: "De opmerking onder de samenvatting, en de bron en datum boven elke kop.",
       edElRowChange: "Verandering",
       edElRowChangeHelp: "Het percentage. De kleur is de winst- of verlieskleur.",
       edElRowPrice: "Koers",
@@ -2407,10 +2851,13 @@
     // the overview. The two are either/or - the editor switches one off as
     // the other goes on - and both may be off.
     group_by_groups: false,
+    // The savings plans' own heading in the overview.
+    show_portfolio_savings: true,
     sort: "name",
     // What a security's own page shows.
     show_detail_chart: true,
     show_detail_quote: true,
+    show_detail_news: true,
     show_detail_position: true,
     show_detail_transactions: true,
     // A list entry: what a click does, and what it is made of.
@@ -2419,6 +2866,8 @@
     show_row_logo: true,
     show_row_value: true,
     show_row_orders: true,
+    show_row_news: true,
+    show_row_plan: true,
     show_row_sparkline: true,
     show_row_change: true,
     show_row_price: true,
@@ -2437,9 +2886,11 @@
     ...look("tabs", { tabs_active_color: "" }),
     ...look("overnight_tabs", { overnight_tabs_active_color: "" }),
     ...look("period", { period_active_background_color: "" }),
-    ...look("total"),
-    ...look("overnight_total"),
-    ...look("fixed_total"),
+    // The big figures, the section headings, a position's value and the
+    // price are drawn bold: the switch stands on, and off takes it away.
+    ...look("total", { total_bold: true }),
+    ...look("overnight_total", { overnight_total_bold: true }),
+    ...look("fixed_total", { fixed_total_bold: true }),
     ...look("broker_name", { broker_icon_background_color: "" }),
     ...look("broker_sub"),
     ...look("overnight_name", { overnight_icon_background_color: "" }),
@@ -2447,18 +2898,36 @@
     ...look("fixed_name", { fixed_icon_background_color: "" }),
     ...look("fixed_sub"),
     ...look("credit_name", { credit_icon_background_color: "" }),
-    ...look("credit_total"),
+    ...look("credit_total", { credit_total_bold: true }),
     // The bar of the credit line: its colour and its thickness.
     credit_bar_color: "",
     credit_bar_height: "",
     ...look("change"),
-    ...look("section"),
+    ...look("section", { section_bold: true }),
     ...look("section_value"),
     ...look("row_name"),
-    ...look("row_value"),
+    ...look("row_value", { row_value_bold: true }),
     ...look("row_badge", { row_badge_background: true, row_badge_background_color: "" }),
+    // The symbols on the two badges: the web app's to begin with.
+    row_badge_icon: "mdi:clock-outline",
+    row_insight_icon: "mdi:creation",
+    // The sparkle has no text: a colour, a background and a size.
+    row_insight_color: "",
+    row_insight_background: true,
+    row_insight_background_color: "",
+    row_insight_size: "",
+    ...look("row_plan", { row_plan_background: true, row_plan_background_color: "" }),
+    row_plan_icon: "mdi:autorenew",
+    // Bold and capitals, as the app draws the heading, stand here rather
+    // than in the stylesheet, so the editor's switches show them. Sizes and
+    // spacing stay in the stylesheet: their fields keep their examples.
+    ...look("news_title", { news_title_bold: true, news_title_uppercase: true, news_icon_color: "" }),
+    ...look("news_text"),
+    ...look("news_popup_title", { news_popup_title_bold: true }),
+    ...look("news_popup_text"),
+    ...look("news_popup_note"),
     ...look("row_change"),
-    ...look("row_price"),
+    ...look("row_price", { row_price_bold: true }),
     divider_color: "",
     divider_width: "",
     divider_style: "solid",
@@ -2810,6 +3279,19 @@
     }
   }
 
+  // The day the one-day figures and curve describe. "Today" on a trading
+  // day; otherwise the trading day Scalable last valued - "Friday" on a
+  // weekend, "Thursday" when Friday was a holiday - and a date once that
+  // day is a week or more back. The valuation stamp carries that day.
+  function shownDay(hass, str, iso) {
+    const stamp = iso ? new Date(iso) : null;
+    if (!stamp || Number.isNaN(stamp.getTime())) return str.lblToday;
+    const gone = Math.round((dayStart(new Date()).getTime() - dayStart(stamp).getTime()) / DAY);
+    if (gone <= 0) return str.lblToday;
+    if (gone < 7) return dateTime(hass, iso, { weekday: "long" });
+    return dateTime(hass, iso, { day: "2-digit", month: "2-digit", year: "numeric" });
+  }
+
   // The moment a chart's hover names, in the period's own form: on a day
   // the day's name and the time, on a week and a month date and time,
   // from three months up the date alone - the way the web app does it.
@@ -2830,6 +3312,78 @@
     hour: "2-digit", minute: "2-digit", second: "2-digit",
   };
   const DAY_HEADING = { weekday: "long", day: "numeric", month: "long", year: "numeric" };
+
+  // Every MDI icon leaves a different amount of room around its drawing, so
+  // a box that is centred leaves a drawing that is not. This measures the
+  // room once per icon: the share of the box the drawing fills, and the
+  // share left empty under it.
+  const ICON_INK = new Map();
+  function iconInk(el) {
+    // The attribute, not the property: on the first look after innerHTML the
+    // custom element may not have been upgraded yet.
+    const name = el.getAttribute("icon") || el.icon;
+    if (ICON_INK.has(name)) return ICON_INK.get(name);
+    try {
+      const inner = el.shadowRoot && el.shadowRoot.querySelector("ha-svg-icon");
+      const svg = inner && inner.shadowRoot && inner.shadowRoot.querySelector("svg");
+      if (!svg) return null;
+      const view = Number((svg.getAttribute("viewBox") || "0 0 24 24").split(/\s+/)[3]) || 24;
+      const box = svg.getBBox();
+      if (!(box.height > 0)) return null;
+      const ink = { fill: box.height / view, below: (view - (box.y + box.height)) / view };
+      ICON_INK.set(name, ink);
+      return ink;
+    } catch (err) {
+      // A shape that cannot be measured keeps its box as the stylesheet has it.
+      return null;
+    }
+  }
+
+  // A plain number in the dashboard's language - the badge of a savings
+  // plan shows the amount without its currency, as the web app does.
+  function amountText(hass, value) {
+    try {
+      return new Intl.NumberFormat(localeOf(hass), { maximumFractionDigits: 2 }).format(value || 0);
+    } catch (err) {
+      return String(value || 0);
+    }
+  }
+
+  // Scalable writes its Market Insights in English and German only.
+  function newsLocale(hass) {
+    return (hass && hass.language ? hass.language : "en").slice(0, 2).toLowerCase() === "de"
+      ? "de_DE"
+      : "en_US";
+  }
+
+  // "1 day ago", in the dashboard's language.
+  function ago(hass, iso) {
+    const date = iso ? new Date(iso) : null;
+    if (!date || Number.isNaN(date.getTime())) return "";
+    const seconds = Math.max(0, (Date.now() - date.getTime()) / 1000);
+    const [value, unit] =
+      seconds < 3600
+        ? [Math.max(1, Math.round(seconds / 60)), "minute"]
+        : seconds < 86400
+          ? [Math.round(seconds / 3600), "hour"]
+          : [Math.round(seconds / 86400), "day"];
+    try {
+      return new Intl.RelativeTimeFormat(localeOf(hass), { numeric: "always" }).format(-value, unit);
+    } catch (err) {
+      return `${value} ${unit}${value === 1 ? "" : "s"} ago`;
+    }
+  }
+
+  // The summary's text as Scalable writes it: paragraphs apart, **bold**
+  // between double asterisks, nothing else.
+  function richText(text) {
+    return String(text || "")
+      .split(/\n\s*\n/)
+      .map((part) => part.trim())
+      .filter(Boolean)
+      .map((part) => `<p>${escapeHtml(part).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>")}</p>`)
+      .join("");
+  }
 
   function updatedText(str, iso) {
     if (!iso) return "";
@@ -3122,6 +3676,37 @@
     CRYPTO: "typeCrypto",
   };
 
+  // The web app's filter: twelve kinds of transaction, five states, and
+  // the spans of time its Date menu offers.
+  const TX_TYPES = [
+    ["buy", "buy"],
+    ["sell", "sell"],
+    ["savings_plan", "savingsPlanTx"],
+    ["deposit", "deposit"],
+    ["withdrawal", "withdrawal"],
+    ["distribution", "distribution"],
+    ["transfer", "transfer"],
+    ["fee", "fFees"],
+    ["corporate", "corporate"],
+    ["tax", "fTaxes"],
+    ["reinvestment", "reinvestment"],
+    ["interest", "interest"],
+  ];
+  const TX_STATUSES = [
+    ["open", "stPending"],
+    ["done", "stDone"],
+    ["cancelled", "stCancelled"],
+    ["expired", "stExpired"],
+    ["rejected", "stRejected"],
+  ];
+  const TX_DATES = [
+    ["any", "dAny"],
+    ["7", "dLast7"],
+    ["30", "dLast30"],
+    ["365", "dLast365"],
+    ["custom", "dCustom"],
+  ];
+
   const CASH_LABELS = {
     DEPOSIT: "deposit",
     WITHDRAWAL: "withdrawal",
@@ -3147,7 +3732,12 @@
     const info = { open: TX_OPEN.includes(tx.status), isin: null, units: null, amount: null };
     if (tx.kind === "security" && tx.security) {
       const trade = tx.security;
-      info.kind = trade.side === "BUY" ? str.buy : trade.side === "SELL" ? str.sell : plain(trade.side);
+      // A savings plan's purchase is its own kind in the web app's filter.
+      const plan = /SAVING/i.test(String(trade.transactionType || ""));
+      info.type = plan ? "savings_plan" : trade.side === "BUY" ? "buy" : trade.side === "SELL" ? "sell" : "other";
+      info.kind = plan
+        ? str.savingsPlanTx
+        : trade.side === "BUY" ? str.buy : trade.side === "SELL" ? str.sell : plain(trade.side);
       info.name = tx.description || trade.isin || "";
       info.isin = trade.isin;
       info.units = toNumber(trade.quantity);
@@ -3157,7 +3747,9 @@
       // is not a loss, so it gets no colour of its own.
       if (trade.side === "SELL") info.tone = "gain";
     } else if (tx.kind === "cash" && tx.cash) {
-      const key = CASH_LABELS[tx.cash.transactionType];
+      const raw = String(tx.cash.transactionType || "");
+      const key = CASH_LABELS[raw] || (/CORPORATE/i.test(raw) ? "corporate" : /REINVEST/i.test(raw) ? "reinvestment" : null);
+      info.type = key || "other";
       info.kind = key ? str[key] : plain(tx.cash.transactionType);
       // Money coming in and money going out, told apart the way the web app
       // tells a deposit: a tray with an arrow into it and the amount in the
@@ -3174,16 +3766,28 @@
       info.isin = tx.cash.relatedIsin;
       info.amount = toNumber(tx.cash.amount);
     } else if (tx.kind === "non_trade_security" && tx.nonTradeSecurity) {
-      info.kind = str.transfer;
+      const raw = String(tx.nonTradeSecurity.transactionType || "");
+      info.type = /CORPORATE/i.test(raw) ? "corporate" : /REINVEST/i.test(raw) ? "reinvestment" : "transfer";
+      info.kind = info.type === "transfer" ? str.transfer : str[info.type];
       info.name = tx.description || tx.nonTradeSecurity.isin || "";
       info.isin = tx.nonTradeSecurity.isin;
       info.units = toNumber(tx.nonTradeSecurity.quantity);
       info.amount = toNumber(tx.nonTradeSecurity.amount);
     } else {
-      info.kind = plain(tx.category || tx.kind);
+      const raw = String(tx.category || tx.kind || "");
+      info.type = /CORPORATE/i.test(raw) ? "corporate" : /REINVEST/i.test(raw) ? "reinvestment" : "other";
+      info.kind = info.type === "other" ? plain(raw) : str[info.type];
       info.name = tx.description || "";
     }
-    info.group = info.open ? "open" : tx.status === "CANCELLED" ? "cancelled" : "done";
+    info.group = info.open
+      ? "open"
+      : tx.status === "CANCELLED"
+        ? "cancelled"
+        : tx.status === "EXPIRED"
+          ? "expired"
+          : tx.status === "REJECTED"
+            ? "rejected"
+            : "done";
     if (tx.status === "PARTIAL_FILLED") info.end = str.stPartial;
     else if (tx.status === "CANCEL_REQUESTED") info.end = str.stCancelRequested;
     else if (info.open) info.end = str.stPending;
@@ -3212,7 +3816,41 @@
     EXPIRED: "stExpired",
   };
 
-  const FREQUENCIES = { MONTHLY: "freqMonthly", QUARTERLY: "freqQuarterly", YEARLY: "freqYearly", ANNUALLY: "freqYearly" };
+  const FREQUENCIES = {
+    MONTHLY: "freqMonthly",
+    BI_MONTHLY: "freqBiMonthly",
+    QUARTERLY: "freqQuarterly",
+    SEMI_ANNUALLY: "freqSemiAnnually",
+    ANNUALLY: "freqYearly",
+    YEARLY: "freqYearly",
+  };
+  // The orders the savings plans' sort menu offers, as the web app lists them.
+  const SAVINGS_ORDERS = ["name_asc", "name_desc", "amount_asc", "amount_desc", "due_asc", "due_desc"];
+  // The symbol the sort button shows for each order, as the web app draws
+  // them: A-Z with the arrow down or up, the euro sign with an arrow for the
+  // rate, a bare arrow for the run date.
+  function sortIconHtml(sort) {
+    const arrow = sort.endsWith("_desc") ? "mdi:arrow-down" : "mdi:arrow-up";
+    if (sort.startsWith("name")) {
+      return `<ha-icon icon="${sort === "name_desc" ? "mdi:sort-alphabetical-descending" : "mdi:sort-alphabetical-ascending"}"></ha-icon>`;
+    }
+    if (sort.startsWith("amount")) {
+      return `<span class="sort-eur"><ha-icon icon="mdi:currency-eur"></ha-icon><ha-icon class="small" icon="${arrow}"></ha-icon></span>`;
+    }
+    return `<ha-icon icon="${arrow}"></ha-icon>`;
+  }
+  const SAVINGS_ORDER_LABELS = {
+    name_asc: "spSortNameAsc",
+    name_desc: "spSortNameDesc",
+    amount_asc: "spSortAmountAsc",
+    amount_desc: "spSortAmountDesc",
+    due_asc: "spSortDueAsc",
+    due_desc: "spSortDueDesc",
+  };
+
+  // Months between two runs: what makes the plans' sum a monthly rate, the
+  // figure the web app heads the tab with.
+  const MONTHS_PER_RUN = { MONTHLY: 1, BI_MONTHLY: 2, QUARTERLY: 3, SEMI_ANNUALLY: 6, ANNUALLY: 12, YEARLY: 12 };
 
   // ------------------------------------------------------------------- card
   class ScalableCard extends HTMLElement {
@@ -3504,6 +4142,131 @@
       this._render();
     }
 
+    // Scalable's Market Insights for one security, in the dashboard's
+    // language. Asked for once an hour: the summary changes about once a day.
+    // Undefined while the first answer is on its way, null when Scalable has
+    // nothing on the security.
+    _news(isin) {
+      this._newsKept = this._newsKept || {};
+      const locale = newsLocale(this._hass);
+      const key = `${locale}|${isin}`;
+      const kept = this._newsKept[key];
+      if (kept && (kept.pending || Date.now() - kept.at < 3600000)) return kept.news;
+      this._newsKept[key] = { at: kept ? kept.at : 0, news: kept ? kept.news : undefined, pending: true };
+      // Every security this redraw asks about, in one request once it is
+      // drawn - the list asks for each of its positions at once.
+      this._newsWanted = this._newsWanted || new Set();
+      this._newsWanted.add(isin);
+      if (!this._newsTimer) {
+        this._newsTimer = setTimeout(() => {
+          this._newsTimer = null;
+          this._fetchNews(locale);
+        }, 0);
+      }
+      return this._newsKept[key].news;
+    }
+
+    async _fetchNews(locale) {
+      const isins = [...(this._newsWanted || [])];
+      this._newsWanted = new Set();
+      if (!isins.length || !this._hass) return;
+      let found = {};
+      try {
+        for (let at = 0; at < isins.length; at += 60) {
+          const part = await this._hass.callWS(
+            this._message("scalable/news", { isins: isins.slice(at, at + 60), locale })
+          );
+          found = { ...found, ...(part || {}) };
+        }
+      } catch (err) {
+        found = {};
+      }
+      for (const isin of isins) {
+        this._newsKept[`${locale}|${isin}`] = { at: Date.now(), news: found[isin] || null };
+      }
+      this._render();
+    }
+
+    // The line on a security's page: the summary's first sentence, a click
+    // away from the whole of it. Left out while there is none.
+    _newsBlockHtml(isin, str) {
+      const news = this._news(isin);
+      if (!news) return "";
+      return (
+        `<div class="news"><div class="news-head">` +
+        `<span class="news-title" style="${elementStyle(this._config, "news_title")}">` +
+        `<ha-icon icon="mdi:creation"></ha-icon>${escapeHtml(str.newsTitle)}</span>` +
+        `<span class="news-when">${escapeHtml([ago(this._hass, news.updated), str.newsAi].filter(Boolean).join(", "))}</span>` +
+        `</div><div class="news-short" data-action="news" data-isin="${escapeHtml(isin)}" tabindex="0" role="button"` +
+        ` style="${elementStyle(this._config, "news_text")}">` +
+        `${escapeHtml(news.short)}⁠<span class="news-go"><ha-icon icon="mdi:chevron-right"></ha-icon></span></div></div>`
+      );
+    }
+
+    // The pop-up: the whole summary with the note the app puts under it,
+    // and behind a button the headlines it was made from. A native dialog,
+    // so it sits above everything and closes on Escape by itself.
+    _newsDialogHtml(str) {
+      const news = this._news(this._newsOpen);
+      if (!news) return "";
+      const hass = this._hass;
+      const sources = news.sources || [];
+      let body;
+      if (this._newsSources) {
+        body =
+          `<div class="news-bar"><button type="button" class="news-nav" data-action="news-text"` +
+          ` aria-label="${escapeHtml(str.back)}"><ha-icon icon="mdi:chevron-left"></ha-icon></button>` +
+          `<div class="news-h" style="${elementStyle(this._config, "news_popup_title")}">${escapeHtml(str.newsSourcesTitle)}</div>` +
+          `<button type="button" class="news-nav" data-action="news-close"` +
+          ` aria-label="${escapeHtml(str.close)}"><ha-icon icon="mdi:close"></ha-icon></button></div>` +
+          `<div class="news-list">` +
+          sources
+            .map(
+              (source) =>
+                `<div class="news-src"><div class="news-src-name" style="${elementStyle(this._config, "news_popup_note")}">${escapeHtml(source.source || "")}` +
+                (source.time ? ` · ${escapeHtml(dateTime(hass, source.time, DAY_HEADING))}` : "") +
+                `</div><div class="news-src-head" style="${elementStyle(this._config, "news_popup_text")}">${escapeHtml(source.headline)}</div></div>`
+            )
+            .join("") +
+          `</div>`;
+      } else {
+        const names = [...new Set(sources.map((source) => source.source).filter(Boolean))];
+        body =
+          `<div class="news-bar"><span></span><div class="news-h" style="${elementStyle(this._config, "news_popup_title")}">${escapeHtml(str.newsTitle)}</div>` +
+          `<button type="button" class="news-nav" data-action="news-close"` +
+          ` aria-label="${escapeHtml(str.close)}"><ha-icon icon="mdi:close"></ha-icon></button></div>` +
+          `<div class="news-long" style="${elementStyle(this._config, "news_popup_text")}">${richText(news.long)}</div>` +
+          `<div class="news-note" style="${elementStyle(this._config, "news_popup_note")}">` +
+          `${escapeHtml(str.newsDisclaimer(names.join(", ") || "Scalable"))}</div>` +
+          (sources.length
+            ? `<button type="button" class="news-sources" data-action="news-sources">` +
+              `<ha-icon icon="mdi:newspaper-variant-outline"></ha-icon>${escapeHtml(str.newsSources(sources.length))}</button>`
+            : "");
+      }
+      return `<dialog class="news-modal" aria-label="${escapeHtml(str.newsTitle)}"><div class="news-body">${body}</div></dialog>`;
+    }
+
+    // Every redraw makes the dialog anew; this opens it again, and closes
+    // the page's state with it when the user closes it - the close button,
+    // Escape, or a click beside it.
+    _showNewsDialog(view) {
+      const dialog = view.querySelector("dialog.news-modal");
+      if (!dialog) return;
+      dialog.addEventListener("close", () => {
+        if (!dialog.isConnected || !this._newsOpen) return;
+        this._newsOpen = null;
+        this._render();
+      });
+      dialog.addEventListener("click", (ev) => {
+        if (ev.target === dialog) dialog.close();
+      });
+      try {
+        dialog.showModal();
+      } catch (err) {
+        // Already open, or no dialog support: the content is on the page anyway.
+      }
+    }
+
     async _fetchTransaction(id) {
       this._txDetails = this._txDetails || {};
       if (this._txDetails[id] && Date.now() - this._txDetails[id].at < 300000) return;
@@ -3559,6 +4322,7 @@
       const data = this._data || {};
       return (
         (data.positions || []).find((item) => item.isin === isin) ||
+        (data.planned || []).find((item) => item.isin === isin) ||
         (data.watchlist || []).find((item) => item.isin === isin) ||
         null
       );
@@ -3661,6 +4425,8 @@
       setVar("--sc-logo-size", CSS.supports("width", config.logo_size) ? config.logo_size : "");
       setVar("--sc-divider-color", config.divider_color);
       setVar("--sc-credit-bar", config.credit_bar_color);
+      setVar("--sc-news-icon", config.news_icon_color);
+      setVar("--sc-insight-size", CSS.supports("width", config.row_insight_size) ? config.row_insight_size : "");
       setVar("--sc-credit-bar-height", CSS.supports("height", config.credit_bar_height) ? config.credit_bar_height : "");
       setVar("--sc-divider-width", CSS.supports("border-top-width", config.divider_width) ? config.divider_width : "");
       setVar("--sc-divider-style", config.divider_style);
@@ -3670,8 +4436,8 @@
       // A field being typed into keeps its focus and its caret across a
       // redraw - the list under it is what changes, not the field.
       const active = this.shadowRoot.activeElement;
-      const typing = active && active.dataset && active.dataset.input === "search"
-        ? [active.selectionStart, active.selectionEnd]
+      const typing = active && active.dataset && /search$/.test(active.dataset.input || "")
+        ? [active.selectionStart, active.selectionEnd, active.dataset.input]
         : null;
 
       const tabs = this._tabs();
@@ -3769,11 +4535,15 @@
           transactions: () => this._transactionsHtml(str),
         }[this._tab]();
       }
+      if (this._newsOpen) html += this._newsDialogHtml(str);
       view.innerHTML = html;
+      this._showNewsDialog(view);
+      this._watchSpMenu();
+      this._centreIcons();
       this._wireCharts();
 
       if (typing) {
-        const field = view.querySelector('[data-input="search"]');
+        const field = view.querySelector(`[data-input="${typing[2]}"]`);
         if (field) {
           field.focus();
           try { field.setSelectionRange(typing[0], typing[1]); } catch (err) { /* not a text field */ }
@@ -4239,7 +5009,9 @@
           (config.show_change
             ? `<div class="change" style="${elementStyle(config, "change")}">` +
               `<span class="${gainClass(change)}">${money(hass, change, true)}</span>` +
-              `<span class="lbl">${escapeHtml(str[period.label])}</span>` +
+              `<span class="lbl">${escapeHtml(
+                period.key === "1d" ? shownDay(hass, str, data.valued) : str[period.label]
+              )}</span>` +
               (pct !== null
                 ? `<span class="pct ${gainClass(change)}">(${percent(hass, pct)})</span>`
                 : "") +
@@ -4268,9 +5040,28 @@
       const open = this._openOrders();
       if (config.show_portfolio) {
         const positions = this._sorted(data.positions || [], period);
+        // Securities a savings plan buys into that are not held yet: the
+        // web app lists them first, under the head, outside every group.
+        const showSavings = config.show_portfolio_savings !== false;
+        const planned = (showSavings ? [...(data.planned || [])] : []).sort((a, b) =>
+          String(a.name).localeCompare(String(b.name), localeOf(hass))
+        );
+        // Under a heading of their own, drawn like the kinds below, with the
+        // value of what stands under it. Grouped by kind, every security a
+        // plan saves into belongs here, held or not; in the other
+        // arrangements a held one keeps its place and only the ones not
+        // held yet stand here.
+        const savingsHead = (items) =>
+          `<div class="type-head"><span style="${elementStyle(config, "section")}">` +
+          `${escapeHtml(str.tabSavings)}</span><span style="${elementStyle(config, "section_value")}">` +
+          `${escapeHtml(money(hass, items.reduce((sum, item) => sum + (item.value || 0), 0)))}</span></div>` +
+          this._rowsOpen(period) + items.map((item) => this._rowHtml(item, item.quantity > 0, period, open)).join("") + `</div>`;
         let body = "";
+        if (planned.length && !(config.group_by_type && !(config.group_by_groups && (data.groups || []).length))) {
+          body = savingsHead(planned);
+        }
         if (!positions.length) {
-          body = `<div class="empty">${escapeHtml(str.noPositions)}</div>`;
+          if (!planned.length) body = `<div class="empty">${escapeHtml(str.noPositions)}</div>`;
         } else if (config.group_by_groups && (data.groups || []).length) {
           // Scalable's own arrangement: each group folded to its name and
           // value, the positions outside every group under one more.
@@ -4288,8 +5079,15 @@
             );
           }
         } else if (config.group_by_type) {
+          const saved = showSavings ? positions.filter((position) => position.savings_plan) : [];
+          if (planned.length || saved.length) {
+            body += savingsHead(
+              [...planned, ...saved].sort((a, b) => String(a.name).localeCompare(String(b.name), localeOf(hass)))
+            );
+          }
           const groups = new Map();
           for (const position of positions) {
+            if (showSavings && position.savings_plan) continue;
             const label = str[TYPE_LABELS[position.type]] || (position.type ? plain(position.type) : str.typeOther);
             if (!groups.has(label)) groups.set(label, []);
             groups.get(label).push(position);
@@ -4300,13 +5098,13 @@
               `<div class="type-head"><span style="${elementStyle(config, "section")}">` +
               `${escapeHtml(label)}</span><span style="${elementStyle(config, "section_value")}">` +
               `${escapeHtml(money(hass, value))}</span></div>` +
-              `<div class="rows">` +
+              this._rowsOpen(period) +
               members.map((item) => this._rowHtml(item, true, period, open)).join("") +
               `</div>`;
           }
         } else {
-          body =
-            `<div class="rows">` +
+          body +=
+            this._rowsOpen(period) +
             positions.map((item) => this._rowHtml(item, true, period, open)).join("") +
             `</div>`;
         }
@@ -4328,7 +5126,7 @@
       if (config.show_watchlist) {
         const watched = this._sorted(data.watchlist || [], period);
         const body = watched.length
-          ? `<div class="rows">` +
+          ? this._rowsOpen(period) +
             watched.map((item) => this._rowHtml(item, false, period, open)).join("") +
             `</div>`
           : `<div class="empty">${escapeHtml(str.watchEmpty)}</div>`;
@@ -4364,9 +5162,27 @@
         `<ha-icon class="chev" icon="mdi:chevron-${isOpen ? "up" : "down"}"></ha-icon>` +
         `</div>` +
         (isOpen
-          ? `<div class="rows group-rows">${members.map((item) => this._rowHtml(item, true, period, open)).join("")}</div>`
+          ? this._rowsOpen(period, "group") + members.map((item) => this._rowHtml(item, true, period, open)).join("") + `</div>`
           : "")
       );
+    }
+
+    // Opens a list of entries. The list is a grid and every entry a subgrid
+    // of it, so the curve, the change and the price stand in one column
+    // across all entries whatever each one's width - a narrow card included,
+    // where the flex rows used to drift apart. The tracks follow the switches.
+    _rowsOpen(period, kind) {
+      const config = this._config;
+      const tracks = [];
+      if (config.show_row_logo) tracks.push("[logo] auto");
+      tracks.push("[main] minmax(0, 1fr)");
+      if (kind === "plans") tracks.push("[chev] auto");
+      else {
+        if (config.show_row_sparkline && period && period.chart) tracks.push("[spark] auto");
+        if (config.show_row_change) tracks.push("[change] auto");
+        if (config.show_row_price) tracks.push("[price] auto");
+      }
+      return `<div class="rows${kind === "group" ? " group-rows" : ""}" style="grid-template-columns: ${tracks.join(" ")}">`;
     }
 
     // One entry of the portfolio or of the watchlist.
@@ -4382,6 +5198,10 @@
         change = isNumber(item.gain_fraction)
           ? `${percent(hass, item.gain_fraction)} (${money(hass, Math.abs(item.gain))})`
           : "–";
+      } else if (period.key === "since" && item.quantity === 0) {
+        // Saved into, nothing bought yet: there is no "since purchase".
+        tone = "";
+        change = "–";
       } else {
         tone = gainClass(perf.fraction);
         change = percent(hass, perf.fraction);
@@ -4399,14 +5219,21 @@
         }
       }
       const orders = open[item.isin] || 0;
+      const news = config.show_row_news && this._news(item.isin);
+      const plan = config.show_row_plan && item.savings_plan && isNumber(item.savings_plan.amount) ? item.savings_plan : null;
+      // A security saved into but not held yet has no value line; its plan
+      // and its orders still stand under the name.
+      const saved = held || item.quantity === 0;
       const sub =
-        held && (config.show_row_value || (config.show_row_orders && orders))
+        (saved && ((held && config.show_row_value) || (config.show_row_orders && orders))) || news || plan
           ? `<div class="row-sub">` +
-            (config.show_row_value
+            (held && config.show_row_value
               ? `<span class="row-value" style="${elementStyle(config, "row_value")}">` +
                 `${escapeHtml(money(hass, item.value))}</span>`
               : "") +
-            (config.show_row_orders && orders ? this._badgeHtml(orders, item.isin) : "") +
+            (saved && config.show_row_orders && orders ? this._badgeHtml(orders, item.isin) : "") +
+            (plan ? this._planBadgeHtml(plan.amount) : "") +
+            (news ? this._newsBadgeHtml(item.isin) : "") +
             `</div>`
           : "";
       return (
@@ -4432,13 +5259,73 @@
     // The clock with the number of open orders - a link to them (see
     // "orders" in _onClick). Inside a row, which is a link of its own, the
     // badge is found first on the click's path, so the row does not open.
+    // Centres the drawing of every badge symbol in its box - the box itself
+    // the pill centres. Retries while ha-icon is still fetching the shape.
+    _centreIcons(attempt = 0) {
+      const icons = this._root ? [...this._root.querySelectorAll(".badge ha-icon")] : [];
+      if (!icons.length) return;
+      let waiting = false;
+      for (const icon of icons) {
+        const pill = icon.closest(".badge");
+        const inner = icon.shadowRoot && icon.shadowRoot.querySelector("ha-svg-icon");
+        const svg = inner && inner.shadowRoot && inner.shadowRoot.querySelector("svg");
+        const ink = iconInk(icon);
+        if (!pill || !svg || !ink) {
+          waiting = true;
+          continue;
+        }
+        // Measured, not assumed: ha-icon lays its drawing out in a line box
+        // of its own, so where the drawing really is comes from its rect and
+        // the empty strip above it - and the shift is whatever brings that
+        // middle onto the pill's.
+        icon.style.transform = "";
+        const box = svg.getBoundingClientRect();
+        const pr = pill.getBoundingClientRect();
+        if (!(box.height > 0)) {
+          waiting = true;
+          continue;
+        }
+        const above = 1 - ink.fill - ink.below;
+        const drawingMid = box.top + (above + ink.fill / 2) * box.height;
+        icon.style.transform = `translateY(${((pr.top + pr.bottom) / 2 - drawingMid).toFixed(2)}px)`;
+      }
+      if (waiting && attempt < 20) {
+        window.setTimeout(() => this._centreIcons(attempt + 1), attempt < 6 ? 16 : 150);
+      }
+    }
+
+    // The badge of a savings plan: the amount per run, as the web app shows it.
+    _planBadgeHtml(amount) {
+      const str = t(this._hass);
+      return (
+        `<span class="badge plan" title="${escapeHtml(str.tabSavings)}"` +
+        ` style="${elementStyle(this._config, "row_plan")}">` +
+        `<ha-icon icon="${escapeHtml(this._config.row_plan_icon || "mdi:autorenew")}"></ha-icon>` +
+        `<span class="pill-text">${escapeHtml(amountText(this._hass, amount))}</span></span>`
+      );
+    }
+
+    // The sparkle on an entry that has Market Insights: the pop-up, a click
+    // away from the list.
+    _newsBadgeHtml(isin) {
+      const str = t(this._hass);
+      return (
+        `<span class="badge insight link" data-action="news" data-isin="${escapeHtml(isin)}"` +
+        ` tabindex="0" role="button" title="${escapeHtml(str.newsTitle)}"` +
+        ` aria-label="${escapeHtml(str.newsTitle)}"` +
+        ` style="${elementStyle(this._config, "row_insight")}">` +
+        `<ha-icon icon="${escapeHtml(this._config.row_insight_icon || "mdi:creation")}"></ha-icon></span>`
+      );
+    }
+
     _badgeHtml(count, isin) {
       const str = t(this._hass);
       return (
         `<span class="badge link" data-action="orders" data-isin="${escapeHtml(isin)}"` +
         ` tabindex="0" role="button" title="${escapeHtml(str.edRowOrders)}"` +
         ` style="${elementStyle(this._config, "row_badge")}">` +
-        `<ha-icon icon="mdi:clock-outline"></ha-icon>${count}</span>`
+        `<ha-icon icon="${escapeHtml(this._config.row_badge_icon || "mdi:clock-outline")}"></ha-icon>` +
+        `<span class="pill-text">${count}</span></span>`
       );
     }
 
@@ -4670,7 +5557,9 @@
       const config = this._config;
       const hass = this._hass;
       const item = this._item(this._detail);
-      const held = isNumber(item.quantity);
+      // A security a savings plan buys into is not held until the first run:
+      // no value in the head, no "Your position" block.
+      const held = isNumber(item.quantity) && item.quantity > 0;
       const period = CHART_PERIODS.find((p) => p.key === this._detailPeriod) || CHART_PERIODS[0];
       const perf = (item.performance && item.performance[period.tf]) || {};
       const orders = this._openOrders()[item.isin] || 0;
@@ -4723,6 +5612,8 @@
             `</div>`
           : "") +
         `</div>`;
+
+      if (config.show_detail_news) html += this._newsBlockHtml(item.isin, str);
 
       if (config.show_detail_chart) {
         const chart = this._chart(period.chart, item.isin);
@@ -4829,37 +5720,113 @@
         .join("");
     }
 
+    // The span of time the Date menu stands on, as [from, to] in local
+    // milliseconds - null where it is open at that end.
+    _txSpan() {
+      const range = this._txRange || { preset: "any" };
+      if (range.preset === "custom") {
+        const day = (iso) => {
+          const parts = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || "");
+          return parts ? new Date(Number(parts[1]), Number(parts[2]) - 1, Number(parts[3])) : null;
+        };
+        const from = day(range.from);
+        const to = day(range.to);
+        return [from ? from.getTime() : null, to ? to.getTime() + DAY - 1 : null];
+      }
+      const days = Number(range.preset);
+      if (!(days > 0)) return [null, null];
+      return [dayStart(new Date()).getTime() - (days - 1) * DAY, null];
+    }
+
     _filteredTransactions(str) {
       const hass = this._hass;
       const search = (this._txSearch || "").trim().toLowerCase();
+      const types = this._txTypes || new Set();
+      const statuses = this._txStatuses || new Set();
+      const [from, to] = this._txSpan();
       return (this._data.transactions || []).filter((tx) => {
         const info = txInfo(tx, str, hass);
-        if (this._txType && info.kind !== this._txType) return false;
-        if (this._txStatus && info.group !== this._txStatus) return false;
+        if (types.size && !types.has(info.type)) return false;
+        if (statuses.size && !statuses.has(info.group)) return false;
+        if (from !== null || to !== null) {
+          const at = new Date(tx.lastEventAt || 0).getTime();
+          if (from !== null && at < from) return false;
+          if (to !== null && at > to) return false;
+        }
         if (!search) return true;
         return [info.kind, info.name, info.isin, info.end]
           .some((text) => String(text || "").toLowerCase().includes(search));
       });
     }
 
+    // A dropdown button of the filter bar: its word, a count of what is
+    // ticked where that applies, and the chevron; the menu under it while
+    // it is open.
+    _filterButtonHtml(key, label, count, menuHtml) {
+      const open = this._menuOpen === key;
+      return (
+        `<span class="filter"><button type="button" class="filter-btn${open ? " open" : ""}" data-action="menu"` +
+        ` data-menu="${key}" aria-haspopup="menu" aria-expanded="${open}">` +
+        `<span class="pill-text">${escapeHtml(label)}</span>` +
+        (count ? `<span class="count">${count}</span>` : "") +
+        `<ha-icon icon="mdi:chevron-down"></ha-icon></button>${open ? menuHtml : ""}</span>`
+      );
+    }
+
+    // A menu of check rows: a click ticks or unticks, the menu stays.
+    _checkMenuHtml(key, entries, picked, str) {
+      return (
+        `<div class="sp-menu pop-menu" popover="manual" role="menu" data-menu="${key}">` +
+        entries
+          .map(
+            ([value, label]) =>
+              `<button type="button" class="sp-order menu-check" role="menuitemcheckbox" aria-checked="${picked.has(value)}"` +
+              ` data-action="menu-toggle" data-menu="${key}" data-key="${value}">` +
+              `<span>${escapeHtml(str[label])}</span><span class="box${picked.has(value) ? " on" : ""}">` +
+              (picked.has(value) ? `<ha-icon icon="mdi:check"></ha-icon>` : "") +
+              `</span></button>`
+          )
+          .join("") +
+        `</div>`
+      );
+    }
+
     _transactionsHtml(str) {
       const hass = this._hass;
-      const kinds = [...new Set((this._data.transactions || []).map((tx) => txInfo(tx, str, hass).kind))];
-      if (this._txType && !kinds.includes(this._txType)) this._txType = "";
-      const option = (value, label, selected) =>
-        `<option value="${escapeHtml(value)}"${selected ? " selected" : ""}>${escapeHtml(label)}</option>`;
+      const types = this._txTypes || new Set();
+      const statuses = this._txStatuses || new Set();
+      const range = this._txRange || { preset: "any" };
+      const dateFormat = { day: "2-digit", month: "2-digit", year: "numeric" };
+      // The Date button names its span once one is chosen.
+      let dateLabel = str.fDate;
+      if (range.preset === "custom" && (range.from || range.to)) {
+        dateLabel = `${range.from ? dateTime(hass, range.from, dateFormat) : "…"} - ${range.to ? dateTime(hass, range.to, dateFormat) : "…"}`;
+      } else if (range.preset && range.preset !== "any" && range.preset !== "custom") {
+        dateLabel = str[(TX_DATES.find(([value]) => value === range.preset) || [])[1]] || str.fDate;
+      }
+      const dateMenu =
+        `<div class="sp-menu pop-menu" popover="manual" role="menu" data-menu="tx-date">` +
+        TX_DATES.map(
+          ([value, label]) =>
+            `<button type="button" class="sp-order${range.preset === value ? " on" : ""}" role="menuitemradio"` +
+            ` aria-checked="${range.preset === value}" data-action="menu-pick" data-menu="tx-date" data-key="${value}">` +
+            `<span>${escapeHtml(str[label])}</span>` +
+            (range.preset === value ? `<ha-icon icon="mdi:check"></ha-icon>` : "") +
+            `</button>`
+        ).join("") +
+        (range.preset === "custom"
+          ? `<div class="date-panel">` +
+            `<label><span>${escapeHtml(str.dFrom)}</span><input type="date" data-input="tx-from" value="${escapeHtml(this._txDraftFrom || range.from || "")}"></label>` +
+            `<label><span>${escapeHtml(str.dTo)}</span><input type="date" data-input="tx-to" value="${escapeHtml(this._txDraftTo || range.to || "")}"></label>` +
+            `<button type="button" class="apply" data-action="menu-apply" data-menu="tx-date">${escapeHtml(str.dApply)}</button>` +
+            `</div>`
+          : "") +
+        `</div>`;
       return (
         `<div class="tx-filters">` +
-        `<select data-input="type" aria-label="${escapeHtml(str.fType)}">` +
-        option("", `${str.fType}: ${str.fAll}`, !this._txType) +
-        kinds.map((kind) => option(kind, kind, kind === this._txType)).join("") +
-        `</select>` +
-        `<select data-input="status" aria-label="${escapeHtml(str.fStatus)}">` +
-        option("", `${str.fStatus}: ${str.fAll}`, !this._txStatus) +
-        option("open", str.txOpen, this._txStatus === "open") +
-        option("done", str.stDone, this._txStatus === "done") +
-        option("cancelled", str.stCancelled, this._txStatus === "cancelled") +
-        `</select>` +
+        this._filterButtonHtml("tx-date", dateLabel, 0, dateMenu) +
+        this._filterButtonHtml("tx-type", str.fType, types.size, this._checkMenuHtml("tx-type", TX_TYPES, types, str)) +
+        this._filterButtonHtml("tx-status", str.fStatus, statuses.size, this._checkMenuHtml("tx-status", TX_STATUSES, statuses, str)) +
         `<label class="search"><ha-icon icon="mdi:magnify"></ha-icon>` +
         `<input type="search" data-input="search" placeholder="${escapeHtml(str.search)}"` +
         ` value="${escapeHtml(this._txSearch || "")}"></label>` +
@@ -5060,31 +6027,165 @@
       );
     }
 
+    // While the sort menu stands, a click outside the card or Escape closes
+    // it - the card's own click handler only hears clicks on the card.
+    _watchSpMenu() {
+      // The menu is fixed to the page, under the button, so the view's own
+      // scroll box cannot clip it; a scroll anywhere closes it instead.
+      const key = this._menuOpen;
+      const place = () => {
+        const menu = key && this._root && this._root.querySelector(`.pop-menu[data-menu="${key}"]`);
+        const button = key && this._root && this._root.querySelector(`[data-action="menu"][data-menu="${key}"]`);
+        if (!menu || !button) return;
+        // In the top layer, so the next card on the dashboard cannot paint
+        // over it; where popovers are unknown it stays a fixed box.
+        if (menu.showPopover && !menu.matches(":popover-open")) {
+          try {
+            menu.showPopover();
+          } catch (err) {
+            // Already shown, or no popover support: the fixed box is there anyway.
+          }
+        }
+        const at = button.getBoundingClientRect();
+        const width = menu.getBoundingClientRect().width;
+        menu.style.top = `${Math.round(at.bottom + 6)}px`;
+        menu.style.left = `${Math.round(Math.max(8, Math.min(at.left, window.innerWidth - width - 8)))}px`;
+      };
+      // Placed now, and again once the button's symbol has come in and
+      // given the button its final height.
+      place();
+      requestAnimationFrame(place);
+      setTimeout(place, 150);
+      if (this._menuOpen && !this._spMenuWatch) {
+        this._spMenuWatch = (ev) => {
+          if (ev.type === "keydown" && ev.key !== "Escape") return;
+          if (ev.type === "click" && ev.composedPath().includes(this)) return;
+          if (ev.type === "scroll" && ev.target && ev.target.classList && ev.target.classList.contains("pop-menu")) return;
+          this._menuOpen = null;
+          this._render();
+        };
+        document.addEventListener("click", this._spMenuWatch, true);
+        document.addEventListener("keydown", this._spMenuWatch, true);
+        document.addEventListener("scroll", this._spMenuWatch, true);
+      } else if (!this._menuOpen && this._spMenuWatch) {
+        document.removeEventListener("click", this._spMenuWatch, true);
+        document.removeEventListener("keydown", this._spMenuWatch, true);
+        document.removeEventListener("scroll", this._spMenuWatch, true);
+        this._spMenuWatch = null;
+      }
+    }
+
+    // The order the savings plans stand in.
+    _savingsSort() {
+      return SAVINGS_ORDERS.includes(this._spSort) ? this._spSort : "name_asc";
+    }
+
     _savingsHtml(str) {
       const hass = this._hass;
       const plans = this._data.savings_plans || [];
       if (!plans.length) return `<div class="empty">${escapeHtml(str.savingsNone)}</div>`;
-      const total = plans.reduce((sum, plan) => sum + (toNumber(plan.amount) || 0), 0);
+      // The web app heads the tab with the monthly rate: a plan that runs
+      // every two months counts half its amount, a yearly one a twelfth.
+      // Only a rhythm this card does not know falls back to the sum per run.
+      const months = (plan) => MONTHS_PER_RUN[(plan.configuration || {}).frequency || "MONTHLY"];
+      const monthly = plans.every((plan) => months(plan) > 0);
+      const total = plans.reduce(
+        (sum, plan) => sum + (toNumber(plan.amount) || 0) / (monthly ? months(plan) : 1),
+        0
+      );
+      const sort = this._savingsSort();
+      // The web app's two tools beside the figure: the sort button with its
+      // menu, and the search field. On a narrow card they take a line of
+      // their own.
+      const menu = this._menuOpen === "sp-sort"
+        ? `<div class="sp-menu pop-menu" popover="manual" role="menu" data-menu="sp-sort"><div class="sp-menu-head">${escapeHtml(str.spSortBy)}</div>` +
+          SAVINGS_ORDERS.map(
+            (key) =>
+              `<button type="button" class="sp-order${key === sort ? " on" : ""}" role="menuitemradio"` +
+              ` aria-checked="${key === sort}" data-action="sp-order" data-key="${key}">` +
+              `<span>${escapeHtml(str[SAVINGS_ORDER_LABELS[key]])}</span>` +
+              (key === sort ? `<ha-icon icon="mdi:check"></ha-icon>` : "") +
+              `</button>`
+          ).join("") +
+          `</div>`
+        : "";
+      const tools =
+        `<div class="sp-tools">` +
+        `<button type="button" class="sort${this._menuOpen === "sp-sort" ? " open" : ""}" data-action="menu" data-menu="sp-sort" title="${escapeHtml(str.spSort)}"` +
+        ` aria-label="${escapeHtml(str.spSort)}" aria-haspopup="menu" aria-expanded="${this._menuOpen === "sp-sort"}">` +
+        `${sortIconHtml(sort)}</button>${menu}` +
+        `<label class="search"><ha-icon icon="mdi:magnify"></ha-icon>` +
+        `<input type="search" data-input="sp-search" placeholder="${escapeHtml(str.spSearch)}"` +
+        ` value="${escapeHtml(this._spSearch || "")}"></label></div>`;
       return (
-        this._sectionHtml("savings", str.savingsTotal, escapeHtml(money(hass, total)), "", null) +
-        `<div class="rows">` +
+        this._sectionHtml("savings", monthly ? str.savingsMonthly : str.savingsTotal, escapeHtml(money(hass, total)), tools, null) +
+        `<div class="sp-list">${this._savingsRowsHtml(str)}</div>`
+      );
+    }
+
+    // The plans that match the search, in the chosen order.
+    _savingsRowsHtml(str) {
+      const hass = this._hass;
+      const config = this._config;
+      const search = (this._spSearch || "").trim().toLowerCase();
+      const sort = this._savingsSort();
+      const plans = (this._data.savings_plans || []).filter((plan) => {
+        if (!search) return true;
+        const instrument = plan.instrument || {};
+        return `${instrument.name || ""} ${instrument.identifier || ""}`.toLowerCase().includes(search);
+      });
+      const byName = (a, b) =>
+        String((a.instrument || {}).name || "").localeCompare(String((b.instrument || {}).name || ""), localeOf(hass));
+      const desc = sort.endsWith("_desc");
+      plans.sort((a, b) => {
+        let order = 0;
+        if (sort.startsWith("amount")) order = (toNumber(a.amount) || 0) - (toNumber(b.amount) || 0);
+        else if (sort.startsWith("due")) {
+          const da = (a.configuration || {}).nextExecutionDate || "9999";
+          const db = (b.configuration || {}).nextExecutionDate || "9999";
+          order = da.localeCompare(db);
+        } else order = byName(a, b);
+        return (desc ? -order : order) || byName(a, b);
+      });
+      if (!plans.length) return `<div class="empty">${escapeHtml(str.spNoMatch)}</div>`;
+      const amountOf = (value) => amountText(hass, value);
+      // How far off the next run is, against the calendar - the date comes
+      // without a time, so it is read as a local day.
+      const dueText = (iso) => {
+        const parts = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || "");
+        if (!parts) return "";
+        const day = new Date(Number(parts[1]), Number(parts[2]) - 1, Number(parts[3]));
+        const gone = Math.round((day.getTime() - dayStart(new Date()).getTime()) / DAY);
+        if (gone <= 0) return str.dueToday;
+        if (gone === 1) return str.dueTomorrow;
+        return str.dueIn(gone);
+      };
+      const cap = (text) => (text ? text.charAt(0).toUpperCase() + text.slice(1) : "");
+      return (
+        this._rowsOpen(null, "plans") +
         plans
           .map((plan) => {
             const instrument = plan.instrument || {};
             const setup = plan.configuration || {};
             const item = { isin: instrument.identifier, name: instrument.name || instrument.identifier };
-            const frequency = str[FREQUENCIES[setup.frequency]] || plain(setup.frequency);
+            const frequency = cap(str[FREQUENCIES[setup.frequency]] || plain(setup.frequency));
+            const due = dueText(setup.nextExecutionDate);
+            const rate = toNumber(setup.dynamizationRate);
+            const dynamization = rate > 0 ? str.dynamization(amountOf(rate)) : "";
+            // A chevron and a click where the security has a page here:
+            // held or watched. The plan's own page is the web app's.
+            const page = config.row_click === "detail" && item.isin && this._item(item.isin);
             return (
-              `<div class="row">${logoHtml(item)}<div class="row-main">` +
-              `<div class="row-name" style="${elementStyle(this._config, "row_name")}">${escapeHtml(item.name)}</div>` +
-              `<div class="row-sub"><span class="row-value">${escapeHtml(
-                setup.nextExecutionDate
-                  ? str.nextExec(dateTime(hass, setup.nextExecutionDate, { day: "2-digit", month: "short", year: "numeric" }))
-                  : frequency
-              )}</span></div></div>` +
-              `<div class="row-change">${escapeHtml(setup.nextExecutionDate ? frequency : "")}</div>` +
-              `<div class="row-price" style="${elementStyle(this._config, "row_price")}">` +
-              `${splitHtml(hass, toNumber(plan.amount), false)}</div></div>`
+              `<div class="row${page ? " clickable" : ""}"` +
+              (page ? ` data-action="open" data-isin="${escapeHtml(item.isin)}" tabindex="0" role="button"` : "") +
+              `>${config.show_row_logo ? logoHtml(item) : ""}<div class="row-main">` +
+              `<div class="row-name" style="${elementStyle(config, "row_name")}">${escapeHtml(item.name)}</div>` +
+              `<div class="row-sub">` +
+              this._planBadgeHtml(toNumber(plan.amount)) +
+              `<span class="row-note">${escapeHtml([frequency, due, dynamization].filter(Boolean).join(" · "))}</span>` +
+              `</div></div>` +
+              (page ? `<ha-icon class="row-chevron" icon="mdi:chevron-right"></ha-icon>` : "") +
+              `</div>`
             );
           })
           .join("") +
@@ -5136,6 +6237,19 @@
     // -------------------------------------------------------------- input
     _onClick(ev) {
       const el = ev.composedPath().find((node) => node.dataset && node.dataset.action);
+      // A click anywhere but inside the open menu or on its button closes
+      // the menu - and is otherwise handled as it would be.
+      if (this._menuOpen) {
+        const inMenu = ev.composedPath().some((node) => node.classList && node.classList.contains("pop-menu"));
+        const onButton = el && el.dataset.action === "menu";
+        if (!inMenu && !onButton) {
+          this._menuOpen = null;
+          if (!el) {
+            this._render();
+            return;
+          }
+        }
+      }
       if (!el) return;
       const key = el.dataset.key;
       switch (el.dataset.action) {
@@ -5164,6 +6278,44 @@
         case "detail-period":
           this._detailPeriod = key;
           break;
+        case "news":
+          this._newsOpen = el.dataset.isin;
+          this._newsSources = false;
+          break;
+        case "news-sources":
+          this._newsSources = true;
+          break;
+        case "news-text":
+          this._newsSources = false;
+          break;
+        case "news-close":
+          this._newsOpen = null;
+          break;
+        case "menu":
+          this._menuOpen = this._menuOpen === el.dataset.menu ? null : el.dataset.menu;
+          break;
+        case "sp-order":
+          this._spSort = key;
+          this._menuOpen = null;
+          break;
+        case "menu-pick":
+          // The Date menu: a span closes the menu, "Custom" opens its two
+          // fields under the list instead.
+          this._txRange = key === "custom" ? { preset: "custom", from: this._txDraftFrom || "", to: this._txDraftTo || "" } : { preset: key };
+          if (key !== "custom") this._menuOpen = null;
+          break;
+        case "menu-toggle": {
+          const name = el.dataset.menu === "tx-type" ? "_txTypes" : "_txStatuses";
+          const picked = new Set(this[name] || []);
+          if (picked.has(key)) picked.delete(key);
+          else picked.add(key);
+          this[name] = picked;
+          break;
+        }
+        case "menu-apply":
+          this._txRange = { preset: "custom", from: this._txDraftFrom || "", to: this._txDraftTo || "" };
+          this._menuOpen = null;
+          break;
         case "back":
           if (this._tx) this._tx = null;
           else this._detail = null;
@@ -5188,8 +6340,9 @@
             this._tab = "transactions";
             this._detail = null;
             this._tx = null;
-            this._txType = "";
-            this._txStatus = "open";
+            this._txTypes = new Set();
+            this._txStatuses = new Set(["open"]);
+            this._txRange = { preset: "any" };
             this._txSearch = this._item(isin).name || isin;
           } else {
             this._detail = isin;
@@ -5231,6 +6384,19 @@
       const el = ev.target;
       const what = el && el.dataset && el.dataset.input;
       if (!what) return;
+      if (what === "tx-from" || what === "tx-to") {
+        if (what === "tx-from") this._txDraftFrom = el.value;
+        else this._txDraftTo = el.value;
+        return;
+      }
+      if (what === "sp-search") {
+        if (ev.type !== "input") return;
+        this._spSearch = el.value;
+        // Only the list: the field being typed into stays as it is.
+        const list = this.shadowRoot.querySelector(".sp-list");
+        if (list) list.innerHTML = this._savingsRowsHtml(t(this._hass));
+        return;
+      }
       if (what === "search") {
         if (ev.type !== "input") return;
         this._txSearch = el.value;
@@ -5324,7 +6490,10 @@
   const resolveFallback = (fallback, config) => (typeof fallback === "function" ? fallback(config) : fallback);
 
   // The looks on Layout -> General that belong to the broker alone.
-  const BROKER_LOOKS = ["period", "change", "section", "section_value"];
+  const BROKER_LOOKS = [
+    "period", "change", "section", "section_value",
+    "news_title", "news_text", "news_popup_title", "news_popup_text", "news_popup_note",
+  ];
 
   const DESIGN_ELEMENTS = {
     title: {
@@ -5551,6 +6720,54 @@
       fontHelp: "edFontHelp",
       fallback: "var(--secondary-text-color)",
     },
+    news_title: {
+      label: "edElNewsTitle",
+      help: "edElNewsTitleHelp",
+      colorHelp: "edColorHelp",
+      fontHelp: "edFontHelp",
+      fallback: "var(--primary-text-color)",
+      extra: {
+        key: "news_icon_color",
+        label: "edNewsIcon",
+        help: "edNewsIconHelp",
+        fallback: "#a78bfa",
+      },
+      hidden: (config) => config.show_detail_news === false,
+    },
+    news_text: {
+      label: "edElNewsText",
+      help: "edElNewsTextHelp",
+      colorHelp: "edColorHelp",
+      fontHelp: "edFontHelp",
+      fallback: "var(--primary-text-color)",
+      hidden: (config) => config.show_detail_news === false,
+    },
+    // The pop-up opens from a security's page and from the list's sparkle,
+    // so its looks stay as long as either is on.
+    news_popup_title: {
+      label: "edElNewsPopupTitle",
+      help: "edElNewsPopupTitleHelp",
+      colorHelp: "edColorHelp",
+      fontHelp: "edFontHelp",
+      fallback: "var(--primary-text-color)",
+      hidden: (config) => config.show_detail_news === false && config.show_row_news === false,
+    },
+    news_popup_text: {
+      label: "edElNewsPopupText",
+      help: "edElNewsPopupTextHelp",
+      colorHelp: "edColorHelp",
+      fontHelp: "edFontHelp",
+      fallback: "var(--primary-text-color)",
+      hidden: (config) => config.show_detail_news === false && config.show_row_news === false,
+    },
+    news_popup_note: {
+      label: "edElNewsPopupNote",
+      help: "edElNewsPopupNoteHelp",
+      colorHelp: "edColorHelp",
+      fontHelp: "edFontHelp",
+      fallback: "var(--secondary-text-color)",
+      hidden: (config) => config.show_detail_news === false && config.show_row_news === false,
+    },
     logo: {
       label: "edElLogo",
       help: "edElLogoHelp",
@@ -5584,6 +6801,7 @@
       colorHelp: "edColorHelp",
       fontHelp: "edFontHelp",
       fallback: "#e8c56b",
+      icon: { key: "row_badge_icon", label: "edRowBadgeIcon", help: "edRowBadgeIconHelp" },
       bgToggle: { key: "row_badge_background", label: "edRowBadgeBackground" },
       extra: {
         key: "row_badge_background_color",
@@ -5593,6 +6811,44 @@
       },
       tab: "list",
       hidden: (config) => config.show_row_orders === false,
+    },
+    row_insight: {
+      label: "edElRowInsight",
+      help: "edElRowInsightHelp",
+      colorHelp: "edColorHelp",
+      // A symbol, no text: a size instead of the font block.
+      plainSize: { key: "row_insight_size", label: "edInsightSize", help: "edInsightSizeHelp" },
+      noFont: true,
+      icon: { key: "row_insight_icon", label: "edInsightIcon", help: "edInsightIconHelp" },
+      fallback: "#a78bfa",
+      bgToggle: { key: "row_insight_background", label: "edRowInsightBackground" },
+      extra: {
+        key: "row_insight_background_color",
+        label: "edRowInsightBg",
+        help: "edRowInsightBgHelp",
+        // The violet at a sixth over the dark card, as the stylesheet has it.
+        fallback: "#2c2a3f",
+      },
+      tab: "list",
+      hidden: (config) => config.show_row_news === false,
+    },
+    row_plan: {
+      label: "edElRowPlan",
+      help: "edElRowPlanHelp",
+      colorHelp: "edColorHelp",
+      fontHelp: "edFontHelp",
+      fallback: GAIN,
+      icon: { key: "row_plan_icon", label: "edRowPlanIcon", help: "edRowPlanIconHelp" },
+      bgToggle: { key: "row_plan_background", label: "edRowPlanBackground" },
+      extra: {
+        key: "row_plan_background_color",
+        label: "edRowPlanBg",
+        help: "edRowPlanBgHelp",
+        // The green at a sixth over the dark card, as the stylesheet has it.
+        fallback: "#2c3a36",
+      },
+      tab: "list",
+      hidden: (config) => config.show_row_plan === false,
     },
     row_change: {
       label: "edElRowChange",
@@ -6533,6 +7789,7 @@
           this._contentBlock(str.edBlockPortfolio, str.edBlockPortfolioHelp, [
             this._toggleRow("group_by_groups", str.edGroupByGroups, str.edGroupByGroupsHelp),
             this._toggleRow("group_by_type", str.edGroupByType, str.edGroupByTypeHelp),
+            this._toggleRow("show_portfolio_savings", str.edPortfolioSavings, str.edPortfolioSavingsHelp),
             // Named, unlike the block's other choice: a dropdown reading
             // "By name" does not say what is ordered.
             this._fieldRow(str.edSort, str.edSortHelp,
@@ -6547,6 +7804,7 @@
           this._contentBlock(str.edBlockDetail, str.edBlockDetailHelp, [
             this._toggleRow("show_detail_chart", str.edDetailChart, str.edDetailChartHelp),
             this._toggleRow("show_detail_quote", str.edDetailQuote, str.edDetailQuoteHelp),
+            this._toggleRow("show_detail_news", str.edDetailNews, str.edDetailNewsHelp),
             this._toggleRow("show_detail_position", str.edDetailPosition, str.edDetailPositionHelp),
             this._toggleRow(
               "show_detail_transactions", str.edDetailTransactions, str.edDetailTransactionsHelp
@@ -6580,6 +7838,8 @@
         pic.appendChild(this._toggleRow("show_row_logo", str.edRowLogo, str.edRowLogoHelp));
         rowBody.appendChild(this._toggleRow("show_row_value", str.edRowValue, str.edRowValueHelp));
         rowBody.appendChild(this._toggleRow("show_row_orders", str.edRowOrders, str.edRowOrdersHelp));
+        rowBody.appendChild(this._toggleRow("show_row_news", str.edRowNews, str.edRowNewsHelp));
+        rowBody.appendChild(this._toggleRow("show_row_plan", str.edRowPlan, str.edRowPlanHelp));
         const chips = document.createElement("div");
         chips.className = "row-shape-chips";
         // None of the three carries an "i": their names say what they are,
@@ -7418,7 +8678,8 @@
       padding-bottom: 6px;
       border-bottom: 1px solid var(--divider-color, #e0e0e0);
     }
-    .group-label-row + .sub-field-row { margin-top: 0; }
+    .group-label-row + .sub-field-row,
+    .group-label-row + div > .sub-field-row:first-child { margin-top: 0; }
     .group-label-row { cursor: pointer; }
     .group-label-row.plain-label-row { cursor: default; }
     .group-label-row:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
@@ -7766,7 +9027,9 @@
     .ov-figures { flex: 1 1 auto; min-width: 0; }
     .ov-chart { flex: 0 1 240px; min-width: 70px; height: 64px; }
     .ov-chart.link { cursor: pointer; }
-    .total { display: flex; align-items: flex-start; font-size: 2.6em; font-weight: 700;
+    /* Bold comes from the config (DEFAULTS has it on), so the editor's
+       switch shows it - here and for every element drawn bold. */
+    .total { display: flex; align-items: flex-start; font-size: 2.6em;
              line-height: 1; color: var(--primary-text-color); }
     .total.small { font-size: 1.9em; margin: 6px 0 14px; }
     .total .frac { display: flex; flex-direction: column; margin-left: 4px; font-size: 0.42em;
@@ -7785,15 +9048,18 @@
     .sec-head { display: flex; align-items: center; gap: 12px; }
     .sec-head.foldable { cursor: pointer; }
     .sec-text { flex: 1 1 auto; min-width: 0; }
-    .sec-title { font-size: 1.25em; font-weight: 600; color: var(--primary-text-color); }
+    .sec-title { font-size: 1.25em; color: var(--primary-text-color); }
     .sec-title.block { margin: 22px 0 10px; }
     .sec-value { margin-top: 2px; font-size: 1.2em; color: var(--secondary-text-color); }
     .sec-value .sec-note { font-size: 0.85em; }
     .sec-return { font-size: 1.05em; white-space: nowrap; }
     .chev { flex: none; padding: 6px; border-radius: 50%; background: rgba(127, 127, 127, 0.14);
             color: var(--primary-text-color); --mdc-icon-size: 20px; }
+    /* The kind's name is bold through the section look (DEFAULTS has it on),
+       its value through nothing - so no weight here, or the value would
+       inherit it and the switch would not show it. */
     .type-head { display: flex; justify-content: space-between; gap: 12px; margin: 14px 0 0;
-                 font-weight: 600; color: var(--primary-text-color); }
+                 color: var(--primary-text-color); }
     .type-head span + span { color: var(--secondary-text-color); }
     /* Scalable's portfolio groups: a folding line each, the app's card. */
     .group-head { display: flex; align-items: center; justify-content: space-between; gap: 12px;
@@ -7801,15 +9067,19 @@
                   background: var(--sc-group-background, rgba(127, 127, 127, 0.1)); }
     .group-head:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 1px; }
     .group-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-    .group-name { font-weight: 600; color: var(--primary-text-color); }
+    .group-name { color: var(--primary-text-color); }
     .group-value { color: var(--secondary-text-color); }
     .group-return { margin-left: 8px; font-size: 0.9em; }
     .group-rows { padding: 0 6px; }
 
     /* One entry: symbol, name over value, curve, change, price. */
-    .rows { margin-top: 6px; }
-    .row { display: flex; align-items: center; gap: 12px; padding: 10px 6px; margin: 0 -6px;
-           min-width: 0; border-radius: 8px; }
+    /* A list is a grid, each entry a subgrid of it (see _rowsOpen): the
+       columns line up across the entries. The entry's 6px of padding and
+       -6px of margin cancel, so its tracks sit exactly on the list's. */
+    .rows { display: grid; column-gap: 12px; margin-top: 6px; }
+    .row { display: grid; grid-template-columns: subgrid; grid-column: 1 / -1; align-items: center;
+           column-gap: 12px; padding: 10px 6px; margin: 0 -6px; min-width: 0; border-radius: 8px; }
+    .row > .logo { grid-column: logo; }
     .row.clickable { cursor: pointer; }
     .row.clickable:hover { background: rgba(127, 127, 127, 0.08); }
     .dividers .row + .row {
@@ -7821,21 +9091,95 @@
             width: var(--sc-logo-size, 36px); height: var(--sc-logo-size, 36px);
             border-radius: 50%; color: #fff; font-weight: 700; }
     .logo.big { width: 56px; height: 56px; font-size: 1.5em; }
-    .row-main { flex: 1 1 auto; min-width: 0; }
+    .row-main { grid-column: main; min-width: 0; }
     .row-name { font-size: 1.1em; font-weight: 500; color: var(--primary-text-color);
                 overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .row-sub { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
-    .row-value { font-weight: 600; color: var(--secondary-text-color); }
-    .badge { display: inline-flex; align-items: center; gap: 3px; padding: 0 6px;
-             border-radius: 5px; font-size: 0.85em; color: var(--sc-warn);
-             background: rgba(232, 197, 107, 0.16); }
-    .badge ha-icon { --mdc-icon-size: 13px; }
+    .row-value { color: var(--secondary-text-color); }
+    /* A pill: symbol and word on its middle whatever their sizes. A flex row
+       centred on its cross axis, one line tall at least so a trimmed word does
+       not shrink it, the word's box trimmed to its capitals where the browser
+       can (without that the line box is centred, capitals a hair high), and
+       the symbol's drawing centred in its box by _centreIcons. */
+    .badge { display: inline-flex; align-items: center; justify-content: center; gap: 3px;
+             padding: 0 6px; border-radius: 5px; font-size: 0.85em; color: var(--sc-warn);
+             background: rgba(232, 197, 107, 0.16); vertical-align: middle; min-height: 1lh;
+             box-sizing: content-box; }
+    .badge .pill-text { text-box: trim-both cap alphabetic; }
+    .badge ha-icon { --mdc-icon-size: 13px; display: inline-flex; align-items: center; line-height: 0; }
     .badge.link { cursor: pointer; }
-    .row-spark { flex: none; width: var(--sc-spark-width, 90px); height: 30px; }
-    .row-change { flex: none; min-width: 72px; text-align: right; font-size: 1.1em;
+    .badge.insight { padding: 0 5px; color: #a78bfa; background: rgba(167, 139, 250, 0.16); }
+    /* The brand's own green, as the badge's colour swatch in the editor promises -
+       not the gain colour, which a theme may change. */
+    .badge.plan { color: var(--sc-brand); background: color-mix(in srgb, var(--sc-brand) 16%, transparent); }
+    /* Every menu and filter control takes one accent: the colour the active
+       tab is drawn in, Scalable's green unless the editor says otherwise. */
+    .sp-tools, .tx-filters, .pop-menu { --sc-accent: var(--sc-tab-active, var(--sc-brand)); }
+    /* The savings plans' tools, right of the figure as the web app has them;
+       the head wraps so a narrow card puts them on a line of their own. */
+    .sec-head:has(.sp-tools) { flex-wrap: wrap; }
+    .sp-tools { display: flex; align-items: center; gap: 8px; flex: 1 1 240px; min-width: 0;
+                justify-content: flex-end; }
+    .sp-tools .search { flex: 0 1 260px; }
+    .sort { all: unset; cursor: pointer; flex: none; display: inline-flex; padding: 6px;
+            border-radius: 50%; color: var(--sc-accent); --mdc-icon-size: 22px; }
+    .sort:hover, .sort.open { background: rgba(127, 127, 127, 0.15); }
+    .sort .sort-eur { display: inline-flex; align-items: center; }
+    .sort .sort-eur ha-icon.small { --mdc-icon-size: 16px; margin-left: -3px; }
+    /* The sort menu, as the web app draws it: under the button, a heading
+       in small capitals, one line per order, a tick on the one in force.
+       The tools box places it; the head wraps rather than clips, so it
+       stands above the list. */
+    .sp-menu { position: fixed; z-index: 5; margin: 0; inset: auto; border: none; min-width: 240px;
+               padding: 10px 0; border-radius: 12px; color: var(--primary-text-color);
+               background: var(--card-background-color, #1c1c1c);
+               box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45); }
+    .sp-menu-head { padding: 6px 16px 10px; font-size: 0.8em; font-weight: 600; letter-spacing: 0.08em;
+                    text-transform: uppercase; color: var(--secondary-text-color); }
+    .sp-order { all: unset; cursor: pointer; display: flex; align-items: center; justify-content: space-between;
+                gap: 16px; width: 100%; box-sizing: border-box; padding: 10px 16px; font-weight: 500; }
+    .sp-order:hover, .sp-order:focus-visible { background: rgba(127, 127, 127, 0.12); }
+    .sp-order ha-icon { --mdc-icon-size: 20px; color: var(--sc-accent); }
+    /* The transactions' filter bar: the web app's three dropdown words with
+       a count of what is ticked, and its menus - a tick list for the span,
+       check boxes for kinds and states, two date fields for a custom span. */
+    .filter { position: relative; display: inline-flex; }
+    .filter-btn { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+                  padding: 6px 4px; color: var(--secondary-text-color); font-weight: 500;
+                  --mdc-icon-size: 18px; }
+    .filter-btn:hover, .filter-btn.open { color: var(--primary-text-color); }
+    .filter-btn .pill-text { text-box: trim-both cap alphabetic; }
+    .filter-btn .count { display: inline-flex; align-items: center; justify-content: center;
+                         min-width: 18px; height: 18px; padding: 0 5px; box-sizing: border-box;
+                         border-radius: 9px; font-size: 0.75em; font-weight: 700; color: #0e1113;
+                         background: var(--sc-accent); }
+    .menu-check .box { flex: none; width: 22px; height: 22px; box-sizing: border-box; border-radius: 6px;
+                       border: 2px solid var(--sc-accent); display: inline-flex; align-items: center;
+                       justify-content: center; }
+    .menu-check .box.on { background: var(--sc-accent); }
+    .menu-check .box ha-icon { --mdc-icon-size: 16px; color: #0e1113; }
+    .date-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; padding: 12px 16px 6px; }
+    .date-panel label { display: flex; flex-direction: column; gap: 4px; min-width: 0;
+                        color: var(--secondary-text-color); font-size: 0.85em; }
+    .date-panel input { font: inherit; font-size: 1.1em; color: var(--primary-text-color); background: none;
+                        border: none; border-bottom: 1px solid var(--divider-color); padding: 4px 0;
+                        color-scheme: dark; min-width: 0; }
+    .date-panel .apply { all: unset; cursor: pointer; grid-column: 2; justify-self: stretch; text-align: center;
+                         margin-top: 6px; padding: 10px 16px; border-radius: 10px; font-weight: 600;
+                         color: var(--primary-text-color);
+                         background: color-mix(in srgb, var(--sc-accent) 22%, transparent); }
+    .date-panel .apply:hover { background: color-mix(in srgb, var(--sc-accent) 32%, transparent); }
+    .sp-list { margin-top: 6px; }
+    /* The note may shrink and wrap: a long one on a narrow card must not
+       push the entry past the card's edge. */
+    .row-note { flex: 1 1 auto; min-width: 0; color: var(--secondary-text-color); }
+    .row-chevron { grid-column: chev; --mdc-icon-size: 20px; color: var(--secondary-text-color); }
+    .badge.insight ha-icon { --mdc-icon-size: var(--sc-insight-size, 14px); }
+    .row-spark { grid-column: spark; width: var(--sc-spark-width, 90px); height: 30px; }
+    .row-change { grid-column: change; justify-self: end; min-width: 72px; text-align: right; font-size: 1.1em;
                   white-space: nowrap; color: var(--secondary-text-color); }
-    .row-price { flex: none; min-width: 70px; display: flex; justify-content: flex-end;
-                 align-items: flex-start; font-size: 1.15em; font-weight: 600;
+    .row-price { grid-column: price; justify-self: end; min-width: 70px; display: flex; justify-content: flex-end;
+                 align-items: flex-start; font-size: 1.15em;
                  color: var(--primary-text-color); }
     .row-price .frac { margin-left: 2px; font-size: 0.62em; font-weight: 500; }
 
@@ -7870,6 +9214,51 @@
        buttons carry theirs - narrow enough to stand beside the price. */
     .d-quote > span { display: flex; flex-direction: column; align-items: center; }
     .d-quote .lbl { margin: 0; font-size: 0.85em; }
+
+    /* Market Insights: the line on a security's page, and its pop-up. */
+    .news { margin: 14px 0 2px; }
+    .news-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+                 gap: 4px 16px; }
+    /* Bold and capitals come from the config (DEFAULTS holds them, so the
+       editor's switches show them and can take them away); size and
+       spacing are the stylesheet's, their fields keep their examples. */
+    .news-title { display: inline-flex; align-items: center; gap: 8px; font-size: 0.85em;
+                  letter-spacing: 0.1em; color: var(--primary-text-color); }
+    .news-title ha-icon { --mdc-icon-size: 18px; color: var(--sc-news-icon, #a78bfa); }
+    .news-when { font-size: 0.85em; color: var(--secondary-text-color); }
+    .news-short { margin-top: 8px; cursor: pointer; line-height: 1.45; color: var(--primary-text-color); }
+    /* The arrow on the middle of the capitals, whatever the text size: a box
+       one capital high standing on the baseline - with no line of its own,
+       its bottom edge is its baseline - and the symbol centred on that box.
+       The margins take back the empty strips beside the drawing. */
+    .news-go { position: relative; display: inline-block; width: 1.5em; height: 0.7em; height: 1cap;
+               margin: 0 -0.5em 0 -0.2em; }
+    .news-go ha-icon { position: absolute; top: 50%; left: 0; width: 1.5em; height: 1.5em; margin-top: -0.75em;
+                       display: flex; align-items: center; justify-content: center; line-height: 0;
+                       --mdc-icon-size: 1.5em; }
+    .news-modal { width: min(560px, calc(100vw - 32px)); max-height: min(85vh, calc(100vh - 32px));
+                  box-sizing: border-box; padding: 0; border: none; border-radius: 18px;
+                  color: var(--primary-text-color); background: var(--card-background-color, #fff);
+                  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4); overflow: hidden; }
+    .news-modal::backdrop { background: rgba(0, 0, 0, 0.55); }
+    .news-body { max-height: inherit; box-sizing: border-box; overflow-y: auto; padding: 18px 24px 22px; }
+    .news-bar { display: grid; grid-template-columns: 36px minmax(0, 1fr) 36px; align-items: center;
+                margin-bottom: 14px; }
+    .news-h { text-align: center; font-size: 1.2em; }
+    .news-nav { all: unset; cursor: pointer; width: 36px; height: 36px; display: inline-flex;
+                align-items: center; justify-content: center; border-radius: 50%;
+                color: var(--primary-text-color); --mdc-icon-size: 24px; }
+    .news-nav:hover { background: rgba(127, 127, 127, 0.15); }
+    .news-long p { margin: 0 0 14px; line-height: 1.55; }
+    .news-note { margin-top: 20px; font-size: 0.9em; line-height: 1.45; color: var(--secondary-text-color); }
+    .news-sources { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+                    margin-top: 18px; padding: 8px 16px; border-radius: 999px;
+                    border: 1px solid var(--divider-color); font-weight: 600; --mdc-icon-size: 18px; }
+    .news-sources:hover { background: rgba(127, 127, 127, 0.15); }
+    .news-src { padding: 12px 0; border-top: 1px solid var(--divider-color); }
+    .news-src:first-child { border-top: none; padding-top: 0; }
+    .news-src-name { font-size: 0.9em; color: var(--secondary-text-color); }
+    .news-src-head { margin-top: 2px; line-height: 1.4; }
 
     /* The large charts. */
     .chart-big { display: grid; grid-template-columns: minmax(0, 1fr); margin-top: 12px; }

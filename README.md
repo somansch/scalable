@@ -229,7 +229,11 @@ Beside the title stand the time of the last update and a small symbol that reads
 
 The total value with its change over the chosen period - **1D, 1W, 1M, 3M, 6M, YTD, 1Y, Since purchase** - in euros and, in brackets after the period's name, in percent - and the portfolio's curve beside it; **Opens with** under **Settings → Content → Broker** says which of the eight the switch offers and which it starts on; a click on the curve opens [Insights](#insights). Below, the cash balance - with what can be invested in brackets where that differs, as with a credit line drawn on - the positions under a heading per kind of security - Stocks, ETFs, … - or, with **Scalable's groups** switched on in place of the kinds and groups made in Scalable's app, under those groups, each folded to its name and value until opened, the positions outside every group under **Ungrouped** - the crypto value and the watchlist.
 
-Every entry carries its value, its open orders - the clock is a link to them - a small curve, the change and the price. Under *Since purchase* a position shows its return in percent and euros instead. A section folds with a click on its heading.
+On a weekend or a holiday the one-day view names the trading day it describes - *Friday*, say - in place of *Today*.
+
+Every entry carries its value, its open orders - the clock is a link to them - the amount of its savings plan, a small curve, the change and the price. Where Scalable has [Market Insights](#a-securitys-page) on a security, a sparkle opens them straight from the list. Under *Since purchase* a position shows its return in percent and euros instead. A section folds with a click on its heading.
+
+A security a savings plan saves into stands under **Savings plans**, a heading like the kinds with the value of what stands under it - from the day the plan exists, so before the first run with no value yet. Grouped by kind, every security with a plan stands there, held or not; with Scalable's groups or no grouping, a held one keeps its place. **Savings plans** under **Settings → Content → Broker** switches the heading off.
 
 <img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-watchlist.png" alt="The lower part of the overview: the crypto value, and the watchlist with a curve, the change and the price per entry" width="60%">
 
@@ -238,6 +242,7 @@ Every entry carries its value, its open orders - the clock is a link to them - a
 A click on an entry opens the security's own page:
 
 - the price with its change over the chosen period, and the two prices of Scalable's **Sell** and **Buy** buttons;
+- **Market Insights**, while Scalable has them: its AI summary of the news about the security in one line, a click away from the whole text and the headlines it was made from, newest first;
 - a chart over **1D** to **MAX** that reads off the moment and the price under the pointer and marks the current price at its end, green above the period's starting price and red below it;
 - a bell with the number of its waiting price alerts, which leads to them;
 - **Your position** - value, purchase value, quantity, average price and unrealised return;
@@ -245,23 +250,27 @@ A click on an entry opens the security's own page:
 
 While the security cannot be traded - outside weekdays 06:00 to 23:00 German time, the hours Scalable trades in and the charts run on, or once Scalable marks the price as outdated - a moon stands in front of the price; crypto trades round the clock. Once Scalable marks the price as outdated, the one-day view names the day the price is from instead of *Today*.
 
+<img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-market-insights.png" alt="Market Insights on a security's page: the heading with the sparkle, how long ago it was written, and the one-line summary of the news with an arrow to the whole text" width="60%">
+
 <img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-active-asset.png" alt="A position's page: Caterpillar with its price, the month's change, the sell and the buy price, the bell with one alert, a month's price chart with the current price marked at its end, the position's value, quantity and return, and its open sell order" width="45%"> <img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-watchlist-asset.png" alt="A watchlist entry's page: the year-to-date chart, green above the starting price and red below it, with no position and no transactions" width="45%">
 
 ### Price alerts and savings plans
 
 **Price alerts** lists the securities that have alerts. The chosen one shows its price, every alert still waiting with how far it is from the current price, and the ones already triggered with the moment they were reached.
 
-**Savings plans** lists each plan with its amount, how often it runs and when it runs next.
+**Savings plans** opens with the monthly savings rate - a plan that runs every two months counts half, a yearly one a twelfth - and lists each plan with a badge for its amount, how often it runs, in how many days it is due and its inflation adjustment where one is set. A search field goes by name and ISIN, and the button beside it sorts by name, savings rate or next run, each either way.
+
+<img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-saving-plans.png" alt="The Savings plans tab: the monthly savings rate of €125.00 beside the sort button and the search field, and two plans, each with a badge with its amount, how often it runs, when it is due and, where set, its inflation adjustment" width="60%">
 
 <img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-price-alerts.png" alt="The Price alerts tab: four securities with their number of alerts on the left, and on the right Caterpillar's price with its alert and how far above the current price it is" width="45%">
 
 ### Transactions
 
-Open orders first, the rest under their day, with a search and two filters, **Type** and **Status**. Deposits and withdrawals carry their own symbol, the amount in green or red; a sale's proceeds are green as well.
+Open orders first, the rest under their day, with a search and three filters as in the web app. **Date** offers the last 7, 30 and 365 days or a span of your own and names what was chosen; **Type** and **Status** are check lists that show how many are ticked. Deposits and withdrawals carry their own symbol, the amount in green or red; a sale's proceeds are green as well.
 
 A click opens the transaction's own page: ordered and executed quantity, limit and stop price with their distance to the current price, validity, trading venue, execution price, amount, the history of the order and the reference Scalable gives it.
 
-<img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-transactions.png" alt="The Transactions tab: the type and status filters and the search field, four pending sell orders under Open, and the cancelled orders of one day below" width="45%">
+<img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-transactions-filters.png" alt="The Transactions tab with a date span, two types and three statuses chosen and the Status menu open with its five check boxes, over the open sell orders with their names blurred" width="60%">
 
 ### Insights
 
@@ -285,18 +294,19 @@ The pointer reads off the moment and the figure: the time on a day, date and tim
 
 The editor has two panels, each with three tabs, the way the Annuals and Blitzer.de cards have them:
 
-- **Settings** - *General* (which account, the title, which of the account's products the card offers - broker, overnight, fixed-term, credit - whether a dropdown switches between them and which it starts on), *Content* (every product's group opens with its head over the tabs - its symbol on a disc, its name and the line under it, the broker's plan read off its fee booking - with a switch for the head and one for the symbol; under **Broker**: the tab line and its tabs, the tab and the period the card opens on, what the overview's head and sections show, grouping the positions by kind or by Scalable's groups, their order, what a security's page shows; under **Overnight savings**: its tab line, its Transactions tab, the tab it opens on and what its page shows; under **Fixed-term deposit** and **Credit**: what their pages show) and *List* (what a broker entry is made of and what a click on it does). A product that is not offered takes its settings with it.
-- **Layout** - *General* (card background, the colours for gain and loss, colour and font of the title and the update time; then every product's group, opening with its head - the name with the symbol and the colour of the disc behind it, and the line under the name where the product has one - and going on with what the product has: the broker its tabs, the big figure, the period switch, the change and the section headings; the overnight account its tabs and its figure; a fixed-term account its figure; the credit its figure and the usage bar, its colour and thickness), *Chart* (under **Broker**: height, line width, fill, reference line, axis labels, the note under the portfolio's curve) and *List* (under **Broker**: colour and font of every part of an entry).
+- **Settings** - *General* (which account, the title, which of the account's products the card offers - broker, overnight, fixed-term, credit - whether a dropdown switches between them and which it starts on), *Content* (every product's group opens with its head over the tabs - its symbol on a disc, its name and the line under it, the broker's plan read off its fee booking - with a switch for the head and one for the symbol; under **Broker**: the tab line and its tabs, the tab and the period the card opens on, what the overview's head and sections show, grouping the positions by kind or by Scalable's groups, the savings plans' heading, their order, what a security's page shows; under **Overnight savings**: its tab line, its Transactions tab, the tab it opens on and what its page shows; under **Fixed-term deposit** and **Credit**: what their pages show) and *List* (what a broker entry is made of and what a click on it does). A product that is not offered takes its settings with it.
+- **Layout** - *General* (card background, the colours for gain and loss, colour and font of the title and the update time; then every product's group, opening with its head - the name with the symbol and the colour of the disc behind it, and the line under the name where the product has one - and going on with what the product has: the broker its tabs, the big figure, the period switch, the change, the section headings and the texts of Market Insights; the overnight account its tabs and its figure; a fixed-term account its figure; the credit its figure and the usage bar, its colour and thickness), *Chart* (under **Broker**: height, line width, fill, reference line, axis labels, the note under the portfolio's curve) and *List* (under **Broker**: colour and font of every part of an entry, and the symbols of the badges for open orders, savings plans and Market Insights).
 
 Every field carries an **i** describing it. Only what you change is written to the dashboard: a card left as it is stores nothing but its type.
 
 ### What differs from the web app
 
-Three things, because Scalable does not hand them out:
+Four things, because Scalable does not hand them out:
 
 - **Logos.** An entry gets a round symbol with its first letter.
 - **The portfolio's own curve** - beside the total value and under Insights - is drawn from what Home Assistant has recorded for the portfolio's value. It therefore reaches back to the day the integration was set up, not to the day the portfolio was opened, and shows a grey gap where nothing was recorded.
 - **Crypto** is one figure; single coins are not listed.
+- **The articles behind Market Insights.** Their headlines are listed; the articles themselves open only in Scalable's app.
 
 And two things the card adds. **3M** and **6M** stand on the overview's switch, which the web app keeps for a security's own page. And the change stands in percent, in brackets after the period's name and after the **Total return** under Insights: Scalable reports the change in euros only, with deposits and withdrawals taken out, so the percentage is that change as a share of what the period began with - the value at its start plus what was paid in since, which is the value now less the change. A deposit inside the period is therefore no gain, and a period that reaches back before the account was opened counts from nought. **Change in percent** under **Settings → Content → Broker** switches it off.
 
@@ -304,13 +314,13 @@ And two things the card adds. **3M** and **6M** stand on the overview's switch, 
 
 ## Reading only
 
-Scalable's sign-in does not come in a read-only variety: what narrows it is the **access level** you set for Scalable MCP in your account (see [Before you start](#before-you-start)). On this side, the integration names fifteen of Scalable's tools - overview, positions, quotes, cash, watchlist, transactions, a transaction's details, price charts, price alerts, savings plans, portfolio list, the overnight account and its transactions, the fixed-term accounts and a fixed-term account's details - and checks at every start and once a day that Scalable itself still declares each of them read-only. A tool that loses that declaration is not called at all.
+Scalable's sign-in does not come in a read-only variety: what narrows it is the **access level** you set for Scalable MCP in your account (see [Before you start](#before-you-start)). On this side, the integration names eighteen of Scalable's tools - overview, positions, quotes, cash, watchlist, transactions, a transaction's details, price charts, price alerts, savings plans, portfolio list, portfolio groups, account profile, the overnight account and its transactions, the fixed-term accounts and a fixed-term account's details, and the news summaries behind Market Insights - and checks at every start and once a day that Scalable itself still declares each of them read-only. A tool that loses that declaration is not called at all.
 
 ## Good to know
 
-- **"Today"** is the last trading day against the close before it. On a weekend it still describes Friday.
+- **The one-day figures** are the last trading day against the close before it. On a weekend or a holiday the card names that day in place of *Today*.
 - **Crypto** is counted in the portfolio's crypto value; single coins are not positions yet.
-- **Every update** costs a handful of requests plus one per position, watchlist entry and fixed-term account. The card adds one request per security and period for its curves, kept for five minutes (one day) up to twelve hours (maximum), and one per transaction page opened.
+- **Every update** costs a handful of requests plus one per position, watchlist entry and fixed-term account. The card adds one request per security and period for its curves, kept for five minutes (one day) up to twelve hours (maximum), one per transaction page opened, and one per security an hour for Market Insights.
 - Scalable MCP is a young interface. If Scalable changes it, this integration has to follow.
 
 ## Installation
