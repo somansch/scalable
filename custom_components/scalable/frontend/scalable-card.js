@@ -313,7 +313,7 @@
       edDivider: "Show a line between entries",
       edDividerHelp: "A thin rule between two entries. Its looks are under Layout → List.",
       edRowLogo: "Symbol",
-      edRowLogoHelp: "A round symbol with the security's first letter. Scalable does not hand out the logos.",
+      edRowLogoHelp: "The security's logo. Where there is none, a round symbol with its first letter.",
       edRowValue: "Value of the position",
       edRowValueHelp: "Under the name: what the position is worth.",
       edRowOrders: "Open orders",
@@ -329,6 +329,88 @@
       edRowPlanBgHelp: "Background of the badge.",
       edRowPlanIcon: "Symbol",
       edRowPlanIconHelp: "The symbol on the badge. The two arrows to begin with.",
+      edFormat: "Format",
+      edFormatHelp: "How the card shows the securities: a running ticker, one compact row at a time, or a carousel of tiles. A click on one opens its details.",
+      formatTicker: "Ticker",
+      formatLine: "Compact row",
+      formatCarousel: "Carousel",
+      edSource: "Shows",
+      edSourceHelp: "Which securities the card goes through.",
+      sourcePositions: "Portfolio positions",
+      sourceWatchlist: "Watchlist",
+      edSourcePositionsHelp: "The securities in the portfolio. Groups set up in Scalable appear below, each with its own switch.",
+      edSourceWatchlistHelp: "The securities on the watchlist. One that is also in the portfolio appears once.",
+      edTkPeriod: "Change over",
+      edTkPeriodHelp: "The period the change and the small curve cover.",
+      edBlockAuto: "Automatic change",
+      edBlockAutoHelp: "How the card moves on by itself.",
+      edAutoAdvance: "Move on automatically",
+      edAutoAdvanceHelp: "Off, you go through the securities by hand. It pauses while the pointer is over the card and while the pop-up is open.",
+      edEffect: "Effect",
+      edEffectHelp: "How the change from one security to the next looks, and how long it takes.",
+      edEffectType: "Type",
+      edEffectTypeHelp: "How one security gives way to the next.",
+      fxSlide: "Slide",
+      fxFade: "Cross-fade",
+      fxRoll: "Roll up",
+      fxFlap: "Split-flap",
+      fxZoom: "Zoom fade",
+      fxGlide: "Continuous glide",
+      fxFocus: "Focus",
+      fxStagger: "Staggered fade-in",
+      fxCoverflow: "Coverflow",
+      edEffectDuration: "Duration",
+      edEffectDurationHelp: "How long the change takes, from 100 to 3000 milliseconds. With the automatic change it stays shorter than the seconds per security.",
+      edElTileBg: "Tile background",
+      edElTileBgHelp: "A colour and an image of your own behind each tile of the carousel.",
+      edTileBgEnableHelp: "Draws the colour and the image below. Off leaves the tiles their usual grey.",
+      edTileBgColorHelp: "Background colour for each tile. Empty keeps the usual grey.",
+      edTileBgSizeHelp: "How the image meets the edges of a tile.",
+      edEndlessLoop: "Endless loop",
+      edEndlessLoopHelp: "After the last security comes the first again, without running back to the start.",
+      edAutoInterval: "Seconds per security",
+      edAutoIntervalHelp: "How long one stands before the next. In the ticker and with the continuous glide, how long one takes to pass. 2 to 120.",
+      edBlockEntry: "What an entry shows",
+      edBlockEntryHelp: "The parts of a security in the ticker, the row or the tile.",
+      edTkChangeHelp: "The change over the chosen period.",
+      edTkNewsHelp: "The sparkle in front of an entry's name while Scalable has a news summary on the security. A click opens it over the security's page.",
+      edTkPriceHelp: "The current price.",
+      edTkValue: "Position value",
+      edTkValueHelp: "In place of the price of one share, what the whole position is worth. A security that is only on the watchlist keeps its price.",
+      edTkSortHelp: "The order the securities come in. By value, the positions come first and the watchlist entries follow by price.",
+      edTkElRowPriceHelp: "The price at an entry - or the position's value, where that is shown instead.",
+      edRowSymbol: "Short name",
+      edRowSymbolHelp: "The short name the security trades under, such as AAPL for Apple.",
+      edElRowSymbol: "Short name",
+      edElRowSymbolHelp: "The short name in front of the security's name.",
+      edTkCurveHelp: "The small curve of the chosen period, in the compact row and the carousel.",
+      edBlockPopup: "Pop-up",
+      edBlockPopupHelp: "What the pop-up shows that opens on a click.",
+      edTkPanelSettingsDesc: "General, content and animation",
+      edGroupAnimation: "Animation",
+      edGroupPopup: "Pop-up",
+      edTkPopHead: "Head",
+      edTkDetailLogoHelp: "The security's logo in front of its name at the top of the pop-up. Where there is none, a round symbol with its first letter.",
+      edTkElPopName: "Name",
+      edTkElPopNameHelp: "The security's name at the top of the pop-up.",
+      edTkElPrice: "Price",
+      edTkElPriceHelp: "The large price at the top of the pop-up.",
+      edTkElPosTitle: "Heading",
+      edTkElPosTitleHelp: "The heading Your position above the figures.",
+      edTkChartHeightHelp: "Height of the chart in the pop-up, in pixels.",
+      edTkChartLineHelp: "Width of the curve in the pop-up's chart, in pixels.",
+      edTkPanelLayoutDesc: "General, list and pop-up",
+      tkPrev: "Previous",
+      tkNext: "Next",
+      edTkTotalHelp: "The portfolio as a whole as the first entry: its total value, its change over the chosen period and the curve of its return. A click opens that curve in the pop-up.",
+      edTkPick: "Securities",
+      edTkPickHelp: "Which securities of the lists switched on above the card shows. Tick the ones to show and apply. One that Scalable adds to a list later appears by itself.",
+      tkPickAll: "All securities",
+      tkPickSome: (n, of) => `${n} of ${of} securities`,
+      tkPickEvery: "All",
+      tkPickNone: "None",
+      tkPickApply: "Apply",
+      tkPickEmpty: "Nothing to choose from",
       edRowSparkline: "Curve",
       edRowChange: "Change",
       edRowPrice: "Price",
@@ -336,8 +418,8 @@
       edElCardBgHelp: "A colour and an image of your own behind the whole card.",
       edCardBgEnable: "Show background",
       edCardBgEnableHelp: "Draws the colour and the image below. Off leaves the card the background the theme gives it.",
-      edCardBgColor: "Color",
-      edCardBgColorHelp: "Background color for the card.",
+      edCardBgColor: "Colour",
+      edCardBgColorHelp: "Background colour for the card.",
       edCardBgImage: "Image",
       edCardBgImageHelp: "Upload one, or paste a URL or a local path. JPEG, PNG, GIF and WebP. Keep it small: the card waits for it on every load.",
       edCardBgImagePlaceholder: "e.g. /local/my-image.jpg",
@@ -438,13 +520,13 @@
       dividerDashed: "Dashed",
       dividerDotted: "Dotted",
       edElLogo: "Symbol",
-      edElLogoHelp: "The round symbol in front of an entry.",
+      edElLogoHelp: "The round symbol of an entry.",
       edLogoSize: "Size",
       edLogoSizeHelp: "Diameter, e.g. 36px.",
       edListOff: "Portfolio and watchlist are both switched off under Settings → Content, so there is no list to set up.",
-      edColor: "Color",
-      edFontColor: "Text color",
-      edColorHelp: "Text color. Empty keeps the theme's.",
+      edColor: "Colour",
+      edFontColor: "Text colour",
+      edColorHelp: "Text colour. Empty keeps the theme's.",
       edColorPlaceholder: "e.g. #ff5722 or var(--my-red)",
       edFont: "Font",
       edFontHelp: "Font size, and whether it is bold, italic, in capitals or underlined.",
@@ -768,7 +850,7 @@
       edDivider: "Linie zwischen den Einträgen anzeigen",
       edDividerHelp: "Eine dünne Linie zwischen zwei Einträgen. Ihr Aussehen steht unter Layout → Liste.",
       edRowLogo: "Symbol",
-      edRowLogoHelp: "Ein rundes Symbol mit dem ersten Buchstaben des Wertpapiers. Die Logos gibt Scalable nicht heraus.",
+      edRowLogoHelp: "Das Logo des Wertpapiers. Wo es keines gibt, ein rundes Symbol mit dem Anfangsbuchstaben.",
       edRowValue: "Wert der Position",
       edRowValueHelp: "Unter dem Namen: was die Position wert ist.",
       edRowOrders: "Offene Orders",
@@ -784,6 +866,88 @@
       edRowPlanBgHelp: "Hintergrund der Plakette.",
       edRowPlanIcon: "Symbol",
       edRowPlanIconHelp: "Das Symbol auf der Plakette. Zu Beginn die zwei Pfeile.",
+      edFormat: "Format",
+      edFormatHelp: "Wie die Karte die Wertpapiere zeigt: als Laufband, als eine kompakte Zeile nach der anderen oder als Karussell aus Kacheln. Ein Klick auf eines öffnet seine Details.",
+      formatTicker: "Laufband",
+      formatLine: "Kompakte Zeile",
+      formatCarousel: "Karussell",
+      edSource: "Zeigt",
+      edSourceHelp: "Welche Wertpapiere die Karte durchläuft.",
+      sourcePositions: "Portfolio-Positionen",
+      sourceWatchlist: "Watchlist",
+      edSourcePositionsHelp: "Die Wertpapiere im Portfolio. In Scalable angelegte Gruppen erscheinen darunter, jede mit eigenem Schalter.",
+      edSourceWatchlistHelp: "Die Wertpapiere der Watchlist. Eines, das auch im Portfolio liegt, erscheint nur einmal.",
+      edTkPeriod: "Veränderung über",
+      edTkPeriodHelp: "Der Zeitraum für die Veränderung und die kleine Kurve.",
+      edBlockAuto: "Automatischer Wechsel",
+      edBlockAutoHelp: "Wie die Karte von selbst weiterläuft.",
+      edAutoAdvance: "Automatisch wechseln",
+      edAutoAdvanceHelp: "Aus wechselt die Karte nur von Hand. Der Wechsel pausiert, solange der Zeiger über der Karte ist und solange das Pop-up offen ist.",
+      edEffect: "Effekt",
+      edEffectHelp: "Wie der Wechsel von einem Wertpapier zum nächsten aussieht und wie lange er dauert.",
+      edEffectType: "Typ",
+      edEffectTypeHelp: "Wie ein Wertpapier dem nächsten Platz macht.",
+      fxSlide: "Schieben",
+      fxFade: "Überblenden",
+      fxRoll: "Von unten nachrücken",
+      fxFlap: "Fallblatt",
+      fxZoom: "Zoom-Überblendung",
+      fxGlide: "Durchgleiten",
+      fxFocus: "Fokus",
+      fxStagger: "Gestaffelt einblenden",
+      fxCoverflow: "Coverflow",
+      edEffectDuration: "Dauer",
+      edEffectDurationHelp: "Wie lange der Wechsel dauert, von 100 bis 3000 Millisekunden. Beim automatischen Wechsel bleibt er kürzer als die Sekunden je Wertpapier.",
+      edElTileBg: "Kachel-Hintergrund",
+      edElTileBgHelp: "Eine eigene Farbe und ein Bild hinter jeder Kachel des Karussells.",
+      edTileBgEnableHelp: "Zeichnet die Farbe und das Bild von unten. Aus behalten die Kacheln ihr übliches Grau.",
+      edTileBgColorHelp: "Hintergrundfarbe jeder Kachel. Leer bleibt das übliche Grau.",
+      edTileBgSizeHelp: "Wie das Bild an die Ränder einer Kachel stößt.",
+      edEndlessLoop: "Endlosschleife",
+      edEndlessLoopHelp: "Nach dem letzten Wertpapier folgt wieder das erste, ohne zum Anfang zurückzulaufen.",
+      edAutoInterval: "Sekunden je Wertpapier",
+      edAutoIntervalHelp: "Wie lange eines stehen bleibt. Beim Laufband und beim Durchgleiten, wie lange eines zum Durchlaufen braucht. 2 bis 120.",
+      edBlockEntry: "Was ein Eintrag zeigt",
+      edBlockEntryHelp: "Die Teile eines Wertpapiers im Laufband, in der Zeile oder auf der Kachel.",
+      edTkChangeHelp: "Die Veränderung über den gewählten Zeitraum.",
+      edTkNewsHelp: "Der Funke vor dem Namen eines Eintrags, solange Scalable eine Nachrichten-Zusammenfassung zum Wertpapier hat. Ein Klick öffnet sie über der Seite des Wertpapiers.",
+      edTkPriceHelp: "Der aktuelle Kurs.",
+      edTkValue: "Positionswert",
+      edTkValueHelp: "Statt des Kurses eines Anteils, was die ganze Position wert ist. Ein Wertpapier, das nur auf der Watchlist steht, behält seinen Kurs.",
+      edTkSortHelp: "Die Reihenfolge der Wertpapiere. Nach Wert kommen zuerst die Positionen, danach die Watchlist-Einträge nach Kurs.",
+      edTkElRowPriceHelp: "Der Kurs an einem Eintrag - oder der Wert der Position, wo er stattdessen gezeigt wird.",
+      edRowSymbol: "Kürzel",
+      edRowSymbolHelp: "Das Kürzel, unter dem das Wertpapier gehandelt wird, etwa AAPL für Apple.",
+      edElRowSymbol: "Kürzel",
+      edElRowSymbolHelp: "Das Kürzel vor dem Namen des Wertpapiers.",
+      edTkCurveHelp: "Die kleine Kurve des gewählten Zeitraums, in der kompakten Zeile und im Karussell.",
+      edBlockPopup: "Pop-up",
+      edBlockPopupHelp: "Was das Pop-up zeigt, das sich beim Klick öffnet.",
+      edTkPanelSettingsDesc: "Allgemein, Inhalt und Animation",
+      edGroupAnimation: "Animation",
+      edGroupPopup: "Pop-up",
+      edTkPopHead: "Kopf",
+      edTkDetailLogoHelp: "Das Logo des Wertpapiers vor seinem Namen oben im Pop-up. Wo es keines gibt, ein rundes Symbol mit dem Anfangsbuchstaben.",
+      edTkElPopName: "Name",
+      edTkElPopNameHelp: "Der Name des Wertpapiers oben im Pop-up.",
+      edTkElPrice: "Kurs",
+      edTkElPriceHelp: "Der große Kurs oben im Pop-up.",
+      edTkElPosTitle: "Überschrift",
+      edTkElPosTitleHelp: "Die Überschrift Ihre Position über den Zahlen.",
+      edTkChartHeightHelp: "Höhe des Diagramms im Pop-up, in Pixeln.",
+      edTkChartLineHelp: "Stärke der Kurve im Diagramm des Pop-ups, in Pixeln.",
+      edTkPanelLayoutDesc: "Allgemein, Liste und Pop-up",
+      tkPrev: "Vorherige",
+      tkNext: "Nächste",
+      edTkTotalHelp: "Das Portfolio als Ganzes als erster Eintrag: sein Gesamtwert, seine Veränderung im gewählten Zeitraum und die Kurve seiner Rendite. Ein Klick öffnet diese Kurve im Pop-up.",
+      edTkPick: "Wertpapiere",
+      edTkPickHelp: "Welche Wertpapiere der oben eingeschalteten Listen die Karte zeigt. Die gewünschten ankreuzen und übernehmen. Eines, das in Scalable später auf eine Liste kommt, erscheint von selbst.",
+      tkPickAll: "Alle Wertpapiere",
+      tkPickSome: (n, of) => `${n} von ${of} Wertpapieren`,
+      tkPickEvery: "Alle",
+      tkPickNone: "Keine",
+      tkPickApply: "Übernehmen",
+      tkPickEmpty: "Nichts zur Auswahl",
       edRowSparkline: "Kurve",
       edRowChange: "Veränderung",
       edRowPrice: "Kurs",
@@ -893,7 +1057,7 @@
       dividerDashed: "Gestrichelt",
       dividerDotted: "Gepunktet",
       edElLogo: "Symbol",
-      edElLogoHelp: "Das runde Symbol vor einem Eintrag.",
+      edElLogoHelp: "Das runde Symbol eines Eintrags.",
       edLogoSize: "Größe",
       edLogoSizeHelp: "Durchmesser, z. B. 36px.",
       edListOff: "Portfolio und Watchlist sind unter Einstellungen → Inhalt beide ausgeschaltet, es gibt also keine Liste einzurichten.",
@@ -1223,7 +1387,7 @@
       edDivider: "Afficher une ligne entre les entrées",
       edDividerHelp: "Un trait fin entre deux entrées. Son apparence se règle sous Mise en page → Liste.",
       edRowLogo: "Symbole",
-      edRowLogoHelp: "Un symbole rond avec la première lettre du titre. Scalable ne fournit pas les logos.",
+      edRowLogoHelp: "Le logo du titre. À défaut, un symbole rond avec sa première lettre.",
       edRowValue: "Valeur de la position",
       edRowValueHelp: "Sous le nom : ce que vaut la position.",
       edRowOrders: "Ordres en cours",
@@ -1239,6 +1403,88 @@
       edRowPlanBgHelp: "Arrière-plan du badge.",
       edRowPlanIcon: "Symbole",
       edRowPlanIconHelp: "Le symbole du badge. Au départ, les deux flèches.",
+      edFormat: "Format",
+      edFormatHelp: "La façon dont la carte présente les titres : un bandeau défilant, une ligne compacte à la fois ou un carrousel de tuiles. Un clic sur l'un d'eux ouvre ses détails.",
+      formatTicker: "Bandeau défilant",
+      formatLine: "Ligne compacte",
+      formatCarousel: "Carrousel",
+      edSource: "Affiche",
+      edSourceHelp: "Les titres que la carte fait défiler.",
+      sourcePositions: "Positions du portefeuille",
+      sourceWatchlist: "Watchlist",
+      edSourcePositionsHelp: "Les titres du portefeuille. Les groupes créés dans Scalable apparaissent en dessous, chacun avec son interrupteur.",
+      edSourceWatchlistHelp: "Les titres de la watchlist. Un titre qui est aussi dans le portefeuille n'apparaît qu'une fois.",
+      edTkPeriod: "Variation sur",
+      edTkPeriodHelp: "La période couverte par la variation et la petite courbe.",
+      edBlockAuto: "Défilement automatique",
+      edBlockAutoHelp: "La façon dont la carte avance toute seule.",
+      edAutoAdvance: "Avancer automatiquement",
+      edAutoAdvanceHelp: "Désactivé, vous parcourez les titres à la main. Le défilement se met en pause tant que le pointeur est sur la carte et tant que la fenêtre est ouverte.",
+      edEffect: "Effet",
+      edEffectHelp: "L'aspect du passage d'un titre au suivant, et sa durée.",
+      edEffectType: "Type",
+      edEffectTypeHelp: "La façon dont un titre cède la place au suivant.",
+      fxSlide: "Glissement",
+      fxFade: "Fondu enchaîné",
+      fxRoll: "Défilement vers le haut",
+      fxFlap: "Afficheur à palettes",
+      fxZoom: "Fondu avec zoom",
+      fxGlide: "Glissement continu",
+      fxFocus: "Focus",
+      fxStagger: "Apparition échelonnée",
+      fxCoverflow: "Coverflow",
+      edEffectDuration: "Durée",
+      edEffectDurationHelp: "La durée du passage, de 100 à 3000 millisecondes. Avec le défilement automatique, elle reste inférieure aux secondes par titre.",
+      edElTileBg: "Arrière-plan des tuiles",
+      edElTileBgHelp: "Une couleur et une image de votre choix derrière chaque tuile du carrousel.",
+      edTileBgEnableHelp: "Applique la couleur et l'image ci-dessous. Désactivé, les tuiles gardent leur gris habituel.",
+      edTileBgColorHelp: "Couleur d'arrière-plan de chaque tuile. Vide : le gris habituel.",
+      edTileBgSizeHelp: "La façon dont l'image rejoint les bords d'une tuile.",
+      edEndlessLoop: "Boucle sans fin",
+      edEndlessLoopHelp: "Après le dernier titre revient le premier, sans retour en arrière jusqu'au début.",
+      edAutoInterval: "Secondes par titre",
+      edAutoIntervalHelp: "Le temps pendant lequel un titre reste affiché avant le suivant. Dans le bandeau et avec le glissement continu, le temps qu'il met à passer. De 2 à 120.",
+      edBlockEntry: "Ce qu'affiche une entrée",
+      edBlockEntryHelp: "Les éléments d'un titre dans le bandeau, la ligne ou la tuile.",
+      edTkChangeHelp: "La variation sur la période choisie.",
+      edTkNewsHelp: "L'étincelle devant le nom d'une entrée tant que Scalable a une synthèse de l'actualité du titre. Un clic l'ouvre par-dessus la page du titre.",
+      edTkPriceHelp: "Le cours actuel.",
+      edTkValue: "Valeur de la position",
+      edTkValueHelp: "À la place du cours d'une part, ce que vaut la position entière. Un titre qui n'est que dans la watchlist garde son cours.",
+      edTkSortHelp: "L'ordre dans lequel viennent les titres. Par valeur, les positions passent d'abord et les entrées de la watchlist suivent selon leur cours.",
+      edTkElRowPriceHelp: "Le cours d'une entrée - ou la valeur de la position, là où elle est affichée à sa place.",
+      edRowSymbol: "Mnémonique",
+      edRowSymbolHelp: "Le mnémonique sous lequel le titre est coté, par exemple AAPL pour Apple.",
+      edElRowSymbol: "Mnémonique",
+      edElRowSymbolHelp: "Le mnémonique devant le nom du titre.",
+      edTkCurveHelp: "La petite courbe de la période choisie, dans la ligne compacte et le carrousel.",
+      edBlockPopup: "Fenêtre",
+      edBlockPopupHelp: "Ce qu'affiche la fenêtre qui s'ouvre au clic.",
+      edTkPanelSettingsDesc: "Général, contenu et animation",
+      edGroupAnimation: "Animation",
+      edGroupPopup: "Fenêtre",
+      edTkPopHead: "Haut de la fenêtre",
+      edTkDetailLogoHelp: "Le logo du titre devant son nom en haut de la fenêtre. À défaut, un symbole rond avec sa première lettre.",
+      edTkElPopName: "Nom",
+      edTkElPopNameHelp: "Le nom du titre en haut de la fenêtre.",
+      edTkElPrice: "Cours",
+      edTkElPriceHelp: "Le grand cours en haut de la fenêtre.",
+      edTkElPosTitle: "En-tête",
+      edTkElPosTitleHelp: "L'en-tête « Votre position » au-dessus des chiffres.",
+      edTkChartHeightHelp: "Hauteur du graphique dans la fenêtre, en pixels.",
+      edTkChartLineHelp: "Épaisseur de la courbe dans le graphique de la fenêtre, en pixels.",
+      edTkPanelLayoutDesc: "Général, liste et fenêtre",
+      tkPrev: "Précédent",
+      tkNext: "Suivant",
+      edTkTotalHelp: "Le portefeuille dans son ensemble comme première entrée : sa valeur totale, sa variation sur la période choisie et la courbe de son rendement. Un clic ouvre cette courbe dans la fenêtre.",
+      edTkPick: "Titres",
+      edTkPickHelp: "Les titres des listes activées ci-dessus que la carte affiche. Cochez ceux à afficher, puis appliquez. Un titre que Scalable ajoute plus tard à une liste apparaît de lui-même.",
+      tkPickAll: "Tous les titres",
+      tkPickSome: (n, of) => `${n} titres sur ${of}`,
+      tkPickEvery: "Tous",
+      tkPickNone: "Aucun",
+      tkPickApply: "Appliquer",
+      tkPickEmpty: "Rien à choisir",
       edRowSparkline: "Courbe",
       edRowChange: "Variation",
       edRowPrice: "Cours",
@@ -1348,7 +1594,7 @@
       dividerDashed: "Tirets",
       dividerDotted: "Pointillés",
       edElLogo: "Symbole",
-      edElLogoHelp: "Le symbole rond devant une entrée.",
+      edElLogoHelp: "Le symbole rond d'une entrée.",
       edLogoSize: "Taille",
       edLogoSizeHelp: "Diamètre, p. ex. 36px.",
       edListOff: "Portefeuille et Watchlist sont tous deux désactivés sous Paramètres → Contenu, il n'y a donc aucune liste à configurer.",
@@ -1678,7 +1924,7 @@
       edDivider: "Mostra una linea tra le voci",
       edDividerHelp: "Una linea sottile tra due voci. Il suo aspetto si imposta in Layout → Elenco.",
       edRowLogo: "Simbolo",
-      edRowLogoHelp: "Un simbolo rotondo con la prima lettera del titolo. Scalable non fornisce i loghi.",
+      edRowLogoHelp: "Il logo del titolo. Dove manca, un simbolo rotondo con la sua prima lettera.",
       edRowValue: "Valore della posizione",
       edRowValueHelp: "Sotto il nome: quanto vale la posizione.",
       edRowOrders: "Ordini aperti",
@@ -1694,6 +1940,88 @@
       edRowPlanBgHelp: "Sfondo del badge.",
       edRowPlanIcon: "Simbolo",
       edRowPlanIconHelp: "Il simbolo del badge. All'inizio le due frecce.",
+      edFormat: "Formato",
+      edFormatHelp: "Come la scheda mostra i titoli: un nastro scorrevole, una riga compatta alla volta o un carosello di riquadri. Un clic su uno ne apre i dettagli.",
+      formatTicker: "Nastro scorrevole",
+      formatLine: "Riga compatta",
+      formatCarousel: "Carosello",
+      edSource: "Mostra",
+      edSourceHelp: "Quali titoli la scheda fa scorrere.",
+      sourcePositions: "Posizioni del portafoglio",
+      sourceWatchlist: "Watchlist",
+      edSourcePositionsHelp: "I titoli del portafoglio. I gruppi creati in Scalable compaiono sotto, ciascuno con il proprio interruttore.",
+      edSourceWatchlistHelp: "I titoli della watchlist. Un titolo presente anche nel portafoglio compare una sola volta.",
+      edTkPeriod: "Variazione su",
+      edTkPeriodHelp: "Il periodo coperto dalla variazione e dalla piccola curva.",
+      edBlockAuto: "Cambio automatico",
+      edBlockAutoHelp: "Come la scheda avanza da sola.",
+      edAutoAdvance: "Avanza automaticamente",
+      edAutoAdvanceHelp: "Disattivato, scorri i titoli a mano. Il cambio si ferma finché il puntatore è sulla scheda e finché la finestra è aperta.",
+      edEffect: "Effetto",
+      edEffectHelp: "Come appare il passaggio da un titolo al successivo e quanto dura.",
+      edEffectType: "Tipo",
+      edEffectTypeHelp: "Come un titolo lascia il posto al successivo.",
+      fxSlide: "Scorrimento",
+      fxFade: "Dissolvenza incrociata",
+      fxRoll: "Scorrimento verso l'alto",
+      fxFlap: "Tabellone a palette",
+      fxZoom: "Dissolvenza con zoom",
+      fxGlide: "Scorrimento continuo",
+      fxFocus: "Focus",
+      fxStagger: "Comparsa scaglionata",
+      fxCoverflow: "Coverflow",
+      edEffectDuration: "Durata",
+      edEffectDurationHelp: "Quanto dura il passaggio, da 100 a 3000 millisecondi. Con il cambio automatico resta più breve dei secondi per titolo.",
+      edElTileBg: "Sfondo dei riquadri",
+      edElTileBgHelp: "Un colore e un'immagine a tua scelta dietro ogni riquadro del carosello.",
+      edTileBgEnableHelp: "Applica il colore e l'immagine qui sotto. Disattivato, i riquadri mantengono il loro grigio abituale.",
+      edTileBgColorHelp: "Colore di sfondo di ogni riquadro. Vuoto: il grigio abituale.",
+      edTileBgSizeHelp: "Come l'immagine incontra i bordi di un riquadro.",
+      edEndlessLoop: "Ciclo continuo",
+      edEndlessLoopHelp: "Dopo l'ultimo titolo torna il primo, senza riavvolgersi fino all'inizio.",
+      edAutoInterval: "Secondi per titolo",
+      edAutoIntervalHelp: "Quanto resta un titolo prima del successivo. Nel nastro e con lo scorrimento continuo, quanto impiega a passare. Da 2 a 120.",
+      edBlockEntry: "Cosa mostra una voce",
+      edBlockEntryHelp: "Le parti di un titolo nel nastro, nella riga o nel riquadro.",
+      edTkChangeHelp: "La variazione nel periodo scelto.",
+      edTkNewsHelp: "La scintilla davanti al nome di una voce finché Scalable ha una sintesi delle notizie sul titolo. Un clic la apre sopra la pagina del titolo.",
+      edTkPriceHelp: "Il prezzo attuale.",
+      edTkValue: "Valore della posizione",
+      edTkValueHelp: "Al posto del prezzo di una quota, quanto vale l'intera posizione. Un titolo presente solo nella watchlist mantiene il suo prezzo.",
+      edTkSortHelp: "L'ordine in cui arrivano i titoli. Per valore, prima le posizioni e poi le voci della watchlist in base al prezzo.",
+      edTkElRowPriceHelp: "Il prezzo di una voce - o il valore della posizione, dove è mostrato al suo posto.",
+      edRowSymbol: "Sigla",
+      edRowSymbolHelp: "La sigla con cui il titolo è negoziato, ad esempio AAPL per Apple.",
+      edElRowSymbol: "Sigla",
+      edElRowSymbolHelp: "La sigla davanti al nome del titolo.",
+      edTkCurveHelp: "La piccola curva del periodo scelto, nella riga compatta e nel carosello.",
+      edBlockPopup: "Finestra",
+      edBlockPopupHelp: "Cosa mostra la finestra che si apre con un clic.",
+      edTkPanelSettingsDesc: "Generale, contenuto e animazione",
+      edGroupAnimation: "Animazione",
+      edGroupPopup: "Finestra",
+      edTkPopHead: "Testata",
+      edTkDetailLogoHelp: "Il logo del titolo davanti al suo nome in cima alla finestra. Dove manca, un simbolo rotondo con la sua prima lettera.",
+      edTkElPopName: "Nome",
+      edTkElPopNameHelp: "Il nome del titolo in cima alla finestra.",
+      edTkElPrice: "Prezzo",
+      edTkElPriceHelp: "Il prezzo grande in cima alla finestra.",
+      edTkElPosTitle: "Intestazione",
+      edTkElPosTitleHelp: "L'intestazione «La tua posizione» sopra le cifre.",
+      edTkChartHeightHelp: "Altezza del grafico nella finestra, in pixel.",
+      edTkChartLineHelp: "Spessore della curva nel grafico della finestra, in pixel.",
+      edTkPanelLayoutDesc: "Generale, elenco e finestra",
+      tkPrev: "Precedente",
+      tkNext: "Successivo",
+      edTkTotalHelp: "Il portafoglio nel suo insieme come prima voce: il suo valore totale, la sua variazione nel periodo scelto e la curva del suo rendimento. Un clic apre questa curva nella finestra.",
+      edTkPick: "Titoli",
+      edTkPickHelp: "Quali titoli degli elenchi attivati sopra mostra la scheda. Spunta quelli da mostrare e applica. Un titolo che Scalable aggiunge in seguito a un elenco compare da solo.",
+      tkPickAll: "Tutti i titoli",
+      tkPickSome: (n, of) => `${n} di ${of} titoli`,
+      tkPickEvery: "Tutti",
+      tkPickNone: "Nessuno",
+      tkPickApply: "Applica",
+      tkPickEmpty: "Niente da scegliere",
       edRowSparkline: "Curva",
       edRowChange: "Variazione",
       edRowPrice: "Prezzo",
@@ -1803,7 +2131,7 @@
       dividerDashed: "Tratteggiata",
       dividerDotted: "Punteggiata",
       edElLogo: "Simbolo",
-      edElLogoHelp: "Il simbolo rotondo davanti a una voce.",
+      edElLogoHelp: "Il simbolo rotondo di una voce.",
       edLogoSize: "Dimensione",
       edLogoSizeHelp: "Diametro, es. 36px.",
       edListOff: "Portafoglio e Watchlist sono entrambi disattivati in Impostazioni → Contenuto, quindi non c'è alcun elenco da configurare.",
@@ -2133,7 +2461,7 @@
       edDivider: "Mostrar una línea entre entradas",
       edDividerHelp: "Una línea fina entre dos entradas. Su aspecto está en Diseño → Lista.",
       edRowLogo: "Símbolo",
-      edRowLogoHelp: "Un símbolo redondo con la primera letra del valor. Scalable no facilita los logotipos.",
+      edRowLogoHelp: "El logotipo del valor. Donde no lo hay, un símbolo redondo con su primera letra.",
       edRowValue: "Valor de la posición",
       edRowValueHelp: "Bajo el nombre: lo que vale la posición.",
       edRowOrders: "Órdenes abiertas",
@@ -2149,6 +2477,88 @@
       edRowPlanBgHelp: "Fondo de la insignia.",
       edRowPlanIcon: "Símbolo",
       edRowPlanIconHelp: "El símbolo de la insignia. Al principio, las dos flechas.",
+      edFormat: "Formato",
+      edFormatHelp: "Cómo muestra la tarjeta los valores: una cinta en movimiento, una fila compacta cada vez o un carrusel de mosaicos. Un clic en uno abre sus detalles.",
+      formatTicker: "Cinta",
+      formatLine: "Fila compacta",
+      formatCarousel: "Carrusel",
+      edSource: "Muestra",
+      edSourceHelp: "Qué valores recorre la tarjeta.",
+      sourcePositions: "Posiciones de la cartera",
+      sourceWatchlist: "Watchlist",
+      edSourcePositionsHelp: "Los valores de la cartera. Los grupos creados en Scalable aparecen debajo, cada uno con su interruptor.",
+      edSourceWatchlistHelp: "Los valores de la watchlist. Uno que también está en la cartera aparece una sola vez.",
+      edTkPeriod: "Variación en",
+      edTkPeriodHelp: "El periodo que cubren la variación y la curva pequeña.",
+      edBlockAuto: "Cambio automático",
+      edBlockAutoHelp: "Cómo avanza la tarjeta por sí sola.",
+      edAutoAdvance: "Avanzar automáticamente",
+      edAutoAdvanceHelp: "Desactivado, recorres los valores a mano. Se detiene mientras el puntero está sobre la tarjeta y mientras la ventana está abierta.",
+      edEffect: "Efecto",
+      edEffectHelp: "Cómo se ve el paso de un valor al siguiente y cuánto dura.",
+      edEffectType: "Tipo",
+      edEffectTypeHelp: "Cómo un valor da paso al siguiente.",
+      fxSlide: "Deslizamiento",
+      fxFade: "Fundido cruzado",
+      fxRoll: "Desplazamiento hacia arriba",
+      fxFlap: "Panel de aletas",
+      fxZoom: "Fundido con zoom",
+      fxGlide: "Deslizamiento continuo",
+      fxFocus: "Enfoque",
+      fxStagger: "Aparición escalonada",
+      fxCoverflow: "Coverflow",
+      edEffectDuration: "Duración",
+      edEffectDurationHelp: "Cuánto dura el paso, de 100 a 3000 milisegundos. Con el cambio automático queda por debajo de los segundos por valor.",
+      edElTileBg: "Fondo de los mosaicos",
+      edElTileBgHelp: "Un color y una imagen propios detrás de cada mosaico del carrusel.",
+      edTileBgEnableHelp: "Dibuja el color y la imagen de abajo. Desactivado deja a los mosaicos su gris habitual.",
+      edTileBgColorHelp: "Color de fondo de cada mosaico. Vacío mantiene el gris habitual.",
+      edTileBgSizeHelp: "Cómo se ajusta la imagen a los bordes de un mosaico.",
+      edEndlessLoop: "Bucle sin fin",
+      edEndlessLoopHelp: "Tras el último valor vuelve el primero, sin retroceder hasta el principio.",
+      edAutoInterval: "Segundos por valor",
+      edAutoIntervalHelp: "Cuánto permanece un valor antes del siguiente. En la cinta y con el deslizamiento continuo, cuánto tarda en pasar. De 2 a 120.",
+      edBlockEntry: "Qué muestra una entrada",
+      edBlockEntryHelp: "Las partes de un valor en la cinta, la fila o el mosaico.",
+      edTkChangeHelp: "La variación en el periodo elegido.",
+      edTkNewsHelp: "El destello delante del nombre de una entrada mientras Scalable tenga un resumen de noticias del valor. Un clic lo abre sobre la página del valor.",
+      edTkPriceHelp: "El precio actual.",
+      edTkValue: "Valor de la posición",
+      edTkValueHelp: "En lugar del precio de una participación, lo que vale toda la posición. Un valor que solo está en la watchlist mantiene su precio.",
+      edTkSortHelp: "El orden en que llegan los valores. Por valor, primero van las posiciones y después las entradas de la watchlist según su precio.",
+      edTkElRowPriceHelp: "El precio de una entrada - o el valor de la posición, donde se muestra en su lugar.",
+      edRowSymbol: "Código bursátil",
+      edRowSymbolHelp: "El código con el que cotiza el valor, por ejemplo AAPL para Apple.",
+      edElRowSymbol: "Código bursátil",
+      edElRowSymbolHelp: "El código bursátil delante del nombre del valor.",
+      edTkCurveHelp: "La curva pequeña del periodo elegido, en la fila compacta y en el carrusel.",
+      edBlockPopup: "Ventana",
+      edBlockPopupHelp: "Qué muestra la ventana que se abre con un clic.",
+      edTkPanelSettingsDesc: "General, contenido y animación",
+      edGroupAnimation: "Animación",
+      edGroupPopup: "Ventana",
+      edTkPopHead: "Cabecera",
+      edTkDetailLogoHelp: "El logotipo del valor delante de su nombre en la parte superior de la ventana. Donde no lo hay, un símbolo redondo con su primera letra.",
+      edTkElPopName: "Nombre",
+      edTkElPopNameHelp: "El nombre del valor en la parte superior de la ventana.",
+      edTkElPrice: "Precio",
+      edTkElPriceHelp: "El precio grande en la parte superior de la ventana.",
+      edTkElPosTitle: "Encabezado",
+      edTkElPosTitleHelp: "El encabezado «Tu posición» sobre las cifras.",
+      edTkChartHeightHelp: "Altura del gráfico en la ventana, en píxeles.",
+      edTkChartLineHelp: "Grosor de la curva en el gráfico de la ventana, en píxeles.",
+      edTkPanelLayoutDesc: "General, lista y ventana",
+      tkPrev: "Anterior",
+      tkNext: "Siguiente",
+      edTkTotalHelp: "La cartera en su conjunto como primera entrada: su valor total, su variación en el periodo elegido y la curva de su rentabilidad. Un clic abre esa curva en la ventana.",
+      edTkPick: "Valores",
+      edTkPickHelp: "Qué valores de las listas activadas arriba muestra la tarjeta. Marca los que quieras mostrar y aplica. Un valor que Scalable añada más tarde a una lista aparece por sí solo.",
+      tkPickAll: "Todos los valores",
+      tkPickSome: (n, of) => `${n} de ${of} valores`,
+      tkPickEvery: "Todos",
+      tkPickNone: "Ninguno",
+      tkPickApply: "Aplicar",
+      tkPickEmpty: "Nada que elegir",
       edRowSparkline: "Curva",
       edRowChange: "Variación",
       edRowPrice: "Precio",
@@ -2258,7 +2668,7 @@
       dividerDashed: "Discontinua",
       dividerDotted: "Punteada",
       edElLogo: "Símbolo",
-      edElLogoHelp: "El símbolo redondo delante de una entrada.",
+      edElLogoHelp: "El símbolo redondo de una entrada.",
       edLogoSize: "Tamaño",
       edLogoSizeHelp: "Diámetro, p. ej. 36px.",
       edListOff: "Cartera y Watchlist están desactivadas en Ajustes → Contenido, así que no hay ninguna lista que configurar.",
@@ -2588,7 +2998,7 @@
       edDivider: "Lijn tussen items tonen",
       edDividerHelp: "Een dunne lijn tussen twee items. Het uiterlijk staat onder Layout → Lijst.",
       edRowLogo: "Symbool",
-      edRowLogoHelp: "Een rond symbool met de eerste letter van het effect. Scalable geeft de logo's niet vrij.",
+      edRowLogoHelp: "Het logo van het effect. Waar er geen is, een rond symbool met de eerste letter.",
       edRowValue: "Waarde van de positie",
       edRowValueHelp: "Onder de naam: wat de positie waard is.",
       edRowOrders: "Open orders",
@@ -2604,6 +3014,88 @@
       edRowPlanBgHelp: "Achtergrond van de badge.",
       edRowPlanIcon: "Symbool",
       edRowPlanIconHelp: "Het symbool op de badge. In het begin de twee pijlen.",
+      edFormat: "Formaat",
+      edFormatHelp: "Hoe de kaart de effecten toont: als lopende ticker, als één compacte regel tegelijk of als carrousel van tegels. Een klik op een effect opent de details.",
+      formatTicker: "Ticker",
+      formatLine: "Compacte regel",
+      formatCarousel: "Carrousel",
+      edSource: "Toont",
+      edSourceHelp: "Welke effecten de kaart doorloopt.",
+      sourcePositions: "Posities in de portefeuille",
+      sourceWatchlist: "Watchlist",
+      edSourcePositionsHelp: "De effecten in de portefeuille. Groepen die in Scalable zijn aangemaakt, staan eronder, elk met een eigen schakelaar.",
+      edSourceWatchlistHelp: "De effecten op de watchlist. Een effect dat ook in de portefeuille zit, verschijnt één keer.",
+      edTkPeriod: "Verandering over",
+      edTkPeriodHelp: "De periode van de verandering en de kleine curve.",
+      edBlockAuto: "Automatisch wisselen",
+      edBlockAutoHelp: "Hoe de kaart vanzelf verdergaat.",
+      edAutoAdvance: "Automatisch verdergaan",
+      edAutoAdvanceHelp: "Uit blader je met de hand door de effecten. Het wisselen pauzeert zolang de aanwijzer op de kaart staat en zolang de pop-up open is.",
+      edEffect: "Overgang",
+      edEffectHelp: "Hoe de overgang van het ene effect naar het volgende eruitziet en hoe lang die duurt.",
+      edEffectType: "Type",
+      edEffectTypeHelp: "Hoe het ene effect plaatsmaakt voor het volgende.",
+      fxSlide: "Schuiven",
+      fxFade: "Overvloeien",
+      fxRoll: "Omhoog rollen",
+      fxFlap: "Split-flap",
+      fxZoom: "Zoomen en vervagen",
+      fxGlide: "Doorlopend glijden",
+      fxFocus: "Focus",
+      fxStagger: "Getrapt infaden",
+      fxCoverflow: "Coverflow",
+      edEffectDuration: "Duur",
+      edEffectDurationHelp: "Hoe lang de overgang duurt, van 100 tot 3000 milliseconden. Bij automatisch wisselen blijft die korter dan de seconden per effect.",
+      edElTileBg: "Tegelachtergrond",
+      edElTileBgHelp: "Een eigen kleur en een eigen afbeelding achter elke tegel van de carrousel.",
+      edTileBgEnableHelp: "Tekent de kleur en de afbeelding hieronder. Uit laat de tegels hun gewone grijs houden.",
+      edTileBgColorHelp: "Achtergrondkleur van elke tegel. Leeg houdt het gewone grijs.",
+      edTileBgSizeHelp: "Hoe de afbeelding op de randen van een tegel aansluit.",
+      edEndlessLoop: "Eindeloze lus",
+      edEndlessLoopHelp: "Na het laatste effect volgt weer het eerste, zonder terug te lopen naar het begin.",
+      edAutoInterval: "Seconden per effect",
+      edAutoIntervalHelp: "Hoe lang een effect blijft staan voor het volgende komt. In de ticker en bij doorlopend glijden: hoe lang het erover doet om voorbij te komen. 2 tot 120.",
+      edBlockEntry: "Wat een item toont",
+      edBlockEntryHelp: "De onderdelen van een effect in de ticker, de regel of de tegel.",
+      edTkChangeHelp: "De verandering over de gekozen periode.",
+      edTkNewsHelp: "De vonk voor de naam van een item zolang Scalable een nieuwssamenvatting over het effect heeft. Een klik opent die boven de pagina van het effect.",
+      edTkPriceHelp: "De huidige koers.",
+      edTkValue: "Positiewaarde",
+      edTkValueHelp: "In plaats van de koers van één stuk: wat de hele positie waard is. Een effect dat alleen op de watchlist staat, houdt zijn koers.",
+      edTkSortHelp: "De volgorde waarin de effecten komen. Op waarde komen eerst de posities en daarna de watchlist-items op koers.",
+      edTkElRowPriceHelp: "De koers bij een item - of de waarde van de positie, waar die in plaats daarvan wordt getoond.",
+      edRowSymbol: "Afkorting",
+      edRowSymbolHelp: "De afkorting waaronder het effect wordt verhandeld, bijvoorbeeld AAPL voor Apple.",
+      edElRowSymbol: "Afkorting",
+      edElRowSymbolHelp: "De afkorting voor de naam van het effect.",
+      edTkCurveHelp: "De kleine curve van de gekozen periode, in de compacte regel en de carrousel.",
+      edBlockPopup: "Pop-up",
+      edBlockPopupHelp: "Wat de pop-up toont die bij een klik opent.",
+      edTkPanelSettingsDesc: "Algemeen, inhoud en animatie",
+      edGroupAnimation: "Animatie",
+      edGroupPopup: "Pop-up",
+      edTkPopHead: "Bovendeel",
+      edTkDetailLogoHelp: "Het logo van het effect voor de naam bovenaan de pop-up. Waar er geen is, een rond symbool met de eerste letter.",
+      edTkElPopName: "Naam",
+      edTkElPopNameHelp: "De naam van het effect bovenaan de pop-up.",
+      edTkElPrice: "Koers",
+      edTkElPriceHelp: "De grote koers bovenaan de pop-up.",
+      edTkElPosTitle: "Kop",
+      edTkElPosTitleHelp: "De kop 'Jouw positie' boven de cijfers.",
+      edTkChartHeightHelp: "Hoogte van de grafiek in de pop-up, in pixels.",
+      edTkChartLineHelp: "Dikte van de curve in de grafiek van de pop-up, in pixels.",
+      edTkPanelLayoutDesc: "Algemeen, lijst en pop-up",
+      tkPrev: "Vorige",
+      tkNext: "Volgende",
+      edTkTotalHelp: "De portefeuille als geheel als eerste item: de totale waarde, de verandering over de gekozen periode en de curve van het rendement. Een klik opent die curve in de pop-up.",
+      edTkPick: "Effecten",
+      edTkPickHelp: "Welke effecten van de hierboven ingeschakelde lijsten de kaart toont. Vink aan wat je wilt tonen en pas toe. Een effect dat Scalable later aan een lijst toevoegt, verschijnt vanzelf.",
+      tkPickAll: "Alle effecten",
+      tkPickSome: (n, of) => `${n} van ${of} effecten`,
+      tkPickEvery: "Alle",
+      tkPickNone: "Geen",
+      tkPickApply: "Toepassen",
+      tkPickEmpty: "Niets om uit te kiezen",
       edRowSparkline: "Curve",
       edRowChange: "Verandering",
       edRowPrice: "Koers",
@@ -2713,7 +3205,7 @@
       dividerDashed: "Gestreept",
       dividerDotted: "Gestippeld",
       edElLogo: "Symbool",
-      edElLogoHelp: "Het ronde symbool voor een item.",
+      edElLogoHelp: "Het ronde symbool van een item.",
       edLogoSize: "Grootte",
       edLogoSizeHelp: "Diameter, bijv. 36px.",
       edListOff: "Portefeuille en Watchlist staan onder Instellingen → Inhoud allebei uit, dus er is geen lijst om in te stellen.",
@@ -2855,6 +3347,8 @@
     show_portfolio_savings: true,
     sort: "name",
     // What a security's own page shows.
+    // The symbol in front of the name at the top of a security's page.
+    show_detail_logo: true,
     show_detail_chart: true,
     show_detail_quote: true,
     show_detail_news: true,
@@ -2906,6 +3400,7 @@
     ...look("section", { section_bold: true }),
     ...look("section_value"),
     ...look("row_name"),
+    ...look("row_symbol", { row_symbol_bold: true }),
     ...look("row_value", { row_value_bold: true }),
     ...look("row_badge", { row_badge_background: true, row_badge_background_color: "" }),
     // The symbols on the two badges: the web app's to begin with.
@@ -2973,11 +3468,11 @@
     return null;
   }
 
-  function pruneDefaults(config) {
+  function pruneDefaults(config, defaults = DEFAULTS) {
     const out = {};
     for (const [key, value] of Object.entries(config)) {
       if (key === "type") { out[key] = value; continue; }
-      if (sameValue(value, DEFAULTS[key])) continue;
+      if (sameValue(value, defaults[key])) continue;
       out[key] = value;
     }
     return out;
@@ -3426,10 +3921,82 @@
     return escapeHtml(parts.join("; "));
   }
 
-  // Scalable does not hand out the logos, so an entry gets a disc with its
-  // first letter - in a colour of its own, taken from the ISIN so that it is
-  // the same one every time and in every list.
+  // Short names and logos, which the integration fetches once per security
+  // - see symbols.py. One table for every card on the page: a security is the
+  // same in all of them, and two cards should not ask twice.
+  const MARK_ISIN = /^[A-Z]{2}[A-Z0-9]{9}[0-9]$/;
+  const MARK_BATCH = 60;
+  const MARKS = new Map();
+  const MARK_ASKED = new Set();
+  const MARK_WANTED = new Map();
+  const MARK_CARDS = new Set();
+  // After a call that failed - Home Assistant restarting, as a rule - a
+  // minute's wait. A security one of the two services did not answer for is
+  // asked again once the integration is ready to try them again: a little
+  // longer than its own wait of a quarter of an hour.
+  const MARK_PAUSE = 60000;
+  const MARK_AGAIN = 16 * 60000;
+  let marksVersion = 0;
+  let markTimer = null;
+  let markHass = null;
+  let markPause = 0;
+
+  function markOf(item) {
+    const isin = item && item.isin;
+    if (!isin || !MARK_ISIN.test(isin)) return null;
+    const known = MARKS.get(isin);
+    const now = Date.now();
+    const wanted = !known || (known.again && now >= known.again);
+    if (wanted && !MARK_ASKED.has(isin) && now >= markPause) {
+      MARK_WANTED.set(isin, { isin, type: item.type || null, name: item.name || null });
+      if (!markTimer) markTimer = setTimeout(askMarks, 0);
+    }
+    return known || null;
+  }
+
+  async function askMarks() {
+    markTimer = null;
+    if (!markHass) return;
+    const items = [...MARK_WANTED.values()];
+    MARK_WANTED.clear();
+    items.forEach((item) => MARK_ASKED.add(item.isin));
+    let drew = false;
+    for (let start = 0; start < items.length; start += MARK_BATCH) {
+      const batch = items.slice(start, start + MARK_BATCH);
+      let marks = {};
+      try {
+        marks = await markHass.callWS({ type: "scalable/marks", items: batch });
+      } catch (err) {
+        // Not answered at all: these are free to be asked for again.
+        batch.forEach((item) => MARK_ASKED.delete(item.isin));
+        markPause = Date.now() + MARK_PAUSE;
+        continue;
+      }
+      for (const [isin, mark] of Object.entries(marks)) {
+        const old = MARKS.get(isin);
+        if (mark.retry) {
+          mark.again = Date.now() + MARK_AGAIN;
+          MARK_ASKED.delete(isin);
+        }
+        MARKS.set(isin, mark);
+        if (!old ? mark.symbol || mark.logo : old.symbol !== mark.symbol || old.logo !== mark.logo) drew = true;
+      }
+    }
+    if (drew) {
+      marksVersion += 1;
+      MARK_CARDS.forEach((card) => card._render());
+    }
+  }
+
+  // The security's logo; where there is none, a disc with its first letter
+  // in a colour of its own, taken from the ISIN so that it is the same one
+  // every time and in every list. Always an <img>: a logo is somebody else's
+  // SVG, and nothing inside an image can run.
   function logoHtml(item, big) {
+    const mark = markOf(item);
+    if (mark && mark.logo) {
+      return `<span class="logo pic${big ? " big" : ""}"><img src="${escapeHtml(mark.logo)}" alt=""></span>`;
+    }
     const seed = String(item.isin || item.identifier || item.name || "?");
     let hash = 0;
     for (let i = 0; i < seed.length; i += 1) hash = (hash * 31 + seed.charCodeAt(i)) % 360;
@@ -3599,8 +4166,13 @@
       const raw = toNumber(tx.cash.amount);
       if (!isNumber(raw) || !raw) continue;
       const amount = type === "WITHDRAWAL" ? -Math.abs(raw) : Math.abs(raw);
-      const at = new Date(tx.lastEventAt).getTime();
-      if (!isNumber(at) || at < base - window) continue;
+      let at = new Date(tx.lastEventAt).getTime();
+      if (!isNumber(at)) continue;
+      // Booked where the curve shows nothing, between its base and the next
+      // point - a weekend, as a rule. However long that stretch is, the
+      // money arrives at that next point.
+      if (cut + 1 < points.length && at > points[cut].t && at < points[cut + 1].t) at = points[cut + 1].t;
+      if (at < base - window) continue;
       let best = null;
       let bestOff = Infinity;
       for (let i = cut + 1; i < points.length; i++) {
@@ -3879,6 +4451,11 @@
     }
 
     set hass(hass) {
+      markHass = hass;
+      // Here as well as in connectedCallback: a card that a newer version of
+      // this file took over was connected under the older one, and would
+      // not hear of the logos the newer one fetches.
+      if (this.isConnected) MARK_CARDS.add(this);
       const first = !this._hass;
       const language = localeOf(hass) + "|" + (hass && hass.language);
       const changed = language !== this._language;
@@ -3911,6 +4488,7 @@
     }
 
     connectedCallback() {
+      MARK_CARDS.add(this);
       this._subscribe();
       // "updated 3 min ago" goes stale by itself - and when trading opens
       // or closes between two updates, the moon has to come or go without
@@ -3931,6 +4509,7 @@
     }
 
     disconnectedCallback() {
+      MARK_CARDS.delete(this);
       this._unsubscribe();
       if (this._clock) clearInterval(this._clock);
       this._clock = null;
@@ -4088,15 +4667,31 @@
         cut = Math.max(0, points.filter((point) => point.t < today).length - 1);
       }
       if (mode === "value") return { points, cut };
-      const base = points[cut].v;
       const flows = cashFlows(data.transactions, points, cut);
+      const period = CHART_PERIODS.find((p) => p.key === range) || OVERVIEW_PERIODS.find((p) => p.key === range);
+      const figure = period && data.returns ? data.returns[period.tf] : null;
+      // The record's last point of the day before can be minutes short of the
+      // close, and the whole curve would stand off by the difference. Scalable's
+      // own figure for the day names the close to the cent: the value now, less
+      // that figure, less what was paid in since. Not trusted when it lands
+      // far from the record - a deposit not yet in the value would do that.
+      let base = points[cut].v;
+      let anchored = false;
+      if (range === "1d" && isNumber(figure) && isNumber(data.total)) {
+        let paidIn = 0;
+        for (let i = cut + 1; i < points.length; i++) paidIn += flows[i] || 0;
+        const close = data.total - figure - paidIn;
+        if (Math.abs(close - base) <= Math.abs(base) * 0.03) {
+          base = close;
+          anchored = true;
+        }
+      }
       let moved = 0;
       const out = points.map((point, i) => {
         if (i > cut) moved += flows[i] || 0;
         return { t: point.t, v: point.v - base - moved, gap: point.gap };
       });
-      const period = CHART_PERIODS.find((p) => p.key === range) || OVERVIEW_PERIODS.find((p) => p.key === range);
-      const figure = period && data.returns ? data.returns[period.tf] : null;
+      if (anchored) out[cut] = { ...out[cut], v: 0 };
       if (isNumber(figure)) out[out.length - 1] = { t: out[out.length - 1].t, v: figure };
       return { points: out, cut };
     }
@@ -4406,32 +5001,7 @@
       }
 
       const card = this._root;
-      const setVar = (name, value) => {
-        if (value === "" || value === undefined || value === null) card.style.removeProperty(name);
-        else card.style.setProperty(name, String(value));
-      };
-      setVar("--sc-gain", config.gain_color || GAIN);
-      setVar("--sc-loss", config.loss_color || LOSS);
-      // The tab line's active colour is the product's: the overnight
-      // account has a tab line of its own.
-      setVar(
-        "--sc-tab-active",
-        this._productKey().startsWith("overnight") ? config.overnight_tabs_active_color : config.tabs_active_color
-      );
-      setVar("--sc-period-active", config.period_active_background_color);
-      const px = (value) => (Number.isFinite(Number(value)) && Number(value) > 0 ? `${Number(value)}px` : "");
-      setVar("--sc-chart-height", px(config.chart_height));
-      setVar("--sc-spark-width", px(config.sparkline_width));
-      setVar("--sc-logo-size", CSS.supports("width", config.logo_size) ? config.logo_size : "");
-      setVar("--sc-divider-color", config.divider_color);
-      setVar("--sc-credit-bar", config.credit_bar_color);
-      setVar("--sc-news-icon", config.news_icon_color);
-      setVar("--sc-insight-size", CSS.supports("width", config.row_insight_size) ? config.row_insight_size : "");
-      setVar("--sc-credit-bar-height", CSS.supports("height", config.credit_bar_height) ? config.credit_bar_height : "");
-      setVar("--sc-divider-width", CSS.supports("border-top-width", config.divider_width) ? config.divider_width : "");
-      setVar("--sc-divider-style", config.divider_style);
-      card.classList.toggle("dividers", config.show_divider === true);
-      this._applyBackground();
+      this._applyCardLook();
 
       // A field being typed into keeps its focus and its caret across a
       // redraw - the list under it is what changes, not the field.
@@ -4557,6 +5127,39 @@
       if (el) el.textContent = updatedText(t(this._hass), this._data && this._data.updated);
     }
 
+    // Colours, sizes and the background - everything the config says about
+    // the whole card, written onto it as variables.
+    _applyCardLook() {
+      const card = this._root;
+      const config = this._config;
+      const setVar = (name, value) => {
+        if (value === "" || value === undefined || value === null) card.style.removeProperty(name);
+        else card.style.setProperty(name, String(value));
+      };
+      setVar("--sc-gain", config.gain_color || GAIN);
+      setVar("--sc-loss", config.loss_color || LOSS);
+      // The tab line's active colour is the product's: the overnight
+      // account has a tab line of its own.
+      setVar(
+        "--sc-tab-active",
+        this._productKey().startsWith("overnight") ? config.overnight_tabs_active_color : config.tabs_active_color
+      );
+      setVar("--sc-period-active", config.period_active_background_color);
+      const px = (value) => (Number.isFinite(Number(value)) && Number(value) > 0 ? `${Number(value)}px` : "");
+      setVar("--sc-chart-height", px(config.chart_height));
+      setVar("--sc-spark-width", px(config.sparkline_width));
+      setVar("--sc-logo-size", CSS.supports("width", config.logo_size) ? config.logo_size : "");
+      setVar("--sc-divider-color", config.divider_color);
+      setVar("--sc-credit-bar", config.credit_bar_color);
+      setVar("--sc-news-icon", config.news_icon_color);
+      setVar("--sc-insight-size", CSS.supports("width", config.row_insight_size) ? config.row_insight_size : "");
+      setVar("--sc-credit-bar-height", CSS.supports("height", config.credit_bar_height) ? config.credit_bar_height : "");
+      setVar("--sc-divider-width", CSS.supports("border-top-width", config.divider_width) ? config.divider_width : "");
+      setVar("--sc-divider-style", config.divider_style);
+      card.classList.toggle("dividers", config.show_divider === true);
+      this._applyBackground();
+    }
+
     _applyBackground() {
       const card = this._root;
       for (const name of ["color", "image", "size", "repeat", "opacity"]) {
@@ -4574,13 +5177,7 @@
       }
       // Two properties per choice: how the image is scaled, and whether it
       // is laid out once or tiled.
-      const fits = {
-        cover: ["cover", "no-repeat"],
-        contain: ["contain", "no-repeat"],
-        auto: ["auto", "no-repeat"],
-        repeat: ["auto", "repeat"],
-      };
-      const [size, repeat] = fits[this._config.card_background_size] || fits.cover;
+      const [size, repeat] = BACKGROUND_FITS[this._config.card_background_size] || BACKGROUND_FITS.cover;
       card.style.setProperty("--sc-card-background-size", size);
       card.style.setProperty("--sc-card-background-repeat", repeat);
       const percentage = Number(this._config.card_background_opacity);
@@ -5580,8 +6177,8 @@
 
       let html =
         this._backHtml(str) +
-        `<div class="d-head">${logoHtml(item, true)}<div class="d-id">` +
-        `<div class="d-name" style="${elementStyle(config, "row_name")}">${escapeHtml(item.name)}</div>` +
+        `<div class="d-head">${config.show_detail_logo !== false ? logoHtml(item, true) : ""}<div class="d-id">` +
+        `<div class="d-name" style="${elementStyle(config, this._detailNameLook())}">${escapeHtml(item.name)}</div>` +
         `<div class="d-sub">` +
         (held ? `<span class="row-value">${escapeHtml(money(hass, item.value))}</span>` : "") +
         (orders ? this._badgeHtml(orders, item.isin) : "") +
@@ -5677,6 +6274,12 @@
     }
 
     // The transactions, the open ones first and the rest under their day.
+    // Which look the name at the top of a security's page wears: the
+    // entry's here, one of its own on the ticker card.
+    _detailNameLook() {
+      return "row_name";
+    }
+
     _txListHtml(list, str, plain) {
       const hass = this._hass;
       if (!list.length) return `<div class="empty">${escapeHtml(str.txNone)}</div>`;
@@ -6446,12 +7049,15 @@
   const GROUPS = [
     { key: "general", icon: "mdi:cog" },
     { key: "content", icon: "mdi:filter-variant" },
+    { key: "animation", icon: "mdi:animation-play-outline" },
     // Two tabs called "List": what an entry is made of, under Settings, and
     // how it looks, under Layout.
     { key: "rows", icon: "mdi:format-list-bulleted" },
     { key: "display", icon: "mdi:eye-outline" },
     { key: "chart", icon: "mdi:chart-line" },
     { key: "list", icon: "mdi:format-list-bulleted" },
+    // The ticker card's only.
+    { key: "popup", icon: "mdi:card-text-outline" },
   ];
 
   // Annuals' own palette, in its own order, so a colour picked in one card can
@@ -6494,6 +7100,15 @@
     "period", "change", "section", "section_value",
     "news_title", "news_text", "news_popup_title", "news_popup_text", "news_popup_note",
   ];
+
+  // Two properties per choice: how an image is scaled, and whether it is
+  // laid out once or tiled.
+  const BACKGROUND_FITS = {
+    cover: ["cover", "no-repeat"],
+    contain: ["contain", "no-repeat"],
+    auto: ["auto", "no-repeat"],
+    repeat: ["auto", "repeat"],
+  };
 
   const DESIGN_ELEMENTS = {
     title: {
@@ -6785,6 +7400,27 @@
       fontHelp: "edFontHelp",
       fallback: "var(--primary-text-color)",
       tab: "list",
+      hidden: (config) => config.show_row_name === false,
+    },
+    // Only the ticker card draws it; "ticker" keeps it off the main card's tab.
+    row_symbol: {
+      label: "edElRowSymbol",
+      help: "edElRowSymbolHelp",
+      colorHelp: "edColorHelp",
+      fontHelp: "edFontHelp",
+      fallback: "var(--primary-text-color)",
+      tab: "ticker",
+      hidden: (config) => config.show_row_symbol !== true,
+    },
+    // The ticker card's too: the name at the top of its pop-up, which the
+    // main card's page dresses like the entry's.
+    detail_name: {
+      label: "edTkElPopName",
+      help: "edTkElPopNameHelp",
+      colorHelp: "edColorHelp",
+      fontHelp: "edFontHelp",
+      fallback: "var(--primary-text-color)",
+      tab: "ticker",
     },
     row_value: {
       label: "edElRowValue",
@@ -6898,6 +7534,14 @@
     set hass(hass) {
       this._hass = hass;
       this._render();
+    }
+
+    _superGroups() {
+      return SUPER_GROUPS;
+    }
+
+    _superDesc(key, str) {
+      return key === "settings" ? str.edPanelSettingsDesc : str.edPanelLayoutDesc;
     }
 
     _emit() {
@@ -7072,6 +7716,7 @@
       return {
         general: str.edGroupGeneral,
         content: str.edGroupContent,
+        animation: str.edGroupAnimation,
         rows: str.edGroupRows,
         display: str.edGroupDisplay,
         chart: str.edGroupChart,
@@ -7994,7 +8639,7 @@
         const openSuper = this._openSuper || null;
         const activeTabs = { ...(this._activeTabs || {}) };
         this.shadowRoot.innerHTML = `<style>${EDITOR_STYLE}</style>`;
-        for (const superGroup of SUPER_GROUPS) {
+        for (const superGroup of this._superGroups()) {
           const panel = document.createElement("div");
           panel.className = "super-panel";
           panel.dataset.super = superGroup.key;
@@ -8013,8 +8658,7 @@
             </div>`;
           panel.querySelector(".super-title").textContent =
             superGroup.key === "settings" ? str.edPanelSettings : str.edPanelLayout;
-          panel.querySelector(".super-subtitle").textContent =
-            superGroup.key === "settings" ? str.edPanelSettingsDesc : str.edPanelLayoutDesc;
+          panel.querySelector(".super-subtitle").textContent = this._superDesc(superGroup.key, str);
           panel
             .querySelector(".super-header")
             .addEventListener("click", () => this._toggleSuper(superGroup.key));
@@ -8559,11 +9203,21 @@
       margin-bottom: 8px;
     }
     .content-block { min-width: 0; }
+    /* Fills from the left and keeps its second column empty rather than
+       stretching a single entry across both. */
+    .tk-pair { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0 16px; }
+    .tk-pair > * { min-width: 0; }
+    .tk-pair select, .tk-pair .unit-input-wrap input { box-sizing: border-box; height: 38px; }
     .product-group { margin-top: 18px; }
     .product-group .product-heading .field-label { font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
     .product-group + .product-group { margin-top: 26px; }
     .content-block .group-label-row { margin-bottom: 8px; }
     .content-block .toggle-row { margin-bottom: 10px; }
+    /* The ticker's sources. Padding, not margin, between the group switches:
+       the line down their left side stays one line. */
+    .content-block .tk-source .sub-toggle-row { margin-top: 0; margin-bottom: 0; padding-top: 6px; padding-bottom: 6px; }
+    .content-block .tk-source .toggle-row:not(.sub-toggle-row) + .sub-toggle-row { margin-top: -6px; }
+    .content-block .tk-source .sub-toggle-row:last-child { margin-bottom: 6px; }
     /* Stands in for a tab's settings while the list is off. */
     .off-note {
       margin: 4px 0 8px;
@@ -8882,6 +9536,30 @@
       font-size: 0.85em;
     }
     .preset-item:hover { background: var(--secondary-background-color, rgba(0, 0, 0, 0.06)); }
+    /* The ticker card's menu of securities: the colour menu's box, as wide
+       as its row, with a list that scrolls between two fixed lines. */
+    .pick-select { flex: 1 1 auto; min-width: 0; }
+    .pick-btn { width: 100%; max-width: none; box-sizing: border-box; }
+    .pick-menu { right: 0; min-width: 0; padding: 0; display: flex; flex-direction: column; overflow: hidden; }
+    .pick-menu[hidden] { display: none; }
+    .pick-tools { flex: none; display: flex; gap: 14px; padding: 8px 12px 4px; }
+    .pick-tools button { all: unset; cursor: pointer; font-size: 0.8em; color: var(--primary-color); }
+    .pick-tools button:hover, .pick-tools button:focus-visible { text-decoration: underline; }
+    .pick-tools button:disabled { opacity: 0.4; cursor: default; text-decoration: none; }
+    .pick-list { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 0 4px 4px; }
+    .pick-head { padding: 8px 8px 2px; font-size: 0.72em; font-weight: 600; text-transform: uppercase;
+                 letter-spacing: 0.04em; color: var(--secondary-text-color); }
+    .pick-item { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px;
+                 cursor: pointer; font-size: 0.85em; }
+    .pick-item:hover { background: var(--secondary-background-color, rgba(0, 0, 0, 0.06)); }
+    .pick-item input { flex: none; margin: 0; accent-color: var(--primary-color); }
+    .pick-item span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pick-none { padding: 10px 8px; font-size: 0.85em; color: var(--secondary-text-color); }
+    .pick-foot { flex: none; display: flex; justify-content: flex-end; padding: 8px;
+                 border-top: 1px solid var(--divider-color, #e0e0e0); }
+    .pick-apply { border: none; border-radius: 4px; padding: 6px 14px; font: inherit; font-size: 0.85em; cursor: pointer;
+                  background: var(--primary-color); color: var(--text-primary-color, #fff); }
+    .pick-apply:disabled { opacity: 0.4; cursor: default; }
   `;
 
   // ------------------------------------------------------------------ style
@@ -9091,6 +9769,8 @@
             width: var(--sc-logo-size, 36px); height: var(--sc-logo-size, 36px);
             border-radius: 50%; color: #fff; font-weight: 700; }
     .logo.big { width: 56px; height: 56px; font-size: 1.5em; }
+    .logo.pic { background: #fff; overflow: hidden; }
+    .logo.pic img { display: block; width: 100%; height: 100%; object-fit: contain; }
     .row-main { grid-column: main; min-width: 0; }
     .row-name { font-size: 1.1em; font-weight: 500; color: var(--primary-text-color);
                 overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -9400,6 +10080,1765 @@
     }
   `;
 
+  // ------------------------------------------------------------ ticker card
+  //
+  // The second card: the securities one after another, as a running ticker,
+  // a compact row or a carousel of tiles. A click opens the security's page
+  // in a pop-up, with a way on to the next. It is the Scalable card with
+  // another face: subscription, curves, Market Insights and the page itself
+  // are inherited.
+  const TICKER_TAG = "scalable-ticker-card";
+  const TICKER_EDITOR_TAG = `${TICKER_TAG}-editor`;
+  const TICKER_DEFAULTS = {
+    ...DEFAULTS,
+    layout: "ticker",
+    show_portfolio: true,
+    show_watchlist: false,
+    // The ids of the groups switched off, "ungrouped" for the rest.
+    hidden_groups: [],
+    // The securities taken out one by one, by ISIN.
+    hidden_securities: [],
+    // The portfolio as a whole as the first entry.
+    show_portfolio_total: false,
+    ticker_period: "1d",
+    auto_advance: true,
+    auto_interval: 5,
+    // After the last security the first again, without the run back.
+    endless_loop: true,
+    line_effect: "slide",
+    carousel_effect: "slide",
+    effect_duration: 400,
+    tile_background: false,
+    tile_background_color: "",
+    tile_background_image: "",
+    tile_background_size: "cover",
+    tile_background_opacity: 100,
+    show_row_name: true,
+    show_row_symbol: false,
+    // In place of the price of one share: what the position is worth.
+    show_position_value: false,
+    ...look("detail_name"),
+    // The page in the pop-up has nowhere to send these two to.
+    show_tab_alerts: false,
+    show_tab_transactions: false,
+    // The pop-up fits without scrolling only without the list.
+    show_detail_transactions: false,
+  };
+  const tickerConfig = (config) => ({ ...TICKER_DEFAULTS, ...(config || {}) });
+  const tickerSeconds = (config) => {
+    const value = Number(config.auto_interval);
+    return Number.isFinite(value) && value > 0
+      ? Math.max(2, Math.min(120, value))
+      : TICKER_DEFAULTS.auto_interval;
+  };
+
+  // What stands for the portfolio as a whole where an entry is named by its ISIN.
+  const TK_TOTAL = "__total";
+
+  // The securities the two lists and the groups let through, before any is
+  // taken out by itself. The editor offers exactly these to choose from.
+  function tickerSources(data, config) {
+    let positions = [];
+    if (config.show_portfolio !== false) {
+      // A security in several groups stays while any one of them is on.
+      const off = new Set(config.hidden_groups || []);
+      const groups = data.groups || [];
+      positions = (data.positions || []).filter((item) => {
+        const own = groups.filter((group) => (group.isins || []).includes(item.isin));
+        return own.length ? own.some((group) => !off.has(group.id)) : !off.has("ungrouped");
+      });
+    }
+    let watchlist = [];
+    if (config.show_watchlist === true) {
+      const held = new Set(positions.map((item) => item.isin));
+      watchlist = (data.watchlist || []).filter((item) => !held.has(item.isin));
+    }
+    return { positions, watchlist };
+  }
+
+  // Whether the device asks for less motion.
+  const lessMotion = () => !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+
+  // The ways one entry gives way to the next. "slide" is the plain strip.
+  const TK_LINE_EFFECTS = ["slide", "fade", "roll", "flap", "zoom"];
+  const TK_CAROUSEL_EFFECTS = ["slide", "glide", "focus", "stagger", "coverflow"];
+  const TK_SWAPS = {
+    fade: () => [
+      [{ opacity: 1 }, { opacity: 0 }],
+      [{ opacity: 0 }, { opacity: 1 }],
+    ],
+    roll: (way) => [
+      [{ transform: "translateY(0)" }, { transform: `translateY(${-100 * way}%)` }],
+      [{ transform: `translateY(${100 * way}%)` }, { transform: "translateY(0)" }],
+    ],
+    zoom: () => [
+      [{ opacity: 1, transform: "scale(1)" }, { opacity: 0, transform: "scale(1.06)" }],
+      [{ opacity: 0, transform: "scale(0.9)" }, { opacity: 1, transform: "scale(1)" }],
+    ],
+  };
+
+  const TICKER_STYLE = `
+    ha-card.tkr { display: block; padding: 0; height: auto; }
+    .tk-strip { position: relative; z-index: 1; }
+    .tk-msg { padding: 14px 16px; color: var(--secondary-text-color); }
+    .tk-marquee { overflow: hidden; }
+    .tk-run, .tk-set { display: flex; width: max-content; }
+    .tk-run.auto { animation: tk-run var(--tk-dur, 30s) linear infinite; }
+    .tk-marquee:hover .tk-run, .tk-marquee:focus-visible .tk-run, .tkr.hold .tk-run { animation-play-state: paused; }
+    @keyframes tk-run { to { transform: translateX(-50%); } }
+    /* Where the device asks for less motion the ticker stands still: one set
+       of its entries, moved along by hand. */
+    .tk-marquee.calm { overflow-x: auto; scrollbar-width: none; }
+    .tk-marquee.calm .tk-run { animation: none; }
+    .tk-marquee.calm .tk-set ~ .tk-set { display: none; }
+    .tk-item { display: flex; align-items: center; gap: 8px; padding: 12px 16px; white-space: nowrap;
+               cursor: pointer; border-right: 1px solid var(--divider-color); }
+    .tk-item .logo { width: var(--sc-logo-size, 24px); height: var(--sc-logo-size, 24px); font-size: 0.8em; }
+    .tk-item .tk-price { font-weight: 600; }
+    /* The portfolio's disc: its symbol follows the disc's size. */
+    .tkr .logo.product { --mdc-icon-size: calc(var(--sc-logo-size, 36px) * 0.6); }
+    .tk-item .logo.product { --mdc-icon-size: calc(var(--sc-logo-size, 24px) * 0.62); }
+    .tkr .logo.big.product { --mdc-icon-size: 28px; }
+    .tk-line { position: relative; overflow: hidden; cursor: pointer; touch-action: pan-y; user-select: none; }
+    .tk-track.stack { display: grid; grid-template-columns: minmax(0, 1fr); transition: none; }
+    .tk-track.stack .tk-slide { grid-area: 1 / 1; visibility: hidden; }
+    .tk-track.stack .tk-slide.on, .tk-track.stack .tk-slide.off { visibility: visible; }
+    .tk-track.stack.flapping .tk-slide.on, .tk-track.stack.flapping .tk-slide.off { visibility: hidden; }
+    .tk-flap { position: absolute; inset: 0; perspective: 480px; }
+    .tk-flap::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(0, 0, 0, 0.35); }
+    .tk-half { position: absolute; inset: 0; display: flex; backface-visibility: hidden; isolation: isolate;
+               background: var(--ha-card-background, var(--card-background-color, #1c1c1c)); }
+    /* A flap is a piece of the card: over the theme's background it carries
+       the card's own, the same layer as ha-card::before. */
+    .tk-half::before { content: ""; position: absolute; inset: 0; z-index: -1;
+                       background-color: var(--sc-card-background-color, transparent);
+                       background-image: var(--sc-card-background-image, none);
+                       background-size: var(--sc-card-background-size, cover);
+                       background-repeat: var(--sc-card-background-repeat, no-repeat);
+                       background-position: center;
+                       opacity: var(--sc-card-background-opacity, 1); }
+    .tk-half.top { clip-path: inset(0 0 50% 0); }
+    .tk-half.bottom { clip-path: inset(50% 0 0 0); }
+    .tk-half .tk-slide { flex: 0 0 100%; }
+    .tk-track { display: flex; transition: transform var(--tk-fx, 400ms) ease; }
+    .tk-track.drag { transition: none; }
+    .tk-slide { flex: 0 0 100%; min-width: 0; box-sizing: border-box; display: flex; align-items: center;
+                gap: 12px; padding: 10px 14px; }
+    .tk-main { flex: 1 1 70px; min-width: 0; }
+    .tk-id { display: flex; align-items: baseline; gap: 6px; min-width: 0; }
+    .tk-symbol { flex: none; }
+    .tk-id .badge { flex: none; align-self: center; }
+    .tk-id .tk-name { flex: 0 1 auto; min-width: 0; }
+    .tk-name { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+               color: var(--primary-text-color); }
+    .tk-change { white-space: nowrap; }
+    .tk-slide .row-price, .tk-mini .row-price { min-width: 0; font-size: 1.3em; justify-self: auto; }
+    .tk-slide .row-price { flex: none; }
+    .tk-mini .row-price { width: 100%; justify-content: flex-start; }
+    .tk-slide .row-price .frac, .tk-mini .row-price .frac { display: flex; flex-direction: column; line-height: 1.05; }
+    .tk-scroll { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 12px;
+                 scroll-padding: 0 12px;
+                 scrollbar-width: none; }
+    .tk-scroll.drag { scroll-snap-type: none; cursor: grabbing; }
+    .tk-scroll.moving { scroll-snap-type: none; }
+    .tk-scroll[data-fx="glide"] { scroll-snap-type: none; }
+    .tk-scroll[data-fx="coverflow"] .tk-mini { scroll-snap-align: center; }
+    .tk-mini { position: relative; isolation: isolate; flex: 0 0 clamp(130px, 42%, 220px); min-width: 0; box-sizing: border-box;
+               scroll-snap-align: start; padding: 10px 12px; border-radius: 10px;
+               background: var(--tk-tile-base, var(--sc-panel)); cursor: pointer; user-select: none; }
+    /* A layer of its own, so its opacity leaves the figures alone. */
+    .tk-mini::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+                       background-color: var(--tk-tile-color, transparent);
+                       background-image: var(--tk-tile-image, none);
+                       background-size: var(--tk-tile-size, cover);
+                       background-repeat: var(--tk-tile-repeat, no-repeat);
+                       background-position: center;
+                       opacity: var(--tk-tile-opacity, 1); }
+    .tk-mini .row-price { margin: 6px 0 2px; }
+    .tk-mini-mid { display: flex; align-items: center; gap: 8px; }
+    .tk-mini-values { flex: 1 1 auto; min-width: 0; }
+    .tk-spark { height: 30px; margin-top: 6px; }
+    .tk-slide .tk-spark { flex: 0 1 var(--sc-spark-width, 90px); min-width: 0; margin-top: 0; }
+    .tk-flash { background: rgba(127, 127, 127, 0.25); border-radius: 4px; transition: background 0.6s; }
+    dialog.tk-pop { width: min(600px, calc(100vw - 24px)); max-height: calc(100vh - 32px); box-sizing: border-box;
+                    padding: 0; border: none; border-radius: 16px; overflow: hidden;
+                    color: var(--primary-text-color); background: var(--card-background-color, #1c1c1c); }
+    dialog.tk-pop::backdrop { background: rgba(0, 0, 0, 0.55); }
+    .tk-wrap { display: flex; flex-direction: column; max-height: calc(100vh - 32px); }
+    .tk-nav { flex: none; display: flex; align-items: center; gap: 4px; padding: 10px 12px 2px; }
+    .tk-nav .tk-count { color: var(--secondary-text-color); margin: 0 4px; }
+    .tk-nav .tk-gap { flex: 1 1 auto; }
+    .tk-nav button { all: unset; cursor: pointer; width: 36px; height: 36px; display: inline-flex; align-items: center;
+                     justify-content: center; border-radius: 50%; color: var(--primary-text-color); --mdc-icon-size: 24px; }
+    .tk-nav button:hover, .tk-nav button:focus-visible { background: rgba(127, 127, 127, 0.15); }
+    .tk-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 4px 20px 18px; container-type: inline-size;
+               touch-action: pan-y; }
+  `;
+
+  class ScalableTickerCard extends ScalableCard {
+    setConfig(config) {
+      this._config = tickerConfig(config);
+      if (this._subscribedTo !== undefined && this._subscribedTo !== this._config.entry) {
+        this._unsubscribe();
+        this._data = null;
+      }
+      this._tkBuilt = null;
+      this._subscribe();
+      this._restartAuto();
+      this._render();
+    }
+
+    getCardSize() {
+      return this._config && this._config.layout === "carousel" ? 3 : 1;
+    }
+
+    getGridOptions() {
+      return { columns: 12, rows: "auto", min_columns: 3, min_rows: 1 };
+    }
+
+    static getConfigElement() {
+      return document.createElement(TICKER_EDITOR_TAG);
+    }
+
+    static getStubConfig() {
+      return {};
+    }
+
+    connectedCallback() {
+      super.connectedCallback();
+      this._restartAuto();
+    }
+
+    disconnectedCallback() {
+      super.disconnectedCallback();
+      if (this._tkTimer) clearInterval(this._tkTimer);
+      this._tkTimer = null;
+      this._tkStopGlide();
+      this._tkStopScroll();
+      if (this._tkResize) this._tkResize.disconnect();
+      if (this._tkDialog && this._tkDialog.open) this._tkDialog.close();
+    }
+
+    // ------------------------------------------------------------ the list
+    _tkPeriod() {
+      return OVERVIEW_PERIODS.find((period) => period.key === this._config.ticker_period) || OVERVIEW_PERIODS[0];
+    }
+
+    _tkItems() {
+      const data = this._data || {};
+      const config = this._config;
+      const { positions, watchlist } = tickerSources(data, config);
+      const out = new Set(config.hidden_securities || []);
+      let list = this._sorted([...positions, ...watchlist].filter((item) => !out.has(item.isin)), this._tkPeriod());
+      if (config.sort === "value") {
+        // By value a position counts for what it is worth and a watchlist
+        // entry, which is worth nothing, for its price. The two are not one
+        // scale: the positions lead, and the rest follow by price.
+        const held = (item) => isNumber(item.value) && item.value > 0;
+        list = [...list.filter(held), ...list.filter((item) => !held(item))];
+      }
+      // The portfolio as a whole leads, whatever the order of the rest.
+      if (config.show_portfolio_total === true && isNumber(data.total)) {
+        list.unshift({ isin: TK_TOTAL, total: true, name: t(this._hass).edElTotal, price: data.total });
+      }
+      return list;
+    }
+
+    // The portfolio's change over the ticker's period as a share of what the
+    // period began with - the main card's own reckoning, see _overviewHtml.
+    _tkTotalChange() {
+      const data = this._data || {};
+      const change = data.returns ? data.returns[this._tkPeriod().tf] : null;
+      const base = isNumber(data.total) && isNumber(change) ? data.total - change : null;
+      return base > 0 ? change / base : null;
+    }
+
+    // The broker's disc of the main card, for the entry that is no security.
+    _tkTotalLogo(big) {
+      const config = this._config;
+      const disc = config.broker_icon_background_color || "#5c6bc0";
+      const icon = config.broker_icon || DEFAULTS.broker_icon || "mdi:chart-line";
+      return (
+        `<span class="logo${big ? " big" : ""} product" style="background: ${escapeHtml(disc)}">` +
+        `<ha-icon icon="${escapeHtml(icon)}"></ha-icon></span>`
+      );
+    }
+
+    // The pop-up of the portfolio as a whole: the main card's Insights.
+    _tkTotalHtml(str) {
+      const config = this._config;
+      return (
+        `<div class="d-head">${config.show_detail_logo !== false ? this._tkTotalLogo(true) : ""}<div class="d-id">` +
+        `<div class="d-name" style="${elementStyle(config, "detail_name")}">${escapeHtml(str.edElTotal)}</div>` +
+        `</div></div>` +
+        this._insightsHtml(str)
+      );
+    }
+
+    // ------------------------------------------------------- moving on alone
+    // The ticker runs on CSS; the row and the carousel on this timer.
+    _restartAuto() {
+      if (this._tkTimer) clearInterval(this._tkTimer);
+      this._tkTimer = null;
+      this._tkStopGlide();
+      if (!this._config || !this.isConnected) return;
+      if (this._config.auto_advance === false || this._config.layout === "ticker") return;
+      if (this._tkEffect() === "glide") {
+        this._tkStartGlide();
+        return;
+      }
+      this._tkTimer = setInterval(() => {
+        if (this._detail || this._tkHover || this._tkDragging || document.hidden) return;
+        this._tkStep(1);
+      }, tickerSeconds(this._config) * 1000);
+    }
+
+    // With a loop the strip goes on past its end onto a copy of the
+    // beginning, and is put back on the original where nobody can see it.
+    _tkLoops(items) {
+      const layout = this._config.layout;
+      if (layout === "ticker" || items.length < 2) return false;
+      const effect = this._tkEffect();
+      // Entries stacked on one another have no end to run back from, and a
+      // glide without one would have to stop.
+      if (layout === "line" && effect !== "slide") return false;
+      if (effect === "glide") return true;
+      return this._config.endless_loop === true;
+    }
+
+    // The chosen effect, or the plain strip where it is not known or the
+    // device asks for less motion.
+    _tkEffect() {
+      const config = this._config;
+      const line = config.layout === "line";
+      if (!line && config.layout !== "carousel") return "slide";
+      const chosen = line ? config.line_effect : config.carousel_effect;
+      if (!(line ? TK_LINE_EFFECTS : TK_CAROUSEL_EFFECTS).includes(chosen)) return "slide";
+      if (lessMotion()) return "slide";
+      return chosen;
+    }
+
+    // Milliseconds. An automatic change gets time to stand still in between.
+    _tkFxMs() {
+      const config = this._config;
+      const value = Number(config.effect_duration);
+      const ms = Number.isFinite(value) && value > 0 ? Math.max(100, Math.min(3000, value)) : TICKER_DEFAULTS.effect_duration;
+      return config.auto_advance === false ? ms : Math.min(ms, tickerSeconds(config) * 800);
+    }
+
+    // The browser's smooth scrolling has a speed of its own, so the carousel
+    // moves here. Snapping stays off until it has arrived.
+    _tkScrollTo(box, left) {
+      this._tkStopScroll();
+      const from = box.scrollLeft;
+      const ms = this._tkFxMs();
+      const start = performance.now();
+      box.classList.add("moving");
+      const frame = (now) => {
+        const part = Math.min(1, Math.max(0, (now - start) / ms));
+        const eased = part < 0.5 ? 2 * part * part : 1 - (-2 * part + 2) ** 2 / 2;
+        box.scrollTo({ left: from + (left - from) * eased, behavior: "instant" });
+        if (part < 1) {
+          this._tkMoving.frame = requestAnimationFrame(frame);
+        } else {
+          this._tkStopScroll();
+          this._tkWrapScroll(box);
+        }
+      };
+      this._tkMoving = { box, frame: requestAnimationFrame(frame) };
+    }
+
+    _tkStopScroll() {
+      if (!this._tkMoving) return;
+      cancelAnimationFrame(this._tkMoving.frame);
+      this._tkMoving.box.classList.remove("moving");
+      this._tkMoving = null;
+    }
+
+    // Compact row, every effect but the strip: the entries lie on one another.
+    _tkSwap(direction, total, effect) {
+      const line = this._root.querySelector(".tk-line");
+      const track = line && line.querySelector(".tk-track");
+      if (!track || total < 2) return;
+      if (this._tkFxEnd) this._tkFxEnd();
+      const from = this._tkIndex || 0;
+      const to = (from + direction + total) % total;
+      this._tkIndex = to;
+      this._tkTabStops();
+      const leaving = track.children[from];
+      const coming = track.children[to];
+      leaving.classList.remove("on");
+      leaving.classList.add("off");
+      coming.classList.add("on");
+      let runs = [];
+      let flap = null;
+      const finish = () => {
+        if (this._tkFxEnd !== finish) return;
+        this._tkFxEnd = null;
+        runs.forEach((run) => run.cancel());
+        leaving.classList.remove("off");
+        track.classList.remove("flapping");
+        if (flap) flap.remove();
+      };
+      this._tkFxEnd = finish;
+      if (effect === "flap") {
+        flap = document.createElement("div");
+        flap.className = "tk-flap";
+        const half = (slide, part) => {
+          const el = document.createElement("div");
+          el.className = `tk-half ${part}`;
+          el.appendChild(slide.cloneNode(true));
+          el.querySelectorAll("[tabindex]").forEach((node) => (node.tabIndex = -1));
+          flap.appendChild(el);
+          return el;
+        };
+        half(coming, "top");
+        half(leaving, "bottom");
+        const falling = half(leaving, "top");
+        const landing = half(coming, "bottom");
+        line.appendChild(flap);
+        track.classList.add("flapping");
+        const half2 = this._tkFxMs() / 2;
+        runs = [
+          falling.animate([{ transform: "rotateX(0deg)" }, { transform: "rotateX(-90deg)" }], { duration: half2, easing: "ease-in", fill: "forwards" }),
+          landing.animate([{ transform: "rotateX(90deg)" }, { transform: "rotateX(0deg)" }], { duration: half2, delay: half2, easing: "ease-out", fill: "both" }),
+        ];
+      } else {
+        const [out, into] = TK_SWAPS[effect](direction);
+        const time = { duration: this._tkFxMs(), easing: "ease" };
+        runs = [leaving.animate(out, time), coming.animate(into, time)];
+      }
+      runs[runs.length - 1].finished.then(finish, () => {});
+    }
+
+    // Carousel, staggered: a whole page at once, its tiles appearing in turn.
+    _tkStaggerStep(box, tile, direction, loops) {
+      const step = tile.getBoundingClientRect().width + 10;
+      const page = Math.max(1, Math.floor((box.clientWidth - 14) / step));
+      if (loops) this._tkWrapScroll(box);
+      const end = box.scrollWidth - box.clientWidth;
+      let left = box.scrollLeft + direction * page * step;
+      if (!loops && direction > 0 && box.scrollLeft >= end - 2) left = 0;
+      else if (!loops && direction < 0 && box.scrollLeft <= 2) left = end;
+      box.scrollTo({ left: Math.max(0, Math.min(end, left)), behavior: "instant" });
+      if (loops) this._tkWrapScroll(box);
+      const view = box.getBoundingClientRect();
+      [...box.querySelectorAll(".tk-mini")]
+        .filter((el) => {
+          const rect = el.getBoundingClientRect();
+          return rect.right > view.left && rect.left < view.right;
+        })
+        .forEach((el, index) =>
+          el.animate(
+            [{ opacity: 0, transform: "translateY(10px)" }, { opacity: 1, transform: "translateY(0)" }],
+            { duration: this._tkFxMs() * 0.9, delay: index * this._tkFxMs() * 0.22, easing: "ease-out", fill: "backwards" }
+          )
+        );
+    }
+
+    // Carousel, glide: one tile per interval, without a stop. The position is
+    // kept here because scrollLeft rounds away a slow movement. A hand on the
+    // strip wins: when it moved the strip, the glide picks up from there.
+    _tkStartGlide() {
+      let last = null;
+      let at = null;
+      let hold = 0;
+      const frame = (now) => {
+        this._tkGlide = requestAnimationFrame(frame);
+        const box = this._root && this._root.querySelector('.tk-scroll[data-fx="glide"]');
+        const period = this._tkPeriodPx;
+        const since = last === null ? 0 : Math.min(now - last, 100);
+        last = now;
+        if (!box || !(period > 0)) return;
+        if (at === null || Math.abs(box.scrollLeft - at) > 2) {
+          if (at !== null) hold = now + 800;
+          at = box.scrollLeft;
+        }
+        if (now < hold || this._detail || this._tkHover || box.classList.contains("drag")) return;
+        const perTile = period / this._tkLoopTotal;
+        at += (perTile / tickerSeconds(this._config) / 1000) * since;
+        if (at >= 2 * period) at -= period;
+        box.scrollTo({ left: at, behavior: "instant" });
+      };
+      this._tkGlide = requestAnimationFrame(frame);
+    }
+
+    _tkStopGlide() {
+      if (this._tkGlide) cancelAnimationFrame(this._tkGlide);
+      this._tkGlide = null;
+    }
+
+    // Focus and coverflow: every tile's look follows its distance from the
+    // place at the front, so they change with the scrolling itself.
+    _tkPaintTiles(box) {
+      const effect = box.dataset.fx;
+      if (effect !== "focus" && effect !== "coverflow") return;
+      const tiles = box.querySelectorAll(".tk-mini");
+      if (tiles.length < 2) return;
+      const origin = tiles[0].offsetLeft;
+      const step = tiles[1].offsetLeft - origin;
+      if (!(step > 0)) return;
+      for (const tile of tiles) {
+        const distance = (tile.offsetLeft - origin - box.scrollLeft) / step;
+        const far = Math.min(Math.abs(distance), 1);
+        if (effect === "focus") {
+          // Step by step, as far as three tiles from the front.
+          const steps = Math.min(Math.abs(distance), 3);
+          tile.style.opacity = String(1 - 0.5 * far - 0.15 * Math.max(0, steps - 1));
+          tile.style.transform = `scale(${1 - 0.08 * steps})`;
+        } else {
+          const turn = Math.max(-1, Math.min(1, distance)) * -38;
+          tile.style.opacity = String(1 - 0.3 * Math.min(Math.abs(distance), 2) / 2);
+          tile.style.transform = `perspective(500px) rotateY(${turn}deg) scale(${1 - 0.14 * far})`;
+          tile.style.zIndex = String(10 - Math.min(9, Math.round(Math.abs(distance) * 2)));
+        }
+      }
+    }
+
+    // A coverflow has its front tile in the middle, the first one included.
+    _tkFitCarousel() {
+      const box = this._root && this._root.querySelector(".tk-scroll");
+      if (!box) return;
+      if (box.dataset.fx === "coverflow") {
+        const tile = box.querySelector(".tk-mini");
+        const side = tile ? Math.max(12, (box.clientWidth - tile.getBoundingClientRect().width) / 2) : 12;
+        box.style.paddingLeft = `${side}px`;
+        box.style.paddingRight = `${side}px`;
+      }
+      this._tkFitLoop();
+      this._tkPaintTiles(box);
+    }
+
+    _tkStep(direction) {
+      const items = this._tkItems();
+      if (!items.length) return;
+      const effect = this._tkEffect();
+      if (this._config.layout === "line" && effect !== "slide") {
+        this._tkSwap(direction, items.length, effect);
+        return;
+      }
+      if (this._config.layout === "line") {
+        if (this._tkLoops(items)) {
+          this._tkSettleLine();
+          this._tkIndex = (this._tkIndex || 0) + direction;
+          this._tkPlaceLine();
+          clearTimeout(this._tkSettle);
+          this._tkSettle = setTimeout(() => this._tkSettleLine(), this._tkFxMs() + 30);
+          return;
+        }
+        this._tkIndex = ((this._tkIndex || 0) + direction + items.length) % items.length;
+        this._tkPlaceLine();
+      } else if (this._config.layout === "carousel") {
+        const box = this._root.querySelector(".tk-scroll");
+        const tile = box && box.querySelector(".tk-mini");
+        if (!tile) return;
+        this._tkStopScroll();
+        if (effect === "stagger") {
+          this._tkStaggerStep(box, tile, direction, this._tkLoops(items));
+          return;
+        }
+        if (this._tkLoops(items)) {
+          this._tkWrapScroll(box);
+          this._tkScrollTo(box, box.scrollLeft + direction * (tile.getBoundingClientRect().width + 10));
+          return;
+        }
+        const end = box.scrollWidth - box.clientWidth;
+        const left = box.scrollLeft >= end - 2 ? 0 : box.scrollLeft + tile.getBoundingClientRect().width + 10;
+        this._tkScrollTo(box, left);
+      }
+    }
+
+    _tkPlaceLine(offset) {
+      const track = this._root.querySelector(".tk-track");
+      if (track && track.classList.contains("stack")) {
+        [...track.children].forEach((slide, index) => slide.classList.toggle("on", index === (this._tkIndex || 0)));
+      } else if (track) {
+        const at = (this._tkIndex || 0) + (track.dataset.loop ? 1 : 0);
+        track.style.transform = `translateX(calc(-${at * 100}% + ${offset || 0}px))`;
+      }
+      if (!offset) this._tkTabStops();
+    }
+
+    // The row's entries all lie side by side, one of them in view: only that
+    // one's sparkle is a tab stop.
+    _tkTabStops() {
+      const track = this._root.querySelector(".tk-track");
+      if (!track) return;
+      const at = (this._tkIndex || 0) + (track.dataset.loop ? 1 : 0);
+      [...track.children].forEach((slide, index) => {
+        slide.querySelectorAll(".badge.link").forEach((badge) => (badge.tabIndex = index === at ? 0 : -1));
+      });
+    }
+
+    // A strip that hides what does not fit can still be scrolled - by the
+    // browser, to something out of view. It is put back at once.
+    _tkNoScroll(el) {
+      el.addEventListener("scroll", () => {
+        // The ticker that stands still is scrolled by hand.
+        if (el.scrollLeft && !el.classList.contains("calm")) el.scrollLeft = 0;
+      });
+    }
+
+    // The entry at the running ticker's left edge: the one the keyboard opens.
+    _tkFront() {
+      const box = this._root.querySelector(".tk-marquee");
+      if (!box) return null;
+      const left = box.getBoundingClientRect().left;
+      const front = [...box.querySelectorAll(".tk-item")].find((el) => {
+        const rect = el.getBoundingClientRect();
+        return rect.left + rect.width / 2 > left;
+      });
+      return front ? front.dataset.isin : null;
+    }
+
+    // From the copy back onto the original, without the slide that would show.
+    _tkSettleLine() {
+      clearTimeout(this._tkSettle);
+      const track = this._root.querySelector(".tk-track");
+      if (!track || !track.dataset.loop) return;
+      const total = Number(track.dataset.loop);
+      const at = this._tkIndex || 0;
+      if (at >= 0 && at < total) return;
+      this._tkIndex = ((at % total) + total) % total;
+      track.classList.add("drag");
+      this._tkPlaceLine();
+      void track.offsetWidth;
+      if (!this._tkDragging) track.classList.remove("drag");
+    }
+
+    // The carousel holds the set several times and stays in the second copy.
+    _tkWrapScroll(box) {
+      const period = this._tkPeriodPx;
+      if (!(period > 0) || box.classList.contains("drag") || box.classList.contains("moving")) return;
+      const left = box.scrollLeft;
+      let target = left;
+      if (left < period - 1) target = left + period;
+      else if (left >= 2 * period - 1) target = left - period;
+      if (target !== left) box.scrollTo({ left: target, behavior: "instant" });
+    }
+
+    _tkFitLoop() {
+      const box = this._root && this._root.querySelector(".tk-scroll.loop");
+      if (!box) return;
+      const tiles = box.querySelectorAll(".tk-mini");
+      const total = this._tkLoopTotal;
+      if (tiles.length < total * 2) return;
+      const period = tiles[total].offsetLeft - tiles[0].offsetLeft;
+      if (!(period > 0)) return;
+      this._tkPeriodPx = period;
+      const copies = Math.max(3, Math.ceil(box.clientWidth / period) + 2);
+      if (copies !== this._tkLoopCopies) {
+        this._tkLoopCopies = copies;
+        box.innerHTML = this._tkLoopClone + this._tkLoopSet + this._tkLoopClone.repeat(copies - 2);
+        this._tkRefresh();
+        this._centreIcons();
+      }
+      this._tkWrapScroll(box);
+    }
+
+    // ------------------------------------------------------------ drawing
+    _render() {
+      if (!this._config || !this._hass) return;
+      const str = t(this._hass);
+      if (!this.shadowRoot) this._tkSetup();
+      this._applyCardLook();
+      const strip = this._root.querySelector(".tk-strip");
+      if (!this._data) {
+        const text =
+          this._error === "none" ? str.noEntry : this._error ? str.failed(this._error) : str.loading;
+        strip.innerHTML = `<div class="tk-msg">${escapeHtml(text)}</div>`;
+        this._tkBuilt = null;
+        return;
+      }
+      const items = this._tkItems();
+      if (!items.length) {
+        strip.innerHTML = `<div class="tk-msg">${escapeHtml(str.noPositions)}</div>`;
+        this._tkBuilt = null;
+      } else {
+        const built = JSON.stringify([
+          this._config,
+          items.map((item) => item.isin),
+          items.map((item) => this._tkHasNews(item)),
+          this._hass.language,
+          marksVersion,
+        ]);
+        if (built !== this._tkBuilt) {
+          this._tkBuilt = built;
+          this._tkBuild(strip, items, str);
+        } else {
+          this._tkUpdate(strip, items);
+        }
+      }
+      this._tkRenderPopup(str);
+      this._centreIcons();
+    }
+
+    _applyCardLook() {
+      super._applyCardLook();
+      const style = this._root.style;
+      const config = this._config;
+      for (const name of ["base", "color", "image", "size", "repeat", "opacity"]) {
+        style.removeProperty(`--tk-tile-${name}`);
+      }
+      if (config.tile_background !== true) return;
+      style.setProperty("--tk-tile-base", "transparent");
+      style.setProperty("--tk-tile-color", config.tile_background_color || "var(--sc-panel)");
+      if (config.tile_background_image) {
+        style.setProperty("--tk-tile-image", `url("${config.tile_background_image.replace(/"/g, "%22")}")`);
+      }
+      const [size, repeat] = BACKGROUND_FITS[config.tile_background_size] || BACKGROUND_FITS.cover;
+      style.setProperty("--tk-tile-size", size);
+      style.setProperty("--tk-tile-repeat", repeat);
+      const percentage = Number(config.tile_background_opacity);
+      const opacity = Number.isFinite(percentage) ? Math.max(0, Math.min(100, percentage)) : 100;
+      style.setProperty("--tk-tile-opacity", String(opacity / 100));
+    }
+
+    _tkSetup() {
+      this.attachShadow({ mode: "open" });
+      this.shadowRoot.innerHTML =
+        `<style>${STYLE}${TICKER_STYLE}</style>` +
+        `<ha-card class="tkr"><div class="tk-strip"></div>` +
+        `<dialog class="tk-pop"><div class="tk-wrap"><div class="tk-nav"></div><div class="tk-body"></div></div></dialog></ha-card>`;
+      this._root = this.shadowRoot.querySelector("ha-card");
+      this._root.addEventListener("click", (ev) => this._onClick(ev));
+      this._root.addEventListener("keydown", (ev) => {
+        if (ev.key !== "Enter" && ev.key !== " ") return;
+        const el = ev.composedPath().find((node) => node.dataset && node.dataset.action);
+        if (!el || el.tagName === "BUTTON") return;
+        ev.preventDefault();
+        this._onClick(ev);
+      });
+      const strip = this._root.querySelector(".tk-strip");
+      strip.addEventListener("pointerenter", () => (this._tkHover = true));
+      strip.addEventListener("pointerleave", () => (this._tkHover = false));
+      const dialog = this._root.querySelector("dialog");
+      this._tkDialog = dialog;
+      dialog.addEventListener("close", () => {
+        if (!this._detail) return;
+        this._detail = null;
+        this._tx = null;
+        this._tkOrders = false;
+        this._newsOpen = null;
+        this._render();
+      });
+      dialog.addEventListener("click", (ev) => {
+        if (ev.target === dialog) dialog.close();
+      });
+      // The Market Insights summary lies over the page: while it is open,
+      // the arrow keys and a swipe are its own and move nothing under it.
+      const summaryOpen = () => !!dialog.querySelector("dialog.news-modal[open]");
+      dialog.addEventListener("keydown", (ev) => {
+        if (summaryOpen()) return;
+        if (ev.key === "ArrowLeft") this._tkPopStep(-1);
+        else if (ev.key === "ArrowRight") this._tkPopStep(1);
+      });
+      const body = dialog.querySelector(".tk-body");
+      let startX = null;
+      let startY = null;
+      body.addEventListener("pointerdown", (ev) => {
+        startX = ev.pointerType !== "mouse" && !summaryOpen() && !ev.composedPath().some((n) => n.classList && n.classList.contains("plot"))
+          ? ev.clientX
+          : null;
+        startY = ev.clientY;
+      });
+      body.addEventListener("pointerup", (ev) => {
+        if (startX === null) return;
+        const dx = ev.clientX - startX;
+        startX = null;
+        if (Math.abs(dx) > 60 && Math.abs(ev.clientY - startY) < 40) this._tkPopStep(dx < 0 ? 1 : -1);
+      });
+      if (window.ResizeObserver) {
+        this._tkResize = new ResizeObserver(() => {
+          this._tkFitMarquee();
+          this._tkFitCarousel();
+        });
+        this._tkResize.observe(this._root);
+      }
+    }
+
+    _tkParts(item) {
+      const config = this._config;
+      const hass = this._hass;
+      const perf = item.total
+        ? { fraction: this._tkTotalChange() }
+        : (item.performance && item.performance[this._tkPeriod().tf]) || {};
+      const mark = markOf(item);
+      const short = config.show_row_symbol !== false && mark && mark.symbol
+        ? `<span class="tk-symbol" style="${elementStyle(config, "row_symbol")}">${escapeHtml(mark.symbol)}</span>`
+        : "";
+      const long = config.show_row_name === false
+        ? ""
+        : `<span class="tk-name" style="${elementStyle(config, "row_name")}">${escapeHtml(item.name)}</span>`;
+      // A tab stop only where the entry is in view: on every tile of the
+      // carousel, on the row's current entry (see _tkTabStops), nowhere in
+      // the running ticker. The browser scrolls to whatever takes the
+      // keyboard, and neither strip is made to be scrolled.
+      let news = this._tkHasNews(item) ? this._newsBadgeHtml(item.isin) : "";
+      if (config.layout !== "carousel") news = news.replace('tabindex="0"', 'tabindex="-1"');
+      return {
+        logo: config.show_row_logo ? (item.total ? this._tkTotalLogo() : logoHtml(item)) : "",
+        name: news || short || long ? `<span class="tk-id">${news}${short}${long}</span>` : "",
+        change: config.show_row_change
+          ? `<span class="tk-change ${gainClass(perf.fraction)}" style="${elementStyle(config, "row_change")}">${escapeHtml(percent(hass, perf.fraction))}</span>`
+          : "",
+      };
+    }
+
+    // Whether the sparkle stands in front of the entry. Asks Scalable the
+    // first time; the answer redraws the strip.
+    _tkHasNews(item) {
+      return !item.total && this._config.show_row_news !== false && !!this._news(item.isin);
+    }
+
+    // The figure of an entry: the price of one share, or - where that is
+    // chosen and there is a position - what the position is worth.
+    _tkFigure(item) {
+      if (item.total) return { amount: item.price, worth: true };
+      const worth =
+        this._config.show_position_value === true &&
+        isNumber(item.quantity) && item.quantity > 0 && isNumber(item.value);
+      return { amount: worth ? item.value : item.price, worth };
+    }
+
+    _tkPrice(item, inline) {
+      const config = this._config;
+      if (!config.show_row_price) return "";
+      const style = elementStyle(config, "row_price");
+      const figure = this._tkFigure(item);
+      const text = figure.worth ? money(this._hass, figure.amount) : price(this._hass, figure.amount);
+      return inline
+        ? `<span class="tk-price" style="${style}">${escapeHtml(text)}</span>`
+        : `<div class="row-price tk-price" style="${style}">${splitHtml(this._hass, figure.amount, true)}</div>`;
+    }
+
+    _tkSpark(item) {
+      if (item.total) {
+        // The return, from nought at the period's start, as the main card
+        // draws it beside its total.
+        const { points, cut } = this._returnHistory(this._tkPeriod().key);
+        if (!points || points.length < 2) return "";
+        return chartSvg(points.map((point) => point.v), {
+          height: 30,
+          reference: 0,
+          cut,
+          gaps: points.map((point) => !!point.gap),
+          lineWidth: 1.25,
+        });
+      }
+      const period = this._tkPeriod();
+      const chart = period.chart ? this._chart(period.chart, item.isin) : null;
+      if (!chart || chart.points.length < 2) return "";
+      return chartSvg(chart.points.map((point) => point[1]), {
+        height: 30,
+        reference: chart.reference,
+        cut: chartCut(chart),
+        lineWidth: 1.25,
+      });
+    }
+
+    _tkBuild(strip, items) {
+      const config = this._config;
+      const effect = this._tkEffect();
+      // Whatever was running ran on the elements about to be replaced.
+      this._tkFxEnd = null;
+      this._tkStopScroll();
+      this._tkPrices = this._tkPrices || {};
+      items.forEach((item) => (this._tkPrices[item.isin] = this._tkFigure(item).amount));
+      if (config.layout === "line") {
+        const loops = this._tkLoops(items);
+        this._tkIndex = (((this._tkIndex || 0) % items.length) + items.length) % items.length;
+        const slides = items.map((item) => {
+          const parts = this._tkParts(item);
+          return (
+            `<div class="tk-slide" data-isin="${escapeHtml(item.isin)}">${parts.logo}` +
+            `<div class="tk-main">${parts.name}${parts.change}</div>` +
+            (config.show_row_sparkline ? `<div class="tk-spark">${this._tkSpark(item)}</div>` : "") +
+            `${this._tkPrice(item)}</div>`
+          );
+        });
+        strip.innerHTML =
+          `<div class="tk-line" data-action="tk-current" tabindex="0" role="button">` +
+          `<div class="tk-track${effect === "slide" ? "" : " stack"}"${loops ? ` data-loop="${items.length}"` : ""}>` +
+          (loops ? slides[slides.length - 1] : "") +
+          slides.join("") +
+          (loops ? slides[0] : "") +
+          `</div></div>`;
+        strip.querySelector(".tk-track").style.setProperty("--tk-fx", `${this._tkFxMs()}ms`);
+        this._tkPlaceLine();
+        this._tkWireLine(strip.querySelector(".tk-line"));
+      } else if (config.layout === "carousel") {
+        const loops = this._tkLoops(items);
+        const tiles =
+          items
+            .map((item) => {
+              const parts = this._tkParts(item);
+              return (
+                `<div class="tk-mini" data-action="tk-open" data-isin="${escapeHtml(item.isin)}" tabindex="0" role="button" aria-label="${escapeHtml(item.name)}">` +
+                `${parts.name}<div class="tk-mini-mid"><div class="tk-mini-values">${this._tkPrice(item)}${parts.change}</div>${parts.logo}</div>` +
+                (config.show_row_sparkline ? `<div class="tk-spark">${this._tkSpark(item)}</div>` : "") +
+                `</div>`
+              );
+            })
+            .join("");
+        // Only the middle set can be reached with the keyboard.
+        this._tkLoopSet = tiles;
+        this._tkLoopClone = tiles.replace(/tabindex="0"/g, 'tabindex="-1" aria-hidden="true"');
+        this._tkLoopTotal = items.length;
+        this._tkLoopCopies = 3;
+        this._tkPeriodPx = 0;
+        strip.innerHTML = loops
+          ? `<div class="tk-scroll loop" data-fx="${effect}">${this._tkLoopClone}${tiles}${this._tkLoopClone}</div>`
+          : `<div class="tk-scroll" data-fx="${effect}">${tiles}</div>`;
+        this._tkWireScroll(strip.querySelector(".tk-scroll"));
+        this._tkFitCarousel();
+      } else {
+        this._tkSet =
+          `<div class="tk-set">` +
+          items
+            .map((item) => {
+              const parts = this._tkParts(item);
+              return (
+                `<div class="tk-item" data-action="tk-open" data-isin="${escapeHtml(item.isin)}">` +
+                `${parts.logo}${parts.name}${this._tkPrice(item, true)}${parts.change}</div>`
+              );
+            })
+            .join("") +
+          `</div>`;
+        this._tkCopies = 1;
+        // Its entries run past and repeat: the ticker as a whole takes the
+        // keyboard, and Enter opens the entry at its left edge - from where
+        // the pop-up's arrows lead to every other.
+        strip.innerHTML =
+          `<div class="tk-marquee auto${lessMotion() ? " calm" : ""}" data-action="tk-current" tabindex="0" role="button"><div class="tk-run auto">` +
+          this._tkSet.repeat(2) +
+          `</div></div>`;
+        this._tkNoScroll(strip.querySelector(".tk-marquee"));
+        this._tkFitMarquee();
+      }
+    }
+
+    // A ticker shorter than its card would run out of itself: the set is
+    // repeated until one half fills the card, and the speed follows.
+    _tkFitMarquee() {
+      const box = this._root && this._root.querySelector(".tk-marquee.auto");
+      if (!box) return;
+      const run = box.querySelector(".tk-run");
+      const set = run.querySelector(".tk-set");
+      const width = set.getBoundingClientRect().width;
+      if (!(width > 0)) return;
+      const copies = Math.max(1, Math.ceil(box.clientWidth / width));
+      if (copies !== this._tkCopies) {
+        this._tkCopies = copies;
+        run.innerHTML = this._tkSet.repeat(copies * 2);
+        this._tkRefresh();
+        this._centreIcons();
+      }
+      const count = run.querySelectorAll(".tk-set:first-child .tk-item").length;
+      run.style.setProperty("--tk-dur", `${count * copies * tickerSeconds(this._config)}s`);
+    }
+
+    // Copies laid in after the build are as old as the build: its prices,
+    // its changes, its curves. This brings them up to now.
+    _tkRefresh() {
+      const strip = this._root && this._root.querySelector(".tk-strip");
+      if (strip && this._tkPrices && this._data) this._tkUpdate(strip, this._tkItems());
+    }
+
+    _tkUpdate(strip, items) {
+      const byIsin = new Map(items.map((item) => [item.isin, item]));
+      const inline = this._config.layout === "ticker";
+      for (const el of strip.querySelectorAll("[data-isin]")) {
+        const item = byIsin.get(el.dataset.isin);
+        if (!item) continue;
+        const parts = this._tkParts(item);
+        const change = el.querySelector(".tk-change");
+        if (change && parts.change) change.outerHTML = parts.change;
+        const price = el.querySelector(".tk-price");
+        if (price) {
+          price.outerHTML = this._tkPrice(item, inline);
+          if (this._tkPrices[item.isin] !== this._tkFigure(item).amount) {
+            const fresh = el.querySelector(".tk-price");
+            fresh.classList.add("tk-flash");
+            setTimeout(() => fresh.classList.remove("tk-flash"), 900);
+          }
+        }
+        const spark = el.querySelector(".tk-spark");
+        if (spark) spark.innerHTML = this._tkSpark(item);
+      }
+      items.forEach((item) => (this._tkPrices[item.isin] = this._tkFigure(item).amount));
+    }
+
+    _tkWireLine(line) {
+      let startX = null;
+      let moved = false;
+      const track = line.querySelector(".tk-track");
+      this._tkNoScroll(line);
+      line.addEventListener("pointerdown", (ev) => {
+        if (ev.pointerType === "mouse" && ev.button !== 0) return;
+        startX = ev.clientX;
+        moved = false;
+        this._tkSwiped = false;
+      });
+      line.addEventListener("pointermove", (ev) => {
+        if (startX === null) return;
+        // Let go of outside the row, where no pointerup reaches it: without
+        // this the row would follow the pointer with no button held.
+        if (!ev.buttons) {
+          startX = null;
+          this._tkDragging = false;
+          track.classList.remove("drag");
+          this._tkPlaceLine();
+          return;
+        }
+        const dx = ev.clientX - startX;
+        if (!moved && Math.abs(dx) > 6) {
+          moved = true;
+          this._tkDragging = true;
+          track.classList.add("drag");
+          line.setPointerCapture(ev.pointerId);
+        }
+        if (moved) this._tkPlaceLine(dx);
+      });
+      const end = (ev) => {
+        if (startX === null) return;
+        const dx = ev.clientX - startX;
+        startX = null;
+        this._tkDragging = false;
+        track.classList.remove("drag");
+        if (moved) this._tkSwiped = true;
+        if (ev.type === "pointerup" && moved && Math.abs(dx) > 30) this._tkStep(dx < 0 ? 1 : -1);
+        else this._tkPlaceLine();
+      };
+      line.addEventListener("pointerup", end);
+      line.addEventListener("pointercancel", end);
+    }
+
+    // A finger scrolls the tiles by itself; a mouse needs this.
+    _tkWireScroll(box) {
+      let startX = null;
+      let startLeft = 0;
+      let moved = false;
+      box.addEventListener("pointerdown", (ev) => {
+        this._tkSwiped = false;
+        this._tkStopScroll();
+        if (ev.pointerType !== "mouse") return;
+        startX = ev.clientX;
+        startLeft = box.scrollLeft;
+        moved = false;
+      });
+      box.addEventListener("pointermove", (ev) => {
+        if (startX === null) return;
+        const dx = ev.clientX - startX;
+        if (!moved && Math.abs(dx) > 5) {
+          moved = true;
+          box.classList.add("drag");
+        }
+        if (moved) box.scrollLeft = startLeft - dx;
+      });
+      const end = () => {
+        if (startX === null) return;
+        startX = null;
+        box.classList.remove("drag");
+        if (moved) this._tkSwiped = true;
+      };
+      box.addEventListener("pointerup", end);
+      box.addEventListener("pointerleave", end);
+      if (box.dataset.fx === "focus" || box.dataset.fx === "coverflow") {
+        let queued = false;
+        box.addEventListener("scroll", () => {
+          if (queued) return;
+          queued = true;
+          requestAnimationFrame(() => {
+            queued = false;
+            this._tkPaintTiles(box);
+          });
+        });
+      }
+      if (box.classList.contains("loop")) {
+        let idle = null;
+        box.addEventListener("scroll", () => {
+          clearTimeout(idle);
+          idle = setTimeout(() => this._tkWrapScroll(box), 160);
+        });
+      }
+    }
+
+    // ------------------------------------------------------------ the pop-up
+    _tkOpen(isin, news) {
+      this._detail = isin;
+      this._tx = null;
+      this._tkOrders = false;
+      this._newsOpen = news ? isin : null;
+      this._newsSources = false;
+      this._detailPeriod = this._tkPeriod().key;
+      // The portfolio's page opens on the return over the ticker's period.
+      this._insPeriod = this._tkPeriod().key;
+      this._insMode = "return";
+      this._tkBodyTop = true;
+      this._render();
+    }
+
+    _detailNameLook() {
+      return "detail_name";
+    }
+
+    _tkPopStep(direction) {
+      if (!this._detail) return;
+      const items = this._tkItems();
+      if (items.length < 2) return;
+      const at = items.findIndex((item) => item.isin === this._detail);
+      this._detail = items[(at + direction + items.length) % items.length].isin;
+      this._tx = null;
+      this._tkOrders = false;
+      this._newsOpen = null;
+      this._tkBodyTop = true;
+      this._render();
+    }
+
+    _backHtml(str) {
+      return this._tx ? super._backHtml(str) : "";
+    }
+
+    _tkRenderPopup(str) {
+      const dialog = this._tkDialog;
+      const total = this._detail === TK_TOTAL && this._config.show_portfolio_total === true;
+      const item = total ? { isin: TK_TOTAL } : this._detail ? this._item(this._detail) : null;
+      if (!item) {
+        this._detail = null;
+        this._root.classList.remove("hold");
+        if (dialog.open) dialog.close();
+        return;
+      }
+      this._root.classList.add("hold");
+      const items = this._tkItems();
+      const at = items.findIndex((entry) => entry.isin === item.isin);
+      const nav = dialog.querySelector(".tk-nav");
+      const arrow = (action, icon, label) =>
+        `<button type="button" data-action="${action}" title="${escapeHtml(label)}" aria-label="${escapeHtml(label)}"><ha-icon icon="${icon}"></ha-icon></button>`;
+      nav.innerHTML =
+        (items.length > 1
+          ? arrow("tk-prev", "mdi:chevron-left", str.tkPrev) +
+            `<span class="tk-count">${at + 1} / ${items.length}</span>` +
+            arrow("tk-next", "mdi:chevron-right", str.tkNext)
+          : "") +
+        `<span class="tk-gap"></span>` +
+        arrow("tk-close", "mdi:close", str.close);
+      const body = dialog.querySelector(".tk-body");
+      const top = this._tkBodyTop ? 0 : body.scrollTop;
+      this._tkBodyTop = false;
+      this._series = {};
+      let html = total ? this._tkTotalHtml(str) : this._tx ? this._txDetailHtml(str) : this._detailHtml(str);
+      // Several open orders, asked for with the clock: listed under the
+      // page, which here has no list of its own.
+      if (!total && !this._tx && this._tkOrders && !this._config.show_detail_transactions) {
+        const orders = this._openOrderList().filter((tx) => tx.security.isin === item.isin);
+        if (orders.length) html += `<div class="tk-orders">${this._txListHtml(orders, str)}</div>`;
+      }
+      if (this._newsOpen) html += this._newsDialogHtml(str);
+      body.innerHTML = html;
+      body.scrollTop = top;
+      if (this._tkOrdersShow) {
+        this._tkOrdersShow = false;
+        const list = body.querySelector(".tk-orders");
+        if (list) list.scrollIntoView({ block: "nearest" });
+      }
+      if (!dialog.open) dialog.showModal();
+      this._showNewsDialog(body);
+      this._centreIcons();
+      this._wireCharts();
+    }
+
+    _onClick(ev) {
+      const el = ev.composedPath().find((node) => node.dataset && node.dataset.action);
+      const action = el && el.dataset.action;
+      // On the strip the sparkle has no pop-up of its own to open in.
+      if (action === "news" && !this._tkDialog.open) {
+        if (this._tkSwiped) {
+          this._tkSwiped = false;
+          return;
+        }
+        if (this._config.layout === "line") this._tkSettleLine();
+        this._tkOpen(el.dataset.isin, true);
+        return;
+      }
+      if (action === "tk-open" || action === "tk-current") {
+        if (this._tkSwiped) {
+          this._tkSwiped = false;
+          return;
+        }
+        if (action === "tk-open") {
+          this._tkOpen(el.dataset.isin);
+        } else if (this._config.layout === "ticker") {
+          const isin = this._tkFront();
+          if (isin) this._tkOpen(isin);
+        } else {
+          this._tkSettleLine();
+          const item = this._tkItems()[this._tkIndex || 0];
+          if (item) this._tkOpen(item.isin);
+        }
+        return;
+      }
+      if (action === "tk-prev" || action === "tk-next") {
+        this._tkPopStep(action === "tk-next" ? 1 : -1);
+        return;
+      }
+      if (action === "tk-close") {
+        this._tkDialog.close();
+        return;
+      }
+      // The clock in the pop-up's head. One open order opens its page, as in
+      // the main card. Several go to the Transactions tab there, and the
+      // pop-up has none: they are listed under the page, and the clock
+      // takes the list away again.
+      if (action === "orders" && this._tkDialog.open) {
+        const orders = this._openOrderList().filter((tx) => tx.security.isin === el.dataset.isin);
+        if (orders.length === 1) {
+          this._tx = orders[0].id;
+        } else if (!this._config.show_detail_transactions) {
+          this._tkOrders = !this._tkOrders;
+          this._tkOrdersShow = this._tkOrders;
+        }
+        this._render();
+        return;
+      }
+      super._onClick(ev);
+    }
+  }
+
+  const TICKER_SUPER_GROUPS = [
+    { key: "settings", icon: "mdi:tune", groups: ["general", "content", "animation"] },
+    { key: "layout", icon: "mdi:view-dashboard-outline", groups: ["display", "list", "popup"] },
+  ];
+
+  class ScalableTickerCardEditor extends ScalableCardEditor {
+    setConfig(config) {
+      this._config = tickerConfig(config);
+      this._render();
+    }
+
+    _superGroups() {
+      return TICKER_SUPER_GROUPS;
+    }
+
+    _superDesc(key, str) {
+      return key === "settings" ? str.edTkPanelSettingsDesc : str.edTkPanelLayoutDesc;
+    }
+
+    _groupText(key, str) {
+      return key === "popup" ? str.edGroupPopup : super._groupText(key, str);
+    }
+
+    _emit() {
+      this.dispatchEvent(
+        new CustomEvent("config-changed", {
+          detail: { config: pruneDefaults(this._config, TICKER_DEFAULTS) },
+          bubbles: true,
+          composed: true,
+        })
+      );
+    }
+
+    _buildGroup(groupKey, str) {
+      const body = document.createElement("div");
+      body.className = "group-body";
+      body.dataset.group = groupKey;
+      if (groupKey === "general") {
+        body.appendChild(
+          this._fieldRow(str.edFormat, str.edFormatHelp,
+            this._select("layout", [
+              { value: "ticker", label: str.formatTicker },
+              { value: "line", label: str.formatLine },
+              { value: "carousel", label: str.formatCarousel },
+            ]))
+        );
+        body.appendChild(
+          this._fieldRow(str.edEntry, str.edEntryHelp,
+            this._picker("entry", { config_entry: { integration: DOMAIN } }))
+        );
+        body.appendChild(
+          this._fieldRow(str.edTkPeriod, str.edTkPeriodHelp,
+            this._select(
+              "ticker_period",
+              OVERVIEW_PERIODS.filter((period) => period.chart).map((period) => ({
+                value: period.key,
+                label: str[period.name],
+              }))
+            ))
+        );
+        body.appendChild(
+          this._fieldRow(str.edSort, str.edTkSortHelp,
+            this._select("sort", [
+              { value: "name", label: str.sortName },
+              { value: "value", label: str.sortValue },
+              { value: "change", label: str.sortChange },
+            ]))
+        );
+      }
+      if (groupKey === "content") {
+        // Two columns, the same as the pair of blocks below them.
+        const sources = document.createElement("div");
+        sources.className = "content-pair tk-sources";
+        for (const row of [
+          this._toggleRow("show_portfolio", str.sourcePositions, str.edSourcePositionsHelp),
+          this._toggleRow("show_watchlist", str.sourceWatchlist, str.edSourceWatchlistHelp),
+        ]) {
+          const column = document.createElement("div");
+          column.className = "tk-source";
+          column.appendChild(row);
+          sources.appendChild(column);
+        }
+        // Under the watchlist's switch, in the shorter of the two columns.
+        sources.lastChild.appendChild(
+          this._toggleRow("show_portfolio_total", str.edElTotal, str.edTkTotalHelp)
+        );
+        body.appendChild(this._contentBlock(str.edSource, str.edSourceHelp, [sources, this._tkPickRow(str)]));
+        const curve = this._toggleRow("show_row_sparkline", str.edRowSparkline, str.edTkCurveHelp);
+        curve.dataset.tkCurve = "";
+        // Under the price, as what it shows instead.
+        const worth = this._toggleRow("show_position_value", str.edTkValue, str.edTkValueHelp);
+        worth.classList.add("sub-field-row", "sub-toggle-row");
+        worth.dataset.tkWorth = "";
+        const pair = document.createElement("div");
+        pair.className = "content-pair";
+        pair.appendChild(
+          this._contentBlock(str.edBlockEntry, str.edBlockEntryHelp, [
+            this._toggleRow("show_row_logo", str.edRowLogo, str.edRowLogoHelp),
+            this._toggleRow("show_row_news", str.edRowNews, str.edTkNewsHelp),
+            this._toggleRow("show_row_symbol", str.edRowSymbol, str.edRowSymbolHelp),
+            this._toggleRow("show_row_name", str.edElRowName, str.edElRowNameHelp),
+            this._toggleRow("show_row_price", str.edRowPrice, str.edTkPriceHelp),
+            worth,
+            this._toggleRow("show_row_change", str.edRowChange, str.edTkChangeHelp),
+            curve,
+          ])
+        );
+        pair.appendChild(
+          this._contentBlock(str.edBlockPopup, str.edBlockPopupHelp, [
+            this._toggleRow("show_detail_logo", str.edRowLogo, str.edTkDetailLogoHelp),
+            this._toggleRow("show_detail_news", str.edDetailNews, str.edDetailNewsHelp),
+            this._toggleRow("show_detail_chart", str.edDetailChart, str.edDetailChartHelp),
+            this._toggleRow("show_detail_quote", str.edDetailQuote, str.edDetailQuoteHelp),
+            this._toggleRow("show_detail_position", str.edDetailPosition, str.edDetailPositionHelp),
+          ])
+        );
+        body.appendChild(pair);
+      }
+      if (groupKey === "animation") {
+        const pair = (rows) => {
+          const el = document.createElement("div");
+          el.className = "tk-pair";
+          rows.forEach((row) => el.appendChild(row));
+          return el;
+        };
+        const advance = this._toggleRow("auto_advance", str.edAutoAdvance, str.edAutoAdvanceHelp);
+        advance.dataset.tkAdvance = "";
+        const endless = this._toggleRow("endless_loop", str.edEndlessLoop, str.edEndlessLoopHelp);
+        endless.dataset.tkLoop = "";
+        const interval = this._unitRow("auto_interval", str.edAutoInterval, str.edAutoIntervalHelp, 2, 120, "s");
+        interval.dataset.tkAuto = "";
+        const automatic = this._contentBlock(str.edBlockAuto, str.edBlockAutoHelp, [pair([endless, advance]), interval]);
+        automatic.querySelector(".group-label-row").dataset.tkAdvance = "";
+        body.appendChild(this._tkSection(automatic));
+
+        const typeRow = (key, layout, values) => {
+          const row = this._fieldRow(
+            str.edEffectType,
+            str.edEffectTypeHelp,
+            this._select(key, values.map(([value, label]) => ({ value, label: str[label] })))
+          );
+          row.dataset.tkFx = layout;
+          return row;
+        };
+        const duration = this._unitRow("effect_duration", str.edEffectDuration, str.edEffectDurationHelp, 100, 3000, "ms");
+        duration.dataset.tkDuration = "";
+        const effect = this._contentBlock(str.edEffect, str.edEffectHelp, [
+          pair([
+            typeRow("line_effect", "line", [
+              ["slide", "fxSlide"],
+              ["fade", "fxFade"],
+              ["roll", "fxRoll"],
+              ["flap", "fxFlap"],
+              ["zoom", "fxZoom"],
+            ]),
+            typeRow("carousel_effect", "carousel", [
+              ["slide", "fxSlide"],
+              ["glide", "fxGlide"],
+              ["focus", "fxFocus"],
+              ["stagger", "fxStagger"],
+              ["coverflow", "fxCoverflow"],
+            ]),
+            duration,
+          ]),
+        ]);
+        effect.dataset.tkFxBlock = "";
+        body.appendChild(this._tkSection(effect));
+      }
+      if (groupKey === "display") {
+        body.appendChild(this._backgroundBlock(str));
+        body.appendChild(this._tileBlock(str));
+        body.appendChild(this._gainBlock(str));
+      }
+      if (groupKey === "list") {
+        body.appendChild(this._offNote(str));
+        for (const prefix of ["logo", "row_insight", "row_symbol", "row_name", "row_price", "row_change"]) {
+          const el = DESIGN_ELEMENTS[prefix];
+          // The main card's words put the price at the end of an entry,
+          // which is not where every format here has it.
+          body.appendChild(
+            this._designElement(prefix, prefix === "row_price" ? { ...el, help: "edTkElRowPriceHelp" } : el, str)
+          );
+        }
+      }
+      if (groupKey === "popup") {
+        // A part of the pop-up under its name, the way the main card's
+        // editor puts a product's settings under the product's.
+        const part = (key, title, rows) => {
+          const group = document.createElement("div");
+          group.className = "product-group";
+          group.dataset.tkPop = key;
+          const heading = this._groupLabelRow(title, "", false);
+          heading.classList.add("product-heading");
+          group.appendChild(heading);
+          rows.forEach((row) => group.appendChild(row));
+          return group;
+        };
+        // The main card's blocks, named for what they are in the pop-up.
+        const element = (prefix, label, help) =>
+          this._designElement(prefix, { ...DESIGN_ELEMENTS[prefix], ...(label ? { label, help } : {}) }, str);
+        body.appendChild(part("head", str.edTkPopHead, [element("detail_name"), element("total", "edTkElPrice", "edTkElPriceHelp")]));
+        body.appendChild(
+          part("news", str.edDetailNews, ["news_title", "news_text", "news_popup_title", "news_popup_text", "news_popup_note"]
+            .map((prefix) => element(prefix)))
+        );
+        body.appendChild(
+          part("chart", str.edGroupChart, [
+            this._unitRow("chart_height", str.edChartHeight, str.edTkChartHeightHelp, 120, 800, "px"),
+            this._unitRow("chart_line_width", str.edChartLine, str.edTkChartLineHelp, 1, 6, "px"),
+            this._toggleRow("chart_fill", str.edChartFill, str.edChartFillHelp),
+            this._toggleRow("chart_reference", str.edChartReference, str.edChartReferenceHelp),
+            this._toggleRow("chart_axis", str.edChartAxis, str.edChartAxisHelp),
+          ])
+        );
+        body.appendChild(part("position", str.yourPosition, [element("section", "edTkElPosTitle", "edTkElPosTitleHelp")]));
+      }
+      return body;
+    }
+
+    // Scalable's groups are the account's, so the editor has to ask for them:
+    // once per entry, the first answer of the card's own subscription.
+    _tkLoadGroups() {
+      if (!this._hass || !this._config) return;
+      const entry = this._config.entry || "";
+      if (this._tkGroupsEntry === entry) return;
+      this._tkGroupsEntry = entry;
+      const message = { type: "scalable/subscribe" };
+      if (entry) message.entry_id = entry;
+      let answered = false;
+      let stop = null;
+      this._hass.connection
+        .subscribeMessage((data) => {
+          answered = true;
+          if (stop) stop();
+          if (this._tkGroupsEntry !== entry) return;
+          this._tkLists = { positions: (data && data.positions) || [], watchlist: (data && data.watchlist) || [] };
+          this._tkGroups = (data && data.groups) || [];
+          this._tkPlaceGroups();
+          this._syncValues();
+        }, message)
+        .then((unsub) => {
+          stop = unsub;
+          if (answered) unsub();
+        })
+        .catch(() => {});
+    }
+
+    // What there is to choose from: what the two switches and the groups
+    // let through, the same as the card works out.
+    _tkCandidates() {
+      const lists = this._tkLists || { positions: [], watchlist: [] };
+      return tickerSources({ ...lists, groups: this._tkGroups || [] }, this._config);
+    }
+
+    // The securities one by one: a menu of them all, each with a tick, and
+    // a button that takes the ticks over. Built on the colour menu's
+    // classes, so a click elsewhere and Escape close it the same way.
+    _tkPickRow(str) {
+      const select = document.createElement("div");
+      select.className = "preset-select pick-select";
+      select.dataset.tkPick = "";
+      select.innerHTML = `
+        <button type="button" class="preset-btn pick-btn">
+          <span class="preset-name"></span>
+          <ha-icon icon="mdi:menu-down"></ha-icon>
+        </button>
+        <div class="preset-menu pick-menu" hidden>
+          <div class="pick-tools">
+            <button type="button" data-pick="all"></button>
+            <button type="button" data-pick="none"></button>
+          </div>
+          <div class="pick-list"></div>
+          <div class="pick-foot"><button type="button" class="pick-apply"></button></div>
+        </div>`;
+      const menu = select.querySelector(".pick-menu");
+      select.querySelector('[data-pick="all"]').textContent = str.tkPickEvery;
+      select.querySelector('[data-pick="none"]').textContent = str.tkPickNone;
+      select.querySelector(".pick-apply").textContent = str.tkPickApply;
+      const boxes = () => [...menu.querySelectorAll(".pick-list input")];
+      select.querySelector(".pick-btn").addEventListener("click", (ev) => {
+        ev.stopPropagation();
+        const isOpen = !menu.hidden;
+        this.shadowRoot.querySelectorAll(".preset-menu").forEach((m) => (m.hidden = true));
+        if (!isOpen) {
+          // Filled on every open: what was ticked and not taken over is gone.
+          this._tkPickFill(menu, str);
+          // The room is measured the way the colour menu measures it.
+          const rect = select.getBoundingClientRect();
+          const box = this._clipRect(select, false);
+          const below = box.bottom - rect.bottom - 8;
+          const above = rect.top - box.top - 8;
+          const up = above > below;
+          menu.classList.toggle("menu-up", up);
+          menu.style.maxHeight = `${Math.max(150, Math.min(380, up ? above : below))}px`;
+        }
+        menu.hidden = isOpen;
+      });
+      select.querySelector('[data-pick="all"]').addEventListener("click", () => boxes().forEach((box) => (box.checked = true)));
+      select.querySelector('[data-pick="none"]').addEventListener("click", () => boxes().forEach((box) => (box.checked = false)));
+      select.querySelector(".pick-apply").addEventListener("click", () => {
+        const listed = new Set(boxes().map((box) => box.dataset.isin));
+        const lists = this._tkLists || { positions: [], watchlist: [] };
+        const known = new Set([...lists.positions, ...lists.watchlist].map((item) => item.isin));
+        // A security not on offer just now - its list is switched off -
+        // keeps the choice made for it. One Scalable no longer has is dropped.
+        const kept = (this._config.hidden_securities || []).filter((isin) => !listed.has(isin) && known.has(isin));
+        menu.hidden = true;
+        this._set("hidden_securities", [...kept, ...boxes().filter((box) => !box.checked).map((box) => box.dataset.isin)]);
+      });
+      return this._fieldRow(str.edTkPick, str.edTkPickHelp, select);
+    }
+
+    _tkPickFill(menu, str) {
+      const { positions, watchlist } = this._tkCandidates();
+      const out = new Set(this._config.hidden_securities || []);
+      const list = menu.querySelector(".pick-list");
+      list.innerHTML = "";
+      const byName = (a, b) => String(a.name).localeCompare(String(b.name), localeOf(this._hass));
+      for (const [title, items] of [[str.portfolio, positions], [str.watchlist, watchlist]]) {
+        if (!items.length) continue;
+        const head = document.createElement("div");
+        head.className = "pick-head";
+        head.textContent = title;
+        list.appendChild(head);
+        for (const item of items.slice().sort(byName)) {
+          const label = document.createElement("label");
+          label.className = "pick-item";
+          label.innerHTML = `<input type="checkbox"><span></span>`;
+          const input = label.querySelector("input");
+          input.dataset.isin = item.isin;
+          input.checked = !out.has(item.isin);
+          label.querySelector("span").textContent = item.name;
+          list.appendChild(label);
+        }
+      }
+      const any = !!list.querySelector("input");
+      if (!any) {
+        const none = document.createElement("div");
+        none.className = "pick-none";
+        none.textContent = str.tkPickEmpty;
+        list.appendChild(none);
+      }
+      menu.querySelectorAll(".pick-tools button, .pick-apply").forEach((button) => (button.disabled = !any));
+    }
+
+    _tkGroupRow(id, label) {
+      const row = document.createElement("div");
+      row.className = "toggle-row sub-field-row sub-toggle-row";
+      row.dataset.tkGroupRow = "";
+      row.innerHTML = `
+        <label class="toggle">
+          <input type="checkbox">
+          <span class="track"></span>
+        </label>
+        <span class="toggle-label"></span>`;
+      row.querySelector(".toggle-label").textContent = label;
+      const input = row.querySelector("input");
+      input.dataset.tkGroup = id;
+      input.addEventListener("change", () => {
+        const others = (this._config.hidden_groups || []).filter((item) => item !== id);
+        this._set("hidden_groups", input.checked ? others : [...others, id]);
+      });
+      return row;
+    }
+
+    // Under the portfolio's switch; the rest of the portfolio gets one too,
+    // or a single group could not be shown.
+    _tkPlaceGroups() {
+      if (!this.shadowRoot) return;
+      this.shadowRoot.querySelectorAll("[data-tk-group-row]").forEach((row) => row.remove());
+      const groups = this._tkGroups || [];
+      const toggle = this.shadowRoot.querySelector('input[data-toggle="show_portfolio"]');
+      if (!toggle || !groups.length) return;
+      const str = t(this._hass);
+      const column = toggle.closest(".tk-source");
+      for (const group of groups) column.appendChild(this._tkGroupRow(group.id, group.name));
+      column.appendChild(this._tkGroupRow("ungrouped", str.ungrouped));
+    }
+
+    // The card background's block once more, for the carousel's tiles.
+    _tileBlock(str) {
+      const block = document.createElement("div");
+      block.className = "design-element";
+      block.dataset.design = "tile_background";
+      block.appendChild(this._groupLabelRow(str.edElTileBg, str.edElTileBgHelp));
+      const on = this._toggleRow("tile_background", str.edCardBgEnable, str.edTileBgEnableHelp);
+      on.classList.add("sub-field-row", "sub-toggle-row");
+      block.appendChild(on);
+      const add = (row) => {
+        row.dataset.withTileBg = "";
+        block.appendChild(row);
+      };
+      add(this._colorRow("tile_background_color", str.edCardBgColor, str.edTileBgColorHelp, str));
+
+      const image = this._textInput("tile_background_image", str.edCardBgImagePlaceholder);
+      const upload = document.createElement("button");
+      upload.type = "button";
+      upload.className = "upload-btn";
+      upload.title = str.edCardBgUpload;
+      upload.innerHTML = `<ha-icon icon="mdi:upload"></ha-icon>`;
+      const imageRow = this._fieldRow(str.edCardBgImage, str.edCardBgImageHelp, image, true);
+      imageRow.querySelector(".field-input-row").appendChild(upload);
+      const preview = document.createElement("div");
+      preview.className = "bg-image-preview";
+      preview.dataset.tilePreview = "";
+      preview.hidden = true;
+      preview.innerHTML = `<img alt=""><button type="button" class="bg-image-clear"
+        title="${escapeHtml(str.edCardBgClear)}"><ha-icon icon="mdi:close"></ha-icon></button>`;
+      imageRow.appendChild(preview);
+      add(imageRow);
+
+      add(this._fieldRow(str.edCardBgSize, str.edTileBgSizeHelp,
+        this._select("tile_background_size", [
+          { value: "cover", label: str.bgSizeCover },
+          { value: "contain", label: str.bgSizeContain },
+          { value: "auto", label: str.bgSizeAuto },
+          { value: "repeat", label: str.bgSizeRepeat },
+        ]), true));
+
+      const opacity = document.createElement("div");
+      opacity.className = "unit-input-wrap";
+      opacity.appendChild(this._numberInput("tile_background_opacity", 0, 100));
+      const suffix = document.createElement("span");
+      suffix.className = "unit-suffix";
+      suffix.textContent = "%";
+      opacity.appendChild(suffix);
+      add(this._fieldRow(str.edCardBgOpacity, str.edCardBgOpacityHelp, opacity, true));
+
+      const setImage = (value) => {
+        this._set("tile_background_image", value);
+        if (value && this._config.tile_background !== true) this._set("tile_background", true);
+        this._syncValues();
+      };
+      upload.addEventListener("click", () => this._uploadBackground(setImage));
+      preview.querySelector(".bg-image-clear").addEventListener("click", () => setImage(""));
+      return block;
+    }
+
+    // A block whose heading reads like a product's in the main card's editor.
+    _tkSection(block) {
+      block.classList.add("product-group");
+      block.querySelector(".group-label-row").classList.add("product-heading");
+      return block;
+    }
+
+    _syncValues() {
+      super._syncValues();
+      if (!this.shadowRoot || !this._config) return;
+      this._tkLoadGroups();
+      // A language change rebuilds the panels and takes the rows with them.
+      if ((this._tkGroups || []).length && !this.shadowRoot.querySelector("[data-tk-group-row]")) {
+        this._tkPlaceGroups();
+      }
+      const off = this._config.hidden_groups || [];
+      this.shadowRoot.querySelectorAll("input[data-tk-group]").forEach((input) => {
+        input.checked = !off.includes(input.dataset.tkGroup);
+      });
+      this.shadowRoot.querySelectorAll("[data-tk-group-row]").forEach((row) => {
+        row.hidden = this._config.show_portfolio === false;
+      });
+      this.shadowRoot.querySelectorAll("[data-tk-auto]").forEach((row) => {
+        row.hidden = this._config.layout !== "ticker" && this._config.auto_advance === false;
+      });
+      // The menu's button says how many of those on offer are shown.
+      const pickName = this.shadowRoot.querySelector("[data-tk-pick] .preset-name");
+      if (pickName) {
+        const str = t(this._hass);
+        const { positions, watchlist } = this._tkCandidates();
+        const offered = [...positions, ...watchlist];
+        const out = new Set(this._config.hidden_securities || []);
+        const shown = offered.filter((item) => !out.has(item.isin)).length;
+        pickName.textContent = !offered.length
+          ? str.tkPickEmpty
+          : shown === offered.length
+            ? str.tkPickAll
+            : str.tkPickSome(shown, offered.length);
+      }
+      this.shadowRoot.querySelectorAll("[data-tk-worth]").forEach((row) => {
+        row.hidden = this._config.show_row_price === false;
+      });
+      this.shadowRoot.querySelectorAll("[data-tk-curve]").forEach((row) => {
+        row.hidden = this._config.layout === "ticker";
+      });
+      this.shadowRoot.querySelectorAll("[data-tk-advance]").forEach((row) => {
+        row.hidden = this._config.layout === "ticker";
+      });
+      this.shadowRoot.querySelectorAll("[data-tk-fx]").forEach((row) => {
+        row.hidden = this._config.layout !== row.dataset.tkFx;
+      });
+      this.shadowRoot.querySelectorAll("[data-tk-fx-block]").forEach((block) => {
+        block.hidden = this._config.layout === "ticker";
+      });
+      // Where the loop changes nothing: the ticker and the stacked row are
+      // endless by nature, and a glide has no end to stop at.
+      const layout = this._config.layout;
+      const endlessAnyway =
+        layout === "ticker" ||
+        (layout === "line" && this._config.line_effect !== "slide") ||
+        (layout === "carousel" && this._config.carousel_effect === "glide");
+      this.shadowRoot.querySelectorAll("[data-tk-loop]").forEach((row) => {
+        row.hidden = endlessAnyway;
+      });
+      // The tiles exist only on the carousel.
+      this._syncColorRow("tile_background_color", this._config.tile_background_color || "", "rgba(127, 127, 127, 0.1)", t(this._hass));
+      const tilePreview = this.shadowRoot.querySelector("[data-tile-preview]");
+      if (tilePreview) {
+        const src = this._config.tile_background_image || "";
+        tilePreview.hidden = !src;
+        if (src) tilePreview.querySelector("img").src = src;
+      }
+      this.shadowRoot.querySelectorAll("[data-with-tile-bg]").forEach((row) => {
+        row.hidden = this._config.tile_background !== true;
+      });
+      const shows = {
+        head: true,
+        news: this._config.show_detail_news !== false || this._config.show_row_news !== false,
+        chart: this._config.show_detail_chart !== false,
+        position: this._config.show_detail_position !== false,
+      };
+      this.shadowRoot.querySelectorAll("[data-tk-pop]").forEach((group) => {
+        group.hidden = !shows[group.dataset.tkPop];
+      });
+      this.shadowRoot.querySelectorAll('[data-design="tile_background"]').forEach((block) => {
+        block.hidden = layout !== "carousel";
+      });
+      // A glide never finishes a change: its speed is the seconds per security.
+      const noDuration = layout === "ticker" || (layout === "carousel" && this._config.carousel_effect === "glide");
+      this.shadowRoot.querySelectorAll("[data-tk-duration]").forEach((row) => {
+        row.hidden = noDuration;
+      });
+    }
+  }
+
   // ---------------------------------------------------------- registration
   //
   // Home Assistant's app bundle replaces the browser's custom element
@@ -9422,6 +11861,8 @@
   const TAGS = [
     [CARD_TAG, ScalableCard],
     [EDITOR_TAG, ScalableCardEditor],
+    [TICKER_TAG, ScalableTickerCard],
+    [TICKER_EDITOR_TAG, ScalableTickerCardEditor],
   ];
   const [LIVE_CARD, LIVE_EDITOR] = [TAGS[0][0], TAGS[1][0]];
   const LIVE_LATEST = "__scalableLatest";
@@ -9465,14 +11906,14 @@
   };
 
   const redraw = () => {
-    for (const el of liveElements([LIVE_CARD, LIVE_EDITOR])) {
+    for (const el of liveElements([LIVE_CARD, LIVE_EDITOR, TICKER_TAG, TICKER_EDITOR_TAG])) {
       try {
         if (!el._config) continue;
         // An editor's form is built once and then only has values pushed
         // into it; a new version means building it again - with the panel
         // and the tabs the person had open, so that the swap is not seen
         // as the form folding up.
-        if (el.localName === LIVE_EDITOR && el.shadowRoot) {
+        if ((el.localName === LIVE_EDITOR || el.localName === TICKER_EDITOR_TAG) && el.shadowRoot) {
           // An element from before these fields existed: read what it has
           // open off the DOM, so that _render puts it back.
           const open = el.shadowRoot.querySelector(".super-panel.open");
@@ -9540,6 +11981,28 @@
     }, 100);
   }
 
+  // The entry an entity of this integration belongs to - only where there
+  // is more than one, since the card takes the first by itself. The
+  // frontend's entity list does not carry it; the entity's device does.
+  const suggestedEntry = (hass, entity) => {
+    const entryOf = (item) => {
+      const device = item && hass.devices && hass.devices[item.device_id];
+      return device ? device.primary_config_entry || (device.config_entries || [])[0] || "" : "";
+    };
+    const entries = new Set(
+      Object.values(hass.entities || {})
+        .filter((item) => item.platform === DOMAIN)
+        .map(entryOf)
+        .filter(Boolean)
+    );
+    return entries.size > 1 ? entryOf(entity) : "";
+  };
+  const ownEntity = (hass, entityId) => {
+    if (typeof entityId !== "string" || !hass || !hass.entities) return null;
+    const entity = hass.entities[entityId];
+    return entity && entity.platform === DOMAIN ? entity : null;
+  };
+
   window.customCards = window.customCards || [];
   // What the card picker shows. Pushed by the first version to run in the
   // page; a newer version keeps the entry and updates its words through
@@ -9555,11 +12018,11 @@
       // only makes the picker harder to use. Pinned to the entry the entity
       // belongs to, so a second account's sensor gets that account's card.
       getEntitySuggestion: (hass, entityId) => {
-        if (typeof entityId !== "string") return null;
-        const entry = hass && hass.entities && hass.entities[entityId];
-        if (!entry || entry.platform !== DOMAIN) return null;
+        const entity = ownEntity(hass, entityId);
+        if (!entity) return null;
         const config = { type: `custom:${CARD_TAG}` };
-        if (entry.config_entry_id) config.entry = entry.config_entry_id;
+        const entry = suggestedEntry(hass, entity);
+        if (entry) config.entry = entry;
         return { config };
       },
   };
@@ -9567,4 +12030,38 @@
   const listed = window.customCards.find((c) => c.type === pickerEntry.type);
   if (listed) Object.assign(listed, pickerEntry);
   else window.customCards.push(pickerEntry);
+  const tickerEntry = {
+    type: TICKER_TAG,
+    name: "Scalable Capital Ticker",
+    description: "The securities of a Scalable Capital portfolio as a ticker, a compact row or a carousel, with their details in a pop-up.",
+    preview: true,
+    documentationURL: "https://github.com/somansch/scalable",
+    // Only for a security - any sensor of a watchlist entry, or of a
+    // position, whose device is the security itself (its model id the ISIN).
+    // Not every one of them carries the ISIN as an attribute. A watchlist
+    // entry's suggests the watchlist.
+    getEntitySuggestion: (hass, entityId) => {
+      const entity = ownEntity(hass, entityId);
+      if (!entity) return null;
+      const watch = String(entity.translation_key || "").startsWith("watch_");
+      const device = hass.devices && hass.devices[entity.device_id];
+      const state = hass.states && hass.states[entityId];
+      const security =
+        watch ||
+        (device && MARK_ISIN.test(String(device.model_id || ""))) ||
+        (state && state.attributes && MARK_ISIN.test(String(state.attributes.isin || "")));
+      if (!security) return null;
+      const config = { type: `custom:${TICKER_TAG}` };
+      const entry = suggestedEntry(hass, entity);
+      if (entry) config.entry = entry;
+      if (watch) {
+        config.show_portfolio = false;
+        config.show_watchlist = true;
+      }
+      return { config };
+    },
+  };
+  const tickerListed = window.customCards.find((c) => c.type === tickerEntry.type);
+  if (tickerListed) Object.assign(tickerListed, tickerEntry);
+  else window.customCards.push(tickerEntry);
 })();

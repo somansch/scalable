@@ -12,7 +12,9 @@
 
 > **Unofficial.** Not affiliated with, endorsed by or supported by Scalable Capital. "Scalable" and its logo are trademarks of Scalable Capital GmbH.
 
-<img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-overview.png" alt="The Scalable card's overview: the broker's head with its plan, the total value with today's change and a curve beside it, the cash balance with what can be invested, and the positions under Stocks and ETFs, each with its open orders, a small curve and its change; beside it the watchlist, and a second card on the overnight savings account" width="60%">
+<img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-overview.png" alt="The Scalable card's overview: the broker's head with its plan, the total value with today's change and a curve beside it, the cash balance with what can be invested, and the positions under Stocks and ETFs, each with its logo, a small curve, its change and its price - Siemens Energy with an open order and the Market Insights sparkle; beside it the watchlist, and a third card on the overnight savings account. Amounts and the names of the other positions are blurred" width="60%">
+
+<img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-ticker-card-overview.gif" alt="The Scalable Ticker card in motion: the running ticker across the top, below it the compact row and the carousel, and beside them the same three formats in other sizes and with the short name in place of the name" width="100%">
 
 ## Overview
 
@@ -23,6 +25,7 @@ It reads through **Scalable MCP**, the connection Scalable offers to AI assistan
 Typical reasons to use it:
 
 - **See the portfolio on a dashboard.** The [Scalable card](#scalable-card) comes with the integration and reads like Scalable's web app: the same tabs, the same period switch, a page per security and per order. Nothing to download and no resource to register.
+- **Keep an eye on it in one line.** The [Scalable Ticker card](#scalable-ticker-card) runs through the positions and the watchlist as a running ticker, a compact row or a carousel, and opens a security's page in a pop-up.
 - **Know what a position has made.** Value, purchase value, average price and the unrealised return for every position - a figure Scalable does not report on its own and the integration works out from the transactions.
 - **See the savings and the credit too.** The overnight account, every fixed-term deposit and the credit line, as sensors and as pages of the card, one dropdown away from the broker.
 - **Follow the watchlist and the price alerts** without opening the app: a price and today's change per entry, and how far each alert still is from the current price.
@@ -37,7 +40,7 @@ Typical reasons to use it:
 1. In Scalable's **web** version, switch on **Scalable MCP** ([Before you start](#before-you-start)).
 2. **Install** via [Marketplace (HACS)](#marketplace-hacs) or [manually](#manual), then restart Home Assistant.
 3. **Settings → Devices & Services → Add Integration**, search for "Scalable Capital", give the entry a name and sign in to Scalable ([Setting up](#setting-up)).
-4. Put it on a dashboard: **Add card → Scalable Capital** gives you the [card that comes with the integration](#scalable-card). Or use the [sensors](#created-entities) in any card you like.
+4. Put it on a dashboard: **Add card → Scalable Capital** gives you the [card that comes with the integration](#scalable-card), **Scalable Capital Ticker** its [ticker](#scalable-ticker-card). Or use the [sensors](#created-entities) in any card you like.
 
 That is the whole setup. Everything below covers the individual parts in more depth.
 
@@ -63,10 +66,13 @@ That is the whole setup. Everything below covers the individual parts in more de
   - [Overview](#overview-1), [A security's page](#a-securitys-page), [Price alerts and savings plans](#price-alerts-and-savings-plans), [Transactions](#transactions), [Insights](#insights), [Overnight savings, fixed-term deposits and credit](#overnight-savings-fixed-term-deposits-and-credit)
   - [Settings](#settings) - the editor
   - [What differs from the web app](#what-differs-from-the-web-app)
+- [Scalable Ticker card](#scalable-ticker-card) - the securities as a running ticker, a compact row or a carousel
+  - [What it goes through](#what-it-goes-through), [An entry](#an-entry), [The pop-up](#the-pop-up), [How it moves](#how-it-moves), [Settings](#settings-1)
 
 **Background**
 
 - [Reading only](#reading-only)
+- [Logos and short names](#logos-and-short-names) - the two services Home Assistant asks, and what it sends them
 - [Good to know](#good-to-know)
 - [Installation](#installation)
 - [Help and Contribution](#help-and-contribution)
@@ -215,7 +221,7 @@ The answer: `updated`, `portfolio` (`total`, `securities`, `crypto`, `cash`, `bu
 
 The integration's own card: the portfolio the way Scalable's web app shows it, with the same tabs - **Overview, Savings plans, Price alerts, Insights, Transactions**. Where the account has more than the broker, a dropdown under the title switches to the [overnight savings, a fixed-term deposit or the credit](#overnight-savings-fixed-term-deposits-and-credit), the way the web app's start page offers them. Every product opens with its head: its symbol on a disc, its name and, for the broker, the plan, read off its monthly fee booking.
 
-It comes with the integration. There is nothing to download, nothing to copy into `www` and nothing to register as a dashboard resource - restart Home Assistant after installing and the card is there, under **Scalable Capital** in the card picker. The entry that shows up under **Settings → Dashboards → Resources** is the integration's own: it writes it, keeps it pointing at the version it serves, and takes it out again with the last entry. In YAML it is just:
+It comes with the integration. There is nothing to download, nothing to copy into `www` and nothing to register as a dashboard resource - restart Home Assistant after installing and the card is there, under **Scalable Capital** in the card picker - and under **By entity** it is suggested for every entity of the integration; with more than one Scalable account, set to the one the entity belongs to. The entry that shows up under **Settings → Dashboards → Resources** is the integration's own: it writes it, keeps it pointing at the version it serves, and takes it out again with the last entry. In YAML it is just:
 
 ```yaml
 type: custom:scalable-card
@@ -231,11 +237,11 @@ The total value with its change over the chosen period - **1D, 1W, 1M, 3M, 6M, Y
 
 On a weekend or a holiday the one-day view names the trading day it describes - *Friday*, say - in place of *Today*.
 
-Every entry carries its value, its open orders - the clock is a link to them - the amount of its savings plan, a small curve, the change and the price. Where Scalable has [Market Insights](#a-securitys-page) on a security, a sparkle opens them straight from the list. Under *Since purchase* a position shows its return in percent and euros instead. A section folds with a click on its heading.
+Every entry carries the security's [logo](#logos-and-short-names), its value, its open orders - the clock is a link to them - the amount of its savings plan, a small curve, the change and the price. Where Scalable has [Market Insights](#a-securitys-page) on a security, a sparkle opens them straight from the list. Under *Since purchase* a position shows its return in percent and euros instead. A section folds with a click on its heading.
 
 A security a savings plan saves into stands under **Savings plans**, a heading like the kinds with the value of what stands under it - from the day the plan exists, so before the first run with no value yet. Grouped by kind, every security with a plan stands there, held or not; with Scalable's groups or no grouping, a held one keeps its place. **Savings plans** under **Settings → Content → Broker** switches the heading off.
 
-<img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-watchlist.png" alt="The lower part of the overview: the crypto value, and the watchlist with a curve, the change and the price per entry" width="60%">
+<img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-watchlist.png" alt="The lower part of the overview: the crypto value, and the watchlist with a logo, a curve, the change and the price per entry" width="60%">
 
 ### A security's page
 
@@ -252,7 +258,7 @@ While the security cannot be traded - outside weekdays 06:00 to 23:00 German tim
 
 <img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-market-insights.png" alt="Market Insights on a security's page: the heading with the sparkle, how long ago it was written, and the one-line summary of the news with an arrow to the whole text" width="60%">
 
-<img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-active-asset.png" alt="A position's page: Caterpillar with its price, the month's change, the sell and the buy price, the bell with one alert, a month's price chart with the current price marked at its end, the position's value, quantity and return, and its open sell order" width="45%"> <img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-watchlist-asset.png" alt="A watchlist entry's page: the year-to-date chart, green above the starting price and red below it, with no position and no transactions" width="45%">
+<img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-active-asset.png" alt="A position's page: Siemens Energy with its logo, its price, the month's change, the sell and the buy price, the Market Insights line, a month's price chart with the current price marked at its end, the position's value, quantity and return - blurred - and its open sell order" width="45%"> <img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-watchlist-asset.png" alt="A watchlist entry's page: the year-to-date chart, green above the starting price and red below it, with no position and no transactions" width="45%">
 
 ### Price alerts and savings plans
 
@@ -301,20 +307,97 @@ Every field carries an **i** describing it. Only what you change is written to t
 
 ### What differs from the web app
 
-Four things, because Scalable does not hand them out:
+Three things, because Scalable does not hand them out:
 
-- **Logos.** An entry gets a round symbol with its first letter.
 - **The portfolio's own curve** - beside the total value and under Insights - is drawn from what Home Assistant has recorded for the portfolio's value. It therefore reaches back to the day the integration was set up, not to the day the portfolio was opened, and shows a grey gap where nothing was recorded.
 - **Crypto** is one figure; single coins are not listed.
 - **The articles behind Market Insights.** Their headlines are listed; the articles themselves open only in Scalable's app.
+
+**Logos** Scalable does not hand out either. The cards get them elsewhere - see [Logos and short names](#logos-and-short-names).
 
 And two things the card adds. **3M** and **6M** stand on the overview's switch, which the web app keeps for a security's own page. And the change stands in percent, in brackets after the period's name and after the **Total return** under Insights: Scalable reports the change in euros only, with deposits and withdrawals taken out, so the percentage is that change as a share of what the period began with - the value at its start plus what was paid in since, which is the value now less the change. A deposit inside the period is therefore no gain, and a period that reaches back before the account was opened counts from nought. **Change in percent** under **Settings → Content → Broker** switches it off.
 
 <img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-card-percentage-3m-6m.png" alt="The overview's head with the period switch from 1D to Since purchase, 3M and 6M among them, and under the total value today's change in euros followed by Today and the change in percent in brackets" width="60%">
 
+## Scalable Ticker card
+
+The integration's second card: the securities one after another, for where a whole card is too much - across the top of a dashboard, in a narrow column, beside other cards. It comes with the integration the same way as the [Scalable card](#scalable-card), stands under **Scalable Capital Ticker** in the card picker and is suggested under **By entity** for the sensors of a position or a watchlist entry. In YAML it is just:
+
+```yaml
+type: custom:scalable-ticker-card
+```
+
+**Format** under **Settings → General** picks one of three:
+
+- **Ticker** - one running line of all securities, without an end. It stops under the pointer.
+- **Compact row** - one security at a time: logo, name, change, a small curve and the price. A swipe or a drag moves on.
+- **Carousel** - tiles side by side, each with name, price, change, logo and a small curve.
+
+Like the Scalable card, it **only shows**.
+
+### What it goes through
+
+**Shows** under **Settings → Content** says which securities:
+
+- **Portfolio positions** - with a switch per group where groups are set up in Scalable's app, and one for the positions outside every group.
+- **Watchlist** - a security that is also a position appears once.
+- **Total value** - the portfolio as a whole in front of the rest: its value, its change over the chosen period and the curve of its return.
+- **Securities** - a menu of everything the switches above let through, each with a tick. Untick the ones to leave out and apply. What Scalable adds to a list later appears by itself.
+
+**Change over** names the period the change and the small curve cover, from **1D** to **1Y**; **Order** sorts by name, by value or by change. By value the positions come first and the watchlist entries follow by price.
+
+### An entry
+
+**What an entry shows** has a switch for each part: the [logo](#logos-and-short-names), the Market Insights sparkle in front of the name, the short name - AAPL for Apple - the name, the price, the change, and in the compact row and the carousel the small curve. **Position value** under the price shows what the whole position is worth in place of the price of one share; a security that is only on the watchlist keeps its price.
+
+### The pop-up
+
+A click on a security opens its page in a pop-up, the same page as in the [Scalable card](#a-securitys-page): the price with its change, the two prices of Scalable's **Sell** and **Buy** buttons, Market Insights, the chart over **1D** to **MAX** and **Your position**. **Pop-up** under **Settings → Content** has a switch for the logo, Market Insights, the chart, the two prices and your position. A click on the sparkle opens the page with the Market Insights summary over it, and the clock on a security with several open orders lists them under the page.
+
+Arrows at the top of the pop-up, the arrow keys and a swipe lead to the next security, in the ticker's own order. A click on **Total value** opens the portfolio's [Insights](#insights) curve instead - **Total return** or **Portfolio value**, over **1D** to **MAX**.
+
+<img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-ticker-card-pop-up.png" alt="The ticker card's pop-up on Siemens Energy: the arrows and 5 / 6 at the top, the logo and the name, the price with today's change, the sell and the buy price, the Market Insights line, the one-day chart, and Your position with its figures blurred" width="45%">
+
+### How it moves
+
+Under **Settings → Animation**:
+
+- **Seconds per security** - how long one stands before the next, 2 to 120; in the running ticker and with the continuous glide, how long one takes to pass.
+- **Endless loop** - after the last security the first comes again, without the run back to the start. On by default.
+- **Move on automatically** - off, you go through the securities by hand. It pauses under the pointer and while the pop-up is open.
+- **Effect** - for the compact row: slide, cross-fade, roll up, split-flap or zoom fade. For the carousel: slide, continuous glide, focus, staggered fade-in or coverflow. **Duration** sets how long a change takes, 100 to 3000 milliseconds.
+
+<img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-ticker-card-animations-compact-row.gif" alt="Four compact rows changing from one security to the next, each with another effect: cross-fade, roll up, split-flap and zoom fade" width="38%"> <img src="https://raw.githubusercontent.com/somansch/scalable/main/docs/scalable-ticker-card-animations-carousel.gif" alt="Four carousels in motion, each with another effect: continuous glide, focus, staggered fade-in and coverflow" width="58%">
+
+Where the device asks for less motion, the effects give way to the plain slide, and the running ticker stands still and is moved by hand.
+
+With the keyboard, the running ticker and the compact row are one stop each: Enter opens the security in front, and the pop-up's arrows lead on from there.
+
+### Settings
+
+The editor is built like the Scalable card's, with two panels of three tabs:
+
+- **Settings** - *General* (the format, the account, the period of the change, the order), *Content* (what the card goes through, what an entry shows, what the pop-up shows) and *Animation*.
+- **Layout** - *General* (the card background, a background of their own for the carousel's tiles, the colours for gain and loss), *List* (the size of the logo, the sparkle's symbol and colours, and colour and font of the short name, the name, the price and the change - each only while its part is shown) and *Pop-up* (the name, the price, the Market Insights texts, the chart and the heading over your position).
+
+Every field carries an **i** describing it, and only what you change is written to the dashboard.
+
 ## Reading only
 
 Scalable's sign-in does not come in a read-only variety: what narrows it is the **access level** you set for Scalable MCP in your account (see [Before you start](#before-you-start)). On this side, the integration names eighteen of Scalable's tools - overview, positions, quotes, cash, watchlist, transactions, a transaction's details, price charts, price alerts, savings plans, portfolio list, portfolio groups, account profile, the overnight account and its transactions, the fixed-term accounts and a fixed-term account's details, and the news summaries behind Market Insights - and checks at every start and once a day that Scalable itself still declares each of them read-only. A tool that loses that declaration is not called at all.
+
+## Logos and short names
+
+Scalable names a security by its ISIN and hands out neither a logo nor the short name it trades under. The cards get the two from public services that need no account:
+
+- **The logo** from [Parqet](https://www.parqet.com/)'s logo service.
+- **The short name** - AAPL for Apple - from [OpenFIGI](https://www.openfigi.com/), which lists every exchange a security trades on. The integration picks one of them: for a stock a listing on one of the large US exchanges - a German stock excepted - else the exchange of its home country, else the German one; for an ETF the German one.
+
+What leaves your Home Assistant for this is the **ISIN of each security a card shows** - nothing about you, your account or what you hold of it. It is Home Assistant that asks, not the browser: once per security, and the answer is kept for 30 days in Home Assistant's own storage, so the two services see one Home Assistant now and then rather than every open dashboard. A service that does not answer is left alone for a quarter of an hour.
+
+The Scalable card asks for the securities whose logo it draws - the entries of its lists while **Symbol** under **Settings → List** is on, and a security whose page is opened. The ticker card asks for every security it goes through.
+
+A security without a logo keeps a round symbol with its first letter, and Scalable's own ETFs carry Scalable's mark. The logos belong to their owners.
 
 ## Good to know
 
@@ -329,10 +412,10 @@ Needs Home Assistant **2026.9** or newer.
 
 ### What you get
 
-Two things, in one download:
+Three things, in one download:
 
 - The **integration** itself.
-- The **[Scalable card](#scalable-card)**. Served by the integration and handed to every dashboard, so there is no file to copy into `www` and no resource to register.
+- The **[Scalable card](#scalable-card)** and the **[Scalable Ticker card](#scalable-ticker-card)**. Served by the integration and handed to every dashboard, so there is no file to copy into `www` and no resource to register.
   After the first installation, load the dashboard page once - a page that is already open holds nothing of the card yet. From then on an update reaches every open page by itself: after Home Assistant restarts, the card checks which version is served and takes the new one over in place, with no reload and no cache to clear.
 
 ### Marketplace (HACS)
@@ -369,7 +452,7 @@ This custom integration is not officially endorsed or supported by Scalable Capi
 
 It talks to **Scalable MCP**, the interface Scalable offers for AI assistants, with your own sign-in and only through tools Scalable declares read-only. Figures it works out itself - purchase values, returns - can differ from Scalable's own, and what Scalable shows in its app is what counts.
 
-**This is not investment advice.** The integration and its card only show what your own account holds; nothing in them, in this README or in its screenshots is a recommendation to buy, sell or hold anything. The securities that appear in the examples and screenshots - Caterpillar among them - are there to show how the card looks, not as a recommendation.
+**This is not investment advice.** The integration and its card only show what your own account holds; nothing in them, in this README or in its screenshots is a recommendation to buy, sell or hold anything. The securities that appear in the examples and screenshots - Caterpillar and Siemens Energy among them - are there to show how the card looks, not as a recommendation.
 
 ---
 

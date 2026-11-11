@@ -24,6 +24,7 @@ from .bundle import CARD_VERSION_DATA
 from .const import CHART_TIMEFRAMES, DOMAIN, NEWS_LOCALES, SIGNAL_ENTRY_LOADED
 from .coordinator import PortfolioGroup, FixedTerm, Overnight, Portfolio, Position, Quote, ScalableCoordinator
 from .errors import ScalableError
+from .symbols import async_get_marks
 
 # The portfolio's own figures the card draws a curve of, from the statistics
 # Home Assistant keeps for their sensors.
@@ -320,6 +321,29 @@ async def websocket_charts(
 
 @websocket_api.websocket_command(
     {
+        vol.Required("type"): "scalable/marks",
+        vol.Required("items"): vol.All(
+            [
+                {
+                    vol.Required("isin"): str,
+                    vol.Optional("type"): vol.Any(str, None),
+                    vol.Optional("name"): vol.Any(str, None),
+                }
+            ],
+            vol.Length(min=1, max=60),
+        ),
+    }
+)
+@websocket_api.async_response
+async def websocket_marks(
+    hass: HomeAssistant, connection: websocket_api.ActiveConnection, msg: dict[str, Any]
+) -> None:
+    """The short name and logo of each named security - see symbols.py."""
+    connection.send_result(msg["id"], await async_get_marks(hass).async_marks(msg["items"]))
+
+
+@websocket_api.websocket_command(
+    {
         vol.Required("type"): "scalable/news",
         vol.Optional("entry_id"): str,
         vol.Required("isins"): vol.All([str], vol.Length(min=1, max=60)),
@@ -402,6 +426,7 @@ def async_register(hass: HomeAssistant) -> None:
     websocket_api.async_register_command(hass, websocket_subscribe)
     websocket_api.async_register_command(hass, websocket_charts)
     websocket_api.async_register_command(hass, websocket_news)
+    websocket_api.async_register_command(hass, websocket_marks)
     websocket_api.async_register_command(hass, websocket_transaction)
     websocket_api.async_register_command(hass, websocket_refresh)
     websocket_api.async_register_command(hass, websocket_card_version)

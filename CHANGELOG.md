@@ -2,6 +2,27 @@
 
 All notable changes to this integration are documented here.
 
+## v3.0.0
+
+**From this version on, Home Assistant asks two public services about the securities the cards show** - Parqet for a logo and OpenFIGI for the short name - and sends each the security's ISIN, nothing else. See **Logos and short names** below and in the README.
+
+### Added
+- **A second card: the Scalable Capital Ticker.** `custom:scalable-ticker-card` runs through the securities of a portfolio in one of three formats - a **running ticker**, a **compact row** that shows one security at a time, or a **carousel** of tiles - and opens a security's page in a pop-up on a click: the price with its change, the sell and the buy price, Market Insights, the chart over 1D to MAX and your position. Arrows in the pop-up, the arrow keys and a swipe lead on to the next security. It comes with the integration like the first card and stands under **Scalable Capital Ticker** in the card picker.
+- **What the ticker goes through.** The portfolio's positions - with a switch per group where groups are set up in Scalable - the watchlist, or both; a security on both appears once. **Securities** opens a menu of them all with a tick each, to take single ones out. **Total value** puts the portfolio as a whole in front: its value, its change over the chosen period and the curve of its return, and a click opens the Insights curve in the pop-up.
+- **What an entry shows.** The logo, the Market Insights sparkle, the short name, the name, the price - or, with **Position value**, what the position is worth - the change over a period of your choice from 1D to 1Y, and in the compact row and the carousel a small curve. The order is by name, by value or by change.
+- **How it moves.** Seconds per security, an endless loop, and a switch for moving on by itself, which pauses under the pointer and while the pop-up is open. The compact row changes by sliding, cross-fading, rolling up, as a split-flap board or with a zoom; the carousel slides, glides without a stop, brings the front tile into focus, fades a page in tile by tile or turns as a coverflow. Where the device asks for less motion, the effects give way to the plain slide and the running ticker stands still, to be moved by hand.
+- **A Layout of its own.** The card background, a background for the carousel's tiles, the colours for gain and loss, colour and font of every part of an entry, and under **Pop-up** the name, the price, the Market Insights texts, the chart and the heading over your position.
+- **Logos and short names.** An entry carries the security's logo in both cards, and the ticker card can show its short name - AAPL for Apple. Scalable hands out neither: the logo comes from Parqet's logo service and the short name from OpenFIGI, each asked with the security's ISIN. Home Assistant asks, not the browser - once per security, and the answer is kept for 30 days - so the two services see one Home Assistant now and then rather than every open dashboard. A security without a logo keeps the round symbol with its first letter; Scalable's own ETFs carry Scalable's mark.
+- **Both cards are offered for an entity.** Under **Add card → By entity**, the Scalable card is suggested for every entity of the integration and the ticker card for the sensors of a position or a watchlist entry - for a watchlist entry already set to the watchlist.
+
+### Changed
+- **The symbol in front of an entry is the security's logo** where there is one - in the Scalable card's lists and at the top of a security's page. **Symbol** under **Settings → List** still switches it off in the lists.
+
+### Fixed
+- **A deposit over the weekend is no gain in the one-day curve.** Scalable dates a deposit to midnight. One booked between Friday's close and Monday's first value lay outside the stretch in which the return curve looks for the jump it made, and stayed in the curve as a rise. It is now taken out at the first value after it, however long the gap.
+- **The one-day return starts from the close Scalable reckons with.** The last value Home Assistant recorded the day before can be minutes short of the close, and the whole day's curve stood off by the difference. The day now starts from the close worked back from Scalable's own figure for the day, and ends on that figure.
+- **The suggested card names the right account.** With more than one Scalable account the suggestion under **By entity** was meant to carry the account of the picked entity and did not; it does now.
+
 ## v2.4.0
 
 ### Added
